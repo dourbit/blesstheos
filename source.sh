@@ -3,7 +3,11 @@
 system_name=`uname -s` # usualy Darwin, sometimes also Linux
 
 function uses {
-  use="$HOME/$HOME_DOTS/use/$1"
+  if [ -z $HOME_DOTS ]; then
+    use="$(dirname $0)/use/$1"
+  else
+    use="$HOME/$HOME_DOTS/use/$1"
+  fi
   source $use
 }
 
