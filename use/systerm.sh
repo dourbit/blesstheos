@@ -1,0 +1,34 @@
+system_name=`uname -s` # usualy Darwin, sometimes also Linux
+
+if [ $system_name == 'Linux' ]; then
+  export EDITOR='vim'
+  [ -f /etc/bash_completion ] && . /etc/bash_completion
+  alias du='du -k --max-depth=1'
+elif [ $system_name == 'Darwin' ]; then
+  export EDITOR='mate -w'
+  [ -f /opt/local/etc/bash_completion ] && . /opt/local/etc/bash_completion
+  alias du='du -k -d1'
+  alias top='top -o cpu'
+  alias vi='mate'
+else
+  echo "Unexpected system: $system_name"
+fi
+
+if [ "$TERM" != "dumb" ]; then
+  # color depends on terminal not being "dumb"
+  if [ $system_name == 'Linux' ]; then
+    color_option='--color=auto'
+  else
+    color_option='-G'
+  fi
+  # . ~/.bash/jump.sh # is this only for non-dumb terminal?
+else
+  color_option=''
+  # TODO: use path_helper to do this properly, first find out what for...
+  export PATH=/opt/local/bin:$PATH
+fi
+
+alias ls="ls $color_option"
+alias ll="ls -lh $color_option"
+alias la="ls -a $color_option"
+alias lal="ls -lha $color_option"

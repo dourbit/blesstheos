@@ -1,5 +1,3 @@
-export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-
 export CLICOLOR=1
 
 # ls colors, see: http://www.linux-sxs.org/housekeeping/lscolors.html
@@ -26,3 +24,5 @@ export COLOR_GRAY='\e[1;30m'
 export COLOR_LIGHT_GRAY='\e[0;37m'
 
 alias colorslist="set | egrep 'COLOR_\w*'"
+
+color_ps1=$COLOR_GREEN
