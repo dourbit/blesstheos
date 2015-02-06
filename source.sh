@@ -16,7 +16,7 @@ uses colors.sh
 uses aliases.sh # general-purpose, independent of systerm, etc.
 uses systerm.sh # system/terminal-specific stuff
 uses git.sh # also improves the prompt in non-git contexts
-
+uses jump.sh
 
 umask 022
 
