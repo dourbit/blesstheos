@@ -12,6 +12,7 @@ function uses {
 uses colors.sh
 uses aliases.sh # general-purpose, independent of systerm, etc.
 uses systerm.sh
+uses git.sh
 
 
 umask 022

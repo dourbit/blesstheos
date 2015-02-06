@@ -1,12 +1,12 @@
 alias ..='cd ..'
 alias ...='cd .. ; cd ..'
 
-# Misc
-alias g='grep -i'  # Case insensitive grep
+alias please=sudo
 alias f='find . -iname'
-alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
+alias ducks='du -cksh * | sort -rn|head -11' # file/dir sizes of the current dir
 alias systail='tail -f /var/log/system.log'
-alias m='less' # less is more
+alias less='less -R'
+alias m='less -R' # less is more -- would it pick the -R from the less alias?
 alias df='df -h'
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
