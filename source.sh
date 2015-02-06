@@ -22,7 +22,7 @@ umask 022
 
 export NODE_ENV=development
 export JAVA_HOME=`/usr/libexec/java_home`
-export GEMS="`gem env gemdir`/gems"
+# export GEMS="$(gem env gemdir)/gems" # this is related to github issue #2
 
 export PATH=${PATH}:${JAVA_HOME}:${DOTS_HOME}/bin
 
