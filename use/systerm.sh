@@ -1,5 +1,10 @@
 system_name=`uname -s` # usualy Darwin, sometimes also Linux
 
+# export ARCHFLAGS="-arch i386 -arch x86_64"
+# Because python compiles for the wrong architecture!
+# Is this a problem for Linux?
+export ARCHFLAGS="-arch x86_64"
+
 if [ $system_name == 'Linux' ]; then
   export EDITOR='vim'
   [ -f /etc/bash_completion ] && . /etc/bash_completion
