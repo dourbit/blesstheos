@@ -1,4 +1,4 @@
-## /usr/bin/env source $(dirname $0)/$(basename $0)
+#!/usr/bin/env bash
 
 # NOTE: using $DOTS_HOME instead of the $HOME_DOTS used to set it!
 if [ -z $HOME_DOTS ]; then
