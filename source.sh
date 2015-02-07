@@ -17,6 +17,8 @@ uses aliases.sh # general-purpose, independent of systerm, etc.
 uses systerm.sh # system/terminal-specific stuff
 uses git.sh # also improves the prompt in non-git contexts
 uses jump.sh
+[ -n "$BASH" ] && uses bash.sh # bash-only stuff
+
 
 umask 022
 
@@ -33,8 +35,3 @@ export HISTCONTROL=ignoredups
 
 shopt -s checkwinsize # After each command, checks the windows size and changes lines and columns
 #shopt -s globstar # research...
-
-# bash completion settings (actually, these are readline settings - research...)
-bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
-bind "set bell-style none" # no bell
-bind "set show-all-if-ambiguous On" # show list automatically, without double tab
