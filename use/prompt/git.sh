@@ -2,9 +2,7 @@
 # erase path from ~ to the .git containing directory
 # otherwise make ~/ $PURPLE
 
-
 # these colors are different from use/colors.sh, why?
-
 WHITE="\[\033[1;37m\]"
 BLUE="\[\033[0;34m\]"
 GREEN="\[\033[0;32m\]"
@@ -60,20 +58,12 @@ my_sha() {
   echo "@$sha "
 }
 
-# non-zero exit status (of the last command) is bad.
+# non-zero exit status (of the last command) is bad
 bad_exit() {
   if test $1 -ne 0 ; then
     echo "▻$1◅ "
   fi
 }
-
-
-# old prompt-experiments archive ...
-# PS1="$RED\$(parse_git_branch) $YELLOW\w $GREEN\$ "
-# PS1="$RED\$(my_git_status)$GREEN\$(__git_ps1) $YELLOW\w$GREEN → "
-# PS1="$RED\$(my_git_status)$GREEN\W$(__git_ps1 " » %s") $YELLOW\w$GREEN → "
-# PS1="$GREEN\$(my_git_propmt)$RED\$(my_git_status)$YELLOW\w$GREEN → "
-# PS1="\$(my_git_propmt)\$(my_git_status)\w → "
 
 
 PS1="${WHITE}⚚ $RED\$(bad_exit \$?)$WHITE\$(my_sha)$PURPLE\$(my_git_propmt)$RED\$(my_git_status)$YELLOW\w$WHITE ➔  $GREEN"
