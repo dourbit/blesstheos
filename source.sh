@@ -26,7 +26,7 @@ export NODE_ENV=development
 export JAVA_HOME=`/usr/libexec/java_home`
 # export GEMS="$(gem env gemdir)/gems" # this is related to github issue #2
 
-export PATH=${PATH}:${JAVA_HOME}:${DOTS_HOME}/bin
+export PATH=/usr/local/bin:${PATH}:${JAVA_HOME}:${DOTS_HOME}/bin
 
 export GREP_COLOR='1;32' # why is it different than what colors.sh exports?
 export GREP_OPTIONS='-i --color=auto' # case-insensitive
