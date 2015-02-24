@@ -12,24 +12,22 @@ function uses {
   source "$DOTS_HOME/use/$1"
 }
 
+export JAVA_HOME=`/usr/libexec/java_home`
+export PATH=/usr/local/bin:${PATH}:${JAVA_HOME}:${DOTS_HOME}/bin
+
+
 uses colors.sh
-uses aliases.sh # general-purpose, independent of systerm, etc.
 uses systerm.sh # system/terminal-specific stuff
+uses aliases.sh # general-purpose, independent of systerm, etc.
 uses git.sh # also improves the prompt in non-git contexts
 uses jump.sh
 [ -n "$BASH" ] && uses bash.sh # bash-only stuff
+uses rundev.sh
 
 
 umask 022
 
-export NODE_ENV=development
-export JAVA_HOME=`/usr/libexec/java_home`
-# export GEMS="$(gem env gemdir)/gems" # this is related to github issue #2
-
-export PATH=/usr/local/bin:${PATH}:${JAVA_HOME}:${DOTS_HOME}/bin
-
-export GREP_COLOR='1;32' # why is it different than what colors.sh exports?
-export GREP_OPTIONS='-i --color=auto' # case-insensitive
+export GREP_OPTIONS="$GREP_OPTIONS -i" # case-insensitive
 export HISTSIZE=1000000 # not much?
 export HISTCONTROL=ignoredups
 

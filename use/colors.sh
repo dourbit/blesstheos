@@ -25,4 +25,7 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 
 alias colorslist="set | egrep 'COLOR_\w*'"
 
+export GREP_COLOR='1;32' # why is it different than what colors.sh exports?
+export GREP_OPTIONS='--color=auto'
+
 color_ps1=$COLOR_GREEN
