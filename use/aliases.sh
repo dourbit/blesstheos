@@ -13,5 +13,6 @@ alias df='df -h'
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
 uses aliases/npm.sh
+uses aliases/pip.sh
 
 # NOTE: some aliases (e.g. git's) are sourced from elsewhere
