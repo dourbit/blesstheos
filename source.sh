@@ -12,9 +12,6 @@ function uses {
   source "$DOTS_HOME/use/$1"
 }
 
-export JAVA_HOME=`/usr/libexec/java_home`
-export PATH=/usr/local/bin:${PATH}:${JAVA_HOME}:${DOTS_HOME}/bin
-
 
 uses colors.sh
 uses systerm.sh # system/terminal-specific stuff
@@ -33,3 +30,8 @@ export HISTCONTROL=ignoredups
 
 shopt -s checkwinsize # After each command, checks the windows size and changes lines and columns
 #shopt -s globstar # research...
+
+
+# programming languages - platforms & packages:
+uses platforms/haskell.sh
+uses platforms/java.sh

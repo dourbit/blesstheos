@@ -1,4 +1,4 @@
-# runtimes / development
+# development runtimes
 
 export NODE_ENV=development
 alias gopath="export GOPATH=$(pwd)"
