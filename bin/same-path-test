@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# determine if `source ~/.bash_profile` changes the $PATH
+# and print what is added to it if it's growing -
+# helps identify and fix any such cases
+
+pre=$PATH
+one=$(echo $PATH | wc -m)
+source ~/.bash_profile
+two=$(echo $PATH | wc -m)
+
+if [ $one == $two ]; then
+  echo "is the same"
+else
+  echo "has changed, with the following extras added:"
+  extra=${PATH//$pre/}
+  for item in $(echo $extra | tr ":" "\n"); do
+    echo $item
+  done
+  exit 1
+fi
