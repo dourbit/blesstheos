@@ -46,8 +46,9 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 
 
 # programming languages - platforms & packages:
-uses platforms/haskell.sh
 uses platforms/java.sh
+uses platforms/ruby.sh
+uses platforms/haskell.sh
 
 # thus far the PATH pas been added to from many places
 add_to_PATH ${DOTS_HOME}/bin
