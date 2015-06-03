@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# NOTE: on a Mac, one must setup the /Applications/GHC.app (download, extract and rename)
+# http://ghcformacosx.github.io/
+
+# TODO: Find out how to install Haskell on a Linux box - Cabal is not fun...
+
+
+# https://github.com/gibiansky/IHaskell
+
+# Ubuntu assumed for 'Linux', on Mac OS zeromq would be auto-installed via brew
+if [ $system_name == 'Linux' ]; then
+  sudo apt-get install libzmq3-dev
+fi
