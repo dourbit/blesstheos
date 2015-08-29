@@ -6,6 +6,7 @@ git-smart # -log  -merge -pull
 ghost
 jekyll
 json
+ohai # used by pleaserun
 omglog
 pleaserun
 ronn
