@@ -5,18 +5,33 @@
 if [ $system_name == 'Darwin' ]; then
   brew install rbenv
   brew install ruby-build
+elif [ $system_name == 'Linux' ]; then
+  cd
+  git clone git://github.com/sstephenson/rbenv.git .rbenv
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+  echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+  exec $SHELL
+
+  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+  echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+  exec $SHELL
+
+  git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 fi
 
 if [ ! -f ~/.bundle/config ]; then mkdir -p ~/.bundle && printf -- "---\nBUNDLE_PATH: vendor/bundle\n" >> ~/.bundle/config; fi
 
 if [ ! -f ~/.irbrc ]; then printf "require 'irb/completion'\n" >> ~/.irbrc; fi
 
-rbenv install 1.9.3-p551
-rbenv rehash #after installing binaries
-rbenv global 1.9.3-p551
+if [ ! -f ~/.gemrc ]; then echo "gem: --no-ri --no-rdoc" >> ~/.gemrc; fi
 
-sudo gem install bundler --pre
-sudo gem install compass ghost # ronn
+# rbenv install --list
+rbenv install 2.2.3
+rbenv rehash #after installing binaries
+rbenv global 2.2.3
+
+gem install bundler --pre
+# TODO: install ./packages/gem
 rbenv rehash
 
 # per project:
