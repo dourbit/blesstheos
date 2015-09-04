@@ -33,7 +33,7 @@ else
   export PATH=/opt/local/bin:$PATH
 fi
 
+alias l="ls -CF $color_option"
 alias ls="ls $color_option"
-alias ll="ls -lh $color_option"
-alias la="ls -a $color_option"
-alias lal="ls -lha $color_option"
+alias la="ls -A $color_option"
+alias ll="ls -halF $color_option"
