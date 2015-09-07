@@ -14,7 +14,7 @@ alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 
 # some aliases depend on variables being set
 # e.g. export TRANSMISSION_RE='127.0.0.1:9091 --auth user:pw'
-[[ -n "$TRANSMISSION_RE" ]] && alias transmission-remote="transmission-remote ${TRANSMISSION_RE}"
+[[ -n "$TRANSMISSION_RE" ]] && alias tre="transmission-remote ${TRANSMISSION_RE}"
 
 uses aliases/apm.sh
 uses aliases/npm.sh
@@ -22,3 +22,8 @@ uses aliases/pip.sh
 
 # NOTE: some aliases (e.g. git's) are sourced from elsewhere
 # also, there are system-dependent aliases in system.sh
+
+# In general aliases aren't available for scripts to use
+# although theres is: shopt -s expand_aliases
+# this isn't recommended - just use functions.sh instead...
+# and export whetever functions are necessary
