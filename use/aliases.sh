@@ -14,7 +14,7 @@ alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 
 # some aliases depend on variables being set
 # e.g. export TRANSMISSION_RE='127.0.0.1:9091 --auth user:pw'
-[[ -n "$TRANSMISSION_RE" ]] && alias tre="transmission-remote ${TRANSMISSION_RE}"
+[[ -n "$TRANSMISSION_RE" ]] && alias tre="$(which transmission-remote) ${TRANSMISSION_RE}"
 
 uses aliases/apm.sh
 uses aliases/npm.sh
