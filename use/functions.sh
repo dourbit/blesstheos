@@ -1,9 +1,9 @@
 if [ -n "$TRANSMISSION_RE" ]; then
   transmission-remote() {
-    exec transmission-remote ${TRANSMISSION_RE} ${@}
+    eval $(which transmission-remote) ${TRANSMISSION_RE} ${@}
   }
   # make it available to scripts
-  export -f transmission-remote
+  [[ $system_name == 'Linux' ]] && export transmission-remote
 fi
 
 function tre-ids-pipe {
@@ -17,4 +17,4 @@ function tre-ids-pipe {
     stdbuf -oL tre-ids | eval $1 "${@:2}"
   fi
 }
-export -f tre-ids-pipe
+[[ $system_name == 'Linux' ]] && export tre-ids-pipe
