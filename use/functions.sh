@@ -5,3 +5,15 @@ if [ -n "$TRANSMISSION_RE" ]; then
   # make it available to scripts
   export -f transmission-remote
 fi
+
+function tre-ids-pipe {
+  # give it a function or script to call
+  if [[ -p /dev/stdin ]]; then
+    # the input is coming from a pipe
+    eval $1
+  else
+    # the stdbuf tip came from http://unix.stackexchange.com/questions/117501/in-bash-script-how-to-capture-stdout-line-by-line
+    stdbuf -oL tre-ids | eval $1
+  fi
+}
+export -f tre-ids-pipe

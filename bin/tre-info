@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+function t-info {
+  echo
+  while IFS= read -r ID; do
+    INFO=`transmission-remote --torrent "$ID" --info`
+    NAME=`echo "$INFO" | grep "Name: "`
+    LOCATION=`echo "$INFO" | grep "Location: "`
+    TRACKER=`transmission-remote -t "$ID" --info-trackers | grep "Tracker 0: "`
+    if [ "$NAME" ]; then
+      echo "# $ID"
+      echo "$NAME"
+      echo "$LOCATION"
+      echo "$TRACKER"
+      echo
+    fi
+  done
+}
+
+tre-ids-pipe t-info
