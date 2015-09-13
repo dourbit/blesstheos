@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+function t-tracker {
+  while IFS= read -r ID; do
+    TRACKER=`transmission-remote -t "$ID" --info-trackers | grep "Tracker 0: "`
+    if [[ "$TRACKER" =~ .*${1}.* ]]; then
+      echo "$ID"
+    fi
+  done
+}
+
+tre-ids-pipe t-tracker "${@}"
