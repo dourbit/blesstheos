@@ -18,11 +18,11 @@ function t-tracker {
   while IFS= read -r ID; do
     TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
     if [[ $NOT == true ]]; then
-      matching "$TRACKER" "${@}" || echo $ID
+      matching "$TRACKER" "$@" || echo $ID
     else
-      matching "$TRACKER" "${@}" && echo $ID
+      matching "$TRACKER" "$@" && echo $ID
     fi
   done
 }
 
-tre-ids-pipe t-tracker ${@}
+tre-ids-pipe t-tracker "$@"
