@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+. $(dirname $0)/tre-functions
+
+function t-tracker-mv {
+  if [[ "$1" && "$2" ]]; then
+    while IFS= read -r ID; do
+      FROM=`tre -t "$ID" --info-trackers | grep "Tracker 0: .*${1}"`
+      if [[ "$FROM" ]]; then
+        echo "Id ${ID} ->${FROM} becomes ${2}"
+        tre -t $ID --tracker-remove 0
+        tre -t $ID --tracker-add $2
+      else
+        echo $ID | tre-info
+        echo "Can't proceed further - tracker doesn't match '${1}'."
+        echo
+        exit 1
+      fi
+    done
+  else
+    echo "Usage: tre-tracker {from} | tre-tracker-mv {from} {to}"
+    exit 1
+  fi
+}
+
+tre-ids-pipe t-tracker-mv "$@"
