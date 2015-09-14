@@ -3,10 +3,10 @@
 function t-info {
   echo
   while IFS= read -r ID; do
-    INFO=`transmission-remote --torrent "$ID" --info`
+    INFO=`tre --torrent "$ID" --info`
     NAME=`echo "$INFO" | grep "Name: "`
     LOCATION=`echo "$INFO" | grep "Location: "`
-    TRACKER=`transmission-remote -t "$ID" --info-trackers | grep "Tracker 0: "`
+    TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
     if [ "$NAME" ]; then
       echo "# $ID"
       echo "$NAME"

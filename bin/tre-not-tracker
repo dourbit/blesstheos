@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 for ID in $(tre-ids); do
-  NAME=`transmission-remote --torrent "$ID" --info | grep "Name: "`
-  TRACKER=`transmission-remote -t "$ID" --info-trackers | grep "Tracker 0: "`
+  NAME=`tre --torrent "$ID" --info | grep "Name: "`
+  TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
   if [[ "$NAME" && ! "$TRACKER" =~ .*${1}.* ]]; then
     echo "$NAME"
     echo "$TRACKER"

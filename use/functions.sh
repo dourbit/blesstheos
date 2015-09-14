@@ -1,9 +1,9 @@
 if [ -n "$TRANSMISSION_RE" ]; then
-  transmission-remote() {
+  function tre() {
     eval $(which transmission-remote) ${TRANSMISSION_RE} ${@}
   }
   # make it available to scripts
-  [[ $system_name == 'Linux' ]] && export transmission-remote
+  [[ $system_name == 'Linux' ]] && export tre
 fi
 
 function tre-ids-pipe {

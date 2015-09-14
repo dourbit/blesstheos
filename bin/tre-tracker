@@ -2,7 +2,7 @@
 
 function t-tracker {
   while IFS= read -r ID; do
-    TRACKER=`transmission-remote -t "$ID" --info-trackers | grep "Tracker 0: "`
+    TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
     if [[ "$TRACKER" =~ .*${1}.* ]]; then
       echo "$ID"
     fi
