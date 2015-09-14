@@ -2,6 +2,14 @@
 
 . $(dirname $0)/tre-functions
 
+function matching {
+  val=$1 && shift
+  for wanted in ${@}; do
+    [[ "$val" =~ .*${wanted}.* ]] && return 0
+  done
+  return 1
+}
+
 function t-tracker {
   if [[ $1 == "not" ]]; then
     NOT=true
@@ -10,9 +18,9 @@ function t-tracker {
   while IFS= read -r ID; do
     TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
     if [[ $NOT == true ]]; then
-      [[ ! "$TRACKER" =~ .*${1}.* ]] && echo "$ID"
+      matching "$TRACKER" "${@}" || echo $ID
     else
-      [[ "$TRACKER" =~ .*${1}.* ]] && echo "$ID"
+      matching "$TRACKER" "${@}" && echo $ID
     fi
   done
 }
