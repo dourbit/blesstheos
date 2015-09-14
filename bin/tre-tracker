@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. $(dirname $0)/tre-functions
+
 function t-tracker {
   while IFS= read -r ID; do
     TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`

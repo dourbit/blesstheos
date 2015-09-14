@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. $(dirname $0)/tre-functions
+
 function t-info {
   echo
   while IFS= read -r ID; do
