@@ -2,8 +2,10 @@
 
 . $(dirname $0)/tre-functions
 
-function t-tracker-mv {
-  if [[ "$1" && "$2" ]]; then
+USE="Usage: tre-tracker {from} | tre-tracker-mv {from} {to}"
+
+if [[ "$1" && "$2" ]]; then
+  if [[ -p /dev/stdin ]]; then
     while IFS= read -r ID; do
       FROM=`tre -t "$ID" --info-trackers | grep "Tracker 0: .*${1}"`
       if [[ "$FROM" ]]; then
@@ -18,9 +20,11 @@ function t-tracker-mv {
       fi
     done
   else
-    echo "Usage: tre-tracker {from} | tre-tracker-mv {from} {to}"
+    echo As a safety precaution this command requires input from a pipe.
+    echo $USE
     exit 1
   fi
-}
-
-tre-ids-pipe t-tracker-mv "$@"
+else
+  echo $USE
+  exit 1
+fi
