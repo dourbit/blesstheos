@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-tre --list | sed -e '1d;$d;s/^ *//' | cut --only-delimited --delimiter=" "  --fields=1
+. $(dirname $0)/tre-functions
+
+tre --list | sed -e '1d;$d;s/^ *//' | cut -s -d ' ' -f 1
