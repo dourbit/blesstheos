@@ -3,12 +3,18 @@
 . $(dirname $0)/tre-functions
 
 function t-tracker {
+  if [[ $1 == "not" ]]; then
+    NOT=true
+    shift 1
+  fi
   while IFS= read -r ID; do
     TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
-    if [[ "$TRACKER" =~ .*${1}.* ]]; then
-      echo "$ID"
+    if [[ $NOT == true ]]; then
+      [[ ! "$TRACKER" =~ .*${1}.* ]] && echo "$ID"
+    else
+      [[ "$TRACKER" =~ .*${1}.* ]] && echo "$ID"
     fi
   done
 }
 
-tre-ids-pipe t-tracker "${@}"
+tre-ids-pipe t-tracker ${@}
