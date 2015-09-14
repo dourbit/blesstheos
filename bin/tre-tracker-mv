@@ -10,8 +10,8 @@ if [[ "$1" && "$2" ]]; then
       FROM=`tre -t "$ID" --info-trackers | grep "Tracker 0: .*${1}"`
       if [[ "$FROM" ]]; then
         echo "Id ${ID} ->${FROM} becomes ${2}"
-        tre -t $ID --tracker-remove 0
-        tre -t $ID --tracker-add $2
+        tre -t $ID --tracker-remove 0 > /dev/null
+        tre -t $ID --tracker-add $2 > /dev/null
       else
         echo $ID | tre-info
         echo "Can't proceed further - tracker doesn't match '${1}'."
