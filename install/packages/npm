@@ -3,6 +3,7 @@ babel-eslint
 batshit
 bower
 browser-sync
+cljs-repl
 coffee-script
 coffeelint
 dat

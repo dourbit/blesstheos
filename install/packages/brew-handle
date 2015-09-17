@@ -1,0 +1,10 @@
+# these need to be handled in a special way
+# e.g. unload / load *.plist or run further commands
+# so, install / upgrade them by by hand for now
+
+boot2docker #$ boot2docker destroy && boot2docker upgrade
+couchdb
+mongodb
+python #$ sudo brew postinstall python && pip install --upgrade pip setuptools && brew linkapps python
+redis
+syncthing #must stop the service first
