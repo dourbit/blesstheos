@@ -2,6 +2,7 @@ ack
 bash
 boot-clj
 cairo
+clojurescript
 cmake
 docker
 emacs

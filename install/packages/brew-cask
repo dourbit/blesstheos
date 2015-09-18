@@ -1,4 +1,5 @@
-asepsis
+asepsis # ban .DS_Store
 gitup
+stack # haskell for agda / greek-grammar
 transmission
 transmission-remote-gui
