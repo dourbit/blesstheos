@@ -1,5 +1,6 @@
 asepsis # ban .DS_Store
 gitup
+qtox # tox.im isn't working, check github.com/tux3/qTox or http://utoxisfinished.info
 stack # haskell for agda / greek-grammar
 transmission
 transmission-remote-gui

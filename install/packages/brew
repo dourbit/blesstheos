@@ -14,6 +14,7 @@ go
 htop
 leiningen
 maven
+michaeldfallen/formula/git-radar
 minidlna
 ocaml
 opam
