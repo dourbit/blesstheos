@@ -9,5 +9,6 @@ json
 ohai # used by pleaserun
 omglog
 pleaserun
+rhc # redhat openshift
 ronn
 susy
