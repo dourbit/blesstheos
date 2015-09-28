@@ -1,4 +1,5 @@
 asepsis # ban .DS_Store
+dragondisk # amazon s3 file manager
 gitup
 qtox # tox.im isn't working, check github.com/tux3/qTox or http://utoxisfinished.info
 stack # haskell for agda / greek-grammar

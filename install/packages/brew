@@ -23,6 +23,7 @@ putty
 python3
 readline
 rlwrap
+s3cmd
 sassc
 shellcheck
 ssh-copy-id
