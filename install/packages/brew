@@ -16,6 +16,7 @@ leiningen
 maven
 michaeldfallen/formula/git-radar
 minidlna
+nvm
 ocaml
 opam
 planck
