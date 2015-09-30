@@ -1,5 +1,6 @@
 ack
 bash
+bats
 boot-clj
 cairo
 clojurescript
