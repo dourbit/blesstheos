@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mkdir ~/.nvm
+
+if [ $system_name == 'Darwin' ]; then
+  cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+fi

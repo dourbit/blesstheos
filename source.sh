@@ -47,6 +47,7 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 
 
 # programming languages - platforms & packages:
+uses platforms/node.sh
 uses platforms/java.sh
 uses platforms/ruby.sh
 uses platforms/haskell.sh
