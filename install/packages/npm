@@ -15,6 +15,7 @@ git-stats
 grunt
 gulp
 harp
+http-server
 ijavascript
 is-up
 jscs
