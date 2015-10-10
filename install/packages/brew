@@ -12,6 +12,7 @@ git
 git-lfs
 gnupg
 go
+graphviz
 htop
 leiningen
 maven
