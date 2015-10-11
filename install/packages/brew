@@ -14,6 +14,7 @@ gnupg
 go
 graphviz
 htop
+ipfs
 leiningen
 maven
 michaeldfallen/formula/git-radar
