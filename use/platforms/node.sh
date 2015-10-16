@@ -1,4 +1,5 @@
 export NVM_DIR=~/.nvm
+system_name=`uname -s`
 
 if [ $system_name == 'Darwin' ]; then
   source $(brew --prefix nvm)/nvm.sh
