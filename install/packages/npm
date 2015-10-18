@@ -45,6 +45,7 @@ ripple-emulator
 rollup
 surge
 tldr
+# transformer-pkg # generates transformer modules
 trevor # runs travis tests from cli on localhost with docker
 vantage # repl
 vorlon
