@@ -7,9 +7,11 @@ cljs-repl
 coffee-script
 coffeelint
 dat
+dat-transformer
 datomic-free
 dbin
 eslint
+gasket # pipelines for node.js by datproject
 ghcal
 git-stats
 grunt
