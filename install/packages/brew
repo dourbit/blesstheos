@@ -14,14 +14,20 @@ gnupg
 go
 graphviz
 htop
+iftop
 ipfs
 leiningen
 maven
 michaeldfallen/formula/git-radar
 minidlna
+mopidy #$ brew tap mopidy/mopidy
+mopidy-soundcloud
+ncdu # http://dev.yorhel.nl/ncdu
+nmap # https://nmap.org
 nvm # source $(brew --prefix nvm)/nvm.sh
 ocaml
 opam
+pick #$ brew tap thoughtbot/formulae
 planck
 putty
 python3

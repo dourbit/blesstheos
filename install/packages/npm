@@ -43,6 +43,7 @@ pageres
 pm2
 ripple-emulator
 rollup
+subdownloader #$ subdownload
 surge
 tldr
 # transformer-pkg # generates transformer modules
