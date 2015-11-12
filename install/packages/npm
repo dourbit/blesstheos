@@ -23,6 +23,7 @@ is-up
 jscs
 jshint
 jsong
+jsonlint
 jspm
 jupyter-nodejs
 katon
@@ -43,6 +44,7 @@ pageres
 pm2
 ripple-emulator
 rollup
+sass-lint
 subdownloader #$ subdownload
 surge
 tldr
