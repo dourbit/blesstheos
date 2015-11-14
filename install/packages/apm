@@ -1,17 +1,25 @@
 # themes:
+
 atom-material-syntax
 atom-material-syntax-light
 atom-material-ui
+focus-dark
+focus-light
+
+# light / dusk
+polymorph-ui
 duotone-dark-syntax
 duotone-dark-red-syntax
 duotone-dusk-syntax
 duotone-light-syntax
-focus-dark
-focus-light
-nucleus-dark-ui
-polymorph-ui
+
+# night - good for clojure code
+isotope-ui
+jonikorpi-atom-solarized-syntax
+
 
 # packages:
+
 api-workbench
 ask-stack
 atom-beautify
@@ -39,6 +47,7 @@ linter-jshint
 linter-jsonlint
 linter-jsxhint
 linter-sass-lint
+lisp-paredit
 mark
 merge-conflicts
 minimap
@@ -54,6 +63,8 @@ project-manager
 pigments
 sort-lines
 symbols-tree-view
+theme-reel
+theme-switcher
 travis-ci-status
 tree-view-git-status
 vim-mode
