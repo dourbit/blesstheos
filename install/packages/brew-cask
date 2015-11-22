@@ -1,7 +1,14 @@
 asepsis # ban .DS_Store
+atom
 dragondisk # amazon s3 file manager
+dropbox
 gitup
+google-chrome
+iterm2
 qtox # tox.im isn't working, check github.com/tux3/qTox or http://utoxisfinished.info
+skype
 stack # haskell for agda / greek-grammar
 transmission
 transmission-remote-gui
+virtualbox
+vlc

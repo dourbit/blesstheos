@@ -1,4 +1,6 @@
+beets #$ beet
+butterfly
 httpie
 jupyter
-beets #$ beet
+libsass # themes for butterfly
 pinggraph #$ gping

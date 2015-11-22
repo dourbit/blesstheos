@@ -3,9 +3,11 @@ bash
 bats
 boot-clj
 cairo
+caskroom/cask/brew-cask
 clojurescript
 cmake
 docker
+docker-machine
 emacs
 gettext
 git
@@ -39,5 +41,7 @@ shellcheck
 ssh-copy-id
 tag
 tmux
+tutum # https://www.tutum.co/
 watchman
+wget
 zeromq
