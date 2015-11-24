@@ -1,14 +1,22 @@
 asepsis # ban .DS_Store
 atom
+caffeine
 dragondisk # amazon s3 file manager
 dropbox
 gitup
 google-chrome
+google-drive
+google-photos-backup
 iterm2
 qtox # tox.im isn't working, check github.com/tux3/qTox or http://utoxisfinished.info
 skype
 stack # haskell for agda / greek-grammar
+tomahawk
 transmission
 transmission-remote-gui
 virtualbox
 vlc
+
+# Needs $ launchctl unload / load
+xquartz # asks for password; http://www.xquartz.org/
+# /Library/LaunchAgents/org.macosforge.xquartz.startx.plist
