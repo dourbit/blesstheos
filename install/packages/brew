@@ -29,6 +29,7 @@ nmap # https://nmap.org
 nvm # source $(brew --prefix nvm)/nvm.sh
 ocaml
 opam
+osxfuse # https://osxfuse.github.io/
 pick #$ brew tap thoughtbot/formulae
 planck
 putty

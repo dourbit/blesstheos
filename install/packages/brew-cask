@@ -1,21 +1,69 @@
+adobe-air
+adobe-creative-cloud
+android-file-transfer
+anki # http://ankisrs.net/ flashcards for learning clojure, etc.
+anybar
 asepsis # ban .DS_Store
 atom
+bettertouchtool # http://www.boastr.net/
 caffeine
+chromium
+colloquy #irc
+commander-one
+cuttle # ClojureScript https://github.com/oakmac/cuttle
+discord # https://discordapp.com/
+diskwave
 dragondisk # amazon s3 file manager
 dropbox
-gitup
+emacs
+evernote
+firefox
+flash
+flux # https://justgetflux.com/
+fuzzyclock
+ghc # haskell https://ghcformacosx.github.io/
+github-desktop
+githubpulse # http://tadeuzagallo.com/GithubPulse/
+gitter
+gitup # http://gitup.co
 google-chrome
 google-drive
 google-photos-backup
 iterm2
+keyboardcleantool
+kodi
+lastfm
+musicbrainz-picard
+nvalt
+opera
+otto # https://www.ottoproject.io/
 qtox # tox.im isn't working, check github.com/tux3/qTox or http://utoxisfinished.info
+quicksilver
+rescuetime
 skype
+slack
+soundcleod # https://salomvary.github.io/soundcleod/
+soundcloud-downloader
+ssh-tunnel-manager # http://projects.tynsoe.org/en/stm/
 stack # haskell for agda / greek-grammar
+syncany # https://syncany.org
+syncthing # better updated without cask / is this additional? https://syncthing.net/
+techstoreclub-simple-comic # http://dancingtortoise.com/simplecomic/ - better forks?
+textmate
 tomahawk
+totalterminal # behind on versions, as with TotalFinder not maintained since 10.11 ?
 transmission
 transmission-remote-gui
+tunnelblick
+ubersicht # http://tracesof.net/uebersicht
+unrarx
+vagrant # https://www.vagrantup.com/
+vault # https://www.vaultproject.io
+viber
 virtualbox
 vlc
+whatroute # http://www.whatroute.net
+xrg # http://www.gauchosoft.com/Products/XRG/
 
 # Needs $ launchctl unload / load
 xquartz # asks for password; http://www.xquartz.org/

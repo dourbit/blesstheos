@@ -3,8 +3,10 @@
 # so, install / upgrade them by by hand for now
 
 boot2docker #$ boot2docker destroy && boot2docker upgrade
+
+# Needs $ launchctl unload / load
 couchdb
 mongodb
 python #$ sudo brew postinstall python && pip install --upgrade pip setuptools && brew linkapps python
 redis
-syncthing #must stop the service first
+syncthing
