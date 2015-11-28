@@ -4,6 +4,7 @@ css2sass
 foreman
 git-smart # -log  -merge -pull
 ghost
+iStats
 jekyll
 json
 ohai # used by pleaserun

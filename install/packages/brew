@@ -15,6 +15,7 @@ git-lfs
 gnupg
 go
 graphviz
+# homebrew/fuse/ntfs-3g # el capitan issue
 htop
 iftop
 ipfs
@@ -29,7 +30,7 @@ nmap # https://nmap.org
 nvm # source $(brew --prefix nvm)/nvm.sh
 ocaml
 opam
-osxfuse # https://osxfuse.github.io/
+# osxfuse # https://osxfuse.github.io/ # with "MacFUSE Compatibility Layer" turned on
 pick #$ brew tap thoughtbot/formulae
 planck
 putty
