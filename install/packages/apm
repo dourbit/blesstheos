@@ -57,9 +57,9 @@ minimap-git-diff
 minimap-highlight-selected
 minimap-pigments
 minimap-selection
-nrepl
 parinfer
 project-manager
+proto-repl
 pigments
 sort-lines
 symbols-tree-view
