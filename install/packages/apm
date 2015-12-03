@@ -65,6 +65,7 @@ sort-lines
 symbols-tree-view
 theme-reel
 theme-switcher
+tool-bar
 travis-ci-status
 tree-view-git-status
 vim-mode
