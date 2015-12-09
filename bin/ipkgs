@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Installs packages, expecting:
+# $1 = package manager
+# $@ = filepath(s)
+
+# the package manager could be inferred from the filename(s)...
+# TODO: if $1 is a filepath that exists, get the name from it and don't shift
+# NOTE: even if not, check that each filename starts with $pm as a precaution
+# there are exceptions though, like brew-cask vs brew-handle...
+# and some things I'll have to rename, such as apt to apt-get?
+pm="$1"
+shift
+
+# verify it's bash version >= 4
+# for associative arrays, used next
+if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
+  echo "Bash must be version 4 or greater."
+  echo "Currently it's: '${BASH_VERSION}'."
+  exit 1
+fi
+
+declare -A install=(
+  ["apm"]="apm install"
+  ["brew"]="brew install"
+  ["npm"]="npm i"
+)
+
+if [ ! ${install[$pm]+_} ]; then
+  echo "Don't know how to install with '$pm'."
+  exit 1
+fi
+
+echo "Installing $@ packages with $pm:"
+echo
+
+sed -f $(dirname "$0")/ids.sed $@ | xargs -n 1 echo \$ ${install[$pm]}
