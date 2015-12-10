@@ -49,7 +49,7 @@ declare -A install=(
 )
 
 # do glob expansion with correct paths
-items=()
+items=() # TODO: make it an associative array keyed by $item, to preserve state?
 shopt -s nullglob
 for item in "$@"; do
   path=${where}${item}
@@ -68,7 +68,7 @@ for path in "${items[@]}"; do
   [[ ${install[$pm]+_} ]] && command=${install[$pm]}
 
   echo
-  echo "Installing '$(basename $path)' packages with \`$command\`..."
+  echo "Installing '$id' packages with \`$command\`..."
 
   # finally, obtain the package names to install one at a time
   sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
