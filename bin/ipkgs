@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-# Installs packages, expecting:
-# $1 = filepath
-# $@ = filepath(s) # TODO
+# Installs packages, given file[path](s)
+
+# verify it's bash version >= 4
+# for associative arrays, used next
+if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
+  echo "Bash must be version 4 or greater."
+  echo "Currently it's: '${BASH_VERSION}'."
+  exit 1
+fi
 
 declare where # path prefix
 if [ "$1" == "-p" ]; then
@@ -16,19 +22,8 @@ elif [ "$#" -ne 0 ]; then
 fi
 
 if [ "$#" -eq 0 ]; then
-    echo "Usage: $(basename $0) [-p] file"
+    echo "Usage: $(basename $0) [-p] file(s)"
     exit 1
-fi
-
-what="$1"
-path="${where}${1}"
-
-# verify it's bash version >= 4
-# for associative arrays, used next
-if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
-  echo "Bash must be version 4 or greater."
-  echo "Currently it's: '${BASH_VERSION}'."
-  exit 1
 fi
 
 # special cases when command isn't the filename
@@ -38,10 +33,6 @@ declare -A special=(
   ["apt-get"]="apt-get" # just for example, or the '-get' would get truncated
   ["brew-cask"]="brew cask"
 )
-
-id=$(basename "$path")
-pm=$(echo $id | sed s/-.*//) # package manager default
-[[ ${special[$id]+_} ]] && pm=${special[$id]}
 
 # TODO: verify $pm is installed, as well as...
 # system-specific, if comand or filename match any of the following
@@ -57,10 +48,18 @@ declare -A install=(
   ["npm"]="npm i -g"
 )
 
-command="$pm install"
-[[ ${install[$pm]+_} ]] && command=${install[$pm]}
+for file in "$@"; do
+  path="${where}${file}"
 
-echo "Installing '$what' packages with \`$command\`..."
-echo
+  id=$(basename "$path")
+  pm=$(echo $id | sed s/-.*//) # package manager default
+  [[ ${special[$id]+_} ]] && pm=${special[$id]}
 
-sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
+  command="$pm install"
+  [[ ${install[$pm]+_} ]] && command=${install[$pm]}
+
+  echo
+  echo "Installing '$file' packages with \`$command\`..."
+
+  sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
+done
