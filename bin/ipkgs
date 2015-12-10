@@ -10,10 +10,12 @@ if [ "$1" == "-p" ]; then
   where=''
   shift
 else
-  # less typing - use env var or the relative default
-  where=${IPKGS_PATH:="$(dirname $0)/../install/packages"}
-  where="${where}/"
+  # less typing - uses env var or the relative default
+  echo Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'.
+  where="$IPKGS_PATH/"
 fi
+
+what="$1"
 path="${where}${1}"
 
 # verify it's bash version >= 4
@@ -53,7 +55,7 @@ declare -A install=(
 command="$pm install"
 [[ ${install[$pm]+_} ]] && command=${install[$pm]}
 
-echo "Installing $path packages with $pm:"
+echo "Installing '$what' packages with \`$command\`..."
 echo
 
 sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
