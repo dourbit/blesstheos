@@ -3,7 +3,7 @@
 # Installs packages, given file[path](s), icluding glob(s)
 
 # verify it's bash version >= 4
-# for associative arrays, used next
+# for associative arrays, used further down
 if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
   echo "Bash must be version 4 or greater."
   echo "Currently it's: '${BASH_VERSION}'."
@@ -34,8 +34,7 @@ declare -A special=(
   ["brew-cask"]="brew cask"
 )
 
-# TODO: verify $pm is installed, as well as...
-# system-specific, if comand or filename match any of the following
+# some commands can only run on certain operating systems
 declare -A syscheck=(
   ["apm-darwin"]="darwin"
   ["apt-get"]="linux" # could check for ubuntu or debian
@@ -59,10 +58,22 @@ done
 
 # for each file path...
 for path in "${items[@]}"; do
-  id=$(basename "$path")
+  id=$(basename "$path") # NOTE: maybe rename to $file to avoid ambiguity
   # it seems like * glob-expands in a sed regexp a set -f prevents that
   pm=$(set -f && echo $id | sed s/-.*//) # package manager default
   [[ ${special[$id]+_} ]] && pm=${special[$id]}
+
+  # NOTE: if you swap $pm and $cmd the naming would become clearer
+  cmd=$(echo $pm | head -n1 | cut -d ' ' -f1) # so far due to brew cask
+
+  # TODO: make sure $pm's $cmd passes syscheck
+
+  # check the $cmd is installed
+  hash $cmd 2>/dev/null || {
+    echo
+    echo "Skipping \`$cmd\` - not in \$PATH."
+    continue
+  }
 
   command="$pm install"
   [[ ${install[$pm]+_} ]] && command=${install[$pm]}
