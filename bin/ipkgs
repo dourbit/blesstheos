@@ -4,7 +4,16 @@
 # $1 = filepath
 # $@ = filepath(s) # TODO
 
-path="$1"
+where="$(dirname "$0")/../install/packages" # use the relative default
+[[ $IPKGS_PATH ]] && where=$IPKGS_PATH # set your own $IPKGS_PATH
+if [ "$1" == "-p" ]; then
+  # provide your own package path(s) with -p
+  where=''
+  shift
+else
+  where="${where}/"
+fi
+path="${where}${1}"
 
 # verify it's bash version >= 4
 # for associative arrays, used next
@@ -46,4 +55,4 @@ command="$pm install"
 echo "Installing $path packages with $pm:"
 echo
 
-sed -f $(dirname "$0")/ids.sed $@ | xargs -n 1 echo \$ $command
+sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
