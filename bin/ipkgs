@@ -1,16 +1,10 @@
 #!/usr/bin/env bash
 
 # Installs packages, expecting:
-# $1 = package manager
-# $@ = filepath(s)
+# $1 = filepath
+# $@ = filepath(s) # TODO
 
-# the package manager could be inferred from the filename(s)...
-# TODO: if $1 is a filepath that exists, get the name from it and don't shift
-# NOTE: even if not, check that each filename starts with $pm as a precaution
-# there are exceptions though, like brew-cask vs brew-handle...
-# and some things I'll have to rename, such as apt to apt-get?
-pm="$1"
-shift
+path="$1"
 
 # verify it's bash version >= 4
 # for associative arrays, used next
@@ -20,18 +14,36 @@ if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
   exit 1
 fi
 
-declare -A install=(
-  ["apm"]="apm install"
-  ["brew"]="brew install"
-  ["npm"]="npm i"
+# special cases when command isn't the filename
+# if a file isn't in this list, the $command is taken up until the first dash
+declare -A special=(
+  ["apt"]="apt-get"
+  ["apt-get"]="apt-get" # just for example, or the '-get' would get truncated
+  ["brew-cask"]="brew cask"
 )
 
-if [ ! ${install[$pm]+_} ]; then
-  echo "Don't know how to install with '$pm'."
-  exit 1
-fi
+id=$(basename "$path")
+pm=$(echo $id | sed s/-.*//) # package manager default
+[[ ${special[$id]+_} ]] && pm=${special[$id]}
 
-echo "Installing $@ packages with $pm:"
+# TODO: verify $pm is installed, as well as...
+# system-specific, if comand or filename match any of the following
+declare -A syscheck=(
+  ["apm-darwin"]="darwin"
+  ["apt-get"]="linux" # could check for ubuntu or debian
+  ["brew"]="darwin"
+  ["brew cask"]="darwin"
+)
+
+# it's `$pm install $package` - except for the following special cases
+declare -A install=(
+  ["npm"]="npm i -g"
+)
+
+command="$pm install"
+[[ ${install[$pm]+_} ]] && command=${install[$pm]}
+
+echo "Installing $path packages with $pm:"
 echo
 
-sed -f $(dirname "$0")/ids.sed $@ | xargs -n 1 echo \$ ${install[$pm]}
+sed -f $(dirname "$0")/ids.sed $@ | xargs -n 1 echo \$ $command
