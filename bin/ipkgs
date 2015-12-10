@@ -64,7 +64,7 @@ for path in "${items[@]}"; do
   [[ ${special[$id]+_} ]] && pm=${special[$id]}
 
   # NOTE: if you swap $pm and $cmd the naming would become clearer
-  cmd=$(echo $pm | head -n1 | cut -d ' ' -f1) # so far due to brew cask
+  cmd=$(echo $pm | awk '{print $1;}') # so far due to brew cask
 
   # TODO: make sure $pm's $cmd passes syscheck
 
