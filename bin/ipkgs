@@ -35,11 +35,13 @@ declare -A special=(
 )
 
 # some commands can only run on certain operating systems
+# these are confirmed by filename
+system=`uname -s`
 declare -A syscheck=(
-  ["apm-darwin"]="darwin"
-  ["apt-get"]="linux" # could check for ubuntu or debian
-  ["brew"]="darwin"
-  ["brew cask"]="darwin"
+  ["apm-darwin"]="Darwin"
+  ["apt"]="Linux" # could check for ubuntu or debian, yet presence is enough
+  ["brew"]="Darwin"
+  ["brew-cask"]="Darwin"
 )
 
 # it's `$pm install $package` - except for the following special cases
@@ -48,7 +50,7 @@ declare -A install=(
 )
 
 # do glob expansion with correct paths
-items=() # TODO: make it an associative array keyed by $item, to preserve state?
+items=() # NOTE: make it an associative array keyed by $item, to preserve state?
 shopt -s nullglob
 for item in "$@"; do
   path=${where}${item}
@@ -66,7 +68,12 @@ for path in "${items[@]}"; do
   # NOTE: if you swap $pm and $cmd the naming would become clearer
   cmd=$(echo $pm | awk '{print $1;}') # so far due to brew cask
 
-  # TODO: make sure $pm's $cmd passes syscheck
+  # make sure the filename / $id passes syscheck - if in whitelist
+  [[ ${syscheck[$id]+_} && $system != ${syscheck[$id]} ]] && {
+    echo
+    echo "Skipping \`$id\` - not for this '$system' OS, see syscheck rules."
+    continue
+  }
 
   # check the $cmd is installed
   hash $cmd 2>/dev/null || {
