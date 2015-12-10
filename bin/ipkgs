@@ -4,13 +4,14 @@
 # $1 = filepath
 # $@ = filepath(s) # TODO
 
-where="$(dirname "$0")/../install/packages" # use the relative default
-[[ $IPKGS_PATH ]] && where=$IPKGS_PATH # set your own $IPKGS_PATH
+declare where # path prefix
 if [ "$1" == "-p" ]; then
-  # provide your own package path(s) with -p
+  # announce to provide your own valid package path(s) with -p
   where=''
   shift
 else
+  # less typing - use env var or the relative default
+  where=${IPKGS_PATH:="$(dirname $0)/../install/packages"}
   where="${where}/"
 fi
 path="${where}${1}"
