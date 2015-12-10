@@ -48,18 +48,26 @@ declare -A install=(
   ["npm"]="npm i -g"
 )
 
-for file in "$@"; do
-  path="${where}${file}"
+# do glob expansion with correct paths
+items=()
+shopt -s nullglob
+for item in "$@"; do
+  path=${where}${item}
+  items+=($path)
+done
+# echo "${#items[@]}"
 
+for path in "${items[@]}"; do
   id=$(basename "$path")
-  pm=$(echo $id | sed s/-.*//) # package manager default
+  # it seems like * glob-expands in a sed regexp a set -f prevents that
+  pm=$(set -f && echo $id | sed s/-.*//) # package manager default
   [[ ${special[$id]+_} ]] && pm=${special[$id]}
 
   command="$pm install"
   [[ ${install[$pm]+_} ]] && command=${install[$pm]}
 
   echo
-  echo "Installing '$file' packages with \`$command\`..."
+  echo "Installing '$(basename $path)' packages with \`$command\`..."
 
   sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
 done
