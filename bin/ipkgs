@@ -9,10 +9,15 @@ if [ "$1" == "-p" ]; then
   # announce to provide your own valid package path(s) with -p
   where=''
   shift
-else
+elif [ "$#" -ne 0 ]; then
   # less typing - uses env var or the relative default
   echo Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'.
   where="$IPKGS_PATH/"
+fi
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $(basename $0) [-p] file"
+    exit 1
 fi
 
 what="$1"
