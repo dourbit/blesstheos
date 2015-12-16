@@ -34,8 +34,8 @@ for path in "${items[@]}"; do
 
   # output depends on the data option
   if [ -n "$data" ]; then
-    # data means csv
-    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo "$id,"
+    # data means csv (pm, pkg) - NOTE the "brew cask" $pm special case
+    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo "$pm,"
   else
     command="$pm install"
     [[ ${install[$pm]+_} ]] && command=${install[$pm]}
