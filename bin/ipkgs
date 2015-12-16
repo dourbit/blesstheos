@@ -4,26 +4,10 @@
 
 source $(dirname "$0")/ipkgs.bash
 
-declare where # path prefix
-if [ "$1" == "-p" ]; then
-  # announce to provide your own valid package path(s) with -p
-  where=''
-  shift
-elif [ "$#" -ne 0 ]; then
-  # less typing - uses env var or the relative default
-  echo Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'.
-  where="$IPKGS_PATH/"
-fi
-
-if [ "$#" -eq 0 ]; then
-    usage
-    exit 1
-fi
-
 # do glob expansion with correct paths
 items=() # NOTE: make it an associative array keyed by $item, to preserve state?
 shopt -s nullglob
-for item in "$@"; do
+for item in "${arguments[@]}"; do
   path=${where}${item}
   items+=($path)
 done
