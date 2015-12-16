@@ -11,12 +11,13 @@ if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
 fi
 
 usage() {
-  echo "Usage: $(basename $0) [-p] file(s)"
+  echo "Usage: $(basename $0) [-d] [-p] file(s)"
 }
 
 options=()
 arguments=() # these will become proper $items after items_init is called
 items=() # NOTE: make it an associative array keyed by $item, to preserve state?
+declare data # option to keep in mind for later use
 
 for arg in "$@"; do
   if [ "${arg:0:1}" = "-" ]; then
@@ -40,12 +41,15 @@ if [ "${#arguments[@]}" -eq 0 ]; then
   exit 1
 fi
 
-unset paths
+unset data paths
 
 for option in "${options[@]}"; do
   case "$option" in
   "p" | "paths" )
     paths="1"
+    ;;
+  "d" | "data" )
+    data="1"
     ;;
   * )
     usage >&2
