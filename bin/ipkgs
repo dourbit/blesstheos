@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-# Installs packages, given file[path](s), icluding glob(s)
+# Prints scripts to install packages, given file[path](s), including glob(s).
 
 source $(dirname "$0")/ipkgs.bash # validation, options, arguments, helpers
 items_init
 system=`uname -s`
 source $(dirname "$0")/ipkgs-vars.bash # expected below
+alias errcho='>&2 echo'
 
 # for each file path...
 for path in "${items[@]}"; do
@@ -19,15 +20,15 @@ for path in "${items[@]}"; do
 
   # make sure the filename / $id passes syscheck - if in whitelist
   [[ ${syscheck[$id]+_} && $system != ${syscheck[$id]} ]] && {
-    echo
-    echo "Skipping \`$id\` - not for this '$system' OS, see syscheck rules."
+    errcho
+    errcho "Skipping \`$id\` - not for this '$system' OS, see syscheck rules."
     continue
   }
 
   # check the $cmd is installed
   hash $cmd 2>/dev/null || {
-    echo
-    echo "Skipping \`$cmd\` - not in \$PATH."
+    errcho
+    errcho "Skipping \`$cmd\` - not in \$PATH."
     continue
   }
 
@@ -35,8 +36,8 @@ for path in "${items[@]}"; do
   [[ ${install[$pm]+_} ]] && command=${install[$pm]}
 
   echo
-  echo "Installing '$id' packages with \`$command\`..."
+  echo "# Installing '$id' packages with \`$command\`..."
 
   # finally, obtain the package names to install one at a time
-  sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo \$ $command
+  sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo $command
 done

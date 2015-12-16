@@ -1,10 +1,12 @@
 # Sourced by `ipkgs`, this provides helpers.
 
+alias errcho='>&2 echo'
+
 # verify it's bash version >= 4
 # for associative arrays, in use by ipkgs
 if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
-  echo "Bash must be version 4 or greater."
-  echo "Currently it's: '${BASH_VERSION}'."
+  errcho "Bash must be version 4 or greater."
+  errcho "Currently it's: '${BASH_VERSION}'."
   exit 1
 fi
 
@@ -62,7 +64,7 @@ items_init() {
     where='' # no need to adjust location
   else
     # less typing - uses env var or the relative default
-    echo Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'.
+    echo "# Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'."
     where="$IPKGS_PATH/"
   fi
 
@@ -72,6 +74,4 @@ items_init() {
     path=${where}${item}
     items+=($path)
   done
-
-  # echo "${#items[@]}"
 }
