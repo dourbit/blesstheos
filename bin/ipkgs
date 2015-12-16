@@ -1,62 +1,12 @@
 #!/usr/bin/env bash
 
-# Installs packages, given file[path](s), icluding glob(s)
+# Prints scripts to install packages, given file[path](s), including glob(s).
 
-# verify it's bash version >= 4
-# for associative arrays, used further down
-if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
-  echo "Bash must be version 4 or greater."
-  echo "Currently it's: '${BASH_VERSION}'."
-  exit 1
-fi
-
-declare where # path prefix
-if [ "$1" == "-p" ]; then
-  # announce to provide your own valid package path(s) with -p
-  where=''
-  shift
-elif [ "$#" -ne 0 ]; then
-  # less typing - uses env var or the relative default
-  echo Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'.
-  where="$IPKGS_PATH/"
-fi
-
-if [ "$#" -eq 0 ]; then
-    echo "Usage: $(basename $0) [-p] file(s)"
-    exit 1
-fi
-
-# special cases when command isn't the filename
-# if a file isn't in this list, the $command is taken up until the first dash
-declare -A special=(
-  ["apt"]="apt-get"
-  ["apt-get"]="apt-get" # just for example, or the '-get' would get truncated
-  ["brew-cask"]="brew cask"
-)
-
-# some commands can only run on certain operating systems
-# these are confirmed by filename
+source $(dirname "$0")/ipkgs.bash # validation, options, arguments, helpers
+items_init
+source $(dirname "$0")/ipkgs-vars.bash # expected below
 system=`uname -s`
-declare -A syscheck=(
-  ["apm-darwin"]="Darwin"
-  ["apt"]="Linux" # could check for ubuntu or debian, yet presence is enough
-  ["brew"]="Darwin"
-  ["brew-cask"]="Darwin"
-)
-
-# it's `$pm install $package` - except for the following special cases
-declare -A install=(
-  ["npm"]="npm i -g"
-)
-
-# do glob expansion with correct paths
-items=() # NOTE: make it an associative array keyed by $item, to preserve state?
-shopt -s nullglob
-for item in "$@"; do
-  path=${where}${item}
-  items+=($path)
-done
-# echo "${#items[@]}"
+alias errcho='>&2 echo'
 
 # for each file path...
 for path in "${items[@]}"; do
@@ -70,24 +20,30 @@ for path in "${items[@]}"; do
 
   # make sure the filename / $id passes syscheck - if in whitelist
   [[ ${syscheck[$id]+_} && $system != ${syscheck[$id]} ]] && {
-    echo
-    echo "Skipping \`$id\` - not for this '$system' OS, see syscheck rules."
+    errcho
+    errcho "Skipping \`$id\` - not for this '$system' OS, see syscheck rules."
     continue
   }
 
   # check the $cmd is installed
   hash $cmd 2>/dev/null || {
-    echo
-    echo "Skipping \`$cmd\` - not in \$PATH."
+    errcho
+    errcho "Skipping \`$cmd\` - not in \$PATH."
     continue
   }
 
-  command="$pm install"
-  [[ ${install[$pm]+_} ]] && command=${install[$pm]}
+  # output depends on the data option
+  if [ -n "$data" ]; then
+    # data means csv (pm, pkg) - NOTE the "brew cask" $pm special case
+    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo "$pm,"
+  else
+    command="$pm install"
+    [[ ${install[$pm]+_} ]] && command=${install[$pm]}
 
-  echo
-  echo "Installing '$id' packages with \`$command\`..."
+    echo
+    echo "# Installing '$id' packages with \`$command\`..."
 
-  # finally, obtain the package names to install one at a time
-  sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
+    # obtain the package names to install one at a time (produces a script)
+    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo $command
+  fi
 done
