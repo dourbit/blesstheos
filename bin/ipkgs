@@ -2,13 +2,7 @@
 
 # Installs packages, given file[path](s), icluding glob(s)
 
-# verify it's bash version >= 4
-# for associative arrays, used further down
-if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
-  echo "Bash must be version 4 or greater."
-  echo "Currently it's: '${BASH_VERSION}'."
-  exit 1
-fi
+source $(dirname "$0")/ipkgs.bash
 
 declare where # path prefix
 if [ "$1" == "-p" ]; then
@@ -89,5 +83,5 @@ for path in "${items[@]}"; do
   echo "Installing '$id' packages with \`$command\`..."
 
   # finally, obtain the package names to install one at a time
-  sed -f $(dirname "$0")/keys.sed $path | xargs -n 1 echo \$ $command
+  sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo \$ $command
 done
