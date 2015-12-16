@@ -4,14 +4,7 @@
 
 source $(dirname "$0")/ipkgs.bash
 
-# do glob expansion with correct paths
-items=() # NOTE: make it an associative array keyed by $item, to preserve state?
-shopt -s nullglob
-for item in "${arguments[@]}"; do
-  path=${where}${item}
-  items+=($path)
-done
-# echo "${#items[@]}"
+items_init
 
 # for each file path...
 for path in "${items[@]}"; do

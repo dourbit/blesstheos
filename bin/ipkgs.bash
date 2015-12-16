@@ -13,7 +13,8 @@ usage() {
 }
 
 options=()
-arguments=()
+arguments=() # these will become proper $items after items_init is called
+items=() # NOTE: make it an associative array keyed by $item, to preserve state?
 
 for arg in "$@"; do
   if [ "${arg:0:1}" = "-" ]; then
@@ -51,16 +52,29 @@ for option in "${options[@]}"; do
   esac
 done
 
-declare where # a path prefix
-if [ -n "$paths" ]; then
-  # the --paths flag, meaning...
-  # valid paths provided as part of the files - either relative or absolute
-  where='' # no need to adjust location
-else
-  # less typing - uses env var or the relative default
-  echo Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'.
-  where="$IPKGS_PATH/"
-fi
+items_init() {
+  # uses $paths (an option) and $arguments in order to initialize $items
+
+  declare where # a path prefix
+  if [ -n "$paths" ]; then
+    # the --paths flag, meaning...
+    # valid paths provided as part of the files - either relative or absolute
+    where='' # no need to adjust location
+  else
+    # less typing - uses env var or the relative default
+    echo Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'.
+    where="$IPKGS_PATH/"
+  fi
+
+  # do glob expansion with correct paths
+  shopt -s nullglob
+  for item in "${arguments[@]}"; do
+    path=${where}${item}
+    items+=($path)
+  done
+
+  # echo "${#items[@]}"
+}
 
 # special cases when command isn't the filename
 # if a file isn't in this list, the $command is taken up until the first dash
