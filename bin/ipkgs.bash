@@ -68,8 +68,8 @@ items_init() {
     where='' # no need to adjust location
   else
     # less typing - uses env var or the relative default
-    echo "# Using \$IPKGS_PATH = \'${IPKGS_PATH:=$(realpath "$(dirname $0)/../install/packages")}\'."
-    where="$IPKGS_PATH/"
+    where="${IPKGS_PATH:-$(realpath "$(dirname $0)/../install/packages")}/"
+    [[ -n "$data" ]] || echo "# Using \$IPKGS_PATH = '$where'."
   fi
 
   # do glob expansion with correct paths
