@@ -1,0 +1,3 @@
+# install with `go get` ...
+
+github.com/google/git-appraise/git-appraise # git config --global alias.appraise '!'"${GOPATH}/bin/git-appraise"
