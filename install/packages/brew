@@ -3,7 +3,6 @@ bash
 bats
 boot-clj
 cairo
-caskroom/cask/brew-cask
 clojurescript
 cmake
 docker

@@ -6,6 +6,7 @@ anybar
 asepsis # ban .DS_Store
 atom
 bettertouchtool # http://www.boastr.net/
+bitbar # https://github.com/matryer/bitbar
 caffeine
 chromium
 colloquy #irc
