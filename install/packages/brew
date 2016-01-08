@@ -7,7 +7,7 @@ clojurescript
 cmake
 docker
 docker-machine
-emacs
+emacs # brew linkapps emacs
 gettext
 git
 git-lfs
