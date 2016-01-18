@@ -6,7 +6,7 @@ if [ $system_name == 'Darwin' ]; then
   cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 fi
 
-echo "stable" > ~/.nvmrc
+echo "stable" > ~/.nvmrc # tho the alias below overrides this...
 nvm alias default stable # to begin with (lts or specific may be preferable)
 
 # some npm options (reminders)
