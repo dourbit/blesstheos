@@ -7,4 +7,7 @@ if [ $system_name == 'Darwin' ]; then
 fi
 
 echo "stable" > ~/.nvmrc
-nvm alias default stable
+nvm alias default stable # to begin with (lts or specific may be preferable)
+
+# some npm options (reminders)
+npm set save-exact true
