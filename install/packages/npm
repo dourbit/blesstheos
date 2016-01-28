@@ -3,6 +3,7 @@ babel-eslint
 batshit
 bower
 browser-sync
+check-dependencies
 cljs-repl
 coffee-script
 coffeelint
@@ -32,12 +33,14 @@ ki
 lev
 license-checker
 licenser
+local-npm
 mocha
 nanybar
 ncp
 nodemon
 npm-check
 npm-check-updates
+npmrc
 ny # as n
 organic-angel
 pageres

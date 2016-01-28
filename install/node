@@ -9,5 +9,8 @@ fi
 echo "stable" > ~/.nvmrc # tho the alias below overrides this...
 nvm alias default stable # to begin with (lts or specific may be preferable)
 
+# local / offline partial npm registry cache
+curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
+
 # some npm options (reminders)
 npm set save-exact true
