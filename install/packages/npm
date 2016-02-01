@@ -36,6 +36,7 @@ licenser
 local-npm
 mocha
 nanybar
+natal
 ncp
 nodemon
 npm-check
@@ -45,6 +46,8 @@ ny # as n
 organic-angel
 pageres
 pm2
+re-natal
+react-native-cli
 ripple-emulator
 rollup
 sass-lint
