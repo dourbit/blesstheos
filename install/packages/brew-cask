@@ -9,6 +9,7 @@ bettertouchtool # http://www.boastr.net/
 bitbar # https://github.com/matryer/bitbar
 caffeine
 chromium
+cocoapods
 colloquy #irc
 commander-one
 cuttle # ClojureScript https://github.com/oakmac/cuttle
