@@ -7,6 +7,7 @@ clojurescript
 cmake
 docker
 docker-machine
+e2fsprogs # tools for ext* fs
 emacs # brew linkapps emacs
 gettext
 git
