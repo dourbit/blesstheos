@@ -6,6 +6,8 @@ I `git clone` and `. source.sh` this first through my `~/.bash_profile`:
 ```bash
 HOME_DOTS=".dots"
 . ~/.dots/source.sh
+
+add_to_PATH ~/.dots/android/sdk/platform-tools #if installed here
 ```
 
 This approach covers both login and non-login shells -- so far just `bash`.
