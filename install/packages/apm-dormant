@@ -1,0 +1,4 @@
+# instead of inactive packages which would get updated unnecessarily
+
+api-workbench # takes a very long time to update; not really useful with cqrs
+atom-beautify # takes a very long time to update; yet unused
