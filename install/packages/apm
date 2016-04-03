@@ -24,6 +24,7 @@ api-workbench
 ask-stack
 atom-beautify
 atom-terminal
+atomic-chrome
 autocomplete-paths
 clipboard-plus
 expose
@@ -32,6 +33,7 @@ fonts
 git-diff-details
 git-log
 git-plus
+git-time-machine
 gulp-control
 highlight-column
 highlight-line
