@@ -20,6 +20,7 @@ gulp
 harp
 http-server
 ijavascript
+is-trademarked-cli
 is-up
 jscs
 jshint
