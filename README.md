@@ -7,7 +7,9 @@ I `git clone` and `. source.sh` this first through my `~/.bash_profile`:
 HOME_DOTS=".dots"
 . ~/.dots/source.sh
 
-add_to_PATH ~/.dots/android/sdk/platform-tools #if installed here
+# for android development
+ANDROID_HOME=~/.dots/android/sdk # if installed here
+add_to_PATH $ANDROID_HOME/platform-tools
 ```
 
 This approach covers both login and non-login shells -- so far just `bash`.

@@ -5,6 +5,7 @@ bower
 browser-sync
 check-dependencies
 cljs-repl
+code-push-cli # cordova or react-native apps
 coffee-script
 coffeelint
 dat
@@ -50,6 +51,7 @@ pm2
 re-natal
 react-native-cli
 ripple-emulator
+rnpm # react-native package manager
 rollup
 sass-lint
 subdownloader #$ subdownload
