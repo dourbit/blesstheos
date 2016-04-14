@@ -8,7 +8,7 @@ HOME_DOTS=".dots"
 . ~/.dots/source.sh
 
 # for android development
-ANDROID_HOME=~/.dots/android/sdk # if installed here
+export ANDROID_HOME=$HOME/.dots/android/sdk # if installed here
 add_to_PATH $ANDROID_HOME/platform-tools
 add_to_PATH $ANDROID_HOME/tools
 ```
