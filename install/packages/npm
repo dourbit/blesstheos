@@ -21,6 +21,8 @@ gulp
 harp
 http-server
 ijavascript
+ios-deploy # install, debug w/o xcode - works on un-jailbroken devices
+ios-sim # use ios simulator w/o opening xcode
 is-trademarked-cli
 is-up
 jscs
