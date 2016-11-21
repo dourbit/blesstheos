@@ -39,6 +39,7 @@ highlight-column
 highlight-line
 highlight-selected
 language-elm
+language-markdown
 live-archive
 linter
 linter-coffeelint
@@ -48,9 +49,11 @@ linter-jscs
 linter-jshint
 linter-jsonlint
 linter-jsxhint
+linter-markdown
 linter-sass-lint
 lisp-paredit
 mark
+markdown-writer
 merge-conflicts
 minimap
 minimap-bookmarks
