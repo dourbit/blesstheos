@@ -38,6 +38,7 @@ lev
 license-checker
 licenser
 local-npm
+lumo-cljs # Fast, cross-platform, standalone ClojureScript REPL
 mocha
 nanybar
 natal
