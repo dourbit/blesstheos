@@ -44,6 +44,7 @@ nanybar
 natal
 ncp
 nodemon
+now@latest # https://zeit.co/now
 npm-check
 npm-check-updates
 npmrc
