@@ -69,6 +69,7 @@ virtualbox
 vlc
 whatroute # http://www.whatroute.net
 xrg # http://www.gauchosoft.com/Products/XRG/
+yarn # https://yarnpkg.com/ # use instead of npm
 
 # Needs $ launchctl unload / load
 xquartz # asks for password; http://www.xquartz.org/
