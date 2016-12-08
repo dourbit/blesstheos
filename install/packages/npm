@@ -44,7 +44,7 @@ nanybar
 natal
 ncp
 nodemon
-now@latest # https://zeit.co/now
+now # https://zeit.co/now
 npm-check
 npm-check-updates
 npmrc
@@ -66,3 +66,4 @@ trevor # runs travis tests from cli on localhost with docker
 vantage # repl
 vorlon
 webpack
+witheve
