@@ -19,6 +19,7 @@ graphviz
 htop
 iftop
 ipfs
+jq # https://jqplay.org
 leiningen
 maven
 michaeldfallen/formula/git-radar
