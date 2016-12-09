@@ -4,7 +4,6 @@ batshit
 bower
 browser-sync
 check-dependencies
-cljs-repl
 code-push-cli # cordova or react-native apps
 coffee-script
 coffeelint
