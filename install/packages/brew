@@ -33,7 +33,7 @@ ocaml
 opam
 # osxfuse # https://osxfuse.github.io/ # with "MacFUSE Compatibility Layer" turned on
 pick #$ brew tap thoughtbot/formulae
-planck
+--devel planck
 putty
 python3
 readline
