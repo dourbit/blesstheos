@@ -21,6 +21,7 @@ iftop
 ipfs
 jq # https://jqplay.org
 leiningen
+lumo
 maven
 michaeldfallen/formula/git-radar
 minidlna
