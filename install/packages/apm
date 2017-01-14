@@ -20,6 +20,21 @@ jonikorpi-atom-solarized-syntax
 # educational
 clojure-color-scope-syntax
 
+# current clojure favs
+silkworm-syntax # light
+warm-night-syntax # dark
+
+# more themes for clojure
+borealis-syntax # explicitly for clojure
+gaslight-syntax # similar to borealis?
+flatwhite-syntax # very popular, has potential, though not so good for clojure yet
+foggy-night-syntax # good and easy dark, kind of a favorite
+miami-nights-syntax # very cool, dark, super-bright in places, a bit blinding :) tempted to tone it down for my personal use…
+reykjavik-syntax # kind of like it
+soft-charcoal-syntax # pretty good, a bit cold
+vector-syntax # good dark, I like how the pink is similar to silkworm-syntax
+zenburn-prime-syntax # has potential…
+
 
 # packages:
 
