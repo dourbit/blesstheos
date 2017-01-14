@@ -17,8 +17,26 @@ duotone-light-syntax
 isotope-ui
 jonikorpi-atom-solarized-syntax
 
+# educational
+clojure-color-scope-syntax
+
 
 # packages:
+
+# https://git.io/atom_clojure_setup with a few additions of my own
+fonts # https://github.com/tonsky/FiraCode
+highlight-column
+highlight-line
+highlight-selected
+ink # for proto-repl (and julia-client)
+linter-clojure
+lisp-paredit
+parinfer
+proto-repl
+proto-repl-charts
+proto-repl-sayid
+set-syntax
+tool-bar
 
 api-workbench
 ask-stack
@@ -29,21 +47,15 @@ autocomplete-paths
 clipboard-plus
 expose
 file-icons
-fonts
 git-diff-details
 git-log
 git-plus
 git-time-machine
 gulp-control
-highlight-column
-highlight-line
-highlight-selected
-ink # used by julia-client and proto-repl
 language-elm
 language-markdown
 live-archive
 linter
-linter-clojure
 linter-coffeelint
 linter-eslint
 linter-js-yaml
@@ -53,7 +65,6 @@ linter-jsonlint
 linter-jsxhint
 linter-markdown
 linter-sass-lint
-lisp-paredit
 mark
 markdown-writer
 merge-conflicts
@@ -64,17 +75,12 @@ minimap-git-diff
 minimap-highlight-selected
 minimap-pigments
 minimap-selection
-parinfer
 project-manager
-proto-repl
-proto-repl-charts
-proto-repl-sayid
 pigments
 sort-lines
 symbols-tree-view
 theme-reel
 theme-switcher
-tool-bar
 travis-ci-status
 tree-view-git-status
 vim-mode
