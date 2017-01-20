@@ -44,6 +44,7 @@ sassc
 shellcheck
 ssh-copy-id
 tag
+terminal-notifier
 tmux
 tutum # https://www.tutum.co/
 watchman
