@@ -36,6 +36,7 @@ ki
 lev
 license-checker
 licenser
+lighthouse # https://github.com/GoogleChrome/lighthouse
 local-npm
 lumo-cljs # Fast, cross-platform, standalone ClojureScript REPL
 mocha
