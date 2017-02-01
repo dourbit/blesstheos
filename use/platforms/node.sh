@@ -6,3 +6,5 @@ if [ $system_name == 'Darwin' ]; then
 else
   [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
 fi
+
+# add_to_PATH "$(yarn global bin)" # nvm does put this is the $PATH
