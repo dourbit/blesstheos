@@ -67,6 +67,7 @@ git-log
 git-plus
 git-time-machine
 gulp-control
+language-babel
 language-elm
 language-markdown
 live-archive
