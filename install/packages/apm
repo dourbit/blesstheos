@@ -58,6 +58,7 @@ ask-stack
 atom-beautify
 atom-terminal
 atomic-chrome
+autocomplete-json
 autocomplete-modules
 autocomplete-paths
 clipboard-plus
