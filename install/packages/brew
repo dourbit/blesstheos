@@ -49,4 +49,5 @@ tmux
 tutum # https://www.tutum.co/
 watchman
 wget
+wifi-password # https://github.com/rauchg/wifi-password
 zeromq
