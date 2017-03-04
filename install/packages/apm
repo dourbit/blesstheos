@@ -84,6 +84,7 @@ linter-jsonlint
 linter-jsxhint
 linter-markdown
 linter-sass-lint
+linter-stylelint
 mark
 markdown-writer
 merge-conflicts
