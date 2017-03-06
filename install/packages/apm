@@ -95,6 +95,7 @@ minimap-git-diff
 minimap-highlight-selected
 minimap-pigments
 minimap-selection
+prettier-atom
 project-manager
 pigments
 sort-lines
