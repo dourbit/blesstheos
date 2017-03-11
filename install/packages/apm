@@ -53,7 +53,7 @@ proto-repl-sayid
 set-syntax
 tool-bar
 
-api-workbench
+# api-workbench # using swagger instead
 ask-stack
 atom-beautify
 atom-terminal
