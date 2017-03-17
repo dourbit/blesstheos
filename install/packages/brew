@@ -15,6 +15,7 @@ git-lfs
 gnupg
 go
 graphviz
+heroku
 # homebrew/fuse/ntfs-3g # el capitan issue
 htop
 iftop
