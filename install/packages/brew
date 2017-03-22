@@ -4,6 +4,7 @@ bats
 boot-clj
 cairo
 clojurescript
+cloudfoundry/tap/cf-cli
 cmake
 docker
 docker-machine
