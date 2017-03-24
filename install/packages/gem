@@ -1,3 +1,5 @@
+# NOTE: $ `rbenv rehash` after new installs
+
 bcat
 compass # includes sass
 css2sass
