@@ -13,3 +13,4 @@ pleaserun
 rhc # redhat openshift
 ronn
 susy
+travis # the official travis-ci client
