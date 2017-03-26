@@ -19,6 +19,7 @@ graphviz
 heroku
 # homebrew/fuse/ntfs-3g # el capitan issue
 htop
+httrack
 iftop
 ipfs
 jq # https://jqplay.org
