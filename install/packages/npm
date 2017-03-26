@@ -58,6 +58,7 @@ ripple-emulator
 rnpm # react-native package manager
 rollup
 sass-lint
+serve
 subdownloader #$ subdownload
 surge
 tldr
