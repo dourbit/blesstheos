@@ -28,6 +28,7 @@ lumo
 maven
 michaeldfallen/formula/git-radar
 minidlna
+minimal-racket # https://racket-lang.org
 mopidy #$ brew tap mopidy/mopidy
 mopidy-soundcloud
 ncdu # http://dev.yorhel.nl/ncdu
