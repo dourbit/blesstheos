@@ -1,3 +1,4 @@
 # install with `go get` ...
 
 github.com/google/git-appraise/git-appraise # git config --global alias.appraise '!'"${GOPATH}/bin/git-appraise"
+github.com/mattn/goreman # clone of foreman
