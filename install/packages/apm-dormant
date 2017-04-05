@@ -2,6 +2,8 @@
 
 api-workbench # takes a very long time to update; not really useful with cqrs
 atom-beautify # takes a very long time to update; yet unused
+atom-clock # no fuzzy option https://github.com/b3by/atom-clock/issues/5
+linter-write-good # https://github.com/gepoch/linter-write-good/issues/23
 
 # not using Julia / Juno IDE yet
 julia-client # adds stuff to the toolbar
