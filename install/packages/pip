@@ -3,4 +3,5 @@ butterfly
 httpie
 jupyter
 libsass # themes for butterfly
+nvpy # simplenote-syncing nv-(alt)-inspired tool
 pinggraph #$ gping
