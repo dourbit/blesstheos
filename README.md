@@ -1,7 +1,24 @@
-# dots -- dot-files source-stuff
+# dotfiles
 
-I `git clone` and `. source.sh` this first through my `~/.bash_profile`:
-`[ -f ~/.bashrc ] && . ~/.bashrc` and then for the goods with `.bashrc`:
+> `git clone git@github.com:orlin/dots.git ~/.dots`
+
+This approach covers both login and non-login shells -- so far just for `bash`.
+Change `.dots` to wherever `dots` is cloned.  It has to be relative to `$HOME`,
+though in the future perhaps absolute paths could be supported as well.
+
+Touch and edit the following files:
+
+> `~/.bash_profile`
+
+```bash
+# source ~/.bashrc
+[ -f ~/.bashrc ] && . ~/.bashrc
+
+# code you don't want to run each time .bashrc is sourced
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+```
+
+> `~/.bashrc`
 
 ```bash
 HOME_DOTS=".dots"
@@ -13,13 +30,10 @@ add_to_PATH $ANDROID_HOME/platform-tools
 add_to_PATH $ANDROID_HOME/tools
 ```
 
-This approach covers both login and non-login shells -- so far just `bash`.
-Change `.dots` to wherever `dots` is cloned.  It has to be relative to `$HOME`,
-though in the future perhaps absolute paths could be supported...
-
-It's may be possible to put it in your `.profile`.
 The bash-specific stuff should be contained in `use/bash.sh`.
-Though I have not tried using all of this with other shells...
+Though I have not tried using any of this with other shells.
+
+Try `.profile` instead?
 
 ## License
 
