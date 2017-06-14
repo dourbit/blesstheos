@@ -87,6 +87,7 @@ linter-markdown
 linter-sass-lint
 linter-stylelint
 mark
+markdown-preview-plus
 markdown-writer
 merge-conflicts
 minimap
