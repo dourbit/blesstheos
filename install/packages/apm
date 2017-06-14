@@ -1,3 +1,5 @@
+sync-settings # everything installs automatically
+
 # themes:
 
 atom-material-syntax
@@ -53,7 +55,6 @@ proto-repl-sayid
 set-syntax
 tool-bar
 
-# api-workbench # using swagger instead
 ask-stack
 atom-beautify
 atom-terminal
