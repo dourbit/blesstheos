@@ -38,7 +38,6 @@ uses rundev.sh
 
 umask 022
 
-export GREP_OPTIONS="$GREP_OPTIONS -i" # case-insensitive
 export HISTSIZE=1000000 # not much?
 export HISTCONTROL=ignoredups
 

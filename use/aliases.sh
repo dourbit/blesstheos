@@ -2,6 +2,7 @@ alias ..='cd ..'
 alias ...='cd .. ; cd ..'
 
 alias please=sudo
+alias grep='grep -i --color=auto' # case-insensitive
 alias f='find . -iname'
 alias ducks='du -cksh * | sort -rn|head -11' # file/dir sizes of the current dir
 alias systail='tail -f /var/log/system.log'
