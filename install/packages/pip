@@ -1,5 +1,6 @@
 beets #$ beet
 butterfly
+grip # md to pdf
 httpie
 jupyter
 libsass # themes for butterfly
