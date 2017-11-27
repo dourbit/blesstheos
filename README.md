@@ -6,6 +6,9 @@ This approach covers both login and non-login shells -- so far just for `bash`.
 Change `.dots` to wherever `dots` is cloned.  It has to be relative to `$HOME`,
 though in the future perhaps absolute paths could be supported as well.
 
+Copy & modify any / all files that you need from `~/.gits/home` to `~`.
+These must be under the home directory.
+
 Touch and edit the following files:
 
 > ~/.bash_profile
