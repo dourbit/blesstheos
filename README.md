@@ -30,6 +30,12 @@ add_to_PATH $ANDROID_HOME/platform-tools
 add_to_PATH $ANDROID_HOME/tools
 ```
 
+For Java on Linux, install `openjdk-8-jdk` and add the following to your shell exports (before sourcing `.dots`).
+
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+```
+
 The bash-specific stuff should be contained in `use/bash.sh`.
 Though I have not tried using any of this with other shells.
 Try `.profile` instead?
