@@ -46,7 +46,7 @@ ncp
 nodemon
 now # https://zeit.co/now
 npm-check
-npm-check-updates
+npm-check-updates # ncu
 npmrc
 ny # as n
 organic-angel
