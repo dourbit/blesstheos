@@ -2,10 +2,14 @@
 
 # borrowed from https://gist.github.com/brentertz/1384279
 
-if [ $system_name == 'Darwin' ]; then
+# sometimes not present
+# system_name=`uname -s`
+
+if [ "$system_name" == 'Darwin' ]; then
   brew install rbenv
   brew install ruby-build
-elif [ $system_name == 'Linux' ]; then
+elif [ "$system_name" == 'Linux' ]; then
+  echo "Linux"
   cd
   git clone git://github.com/sstephenson/rbenv.git .rbenv
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
@@ -22,6 +26,11 @@ elif [ $system_name == 'Linux' ]; then
   # $ rbenv install --list
 
   git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+
+  # dependencies needed for building ruby
+  sudo apt-get install -y libssl-dev libreadline-dev
+else
+  echo "No ${system_name} system match!"
 fi
 
 if [ ! -f ~/.bundle/config ]; then mkdir -p ~/.bundle && printf -- "---\nBUNDLE_PATH: vendor/bundle\n" >> ~/.bundle/config; fi
@@ -30,15 +39,17 @@ if [ ! -f ~/.irbrc ]; then printf "require 'irb/completion'\n" >> ~/.irbrc; fi
 
 if [ ! -f ~/.gemrc ]; then echo "gem: --no-ri --no-rdoc" >> ~/.gemrc; fi
 
-# rbenv install --list
-rbenv install 2.2.3
-rbenv rehash #after installing binaries
-rbenv global 2.2.3
+if [ -x rbenv ]; then
+  # rbenv install --list
+  rbenv install 2.5.1
+  rbenv rehash #after installing binaries
+  rbenv global 2.5.1
 
-gem install bundler --pre
-# TODO: install ./packages/gem
-rbenv rehash
+  gem install bundler --pre
+  # TODO: install ./packages/gem
+  rbenv rehash
 
-# per project:
-# rbenv local 1.9.3-p551
-# bundle # installs Gemfile gems to vendor/bundle
+  # per project:
+  # rbenv local 1.9.3-p551
+  # bundle # installs Gemfile gems to vendor/bundle
+fi
