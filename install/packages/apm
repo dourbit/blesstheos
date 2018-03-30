@@ -62,6 +62,7 @@ atomic-chrome
 autocomplete-json
 autocomplete-modules
 autocomplete-paths
+block-travel
 clipboard-plus
 editorconfig # http://editorconfig.org/
 expose
@@ -100,9 +101,11 @@ minimap-selection
 prettier-atom
 project-manager
 pigments
+recent-files-fuzzy-finder
 sort-lines
 symbols-tree-view
 teletype
+textual-velocity
 theme-reel
 theme-switcher
 travis-ci-status
