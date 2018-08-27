@@ -20,6 +20,7 @@ gulp
 harp
 http-server
 ijavascript
+ims # install my stuff (npm substitute, using dat cache)
 ios-deploy # install, debug w/o xcode - works on un-jailbroken devices
 ios-sim # use ios simulator w/o opening xcode
 is-trademarked-cli
@@ -49,6 +50,7 @@ now # https://zeit.co/now
 npm-check
 npm-check-updates # ncu
 npmrc
+npx # execute npm package binaries
 ny # as n
 organic-angel
 pageres
