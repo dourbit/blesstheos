@@ -21,7 +21,7 @@ Touch and edit the following files:
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 ```
 
-> ~/.bashrc
+> ~/.bashrc # append to the bottom end
 
 ```bash
 HOME_DOTS=".dots"
@@ -42,6 +42,8 @@ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 The bash-specific stuff should be contained in `use/bash.sh`.
 Though I have not tried using any of this with other shells.
 Try `.profile` instead?
+
+Run any of the `install` scripts only after you have sourced the above or started a new shell.  A changed prompt would be a good indicator / confirmation.
 
 ## License
 
