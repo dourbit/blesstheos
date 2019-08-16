@@ -19,3 +19,7 @@ brew install gcc
 
 # it works after logout as well!
 # `brew install clojure` though does not result in working `clj`
+# `sudo apt install clojure` is just fine (uninstall brew's clojure, exit shell)
+
+# TODO: notice the linux-specific steps (follow and correct-install)
+# https://purelyfunctional.tv/guide/how-to-install-clojure/#linux
