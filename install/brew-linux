@@ -16,3 +16,6 @@ sudo apt install build-essential curl file git
 
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew install gcc
+
+# it works after logout as well!
+# `brew install clojure` though does not result in working `clj`
