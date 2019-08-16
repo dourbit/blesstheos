@@ -33,10 +33,10 @@ add_to_PATH $ANDROID_HOME/platform-tools
 add_to_PATH $ANDROID_HOME/tools
 ```
 
-For Java on Linux, install `openjdk-8-jdk` and add the following to your shell exports (before sourcing `.dots`).
+For Java on Linux, install `openjdk-11-jdk` (current LTS version) and add the following to your shell exports (before sourcing `.dots`).
 
 ```bash
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ```
 
 The bash-specific stuff should be contained in `use/bash.sh`.
