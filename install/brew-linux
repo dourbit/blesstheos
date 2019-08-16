@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#NOTE: install/ruby first
+
+# https://docs.brew.sh/Homebrew-on-Linux
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+
+test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+echo "" >>~/.profile
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+
+sudo apt install build-essential curl file git
+
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+brew install gcc
