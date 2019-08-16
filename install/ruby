@@ -3,20 +3,25 @@
 # borrowed from https://gist.github.com/brentertz/1384279
 
 # sometimes not present
-# system_name=`uname -s`
+system_name=`uname -s`
 
 if [ "$system_name" == 'Darwin' ]; then
   brew install rbenv
   brew install ruby-build
 elif [ "$system_name" == 'Linux' ]; then
   echo "Linux"
+  # Debian / Ubuntu can sudo apt install rbenv ruby-build
+  # that's easier, foolproof and automatically upgradable
+  # consider switching to those with the next install ...
+  sudo apt install -y libssl-dev libreadline-dev zlib1g-dev
+
   cd
   git clone git://github.com/sstephenson/rbenv.git .rbenv
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
   echo 'eval "$(rbenv init -)"' >> ~/.bashrc
   exec $SHELL
 
-  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+  git clone git://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
   echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
   exec $SHELL
 
@@ -41,9 +46,9 @@ if [ ! -f ~/.gemrc ]; then echo "gem: --no-ri --no-rdoc" >> ~/.gemrc; fi
 
 if [ -x rbenv ]; then
   # rbenv install --list
-  rbenv install 2.5.1
+  rbenv install 2.6.3
   rbenv rehash #after installing binaries
-  rbenv global 2.5.1
+  rbenv global 2.6.3
 
   gem install bundler --pre
   # TODO: install ./packages/gem
