@@ -11,7 +11,7 @@
   current-branch = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
   # Usage: git track origin/feature-123-login-form
   track = checkout -t
-    unadd = reset HEAD
+  unadd = reset HEAD
 [github]
   user = orlin
 [apply]
@@ -19,7 +19,7 @@
   whitespace = warn
 [user]
     name = Orlin M Bozhinov
-    email = orlin.monad@gmail.com
+    email = orlin@apotelesmatic.com
 [gui]
   recentrepo = ~/.dots
 [core]
