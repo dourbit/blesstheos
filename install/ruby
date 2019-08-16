@@ -13,10 +13,12 @@ elif [ "$system_name" == 'Linux' ]; then
   # Debian / Ubuntu can sudo apt install rbenv ruby-build
   # that's easier, foolproof and automatically upgradable
   # consider switching to those with the next install ...
+
+  # dependencies needed for building ruby
   sudo apt install -y libssl-dev libreadline-dev zlib1g-dev
 
   cd
-  git clone git://github.com/sstephenson/rbenv.git .rbenv
+  git clone git://github.com/rbenv/rbenv.git .rbenv
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
   echo 'eval "$(rbenv init -)"' >> ~/.bashrc
   exec $SHELL
@@ -30,10 +32,8 @@ elif [ "$system_name" == 'Linux' ]; then
   # $ git pull
   # $ rbenv install --list
 
-  git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
-
-  # dependencies needed for building ruby
-  sudo apt-get install -y libssl-dev libreadline-dev
+  # This plugin is deprecated since its behavior is now included in rbenv core.
+  # git clone https://github.com/rbenv/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 else
   echo "No ${system_name} system match!"
 fi
@@ -47,12 +47,11 @@ if [ ! -f ~/.gemrc ]; then echo "gem: --no-ri --no-rdoc" >> ~/.gemrc; fi
 if [ -x rbenv ]; then
   # rbenv install --list
   rbenv install 2.6.3
-  rbenv rehash #after installing binaries
   rbenv global 2.6.3
 
   gem install bundler --pre
   # TODO: install ./packages/gem
-  rbenv rehash
+  # rbenv rehash #after installing binaries is automatic / no longer needed
 
   # per project:
   # rbenv local 1.9.3-p551
