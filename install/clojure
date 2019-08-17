@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Based on https://purelyfunctional.tv/guide/how-to-install-clojure/
+
+# Expected deps
+echo $JAVA_HOME
+java -version
+
+# Leiningen installs the same way on both MacOS and Linux
+curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein
+sudo mv lein /usr/local/bin/lein
+sudo chmod a+x /usr/local/bin/lein
+lein version
+
+system_name=`uname -s`
+
+if [ "$system_name" == 'Darwin' ]; then
+  echo "MacOS setup"
+  brew update
+  brew install clojure
+elif [ "$system_name" == 'Linux' ]; then
+  script='linux-install-1.10.1.462.sh'
+  echo "Linux setup with $script"
+  sudo apt install -y rlwrap
+  curl -O "https://download.clojure.org/install/$script"
+  chmod +x "$script"
+  sudo "./$script"
+  rm "./$script"
+else
+  echo "No ${system_name} system match!"
+fi

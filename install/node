@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+system_name=`uname -s`
+
 mkdir ~/.nvm
 
 if [ $system_name == 'Darwin' ]; then

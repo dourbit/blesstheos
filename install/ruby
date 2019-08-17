@@ -2,10 +2,10 @@
 
 # borrowed from https://gist.github.com/brentertz/1384279
 
-# sometimes not present
 system_name=`uname -s`
 
 if [ "$system_name" == 'Darwin' ]; then
+  echo "MacOS"
   brew install rbenv
   brew install ruby-build
 elif [ "$system_name" == 'Linux' ]; then

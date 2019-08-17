@@ -24,7 +24,8 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 > ~/.bashrc # append to the bottom end
 
 ```bash
-HOME_DOTS=".dots"
+export HOME_DOTS=".dots"
+export DOTS_PATH="~/$HOME_DOTS"
 . ~/.dots/source.sh
 
 # for android development - one would also need to install java ...
@@ -39,6 +40,8 @@ Try `.profile` instead?
 
 Run any `install` scripts after sourcing the above or with a new shell.
 A changed prompt would be a good indicator / confirmation to begin with.
+It's a good idea to run any sudo command before running scripts that need sudo,
+e.g. `sudo ls` so that the password prompt does not trip-up the install.
 I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
@@ -47,7 +50,7 @@ Sometimes installs depend on other installs, here is an example order:
 3. `ruby` - via `brew` on a Mac
 4. `node`
 5. `linux-java` / [AdoptOpenJDK](https://adoptopenjdk.net/)
-6. `clojure` - depends on `java`, and maybe `brew` for Mac install
+6. `clojure` - depends on `java`, also `brew` for Mac install
 
 Packages are for the time being all installed manually.
 

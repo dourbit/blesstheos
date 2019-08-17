@@ -10,4 +10,4 @@ sudo apt install -y adoptopenjdk-11-hotspot
 java -version
 
 echo '' >> ~/.bashrc # add an empty line spacer
-echo 'export export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
+echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
