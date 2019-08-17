@@ -1,18 +1,37 @@
 #!/usr/bin/env bash
 
+# Node.js via Node Version Manager
+# https://github.com/nvm-sh/nvm
+
 system_name=`uname -s`
 
 mkdir ~/.nvm
 
-if [ $system_name == 'Darwin' ]; then
+if [ "$system_name" == 'Darwin' ]; then
+  echo "MacOS"
   cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+elif [ "$system_name" == 'Linux' ]; then
+  echo "Linux"
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+else
+  echo "No ${system_name} system match!"
 fi
 
-echo "stable" > ~/.nvmrc # tho the alias below overrides this...
-nvm alias default stable # to begin with (lts or specific may be preferable)
+# immediate nvm use without a new shell session
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# local / offline partial npm registry cache
-curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
+echo "stable" > ~/.nvmrc # tho the alias below overrides this...
+nvm install stable
+nvm alias default stable # to begin with (lts or specific may be preferable)
+exec $SHELL
+
+if [ "$system_name" == 'Darwin' ]; then
+  # local / offline partial npm registry cache (only for MacOS)
+  curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
+fi
 
 # some npm options (reminders)
 npm set save-exact true
+npm install -g yarn
