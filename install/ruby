@@ -17,14 +17,16 @@ elif [ "$system_name" == 'Linux' ]; then
   # dependencies needed for building ruby
   sudo apt install -y libssl-dev libreadline-dev zlib1g-dev
 
+  echo '' >> ~/.bashrc # add an empty line space
+
   cd
   git clone git://github.com/rbenv/rbenv.git .rbenv
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-  echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-  exec $SHELL
 
   git clone git://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
   echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+
+  echo 'eval "$(rbenv init -)"' >> ~/.bashrc
   exec $SHELL
 
   # to get more ruby versions, down the road:

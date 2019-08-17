@@ -27,23 +27,30 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 HOME_DOTS=".dots"
 . ~/.dots/source.sh
 
-# for android development
-export ANDROID_HOME=$HOME/.dots/android/sdk # if installed here
+# for android development - one would also need to install java ...
+export ANDROID_HOME=$HOME/.dots/android/sdk # if installed here ...
 add_to_PATH $ANDROID_HOME/platform-tools
 add_to_PATH $ANDROID_HOME/tools
-```
-
-For Java on Linux, install `openjdk-11-jdk` (current LTS version) and add the following to your shell exports (before sourcing `.dots`).
-
-```bash
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ```
 
 The bash-specific stuff should be contained in `use/bash.sh`.
 Though I have not tried using any of this with other shells.
 Try `.profile` instead?
 
-Run any of the `install` scripts only after you have sourced the above or started a new shell.  A changed prompt would be a good indicator / confirmation.
+Run any `install` scripts after sourcing the above or with a new shell.
+A changed prompt would be a good indicator / confirmation to begin with.
+I basically start a new shell after each step to confirm it was successful.
+Sometimes installs depend on other installs, here is an example order:
+
+1. `shell`
+2. [Homebrew](https://brew.sh/) - for Mac, or `linux-brew` after improvements...
+3. `ruby` - via `brew` on a Mac
+4. `node`
+5. `linux-java` / [AdoptOpenJDK](https://adoptopenjdk.net/)
+6. `clojure` - depends on `java`, and maybe `brew` for Mac install
+
+Packages are for the time being all installed manually.
+
 
 ## License
 

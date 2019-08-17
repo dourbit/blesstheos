@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#NOTE: install/ruby first
 
 # https://docs.brew.sh/Homebrew-on-Linux
 
@@ -14,12 +13,9 @@ test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>
 
 sudo apt install build-essential curl file git
 
+# log out for `brew` to work, meanwhile install gcc (as recommended)
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew install gcc
 
-# it works after logout as well!
-# `brew install clojure` though does not result in working `clj`
-# `sudo apt install clojure` is just fine (uninstall brew's clojure, exit shell)
-
-# TODO: notice the linux-specific steps (follow and correct-install)
-# https://purelyfunctional.tv/guide/how-to-install-clojure/#linux
+# NOTE: this needs further investigation, because installing clojure didn't work.
+# I guess also for other packages...
