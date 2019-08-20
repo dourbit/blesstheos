@@ -1,5 +1,2 @@
 libuser # lid? (call libuser-lid)
 ncdu # http://dev.yorhel.nl/ncdu
-python-markdown
-python-pip
-python-tk
