@@ -51,6 +51,9 @@ uses platforms/java.sh
 uses platforms/ruby.sh
 uses platforms/haskell.sh
 
+# crypto
+uses bitcoin.sh
+
 # thus far the PATH pas been added to from many places
 add_to_PATH  /usr/local/sbin
 add_to_PATH ${DOTS_HOME}/bin

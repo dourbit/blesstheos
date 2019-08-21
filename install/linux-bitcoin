@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# https://www.bitcoindockers.com/
+# https://github.com/SatoshiPortal/dockers/tree/master/bitcoin-core
+# TODO: add code for bitcoind from docker install instructions link above
