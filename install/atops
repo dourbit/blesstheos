@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# what is generally needed by a system / for other installs
+
+system_name=`uname -s`
+
+if [ "$system_name" == 'Linux' ]; then
+  echo "Linux"
+  # only for Debian / Ubuntu
+
+  sudo apt update
+  sudo apt install build-essential git file
+  sudo apt install apt-transport-https curl wget
+
+elif [ "$system_name" == 'Darwin' ]; then
+  echo "MacOS - TODO"
+
+else
+  echo "No ${system_name} system match!"
+fi

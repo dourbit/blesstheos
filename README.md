@@ -45,12 +45,14 @@ e.g. `sudo ls` so that the password prompt does not trip-up the install.
 I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
-1. `shell`
+1. `atops` - generally needed for many of the install scripts to run
 2. [Homebrew](https://brew.sh/) - for Mac, or `linux-brew` after improvements...
 3. `ruby` - via `brew` on a Mac
 4. `node`
 5. `linux-java` / [AdoptOpenJDK](https://adoptopenjdk.net/)
 6. `clojure` - depends on `java`, also `brew` for Mac install
+7. `linux-server` and `linux-desktop`
+8. `linux-python`
 
 Packages are for the time being all installed manually.
 
