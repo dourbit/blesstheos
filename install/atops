@@ -11,6 +11,10 @@ if [ "$system_name" == 'Linux' ]; then
   sudo apt update
   sudo apt install build-essential git file
   sudo apt install apt-transport-https curl wget
+  sudo apt install \
+        ca-certificates \
+        gnupg-agent \
+        software-properties-common
 
 elif [ "$system_name" == 'Darwin' ]; then
   echo "MacOS - TODO"
