@@ -1,8 +1,12 @@
 beets #$ beet
 butterfly
 grip # md to html
+hermit
 httpie
 jupyter
 libsass # themes for butterfly
 nvpy # simplenote-syncing nv-(alt)-inspired tool
+opendrop
+opentimestamps-client
+pdfparanoia
 pinggraph #$ gping
