@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Based on the following container code
+# https://github.com/mtlynch/docker-sia
+
+SIA_DATA=$HOME/data/sia
+mkdir -p ${SIA_DATA}
+
+# Consensus download for blockchain pre-sync bootstrapping
+# https://siawiki.tech/daemon/bootstrapping_the_blockchain
+mkdir -p ${SIA_DATA}/consensus
+cd ${SIA_DATA}/consensus
+wget https://consensus.siahub.info/consensus.db.gz
+wget https://consensus.siahub.info/consensus.db.gz.sha256sum
+
+# An awkward three-liner that could be repurposed for something else...
+# https://stackoverflow.com/questions/21956954/how-to-check-the-checksum-through-commandline
+# https://unix.stackexchange.com/questions/65932/how-to-get-the-first-word-of-a-bootstrapping
+# https://stackoverflow.com/questions/24597818/exit-with-error-message-in-bash-oneline
+# SHA256_IS="$(cat ${SIA_DATA}/consensus/consensus.db.gz.sha256sum | head -n1 | awk '{print $1;}')"
+# SHA256_FILE="$(sha256sum < ${SIA_DATA}/consensus/consensus.db.gz | head -n1 | awk '{print $1;}')"
+# test $SHA256_FILE = $SHA256_IS && echo "sha256 match" || { echo "sha256 does not match"; exit 1; }
+
+# An awesome sha256sum one-liner verification
+sha256sum --check --status --strict consensus.db.gz.sha256sum && echo "sha256 match" || { echo "sha256 does not match"; exit 1; }
+
+rm consensus.db.gz.sha256sum
+gunzip consensus.db.gz
+sudo chown root:root .
+sudo chown root:root consensus.db
+
+SIA_SEED_FILE=$SIA_DATA/wallet-seed.txt
+touch $SIA_SEED_FILE
+chmod 600 $SIA_SEED_FILE
+
+docker run \
+   --detach \
+   --restart always \
+   --volume /home/orlin/data/sia:/sia-data \
+   --publish 127.0.0.1:9980:9980 \
+   --publish 9981:9981 \
+   --publish 9982:9982 \
+   --cpus "0.5" \
+   --env SIA_MODULES="gctw" \
+   --env SIA_WALLET_PASSWORD="$(cat $SIA_SEED_FILE)" \
+   --name sia \
+    mtlynch/sia:latest
+
+echo Wait until the blockchain is fully synced, checking with:
+echo docker exec -it sia ./siac consensus
+echo Once it says "Yes" run the following
+echo docker exec -it sia ./siac wallet init
+echo Write your wallet passphrase in the wallet-seed.txt file.
+echo vim $SIA_SEED_FILE
+echo For less typing - check use/aliases/docker

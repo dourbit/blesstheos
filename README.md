@@ -51,7 +51,7 @@ Sometimes installs depend on other installs, here is an example order:
 4. `node`
 5. `linux-java` / [AdoptOpenJDK](https://adoptopenjdk.net/)
 6. `clojure` - depends on `java`, also `brew` for Mac install
-7. `linux-server` and `linux-desktop`
+7. `linux-docker` and `linux-desktop`
 8. `linux-python`
 
 Packages are for the time being all installed manually.
