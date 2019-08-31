@@ -36,7 +36,7 @@ chmod 600 $SIA_SEED_FILE
 docker run \
    --detach \
    --restart always \
-   --volume /home/orlin/data/sia:/sia-data \
+   --volume ~/data/sia:/sia-data \
    --publish 127.0.0.1:9980:9980 \
    --publish 9981:9981 \
    --publish 9982:9982 \
