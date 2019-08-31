@@ -52,4 +52,5 @@ echo Once it says "Yes" run the following
 echo docker exec -it sia ./siac wallet init
 echo Write your wallet passphrase in the wallet-seed.txt file.
 echo vim $SIA_SEED_FILE
+echo docker restart sia
 echo For less typing - check use/aliases/docker
