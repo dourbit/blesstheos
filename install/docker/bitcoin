@@ -14,10 +14,13 @@ cd dockers/bitcoin-core/
 docker build -t btcnode --build-arg ARCH=x86_64 .
 cd /tmp && rm -rf dockers
 
-docker run -d --restart always --name btcnode \
-  -p 18333:18333 -p 18332:18332 -p 29000:29000 \
+docker run --detach --restart always --name btcnode \
+  -p 8333:8333 -p 8332:8332 -p 29000:29000 \
   -v ~/data/btc:/.bitcoin \
   btcnode `id -u bitcoinuser`:`id -g bitcoinuser` bitcoind
 
 # TODO: add manual step of changing ~/data/btc/bitcoin.conf (or automate how?)
 # NOTE: it's configured for testnet by default
+
+# https://github.com/Samourai-Wallet/samourai-dojo
+# https://github.com/Samourai-Wallet/samourai-dojo/blob/develop/doc/DOCKER_advanced_setups.md
