@@ -19,6 +19,8 @@ docker run --detach --restart always --name btcnode \
   -v ~/data/btc:/.bitcoin \
   btcnode `id -u bitcoinuser`:`id -g bitcoinuser` bitcoind
 
+ln -s ~/data/btc/ ~/.bitcoin
+
 # TODO: add manual step of changing ~/data/btc/bitcoin.conf (or automate how?)
 # NOTE: it's configured for testnet by default
 
