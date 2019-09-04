@@ -8,6 +8,8 @@
 *.swp
 tmp
 
+secret/
+
 android/sdk
 legacy
 
