@@ -18,6 +18,7 @@ docker build -t btcnode --build-arg ARCH=x86_64 .
 cd /tmp && rm -rf dockers
 
 docker run --detach --restart always --name btcnode \
+  --network host --hostname bitcoind \
   -p 8333:8333 -p 8332:8332 -p 29000:29000 \
   -v ~/data/btc:/.bitcoin \
   btcnode `id -u bitcoinuser`:`id -g bitcoinuser` bitcoind
