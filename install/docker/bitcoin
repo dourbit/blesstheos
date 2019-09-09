@@ -17,6 +17,7 @@ cd dockers/bitcoin-core/
 docker build -t btcnode --build-arg ARCH=x86_64 .
 cd /tmp && rm -rf dockers
 
+# --network host # is another option - good for performance...
 docker run --detach --restart always --name btcnode \
   --network host --hostname bitcoind \
   -p 8333:8333 -p 8332:8332 -p 29000:29000 \
