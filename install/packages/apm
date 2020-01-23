@@ -58,6 +58,7 @@ tool-bar
 ask-stack
 atom-beautify
 atom-terminal
+atom-typescript
 atomic-chrome
 autocomplete-json
 autocomplete-modules
@@ -68,11 +69,14 @@ editorconfig # http://editorconfig.org/
 etheratom
 expose
 file-icons
+find-selection
 git-diff-details
 git-log
 git-plus
 git-time-machine
 gulp-control
+hyperclick
+intentions
 language-babel
 language-elm
 language-markdown
@@ -88,6 +92,7 @@ linter-jsxhint
 linter-markdown
 linter-sass-lint
 linter-stylelint
+linter-ui-default
 mark
 markdown-preview-plus
 markdown-writer
