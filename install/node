@@ -2,6 +2,7 @@
 
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
+# `../bin/nvm-up` - upgrade nvm
 
 system_name=`uname -s`
 
