@@ -2,7 +2,10 @@
 
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
+# See also:
 # `../bin/nvm-up` - upgrade nvm
+# `../bin/node-up` - node lts default, with latest npm, and same global packages
+# `../aliases/npm.sh` - useful command aliases
 
 system_name=`uname -s`
 
@@ -24,8 +27,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 echo "stable" > ~/.nvmrc # tho the alias below overrides this...
-nvm install stable
-nvm alias default stable # to begin with (lts or specific may be preferable)
+nvm install lts/*
+nvm alias default lts/*
 exec $SHELL
 
 if [ "$system_name" == 'Darwin' ]; then
@@ -36,3 +39,5 @@ fi
 # some npm options (reminders)
 npm set save-exact true
 npm install -g yarn
+npm install -g npm-check
+npm install -g npm-check-updates

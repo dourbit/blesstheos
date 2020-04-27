@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# https://github.com/nvm-sh/nvm#migrating-global-packages-while-installing
+
+\. "$NVM_DIR/nvm.sh"
+nvm install lts/* --reinstall-packages-from=default --latest-npm
+nvm alias default lts/*
