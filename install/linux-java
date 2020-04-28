@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# only for Debian / Ubuntu
+# Java 11 (LTS)
+# Only for Debian / Ubuntu so far...
+# https://adoptopenjdk.net/installation.html?variant=openjdk11&jvmVariant=hotspot#linux-pkg
 
 sudo apt install -y software-properties-common
 wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
