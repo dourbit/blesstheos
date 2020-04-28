@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+# https://brew.sh/
+# https://docs.brew.sh/Installation
 # https://docs.brew.sh/Homebrew-on-Linux
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
 test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
@@ -14,6 +16,3 @@ test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>
 # log out for `brew` to work, meanwhile install gcc (as recommended)
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew install gcc
-
-# NOTE: this needs further investigation, because installing clojure didn't work.
-# I guess also for other packages...

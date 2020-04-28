@@ -46,11 +46,11 @@ I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
 1. `atops` - generally needed for many of the install scripts to run
-2. [Homebrew](https://brew.sh/) - for Mac, or `linux-brew` after improvements...
-3. `ruby` - via `brew` on a Mac
+2. `brew` - [Homebrew](https://brew.sh/) runs on both Mac and Linux
+3. `ruby` - via `brew` on a Mac - maybe unify for all to be brew-based...
 4. `node`
 5. `linux-java` / [AdoptOpenJDK](https://adoptopenjdk.net/)
-6. `clojure` - depends on `java`, also `brew` for Mac install
+6. `clojure` - depends on `java` and `brew`
 7. `linux-docker` and certain `docker/` containers
 8. `linux-python`
 9. `linux-desktop`
