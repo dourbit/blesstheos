@@ -21,6 +21,7 @@ uses aliases/apm.sh
 uses aliases/npm.sh
 uses aliases/pip.sh
 
+uses aliases/clojure.sh
 uses aliases/docker.sh
 
 # NOTE: some aliases (e.g. git's) are sourced from elsewhere
