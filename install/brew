@@ -15,4 +15,10 @@ test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>
 
 # log out for `brew` to work, meanwhile install gcc (as recommended)
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+# if you install something by mistake then `brew rmtree package`
+# https://stackoverflow.com/questions/7323261/uninstall-remove-a-homebrew-package-including-all-its-dependencies
+brew tap beeftornado/rmtree
+
+# as suggested:
 brew install gcc
