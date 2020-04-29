@@ -9,16 +9,17 @@
 
 system_name=`uname -s`
 
-mkdir ~/.nvm
-
 if [ "$system_name" == 'Darwin' ]; then
   echo "MacOS"
+  mkdir ~/.nvm
   cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 elif [ "$system_name" == 'Linux' ]; then
   echo "Linux"
+  mkdir ~/.nvm
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 else
-  echo "No ${system_name} system match!"
+  echo "System '${system_name}' is not supported."
+  exit 1
 fi
 
 # immediate nvm use without a new shell session
