@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 
+source "$DOTS_HOME/use/helpers/os.sh"
+
 # Java 11 (LTS)
 # Only for Debian / Ubuntu so far...
 # https://adoptopenjdk.net/installation.html?variant=openjdk11&jvmVariant=hotspot#linux-pkg
 
-sudo apt install -y software-properties-common
-wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
-sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-sudo apt update
-sudo apt install -y adoptopenjdk-11-hotspot
-java -version
+if onApt; then
 
-echo '' >> ~/.bashrc # add an empty line spacer
-echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
+  sudo apt install -y software-properties-common
+  wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
+  sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+  sudo apt update
+  sudo apt install -y adoptopenjdk-11-hotspot
+  java -version
+
+  echo '' >> ~/.bashrc # add an empty line spacer
+  echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
+
+fi

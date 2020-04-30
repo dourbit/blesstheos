@@ -7,13 +7,13 @@
 # `../bin/node-up` - node lts default, with latest npm, and same global packages
 # `../aliases/npm.sh` - useful command aliases
 
-system_name=`uname -s`
+source "$DOTS_HOME/use/helpers/os.sh"
 
-if [ "$system_name" == 'Darwin' ]; then
+if onMac; then
   echo "MacOS"
   mkdir ~/.nvm
   cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
-elif [ "$system_name" == 'Linux' ]; then
+elif onLinux; then
   echo "Linux"
   mkdir ~/.nvm
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
@@ -32,7 +32,7 @@ nvm install lts/*
 nvm alias default lts/*
 exec $SHELL
 
-if [ "$system_name" == 'Darwin' ]; then
+if onMac; then
   # local / offline partial npm registry cache (only for MacOS)
   curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
 fi

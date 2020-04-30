@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
+source "$DOTS_HOME/use/helpers/os.sh"
+
 # borrowed from https://gist.github.com/brentertz/1384279
 
-system_name=`uname -s`
-
-if [ "$system_name" == 'Darwin' ]; then
-  echo "MacOS"
+if onMac; then
+  echo "Mac OS"
   brew install rbenv
   brew install ruby-build
-elif [ "$system_name" == 'Linux' ]; then
-  echo "Linux"
+elif onApt; then
+  echo "Apt Linux"
   # Debian / Ubuntu can sudo apt install rbenv ruby-build
   # that's easier, foolproof and automatically upgradable
   # consider switching to those with the next install ...

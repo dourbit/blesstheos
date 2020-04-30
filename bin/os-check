@@ -2,7 +2,7 @@
 
 source "$DOTS_HOME/use/helpers/os.sh"
 
-if onMac; then echo "onMac"; fi
+if onMac; then echo "Mac OS"; fi
 if onLinux; then echo "Linux"; fi
 if onApt; then echo "Linux with apt-ability (Debian or Ubuntu)"; fi
 if onUbuntu; then echo "Ubuntu Linux"; fi

@@ -2,9 +2,9 @@
 
 # what is generally needed by a system / for other installs
 
-system_name=`uname -s`
+source "$DOTS_HOME/use/helpers/os.sh"
 
-if [ "$system_name" == 'Linux' ]; then
+if onLinux; then
   echo "Linux"
   # only for Debian / Ubuntu
 
@@ -16,9 +16,8 @@ if [ "$system_name" == 'Linux' ]; then
         gnupg-agent \
         software-properties-common
 
-elif [ "$system_name" == 'Darwin' ]; then
-  echo "MacOS - TODO"
-
+elif onMac; then
+  echo "MacOS - TODO..."
 else
   echo "No ${system_name} system match!"
 fi

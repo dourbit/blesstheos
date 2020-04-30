@@ -2,8 +2,6 @@
 
 # Based on https://purelyfunctional.tv/guide/how-to-install-clojure/
 
-# install/linux-java # so far only deb / Ubuntu (no MacOS yet)
-
 # Expected deps
 echo $JAVA_HOME
 java -version
