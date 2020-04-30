@@ -7,7 +7,7 @@ bind "set show-all-if-ambiguous On" # show tab-completion list with a single tab
 # anything else? http://ss64.com/bash/syntax-inputrc.html
 
 # bash_completion
-if [ $system_name == 'Darwin' ]; then
+if onMac; then
   bash_v=${BASH_VERSION%%[^0-9]*} # also possible with $BASH_VERSINFO
   if [ $bash_v == "3" ]; then
     # brew install bash-completion # for bash 3.2+

@@ -16,7 +16,6 @@ uses helpers/os.sh # checks for system-specific stuff, many scripts will use it
 uses colors.sh
 uses systerm.sh # system/terminal-specific stuff
 uses aliases.sh # general-purpose, independent of systerm, etc.
-uses functions.sh # sometimes an alias is not enough
 uses git.sh # also improves the prompt in non-git contexts
 uses jump.sh
 [ -n "$BASH" ] && uses bash.sh # bash-only stuff

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. $(dirname $0)/tre-functions
+. $(dirname $0)/tre-helpers.sh
 
 function t-info {
   echo

@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+source "$DOTS_HOME/use/helpers/os.sh"
+
 if [ -n "$TRANSMISSION_RE" ]; then
   function tre() {
     eval $(which transmission-remote) ${TRANSMISSION_RE} ${@}
   }
   # make it available to scripts
-  [[ $system_name == 'Linux' ]] && export -f tre
+  onLinux && export -f tre
 fi
 
 function tre-ids-pipe {
@@ -19,4 +21,4 @@ function tre-ids-pipe {
     stdbuf -oL tre-ids | eval $1 "${@:2}"
   fi
 }
-[[ $system_name == 'Linux' ]] && export -f tre-ids-pipe
+onLinux && export -f tre-ids-pipe

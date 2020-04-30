@@ -1,15 +1,13 @@
-system_name=`uname -s` # usualy Darwin, sometimes also Linux
-
 # export ARCHFLAGS="-arch i386 -arch x86_64"
 # Because python compiles for the wrong architecture!
 # Is this a problem for Linux?
 export ARCHFLAGS="-arch x86_64"
 
-if [ $system_name == 'Linux' ]; then
+if onLinux; then
   export EDITOR='vim'
   [ -f /etc/bash_completion ] && . /etc/bash_completion
   alias du='du -k --max-depth=1'
-elif [ $system_name == 'Darwin' ]; then
+elif onMac; then
   export EDITOR='mate -w'
   [ -f /opt/local/etc/bash_completion ] && . /opt/local/etc/bash_completion
   alias du='du -k -d1'
@@ -21,7 +19,7 @@ fi
 
 if [ "$TERM" != "dumb" ]; then
   # color depends on terminal not being "dumb"
-  if [ $system_name == 'Linux' ]; then
+  if onLinux; then
     color_option='--color=auto'
   else
     color_option='-G'
