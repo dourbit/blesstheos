@@ -8,10 +8,10 @@ else
   export DOTS_HOME="$HOME/$HOME_DOTS"
 fi
 
-source "$DOTS_HOME/use/_path.sh"
+source "$DOTS_HOME/use/helpers/path.sh"
 
-# helper functions, in addition to _path.sh
-uses _os.sh # checking for system-specific stuff, many scripts will depend on it
+# helper functions, in addition to helpers/path.sh
+uses helpers/os.sh # checks for system-specific stuff, many scripts will use it
 
 uses colors.sh
 uses systerm.sh # system/terminal-specific stuff

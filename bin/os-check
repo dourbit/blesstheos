@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$DOTS_HOME/use/_os.sh"
+source "$DOTS_HOME/use/helpers/os.sh"
 
 onMac && echo "MacOS"
 onLinux && echo "Linux"
