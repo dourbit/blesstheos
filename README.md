@@ -45,7 +45,7 @@ e.g. `sudo ls` so that the password prompt does not trip-up the install.
 I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
-1. `atops` - generally needed for many of the install scripts to run
+1. `apt-atops` - deps for many of the install scripts, needed pre-reqs
 2. `brew` - [Homebrew](https://brew.sh/) runs on both Mac and Linux now
 3. `ruby` - via `brew` on a Mac - maybe unify for all to be brew-based...
 4. `node` - MacOS version has worked in the past, though not tested lately...
