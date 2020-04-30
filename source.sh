@@ -8,23 +8,10 @@ else
   export DOTS_HOME="$HOME/$HOME_DOTS"
 fi
 
-# http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
-add_to_PATH () {
-  for d; do
-    # d=$(cd -- "$d" && { pwd -P || pwd; }) 2>/dev/null  # canonicalize symbolic links
-    # if [ -z "$d" ]; then continue; fi  # skip nonexistent directory
-    if ! [ -d "$d" ]; then continue; fi
-    case ":$PATH:" in
-      *":$d:"*) :;;
-      *) PATH=$PATH:$d;;
-    esac
-  done
-}
+source "$DOTS_HOME/use/_path.sh"
 
-function uses {
-  source "$DOTS_HOME/use/$1"
-}
-
+# helper functions, in addition to _path.sh
+uses _os.sh # checking for system-specific stuff, many scripts will depend on it
 
 uses colors.sh
 uses systerm.sh # system/terminal-specific stuff
@@ -34,7 +21,6 @@ uses git.sh # also improves the prompt in non-git contexts
 uses jump.sh
 [ -n "$BASH" ] && uses bash.sh # bash-only stuff
 uses rundev.sh
-
 
 umask 022
 
@@ -49,7 +35,7 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 uses platforms/node.sh
 uses platforms/java.sh
 uses platforms/ruby.sh
-uses platforms/haskell.sh
+# uses platforms/haskell.sh
 
 # thus far the PATH pas been added to from many places
 add_to_PATH  /usr/local/sbin
