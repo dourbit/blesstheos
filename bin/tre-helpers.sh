@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "$DOTS_HOME/use/helpers/os.sh"
-
 if [ -n "$TRANSMISSION_RE" ]; then
   tre() {
     eval $(which transmission-remote) ${TRANSMISSION_RE} ${@}

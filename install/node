@@ -7,8 +7,6 @@
 # `../bin/node-up` - node lts default, with latest npm, and same global packages
 # `../aliases/npm.sh` - useful command aliases
 
-source "$DOTS_HOME/use/helpers/os.sh"
-
 if onMac; then
   echo "MacOS"
   mkdir ~/.nvm

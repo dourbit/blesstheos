@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "$DOTS_HOME/use/helpers/os.sh"
-
 # only for Debian / Ubuntu
 
 if onApt; then

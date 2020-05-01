@@ -4,8 +4,6 @@
 # need on servers although also useful for desktops
 # run the install/atop first and then this script
 
-source "$DOTS_HOME/use/helpers/os.sh"
-
 if onUbuntu; then
 
   # Docker & Docker Compose

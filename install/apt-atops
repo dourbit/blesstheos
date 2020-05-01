@@ -3,8 +3,6 @@
 # only for Debian / Ubuntu so far...
 # what is generally needed by a system (for other installs)
 
-source "$DOTS_HOME/use/helpers/os.sh"
-
 if onApt; then
 
   echo "Apt Linux"

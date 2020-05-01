@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "$DOTS_HOME/use/helpers/os.sh"
-
 # Java 11 (LTS)
 # Only for Debian / Ubuntu so far...
 # https://adoptopenjdk.net/installation.html?variant=openjdk11&jvmVariant=hotspot#linux-pkg
