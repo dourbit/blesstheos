@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# list exported functions
+# show the code when name of function is given as $1
+
+# https://www.computerhope.com/unix/bash/declare.htm
+# `export -f` is same as `declare -fx` (at least for bash)
+
+if [ $# -eq 0 ]; then
+  declare -Fx
+else
+  declare -fp "$1"
+fi

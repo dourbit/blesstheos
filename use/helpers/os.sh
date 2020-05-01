@@ -1,14 +1,16 @@
-system_name=$(uname -s)
+export system_name=$(uname -s)
 
 onMac() {
   if [ "$system_name" == 'Darwin' ]; then true; return; fi
   false; return
 }
+export -f onMac
 
 onLinux() {
   if [ "$system_name" == 'Linux' ]; then true; return; fi
   false; return
 }
+export -f onLinux
 
 onApt() {
   if [ isLinux ] && [ -f /etc/issue.net ]; then
@@ -17,6 +19,7 @@ onApt() {
   fi
   false; return
 }
+export -f onApt
 
 onUbuntu() {
   if [ isLinux ] && [ -f /etc/issue.net ]; then
@@ -25,3 +28,4 @@ onUbuntu() {
   fi
   false; return
 }
+export -f onUbuntu

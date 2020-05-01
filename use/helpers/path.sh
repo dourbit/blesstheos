@@ -14,3 +14,4 @@ add_to_PATH() {
     esac
   done
 }
+export -f add_to_PATH
