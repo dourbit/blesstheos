@@ -14,7 +14,7 @@ elif onMac; then
   alias top='top -o cpu'
   alias vi='mate'
 else
-  echo "Unexpected system: $system_name"
+  echo "Unexpected system: $KERNEL_NAME"
 fi
 
 if [ "$TERM" != "dumb" ]; then

@@ -18,7 +18,7 @@ elif onLinux; then
   mkdir ~/.nvm
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 else
-  echo "System '${system_name}' is not supported."
+  echo "System '${KERNEL_NAME}' is not supported."
   exit 1
 fi
 
