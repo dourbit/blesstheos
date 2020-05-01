@@ -30,9 +30,16 @@ nvm install lts/*
 nvm alias default lts/*
 exec $SHELL
 
+# TODO: perhaps this belongs to install/npm-local or just install/npm-develop
 if onMac; then
+  # TODO: extract to install local-npm via Docker for any development machine
+  # NOTE: wait for local-npm 3.0 first
+  # https://github.com/local-npm/local-npm
+  # https://github.com/local-npm/local-npm/projects/1
+
+  # https://github.com/local-npm/local-npm-launch-agent
   # local / offline partial npm registry cache (only for MacOS)
-  curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
+  # curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
 fi
 
 # some npm options (reminders)
