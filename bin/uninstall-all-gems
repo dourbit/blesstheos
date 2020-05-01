@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-GEMS=`gem list --no-versions`
+GEMS=$(gem list --no-versions)
 for x in $GEMS ; do gem uninstall $x --ignore-dependencies -ax; done

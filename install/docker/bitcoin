@@ -5,7 +5,7 @@
 
 sudo useradd bitcoinuser
 mkdir -m 2770 -p ~/data/btc
-sudo chown -R bitcoinuser:`id -gn` ~/data/btc
+sudo chown -R bitcoinuser:$(id -gn) ~/data/btc
 sudo find ~/data/btc -type f -exec chmod g+rw {} \;
 sudo find ~/data/btc -type d -exec chmod g+rwx {} \;
 sudo usermod -aG bitcoinuser $USER
@@ -22,7 +22,7 @@ docker run --detach --restart always --name btcnode \
   --network host --hostname bitcoind \
   -p 8333:8333 -p 8332:8332 -p 29000:29000 \
   -v ~/data/btc:/.bitcoin \
-  btcnode `id -u bitcoinuser`:`id -g bitcoinuser` bitcoind
+  btcnode $(id -u bitcoinuser):$(id -g bitcoinuser) bitcoind
 
 # TODO: add manual step of changing ~/data/btc/bitcoin.conf (or automate how?)
 # NOTE: it's configured for testnet by default

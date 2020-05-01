@@ -2,7 +2,7 @@
 
 . $(dirname $0)/tre-helpers.sh
 
-function matching {
+matching() {
   val=$1 && shift
   for wanted in ${@}; do
     [[ "$val" =~ .*${wanted}.* ]] && return 0
@@ -10,13 +10,13 @@ function matching {
   return 1
 }
 
-function t-tracker {
+t-tracker() {
   if [[ $1 == "not" ]]; then
     NOT=true
     shift 1
   fi
   while IFS= read -r ID; do
-    TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
+    TRACKER=$(tre -t "$ID" --info-trackers | grep "Tracker 0: ")
     if [[ $NOT == true ]]; then
       matching "$TRACKER" "$@" || echo $ID
     else

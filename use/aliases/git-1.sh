@@ -10,7 +10,7 @@ alias ghi=gh-issues
 
 # git checkout new branch
 # see also: "greatest conceivable being" - philosophy / ontology
-function gcb {
+gcb() {
   branch=$1
   shift 1
   git checkout -b ${branch} $@
@@ -19,14 +19,14 @@ function gcb {
 # checkout a new branch from the current
 # but first push one with the same name to origin
 # then have the new branch track it
-function gcbot {
-  current=`git-branch-name`
+gcbot() {
+  current=$(git-branch-name)
   branch=$1
   shift 1
   git push origin ${current}:${branch} &&
   git checkout -b ${branch} -t origin/${branch} $@
 }
 
-function git-branch-name {
+git-branch-name() {
   git symbolic-ref HEAD | sed 's/.*\///'
 }

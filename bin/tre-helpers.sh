@@ -3,14 +3,14 @@
 source "$DOTS_HOME/use/helpers/os.sh"
 
 if [ -n "$TRANSMISSION_RE" ]; then
-  function tre() {
+  tre() {
     eval $(which transmission-remote) ${TRANSMISSION_RE} ${@}
   }
   # make it available to scripts
   onLinux && export -f tre
 fi
 
-function tre-ids-pipe {
+tre-ids-pipe() {
   # give it a function or script to call
   # pass on the rest of the args (slice)
   if [[ -p /dev/stdin ]]; then

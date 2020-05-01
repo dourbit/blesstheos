@@ -29,5 +29,5 @@ uses aliases/docker.sh
 
 # In general aliases aren't available for scripts to use
 # although theres is: shopt -s expand_aliases
-# this isn't recommended - just use functions.sh instead...
+# this isn't recommended - just add to use/helpers instead...
 # and export whetever functions are necessary

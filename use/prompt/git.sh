@@ -11,7 +11,7 @@ YELLOW="\[\033[0;33m\]"
 PURPLE="\[\033[0;35m\]"
 
 
-function parse_git_branch {
+parse_git_branch() {
   ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
   echo "["${ref#refs/heads/}"]"
 }
@@ -21,7 +21,7 @@ my_git_status() {
   # ... but also to allow optional status (possibly on a per-repository basis)
   branch_prompt=$(__git_ps1)
   if [ -n "$branch_prompt" ]; then
-    if [ `git config --bool --get bash.showdirtystate` ]; then
+    if [ $(git config --bool --get bash.showdirtystate) ]; then
       if current_git_status=$(git status | grep 'added to commit' 2> /dev/null); then
         echo "⚠ "
       fi

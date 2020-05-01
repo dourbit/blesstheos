@@ -2,13 +2,13 @@
 
 . $(dirname $0)/tre-helpers.sh
 
-function t-info {
+t-info() {
   echo
   while IFS= read -r ID; do
-    INFO=`tre --torrent "$ID" --info`
-    NAME=`echo "$INFO" | grep "Name: "`
-    LOCATION=`echo "$INFO" | grep "Location: "`
-    TRACKER=`tre -t "$ID" --info-trackers | grep "Tracker 0: "`
+    INFO=$(tre --torrent "$ID" --info)
+    NAME=$(echo "$INFO" | grep "Name: ")
+    LOCATION=$(echo "$INFO" | grep "Location: ")
+    TRACKER=$(tre -t "$ID" --info-trackers | grep "Tracker 0: ")
     if [ "$NAME" ]; then
       echo "# $ID"
       echo "$NAME"
