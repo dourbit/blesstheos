@@ -25,9 +25,11 @@ uses aliases/clojure.sh
 uses aliases/docker.sh
 
 # NOTE: some aliases (e.g. git's) are sourced from elsewhere
-# also, there are system-dependent aliases in system.sh
+# Also, there are system-dependent aliases in system.sh
+# TODO: look into improving this - for `uses aliases.sh` becoming all there is
+# Maybe add `aliases-all.sh` which sources all files, including `aliases.sh`?
 
 # In general aliases aren't available for scripts to use
-# although theres is: shopt -s expand_aliases
+# although theres is: `shopt -s expand_aliases && uses aliases.sh`
 # this isn't recommended - just add to use/helpers instead...
 # and export whetever functions are necessary

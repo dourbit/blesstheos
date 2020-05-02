@@ -16,5 +16,10 @@ if [ $# -eq 0 ]; then
   echo "$count exported functions above"
   echo "($(basename $0) name # for code)"
 else
-  declare -fp "$1" 2> /dev/null || echo "$1 NOT FOUND"
+  declare -fp "$1" 2> /dev/null || {
+    echo "$1 is not a function"
+    shopt -s expand_aliases
+    uses "aliases.sh"
+    type "$1" 2> /dev/null
+  }
 fi

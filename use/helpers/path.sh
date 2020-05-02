@@ -1,6 +1,7 @@
 uses() {
   source "$DOTS_HOME/use/$1"
 }
+export -f uses
 
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
 add_to_PATH() {
