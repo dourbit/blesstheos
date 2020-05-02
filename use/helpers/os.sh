@@ -12,20 +12,19 @@ onLinux() {
 }
 export -f onLinux
 
+
+if onLinux; then export DISTRO_ID=$(lsb_release -i | awk '{print $NF}'); fi
+
 onApt() {
-  if [ onLinux ] && [ -f /etc/issue.net ]; then
-    local etn=$(cat /etc/issue.net | cut -f 1 -d " ")
-    if [ "$etn" == 'Ubuntu' ] || [ "$etn" == 'Debian' ] ; then true; return; fi
-  fi
+  # NOTE: other distros are also apt - check for command instead?
+  if [ "$DISTRO_ID" == 'Ubuntu' ] ||
+     [ "$DISTRO_ID" == 'Debian' ]; then true; return; fi
   false; return
 }
 export -f onApt
 
 onUbuntu() {
-  if [ onLinux ] && [ -f /etc/issue.net ]; then
-    local etn=$(cat /etc/issue.net | cut -f 1 -d " ")
-    if [ "$etn" == 'Ubuntu' ]; then true; return; fi
-  fi
+  if [ "$DISTRO_ID" == 'Ubuntu' ]; then true; return; fi
   false; return
 }
 export -f onUbuntu

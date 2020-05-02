@@ -2,5 +2,5 @@
 
 if onMac; then echo "Mac OS"; fi
 if onLinux; then echo "Linux"; fi
-if onApt; then echo "Linux with apt-ability (Debian or Ubuntu)"; fi
+if onApt; then echo "Linux is apt"; fi # (e.g. Debian or Ubuntu)
 if onUbuntu; then echo "Ubuntu Linux"; fi
