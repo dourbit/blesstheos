@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Get a binary asset from GitHub, give it the following args:
+# $1 user/repo
+# $2 file-name
+# $3 [tag-name] optional: defaults to "latest"
+# $4 [dir-name] destination directory optional: defaults to the current dir .
+
+# Require 2 args
+if [[ $# -lt 2 ]]; then
+    echo "Usage: $(basename $0) user/repo file-name [tag_name or latest] [save-to-dir or .]"
+    exit 1
+fi
+
+REPOPATH=$1
+FILENAME=$2
+TAG_NAME=${3-"latest"}
+SAVE_DIR=${4-${BIN_PATH-"."}}
+GET_THIS="https://api.github.com/repos/${REPOPATH}/releases/${TAG_NAME}"
+# https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
+DOWNLOAD=$(curl -sSL "${GET_THIS}" | json | grep browser_download_url | grep closh-zero.jar | awk '{print $NF}' | tr -d '"')
+
+if [ ! "$DOWNLOAD" ]; then
+  echo "Nothing for ${GET_THIS}"
+else
+  echo "Getting: ${DOWNLOAD}"
+  if [ "$SAVE_DIR" != "." ]; then echo "To path: ${SAVE_DIR}/${FILENAME}"; fi
+  echo ""
+  curl -L ${DOWNLOAD} -o "${SAVE_DIR}/${FILENAME}" -H 'Accept: application/octet-stream'
+fi

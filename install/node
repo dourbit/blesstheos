@@ -44,6 +44,7 @@ fi
 
 # some npm options (reminders)
 npm set save-exact true
-npm install -g yarn
-npm install -g npm-check
-npm install -g npm-check-updates
+
+# always have the following packages installed
+npm i -g yarn json
+npm i -g npm-check npm-check-updates
