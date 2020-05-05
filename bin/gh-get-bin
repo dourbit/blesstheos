@@ -15,7 +15,7 @@ fi
 REPOPATH=$1
 FILENAME=$2
 TAG_NAME=${3-"latest"}
-SAVE_DIR=${4-${BIN_PATH-"."}}
+SAVE_DIR=${4-"."}
 GET_THIS="https://api.github.com/repos/${REPOPATH}/releases/${TAG_NAME}"
 # https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 DOWNLOAD=$(curl -sSL "${GET_THIS}" | json | grep browser_download_url | grep closh-zero.jar | awk '{print $NF}' | tr -d '"')
