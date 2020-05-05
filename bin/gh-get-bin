@@ -12,6 +12,8 @@ if [[ $# -lt 2 ]]; then
     exit 1
 fi
 
+# Depends on `install/node` for https://trentm.com/json/ perhaps unnecessarily
+
 REPOPATH=$1
 FILENAME=$2
 TAG_NAME=${3-"latest"}
