@@ -1,25 +1,40 @@
 #!/usr/bin/env bash
 
 # http://www.bpkg.sh/
+# NOTE: using this is kind of funky
 curl -sLo- http://get.bpkg.sh | bash
 
-# http://www.bpkg.sh/pkg/jsonsh
-cd ~
-bpkg install json.sh
-cd -
+# NOTE some issues with bpkg:
+# * global install with sudo doesn't work as bpkg is installed locally
+# * local installs stick a deps/ in a current dir
+# * package.json is a poor choice, as it overlaps with npm's package.json
+# people are in fact using npm to deploy shell scripts
+# npm is ok, except I rather run certain scripts without any install deps
 
-source ~/.bashrc # ~/deps/bin dir just got created, this should add it to $PATH
+# Installing from the source instead - see next block...
+# The package below just a fork; plus it renames JSON.sh to JSON (I rather not)
+# http://www.bpkg.sh/pkg/jsonsh
+# cd ~
+# bpkg install json.sh
+# cd -
+# source ~/.bashrc # ~/deps/bin dir just got created, this should add it to $PATH
+
+# https://github.com/dominictarr/JSON.sh
+curl -O https://raw.githubusercontent.com/dominictarr/JSON.sh/master/JSON.sh
+chmod +x JSON.sh
+mv JSON.sh ~/bin/
 
 # https://github.com/mclarkson/JSONPath.sh
 # https://cburgmer.github.io/json-path-comparison/
 curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh
 chmod +x JSONPath.sh
-mv JSONPath.sh ~/bin
+mv JSONPath.sh ~/bin/
 
 # https://github.com/cute/JSONPretty
 curl -O https://raw.githubusercontent.com/cute/JSONPretty/master/JSONPretty.sh
 chmod +x JSONPretty.sh
-mv JSONPretty.sh ~/bin
+mv JSONPretty.sh ~/bin/
+
 
 if onMac; then
   echo "Mac OS"
