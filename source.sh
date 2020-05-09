@@ -42,7 +42,8 @@ add_to_PATH ${DOTS_HOME}/bin
 
 # TODO: add_to_PATH_front (for the rest of these paths)
 add_to_PATH .
-mkdir -p ~/.bin
-add_to_PATH ~/.bin
+mkdir -p ~/bin
+add_to_PATH ~/bin
+ln -s ~/bin ~/.bin
 
 export PATH # concludes what the PATH will be

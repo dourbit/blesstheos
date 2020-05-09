@@ -18,7 +18,7 @@ if onApt; then
   sudo apt install libhidapi-dev libusb-1.0-0-dev libudev-dev
   # ckcc # Coldcard cli tool:
   pip install 'ckcc-protocol[cli]'
-  ln -s ~/.local/bin/ckcc ~/.bin/
+  ln -s ~/.local/bin/ckcc ~/bin/
 
   python --version #3
 
