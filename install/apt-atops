@@ -7,12 +7,13 @@ if onApt; then
 
   echo "Apt Linux"
   sudo apt update
-  sudo apt install build-essential git file
-  sudo apt install apt-transport-https curl wget
+  sudo apt install -y build-essential git file
+  sudo apt install -y apt-transport-https curl wget
   sudo apt install \
         ca-certificates \
         gnupg-agent \
         software-properties-common
+  sudo apt install -y gawk # needed for JSONPath.sh
 
 elif onMac; then
   echo "MacOS - TODO..."

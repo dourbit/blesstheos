@@ -10,6 +10,11 @@ cd -
 
 source ~/.bashrc # ~/deps/bin dir just got created, this should add it to $PATH
 
+# https://github.com/mclarkson/JSONPath.sh
+# https://cburgmer.github.io/json-path-comparison/
+curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh
+chmod +x JSONPath.sh
+mv JSONPath.sh ~/bin
 
 if onMac; then
   echo "Mac OS"
