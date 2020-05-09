@@ -16,6 +16,11 @@ curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.
 chmod +x JSONPath.sh
 mv JSONPath.sh ~/bin
 
+# https://github.com/cute/JSONPretty
+curl -O https://raw.githubusercontent.com/cute/JSONPretty/master/JSONPretty.sh
+chmod +x JSONPretty.sh
+mv JSONPretty.sh ~/bin
+
 if onMac; then
   echo "Mac OS"
   # the following will add a line to .profile or .bash_profile / something
