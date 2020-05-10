@@ -35,6 +35,11 @@ curl -O https://raw.githubusercontent.com/cute/JSONPretty/master/JSONPretty.sh
 chmod +x JSONPretty.sh
 mv JSONPretty.sh ~/bin/
 
+# https://github.com/dundalek/closh
+CLOSH=closh-zero.jar
+gh-get-bin dundalek/closh $CLOSH
+sudo mv $CLOSH /usr/local/bin/
+sudo chmod a+x /usr/local/bin/$CLOSH
 
 if onMac; then
   echo "Mac OS"

@@ -45,15 +45,16 @@ e.g. `sudo ls` so that the password prompt does not trip-up the install.
 I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
-1. `apt-atops` - deps for many of the install scripts, needed pre-reqs
-2. `brew` - [Homebrew](https://brew.sh/) runs on both Mac and Linux now
-3. `node` - MacOS version has worked in the past, though not tested lately...
-4. `ruby` - via `brew` on a Mac - maybe unify for all to be brew-based...
-5. `apt-java` - unless Ubuntu / Debian: [download & install AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot) manually...
-6. `clojure` - depends on `java`, `brew` and `node` needed to install it
-7. `ubuntu-docker` and certain `docker/` containers
-8. `apt-python`
-9. `apt-desktop`
+1. `atops` - needed for many of the install scripts, find the MacOS equivalents...
+2. `shell`
+3. `brew` - [Homebrew](https://brew.sh/) runs on both Mac and Linux now
+4. `node` - MacOS version has worked in the past, though not tested lately...
+5. `ruby` - via `brew` on a Mac - maybe unify for all to be brew-based...
+6. `apt-java` - unless Ubuntu / Debian: [download & install AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot) manually...
+7. `clojure` - depends on `java`, `brew` and `node` needed to install it
+8. `ubuntu-docker` and certain `docker/` containers
+9. `apt-python`
+10. `apt-desktop`
 
 Packages are for the time being all installed manually.
 

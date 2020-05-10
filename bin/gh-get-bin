@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# `install/shell` for the JSONPath.sh
+
 # Get a binary asset from GitHub, give it the following args:
 # $1 user/repo
 # $2 file-name
@@ -12,15 +14,13 @@ if [[ $# -lt 2 ]]; then
     exit 1
 fi
 
-# Depends on `install/node` for https://trentm.com/json/ perhaps unnecessarily
-
 REPOPATH=$1
 FILENAME=$2
 TAG_NAME=${3-"latest"}
 SAVE_DIR=${4-"."}
 GET_THIS="https://api.github.com/repos/${REPOPATH}/releases/${TAG_NAME}"
 # https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
-DOWNLOAD=$(curl -sSL "${GET_THIS}" | json | grep browser_download_url | grep closh-zero.jar | awk '{print $NF}' | tr -d '"')
+DOWNLOAD=$(curl -sSL "${GET_THIS}" | JSONPath.sh '$.."browser_download_url"' | grep $FILENAME | awk '{print $NF}' | tr -d '"')
 
 if [ ! "$DOWNLOAD" ]; then
   echo "Nothing for ${GET_THIS}"

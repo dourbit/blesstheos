@@ -18,9 +18,3 @@ lein version
 brew update
 brew install clojure/tools/clojure
 clj -e '(println (str "Clojure " (clojure-version)))'
-
-# Closh
-CLOSH=closh-zero.jar
-gh-get-bin dundalek/closh $CLOSH
-sudo mv $CLOSH /usr/local/bin/
-sudo chmod a+x /usr/local/bin/$CLOSH
