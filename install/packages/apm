@@ -41,6 +41,7 @@ zenburn-prime-syntax # has potential…
 # packages:
 
 # https://git.io/atom_clojure_setup with a few additions of my own
+chlorine
 fonts # https://github.com/tonsky/FiraCode
 highlight-column
 highlight-line
