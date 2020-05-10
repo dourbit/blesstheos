@@ -6,7 +6,6 @@
 echo $JAVA_HOME
 java -version
 brew --version
-echo "NodeJS $(node --version)" # used by gh-get-bin for https://trentm.com/json
 
 # Leiningen
 curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein
