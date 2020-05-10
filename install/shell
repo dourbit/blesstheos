@@ -20,20 +20,14 @@ curl -sLo- http://get.bpkg.sh | bash
 # source ~/.bashrc # ~/deps/bin dir just got created, this should add it to $PATH
 
 # https://github.com/dominictarr/JSON.sh
-curl -O https://raw.githubusercontent.com/dominictarr/JSON.sh/master/JSON.sh
-chmod +x JSON.sh
-mv JSON.sh ~/bin/
+gh-install dominictarr/JSON.sh JSON.sh ~/bin/
 
 # https://github.com/mclarkson/JSONPath.sh
 # https://cburgmer.github.io/json-path-comparison/
-curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh
-chmod +x JSONPath.sh
-mv JSONPath.sh ~/bin/
+gh-install mclarkson/JSONPath.sh JSONPath.sh ~/bin/
 
 # https://github.com/cute/JSONPretty
-curl -O https://raw.githubusercontent.com/cute/JSONPretty/master/JSONPretty.sh
-chmod +x JSONPretty.sh
-mv JSONPretty.sh ~/bin/
+gh-install cute/JSONPretty.sh JSONPretty.sh ~/bin/
 
 # https://github.com/dundalek/closh
 CLOSH=closh-zero.jar
