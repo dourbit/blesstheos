@@ -29,6 +29,11 @@ gh-install mclarkson/JSONPath.sh JSONPath.sh ~/bin/
 # https://github.com/cute/JSONPretty
 gh-install cute/JSONPretty.sh JSONPretty.sh ~/bin/
 
+# https://github.com/borkdude/babashka
+gh-install borkdude/babashka install ~/tmp/
+sudo ~/tmp/install
+rm ~/tmp/install
+
 # https://github.com/dundalek/closh
 CLOSH=closh-zero.jar
 gh-get-bin dundalek/closh $CLOSH

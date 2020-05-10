@@ -13,6 +13,7 @@ BRANCH=${4-"master"}
 
 GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILENAME}"
 
+mkdir -p $SAVE_DIR
 pushd $SAVE_DIR
 curl -O $GET_THIS
 chmod +x $FILENAME
