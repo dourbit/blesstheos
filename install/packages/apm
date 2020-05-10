@@ -48,6 +48,7 @@ highlight-line
 highlight-selected
 ink # for proto-repl (and julia-client)
 linter-clojure
+linter-kondo
 lisp-paredit
 parinfer
 proto-repl

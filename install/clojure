@@ -17,3 +17,7 @@ lein version
 brew update
 brew install clojure/tools/clojure
 clj -e '(println (str "Clojure " (clojure-version)))'
+
+# Clj-kondo
+# https://github.com/borkdude/clj-kondo
+brew install borkdude/brew/clj-kondo
