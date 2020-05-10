@@ -25,13 +25,8 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 ```bash
 export HOME_DOTS=".dots"
-export DOTS_PATH="~/$HOME_DOTS"
-. ~/.dots/source.sh
-
-# for android development - one would also need to install java ...
-export ANDROID_HOME=$HOME/.dots/android/sdk # if installed here ...
-add_to_PATH $ANDROID_HOME/platform-tools
-add_to_PATH $ANDROID_HOME/tools
+export DOTS_PATH="$HOME/$HOME_DOTS"
+source "$DOTS_PATH/source.sh"
 ```
 
 The bash-specific stuff should be contained in `use/bash.sh`.
