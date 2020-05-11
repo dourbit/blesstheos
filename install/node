@@ -3,9 +3,9 @@
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
 # See also:
-# `../bin/nvm-up` - upgrade nvm
-# `../bin/node-in` - default lts/* or specific; keep global packages of current
-# `../aliases/npm.sh` - useful command aliases
+# `../bin/nvm-up` - upgrade of nvm itself
+# `../use/helpers/node.sh` - for switching between versions and upgrading
+# `../use/aliases/npm.sh` - useful command aliases
 
 if onMac; then
   echo "MacOS"
