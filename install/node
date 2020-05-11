@@ -4,7 +4,7 @@
 # https://github.com/nvm-sh/nvm
 # See also:
 # `../bin/nvm-up` - upgrade nvm
-# `../bin/node-up` - node lts default, with latest npm, and same global packages
+# `../bin/node-in` - default lts/* or specific; keep global packages of current
 # `../aliases/npm.sh` - useful command aliases
 
 if onMac; then
