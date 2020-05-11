@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Switches the node version while keeping the same global packages.
+# Installs the node version while keeping the same global packages from current.
 # Anything nvm will take is valid: stable, default, lts/* specific version, etc.
 # Defaults to lts/* (for long-term support)
 
@@ -9,5 +9,5 @@
 [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
 
 \. "$NVM_DIR/nvm.sh"
-nvm install ${kind} --reinstall-packages-from=current --latest-npm
-nvm alias default ${kind}
+nvm install ${kind} --reinstall-packages-from=current --latest-npm && \
+  nvm alias default ${kind} #if $kind is N/A this won't run
