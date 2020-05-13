@@ -41,18 +41,21 @@ export -f node-v
 # "current" is the default and can work if it is set to "lts/*" or "stable"
 
 node-up() {
-  kind="$1"
-  # check that $kind specifier is valid
-  if ! $(bb -i '(boolean (some #{(first *input*)}
-                ["lts/*" "stable" "default" "current" ""]))' <<< $kind)
+  kind=${1-"current"}
+  # check if $kind is valid
+  if ! $(node-use.clj $kind)
   then
-    echo "Cannot nvm use '$kind'."
+    echo "Cannot nvm use this."
+    echo "Make it one of: $(node-use.clj)"
     false; return
-  elif [ $# -eq 0 ] || [ "$1" == "default" ] || [ "$1" == "current" ]; then
-    [[ $# -eq 0 ]] && kind="current" # the default
+  elif [ "$kind" == "default" ] || [ "$kind" == "current" ]; then
     kind_v=$(node-v $kind)
-    [[ "$kind_v" == $(node-v lts/*) ]] && kind="lts/*"
-    [[ "$kind_v" == $(node-v stable) ]] && kind="stable"
+    if [ "$kind_v" == $(node-v lts/*) ]; then kind="lts/*"
+    elif [ "$kind_v" == $(node-v stable) ]; then kind="stable"
+    else
+      echo "Cannot use $kind $kind_v - which is neither lts/* nor stable."
+      false; return
+    fi
   fi
   echo "nvm use $kind"
   echo "Attempt upgrade..."

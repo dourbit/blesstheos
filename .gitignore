@@ -16,3 +16,6 @@ legacy
 # Node
 node_modules
 npm-debug.log
+
+# Clojure
+.clj-kondo/.cache
