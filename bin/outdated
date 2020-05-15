@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+lein ancient check-profiles ~/.lein/profiles.clj 2>/dev/null
