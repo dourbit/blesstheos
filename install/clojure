@@ -11,6 +11,9 @@ brew --version
 curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein
 sudo mv lein /usr/local/bin/lein
 sudo chmod a+x /usr/local/bin/lein
+LPROF=".lein/profiles.clj"
+# NOTE: would be nice to merge the profiles rather than the simple off / on
+[[ -f "$HOME/$LPROF" ]] || cp -r ${DOTS_HOME}/files/${LPROF} ~/${LPROF}
 lein version
 
 # Clojure
@@ -21,3 +24,4 @@ clj -e '(println (str "Clojure " (clojure-version)))'
 # Clj-kondo
 # https://github.com/borkdude/clj-kondo
 brew install borkdude/brew/clj-kondo
+clj-kondo --version

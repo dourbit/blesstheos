@@ -47,7 +47,8 @@ highlight-column
 highlight-line
 highlight-selected
 ink # for proto-repl (and julia-client)
-linter-clojure
+# linter-clojure
+linter-kibit
 linter-kondo
 lisp-paredit
 parinfer
@@ -57,6 +58,8 @@ proto-repl-sayid
 set-syntax
 tool-bar
 
+atom-shortcuts # ctrl-` (backtick)
+keybinding-cheatsheet # ctrl-alt-/
 ask-stack
 atom-beautify
 atom-terminal
