@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-tre --list | sed -e '1d;$d;s/^ *//' | cut -s -d ' ' -f 1

@@ -4,13 +4,17 @@
 # export TRANSMISSION_RE='127.0.0.1:9092 --auth username:password'
 # needed by the bin/tre-* scripts
 
-if [ -n "$TRANSMISSION_RE" ]; then
+if onLinux && [ -n "$TRANSMISSION_RE" ]; then
 
   tre() {
     eval $(which transmission-remote) ${TRANSMISSION_RE} ${@}
   }
-  # make it available to scripts
-  onLinux && export -f tre
+  export -f tre
+
+  tre-ids() {
+    tre --list | sed -e '1d;$d;s/^ *//' | cut -s -d ' ' -f 1
+  }
+  export -f tre-ids
 
   tre-ids-pipe() {
     # give it a function or script to call
@@ -23,7 +27,6 @@ if [ -n "$TRANSMISSION_RE" ]; then
       stdbuf -oL tre-ids | eval $1 "${@:2}"
     fi
   }
-  onLinux && export -f tre-ids-pipe
+  export -f tre-ids-pipe
 
 fi
-
