@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. $(dirname $0)/tre-helpers.sh
+check-tre || exit 1
 
 matching() {
   val=$1 && shift

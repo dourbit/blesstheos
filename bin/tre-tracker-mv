@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. $(dirname $0)/tre-helpers.sh
+check-tre || exit 1
 
 USE="Usage: tre-tracker {from} | tre-tracker-mv {from} {to}"
 

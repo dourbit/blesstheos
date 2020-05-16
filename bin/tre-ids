@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-. $(dirname $0)/tre-helpers.sh
-
-tre --list | sed -e '1d;$d;s/^ *//' | cut -s -d ' ' -f 1

@@ -12,6 +12,8 @@ source "$DOTS_HOME/use/helpers/path.sh"
 
 # helper functions, in addition to helpers/path.sh
 uses helpers/os.sh # checks for system-specific stuff, many scripts will use it
+uses helpers/tre.sh # needed by the bin/tre-* scripts: transmission-daemon tools
+# other helpers such as node.sh are sourced from elsewhere
 
 uses colors.sh
 uses systerm.sh # system/terminal-specific stuff
