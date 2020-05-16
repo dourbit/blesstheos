@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-. $(dirname $0)/tre-helpers.sh
-
 matching() {
   val=$1 && shift
   for wanted in ${@}; do
