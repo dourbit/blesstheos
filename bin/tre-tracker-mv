@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+check-tre || exit 1
+
 USE="Usage: tre-tracker {from} | tre-tracker-mv {from} {to}"
 
 if [[ "$1" && "$2" ]]; then

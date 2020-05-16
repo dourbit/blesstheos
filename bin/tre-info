@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+check-tre || exit 1
+
 t-info() {
   echo
   while IFS= read -r ID; do

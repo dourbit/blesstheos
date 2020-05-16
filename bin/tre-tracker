@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+check-tre || exit 1
+
 matching() {
   val=$1 && shift
   for wanted in ${@}; do

@@ -1,13 +1,34 @@
 #!/usr/bin/env bash
 
-# turned on by something like the following line added to .bashrc
-# export TRANSMISSION_RE='127.0.0.1:9092 --auth username:password'
-# needed by the bin/tre-* scripts
+# Some functions in use by the bin/tre-* scripts
 
-if onLinux && [ -n "$TRANSMISSION_RE" ]; then
+check-tre() {
+  if ! onLinux; then
+    echo "Only Linux supported so far."
+    false; return
+  elif ! [ -x "$(command -v transmission-remote)" ]; then
+    echo "Command 'transmission-remote' not found."
+    if onApt; then
+      echo "It can be installed with:"
+      echo "sudo apt install transmission-cli"
+    else
+      echo "Check the following on how to setup:"
+      echo "https://transmissionbt.com/download/"
+    fi
+    false; return
+  elif [ -z ${TRANSMISSION_RE} ]; then
+    echo "Not finding transmission-remote configuration."
+    echo "Retry after adding the following to ~/.bashrc with adjusted values:"
+    echo "export TRANSMISSION_RE='127.0.0.1:9092 --auth user:password'"
+    false; return
+  fi
+}
+export -f check-tre
+
+if check-tre; then
 
   tre() {
-    eval $(which transmission-remote) ${TRANSMISSION_RE} ${@}
+    eval $(command -v transmission-remote) ${TRANSMISSION_RE} ${@}
   }
   export -f tre
 
@@ -29,4 +50,5 @@ if onLinux && [ -n "$TRANSMISSION_RE" ]; then
   }
   export -f tre-ids-pipe
 
+else false; return
 fi
