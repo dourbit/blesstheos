@@ -16,10 +16,11 @@ check-tre() {
       echo "https://transmissionbt.com/download/"
     fi
     false; return
-  elif [ -z ${TRANSMISSION_RE} ]; then
-    echo "Not finding transmission-remote configuration."
+  elif [ -z "${TRANSMISSION_RE}" ]; then
+    echo "Not finding transmission-remote configuration"
     echo "Retry after adding the following to ~/.bashrc with adjusted values:"
     echo "export TRANSMISSION_RE='127.0.0.1:9092 --auth user:password'"
+    echo "#Note it has to be exported before the sourcing of source.sh"
     false; return
   fi
 }
@@ -31,11 +32,6 @@ if check-tre; then
     eval $(command -v transmission-remote) ${TRANSMISSION_RE} ${@}
   }
   export -f tre
-
-  tre-ids() {
-    tre --list | sed -e '1d;$d;s/^ *//' | cut -s -d ' ' -f 1
-  }
-  export -f tre-ids
 
   tre-ids-pipe() {
     # give it a function or script to call

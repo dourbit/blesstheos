@@ -13,10 +13,6 @@ alias df='df -h'
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
-# some aliases depend on variables being set
-# e.g. export TRANSMISSION_RE='127.0.0.1:9091 --auth user:pw'
-[[ -n "$TRANSMISSION_RE" ]] && alias transmission-remote="transmission-remote ${TRANSMISSION_RE}"
-
 uses aliases/apm.sh
 uses aliases/npm.sh
 uses aliases/pip.sh

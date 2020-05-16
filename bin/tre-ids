@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+check-tre || exit 1
+
+# NOTE: this has to remain a script rather than a function because...
+# tre-ids-pipe uses stdbuf which only runs commands - what this is.
+
+tre --list | sed -e '1d;$d;s/^ *//' | cut -s -d ' ' -f 1
