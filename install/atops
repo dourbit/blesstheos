@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+touch ~/.bashrc-pre
+
 # only for Debian / Ubuntu so far...
 # what is generally needed by a system (for other installs)
 

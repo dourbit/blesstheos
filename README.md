@@ -3,7 +3,7 @@
 `git clone git@github.com:orlin/dots.git ~/.dots`
 
 This approach covers both login and non-login shells -- so far just for `bash`.
-Change `.dots` to wherever `dots` is cloned.  It has to be relative to `$HOME`,
+Change `.dots` to wherever `dots` is cloned. It has to be relative to `$HOME`,
 though in the future perhaps absolute paths could be supported as well.
 
 Copy & modify any / all files that you need from `~/.dots/home` to `~`.
@@ -26,6 +26,8 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 ```bash
 export HOME_DOTS=".dots"
 export DOTS_PATH="$HOME/$HOME_DOTS"
+
+source "$HOME/.bashrc-pre"
 source "$DOTS_PATH/source.sh"
 ```
 
@@ -41,7 +43,7 @@ I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
 1. `atops` - needed for many of the install scripts, find the MacOS equivalents...
-2. `brew` - [Homebrew](https://brew.sh/) runs on both Mac and Linux now
+2. `brew` - [Homebrew](https://brew.sh/) runs on both Mac and Linux now, MacOS TODO...
 3. `shell` - scripting with bash + bb or closh
 4. `apt-java` - unless Ubuntu / Debian: [download & install AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot) manually...
 5. `clojure` - depends on `java` and `brew`
@@ -53,7 +55,7 @@ Sometimes installs depend on other installs, here is an example order:
 
 Packages are for the time being all installed manually.
 
-Atom restores to its configured state through a [sync-settings](http://atom.io/packages/sync-settings) package given the [id of a gist, such as this one](https://gist.github.com/orlin/0a47688f152d7ceccb646a23e8245449) and a GitHub Personal Access Token that can read & write to it.  Remember to run `sync-settings:backup` through the [Command Palette](https://github.com/atom/command-palette) once in a while and especially after restore / upgrade / changes so that things stay relatively up-to-date for further reuse.
+Atom restores to its configured state through a [sync-settings](http://atom.io/packages/sync-settings) package given the [id of a gist, such as this one](https://gist.github.com/orlin/0a47688f152d7ceccb646a23e8245449) and a GitHub Personal Access Token that can read & write to it. Remember to run `sync-settings:backup` through the [Command Palette](https://github.com/atom/command-palette) once in a while and especially after restore / upgrade / changes so that things stay relatively up-to-date for further reuse.
 
 ## License
 

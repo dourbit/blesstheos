@@ -18,8 +18,8 @@ test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew
 echo "" >>~/.profile
 echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 
-echo "" >>~/.bashrc
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bashrc
+echo "" >>~/.bashrc-pre
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bashrc-pre
 
 # if you install something by mistake then `brew rmtree package`
 # https://stackoverflow.com/questions/7323261/uninstall-remove-a-homebrew-package-including-all-its-dependencies

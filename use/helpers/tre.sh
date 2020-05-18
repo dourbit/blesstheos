@@ -6,7 +6,7 @@ check-tre() {
   if ! onLinux; then
     echo "Only Linux supported so far."
     false; return
-  elif ! [ -x "$(command -v transmission-remote)" ]; then
+  elif [ ! -x "$(command -v transmission-remote)" ]; then
     echo "Command 'transmission-remote' not found."
     if onApt; then
       echo "It can be installed with:"
@@ -18,15 +18,14 @@ check-tre() {
     false; return
   elif [ -z "${TRANSMISSION_RE}" ]; then
     echo "Not finding transmission-remote configuration"
-    echo "Retry after adding the following to ~/.bashrc with adjusted values:"
+    echo "Retry after adding the following to ~/.bashrc-pre with changed values"
     echo "export TRANSMISSION_RE='127.0.0.1:9092 --auth user:password'"
-    echo "#Note it has to be exported before the sourcing of source.sh"
     false; return
   fi
 }
 export -f check-tre
 
-if ! [ -z "${TRANSMISSION_RE}" ] && check-tre; then
+if [ ! -z "${TRANSMISSION_RE}" ] && check-tre; then
 
   tre() {
     eval $(command -v transmission-remote) ${TRANSMISSION_RE} ${@}
