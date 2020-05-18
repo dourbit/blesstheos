@@ -12,7 +12,7 @@ fi
 if onLinux && check-x apt; then
   echo
   echo Apt ...
-  sudo apt upgrade
+  sudo apt -y upgrade
 fi
 
 [ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh
@@ -21,15 +21,22 @@ if check-x nvm; then
   echo NVM ...
   nvm-up
   echo
-  echo NodeJS ...
-  node-up
+  if check-x bb; then
+    echo NodeJS ...
+    node-up
+  else
+    echo "Babashka required, please install/shell"
+  fi
 fi
 
-if check-x lein; then
-  echo
-  echo Leiningen ...
-  yes Y | sudo lein upgrade
+if check-x sudo; then
+  if sudo bash -c "$(declare -f check-x); check-x lein"; then
+    echo
+    echo Leiningen ...
+    yes Y | sudo lein upgrade
+  fi
   echo
   echo Leiningen User Profiles ...
   lein ancient upgrade-profiles ~/.lein/profiles.clj 2>/dev/null
 fi
+
