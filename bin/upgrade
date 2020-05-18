@@ -1,3 +1,35 @@
 #!/usr/bin/env bash
 
-lein ancient upgrade-profiles ~/.lein/profiles.clj 2>/dev/null
+# so we get the login at the top
+sudo echo "" > /dev/null
+
+if check-x brew; then
+  echo
+  echo Homebrew ...
+  brew upgrade
+fi
+
+if onLinux && check-x apt; then
+  echo
+  echo Apt ...
+  sudo apt upgrade
+fi
+
+[ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh
+if check-x nvm; then
+  echo
+  echo NVM ...
+  nvm-up
+  echo
+  echo NodeJS ...
+  node-up
+fi
+
+if check-x lein; then
+  echo
+  echo Leiningen ...
+  yes Y | sudo lein upgrade
+  echo
+  echo Leiningen User Profiles ...
+  lein ancient upgrade-profiles ~/.lein/profiles.clj 2>/dev/null
+fi

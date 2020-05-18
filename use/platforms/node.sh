@@ -3,8 +3,10 @@ export NVM_DIR="$HOME/.nvm"
 
 if onMac; then
   source $(brew --prefix nvm)/nvm.sh
-elif onLinux; then
-  [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
+fi
+
+if onLinux; then
+  [ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh
 fi
 
 uses helpers/node.sh

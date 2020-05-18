@@ -20,5 +20,7 @@ eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 # https://stackoverflow.com/questions/7323261/uninstall-remove-a-homebrew-package-including-all-its-dependencies
 brew tap beeftornado/rmtree
 
-# as suggested:
-brew install gcc
+# Eventually these will get split in 3 files: linux-only, mac-only, and shared.
+# Here is a fresh start for what should end up as shared.
+brew install gcc #suggested
+brew install neovim #run as nvim
