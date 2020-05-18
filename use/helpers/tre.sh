@@ -9,7 +9,10 @@ check-tre() {
   elif [ ! -x "$(command -v transmission-remote)" ]; then
     echo "Command 'transmission-remote' not found."
     if onApt; then
-      echo "It can be installed with:"
+      echo "The following command can install:"
+      echo "sudo apt install transmission-cli"
+    elif check-x brew; then
+      echo "Since you have brew installed:"
       echo "brew install transmission-cli"
     else
       echo "Check the following on how to setup:"
