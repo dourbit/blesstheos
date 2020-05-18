@@ -10,7 +10,7 @@ check-tre() {
     echo "Command 'transmission-remote' not found."
     if onApt; then
       echo "It can be installed with:"
-      echo "sudo apt install transmission-cli"
+      echo "brew install transmission-cli"
     else
       echo "Check the following on how to setup:"
       echo "https://transmissionbt.com/download/"
@@ -26,7 +26,7 @@ check-tre() {
 }
 export -f check-tre
 
-if check-tre; then
+if ! [ -z "${TRANSMISSION_RE}" ] && check-tre; then
 
   tre() {
     eval $(command -v transmission-remote) ${TRANSMISSION_RE} ${@}

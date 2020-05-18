@@ -4,17 +4,22 @@
 # https://docs.brew.sh/Installation
 # https://docs.brew.sh/Homebrew-on-Linux
 
+if onMac; then
+  echo "MacOS has not been tested yet.  Will not install."
+  exit 0
+fi
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
+# NOTE: the following 2 lines are Linux-specific...  Where does it go on a Mac?
 test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
 test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 echo "" >>~/.profile
 echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
 
-# log out for `brew` to work, meanwhile install gcc (as recommended)
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+echo "" >>~/.bashrc
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bashrc
 
 # if you install something by mistake then `brew rmtree package`
 # https://stackoverflow.com/questions/7323261/uninstall-remove-a-homebrew-package-including-all-its-dependencies
@@ -24,3 +29,4 @@ brew tap beeftornado/rmtree
 # Here is a fresh start for what should end up as shared.
 brew install gcc #suggested
 brew install neovim #run as nvim
+brew install transmission-cli #needed for transmission-remote tre-* scripts
