@@ -2,19 +2,20 @@
 
 # Require 2 args
 if [[ $# -lt 2 ]]; then
-    echo "Usage: $(basename $0) user/repo file-name [branch or master] [save-to-dir or .]"
-    exit 1
+  echo "Usage: $(basename $0) user/repo file-path [save-to-dir or ./] [branch or master]"
+  exit 1
 fi
 
 REPOPATH=$1
-FILENAME=$2
-SAVE_DIR=${3-"."}
+FILEPATH=$2
+FILENAME=$(basename ${FILEPATH})
+SAVE_DIR=${3-"./"}
 BRANCH=${4-"master"}
 
-GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILENAME}"
+GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILEPATH}"
 
 mkdir -p $SAVE_DIR
-pushd $SAVE_DIR
-curl -O $GET_THIS
+cd $SAVE_DIR
+curl -LO $GET_THIS
 chmod +x $FILENAME
-popd
+cd - > /dev/null
