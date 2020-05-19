@@ -1,5 +1,13 @@
 export KERNEL_NAME=$(uname -s)
 
+# spaced echo
+specho() {
+  echo
+  echo "$@"
+}
+export -f specho
+
+
 onMac() {
   if [ "$KERNEL_NAME" == 'Darwin' ]; then true; return; fi
   false; return

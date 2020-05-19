@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
 
 if check-x brew; then
-  echo
-  echo Homebrew ...
+  specho Homebrew ...
   brew outdated
 fi
 
 if onLinux && check-x apt; then
-  echo
-  echo Apt ...
+  specho Apt ...
   apt list --upgradeable
 fi
 
 # TODO: Write a node-upgradeable function in use/helpers/node.sh to use here.
 
 if check-x lein; then
-  echo
-  echo Leiningen User Profiles ...
+  specho Leiningen User Profiles ...
   lein ancient check-profiles ~/.lein/profiles.clj 2>/dev/null
 fi
