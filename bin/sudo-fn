@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]; then
+  echo "Usage: sudo-fn <function> [args]"
+else
+  sudo bash -c "$(declare -f $1); $1 ${@:2}"
+fi

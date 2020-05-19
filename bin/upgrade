@@ -26,7 +26,7 @@ if check-x nvm; then
 fi
 
 if check-x sudo; then
-  if sudo bash -c "$(declare -f check-x); check-x lein"; then
+  if sudo-fn check-x lein; then
     specho Leiningen ...
     yes Y | sudo lein upgrade
   fi
