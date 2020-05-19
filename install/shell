@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 # https://github.com/borkdude/babashka
-brew install borkdude/brew/babashka
+if brewOn; then brew install borkdude/brew/babashka
+else
+  gh-install borkdude/babashka install ~/tmp/
+  sudo ~/tmp/install
+  rm ~/tmp/install
+fi
 
 # http://www.bpkg.sh/
 # NOTE: using this is kind of funky

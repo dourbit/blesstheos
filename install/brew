@@ -26,7 +26,9 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bashrc-pre
 brew tap beeftornado/rmtree
 
 # Eventually these will get split in 3 files: linux-only, mac-only, and shared.
-# Here is a fresh start for what should end up as shared.
-brew install gcc #suggested
-brew install neovim #run as nvim
-brew install transmission-cli #needed for transmission-remote tre-* scripts
+# Here is a fresh start for what should end up as shared. None are necessary...
+if brewOn; then
+  brew install gcc #suggested
+  brew install neovim #run as nvim
+  if ! onApt; then brew install transmission-cli; fi # apt is preferable
+fi

@@ -1,27 +1,40 @@
 #!/usr/bin/env bash
 
 # Based on https://purelyfunctional.tv/guide/how-to-install-clojure/
+CLOJURE_V="1.10.1.536"
 
 # Expected deps
 echo $JAVA_HOME
 java -version
-brew --version
+brewOn && brew --version
 
 # Leiningen
-curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > lein
-sudo mv lein /usr/local/bin/lein
-sudo chmod a+x /usr/local/bin/lein
+sudo env "PATH=$PATH" gh-install technomancy/leiningen bin/lein /usr/local/bin/ stable
+
+# Leiningen User Profiles
 LPROF=".lein/profiles.clj"
 # NOTE: would be nice to merge the profiles rather than the simple off / on
 [[ -f "$HOME/$LPROF" ]] || cp -r ${DOTS_HOME}/files/${LPROF} ~/${LPROF}
 lein version
 
 # Clojure
-brew update
-brew install clojure/tools/clojure
+if brewOn; then brew install clojure/tools/clojure
+else
+  cd ~/tmp
+  curl -sLO "https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh"
+  chmod +x "linux-install-${CLOJURE_V}.sh"
+  sudo "./linux-install-${CLOJURE_V}.sh"
+  rm "./linux-install-${CLOJURE_V}.sh"
+  cd - > /dev/null
+fi
 clj -e '(println (str "Clojure " (clojure-version)))'
 
 # Clj-kondo
 # https://github.com/borkdude/clj-kondo
-brew install borkdude/brew/clj-kondo
+if brewOn; then brew install borkdude/brew/clj-kondo
+else
+  gh-install borkdude/clj-kondo script/install-clj-kondo ~/tmp/
+  sudo ~/tmp/install-clj-kondo
+  rm ~/tmp/install-clj-kondo
+fi
 clj-kondo --version

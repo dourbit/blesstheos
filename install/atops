@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+mkdir -p ~/tmp
 touch ~/.bashrc-pre
 
 # only for Debian / Ubuntu so far...

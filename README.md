@@ -26,6 +26,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 ```bash
 export HOME_DOTS=".dots"
 export DOTS_PATH="$HOME/$HOME_DOTS"
+export BREW_ON=true # omit to reduce or skip Homebrew usage
 
 source "$HOME/.bashrc-pre"
 source "$DOTS_PATH/source.sh"
@@ -43,7 +44,7 @@ I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
 1. `atops` - needed for many of the install scripts, find the MacOS equivalents...
-2. `brew` - [Homebrew](https://brew.sh/) runs on both Mac and Linux now, MacOS TODO...
+2. `brew` - [Homebrew](https://brew.sh/) usage depends on `export BREW_ON=true`, MacOS TODO...
 3. `shell` - scripting with bash + bb or closh
 4. `apt-java` - unless Ubuntu / Debian: [download & install AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot) manually...
 5. `clojure` - depends on `java` and `brew`
