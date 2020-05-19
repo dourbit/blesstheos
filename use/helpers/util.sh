@@ -10,6 +10,6 @@ export -f specho
 # perhaps it is unwanted when installing a cloud server from scratch
 # when getting a machine from from zero to running is of the essence
 brewOn() {
-  [ "$BREW_ON" = true ] && { true; return; } || { false; return; }
+  [ "$BREW_ON" = true ] && check-x brew && { true; return; } || { false; return; }
 }
 export -f brewOn
