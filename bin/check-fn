@@ -19,7 +19,8 @@ else
   declare -fp "$1" 2> /dev/null || {
     echo "$1 is not a function"
     shopt -s expand_aliases
-    uses "aliases.sh"
+    ALIASES="$DOTS_HOME/use/aliases.sh"
+    [ -f "$ALIASES" ] && . "$ALIASES"
     type "$1" 2> /dev/null
   }
 fi
