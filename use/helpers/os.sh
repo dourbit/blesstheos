@@ -1,25 +1,17 @@
 export KERNEL_NAME=$(uname -s)
 
-# spaced echo
-specho() {
-  echo
-  echo "$@"
-}
-export -f specho
-
-
 onMac() {
   if [ "$KERNEL_NAME" == 'Darwin' ]; then true; return; fi
   false; return
 }
 export -f onMac
 
+
 onLinux() {
   if [ "$KERNEL_NAME" == 'Linux' ]; then true; return; fi
   false; return
 }
 export -f onLinux
-
 
 if onLinux; then export DISTRO_ID=$(lsb_release -i | awk '{print $NF}'); fi
 
