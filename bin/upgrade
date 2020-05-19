@@ -25,10 +25,14 @@ if check-x nvm; then
   fi
 fi
 
-if check-x sudo; then
+if check-x lein; then
+  specho Leiningen ...
   if sudo-fn check-x lein; then
-    specho Leiningen ...
+    # global lein needs sudo to upgrade
     yes Y | sudo lein upgrade
+  else
+    # sometimes lein install is just within a local user context
+    yes Y | lein upgrade
   fi
   specho Leiningen User Profiles ...
   lein ancient upgrade-profiles ~/.lein/profiles.clj 2>/dev/null
