@@ -8,4 +8,8 @@ if onApt; then
   sudo apt install -y bmon slurm tcptrack iftop nethogs # network interface(s)
   sudo apt install -y speedometer # graph network traffic with custom chart max
   # speedometer -l  -t eth0 -r eth0 -m $(( 1024 * 1024 * 9 ))
+elif onMac; then
+  specho iTerm2 Shell Integrations ...
+  # the following will add a line to .profile or .bash_profile / something
+  curl -L https://iterm2.com/misc/install_shell_integration.sh | bash
 fi

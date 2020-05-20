@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
+sudo echo "" > /dev/null # sudo needed later
+
 # https://github.com/borkdude/babashka
-if brewOn; then brew install borkdude/brew/babashka
+specho Babashka ...
+if brewOn; then
+  if [ "$1" == "upgrade" ]; then brew upgrade babashka
+  else brew install borkdude/brew/babashka; fi
 else
   gh-install borkdude/babashka install ~/tmp/
   sudo ~/tmp/install
@@ -10,7 +15,8 @@ fi
 
 # http://www.bpkg.sh/
 # NOTE: using this is kind of funky
-curl -sLo- http://get.bpkg.sh | bash
+# there is no use for bpkg at the moment
+# curl -sLo- http://get.bpkg.sh | bash
 
 # NOTE some issues with bpkg:
 # * global install with sudo doesn't work as bpkg is installed locally
@@ -28,23 +34,21 @@ curl -sLo- http://get.bpkg.sh | bash
 # source ~/.bashrc # ~/deps/bin dir just got created, this should add it to $PATH
 
 # https://github.com/dominictarr/JSON.sh
+specho JSON.sh ...
 gh-install dominictarr/JSON.sh JSON.sh ~/bin/
 
 # https://github.com/mclarkson/JSONPath.sh
 # https://cburgmer.github.io/json-path-comparison/
+specho JSONPath.sh ...
 gh-install mclarkson/JSONPath.sh JSONPath.sh ~/bin/
 
 # https://github.com/cute/JSONPretty
+specho JSONPretty.sh ...
 gh-install cute/JSONPretty.sh JSONPretty.sh ~/bin/
 
 # https://github.com/dundalek/closh
+specho Closh ...
 CLOSH=closh-zero.jar
 gh-get-bin dundalek/closh $CLOSH
 sudo mv $CLOSH /usr/local/bin/
 sudo chmod a+x /usr/local/bin/$CLOSH
-
-if onMac; then
-  echo "Mac OS"
-  # the following will add a line to .profile or .bash_profile / something
-  curl -L https://iterm2.com/misc/install_shell_integration.sh | bash
-fi
