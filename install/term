@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Various terminal tools
+
+if onApt; then
+  # https://askubuntu.com/questions/257263/how-to-display-network-traffic-in-the-terminal
+  sudo apt install -y htop glances # monitor system processes and much more
+  sudo apt install -y bmon slurm tcptrack iftop nethogs # network interface(s)
+  sudo apt install -y speedometer # graph network traffic with custom chart max
+  # speedometer -l  -t eth0 -r eth0 -m $(( 1024 * 1024 * 9 ))
+fi

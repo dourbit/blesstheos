@@ -50,9 +50,10 @@ Sometimes installs depend on other installs, here is an example order:
 5. `clojure` - depends on `java`, with `brewOn` possibly for some installs
 6. `node` - MacOS version has worked in the past, though not tested lately...
 7. `ruby` - via `brew` on a Mac - maybe unify for all to be brew-based...
-8. `ubuntu-docker` and certain `docker/` containers
-9. `apt-python`
-10. `apt-desktop`
+8. `term` - it's just `apt` so far...
+9. `ubuntu-docker` and certain `docker/` containers
+10. `apt-python`
+11. `apt-desktop`
 
 Packages are for the time being all installed manually.
 
