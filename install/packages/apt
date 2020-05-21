@@ -1,4 +1,3 @@
-libuser # lid? (call libuser-lid)
-ncdu # http://dev.yorhel.nl/ncdu
+libuser # libuser-lid
 exfat-fuse
 exfat-utils
