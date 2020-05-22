@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $(basename $0) filepath/of/installer-to-run-and-remove"
+    exit 1
+fi
+
+installer=$1
+
+if [ ! -f $installer ]; then
+    echo "$installer"
+    echo "File not found!"
+    exit 1
+fi
+
+# make it an executable file
+chmod +x $installer
+
+# run it to install whatever
+$installer
+
+# remove it for a clean exit
+rm $installer

@@ -28,9 +28,7 @@ if brewOn; then brew install clojure/tools/clojure
 else
   cd ~/tmp
   curl -sLO "https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh"
-  chmod +x "linux-install-${CLOJURE_V}.sh"
-  sudo "./linux-install-${CLOJURE_V}.sh"
-  rm "./linux-install-${CLOJURE_V}.sh"
+  sudomy install-xr "linux-install-${CLOJURE_V}.sh"
   cd - > /dev/null
 fi
 clj -e '(println (str "Clojure " (clojure-version)))'

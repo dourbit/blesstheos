@@ -6,11 +6,4 @@
 gh-install $@
 
 # count on same gh-install args
-INSTALLER=$(basename ${2})
-DIRECTORY=${3-"./"}
-
-# run it to install whatever
-${DIRECTORY}/${INSTALLER}
-
-# remove it for a clean exit
-rm "${DIRECTORY}/${INSTALLER}"
+install-xr ${3-"./"}/$(basename ${2})
