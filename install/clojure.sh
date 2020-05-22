@@ -15,6 +15,7 @@ java -version
 brewOn && brew --version
 
 # Leiningen
+specho Leiningen ...
 sudomy gh-install technomancy/leiningen bin/lein /usr/local/bin/ stable
 
 # Leiningen User Profiles
@@ -24,6 +25,7 @@ LPROF=".lein/profiles.clj"
 lein version
 
 # Clojure - rarely installed, change $CLOJURE_V at the top to reinstall another
+specho Clojure ...
 if brewOn; then brew install clojure/tools/clojure
 else
   cd ~/tmp
@@ -35,6 +37,7 @@ clj -e '(println (str "Clojure " (clojure-version)))'
 
 # Clj-kondo
 # https://github.com/borkdude/clj-kondo
+specho Clj-kondo ...
 if brewOn; then
   brew install borkdude/brew/clj-kondo
 else
