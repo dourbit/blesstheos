@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo echo "" > /dev/null # sudo needed later
+sudoUse
 
 # https://github.com/borkdude/babashka
 specho Babashka ...

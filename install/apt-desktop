@@ -5,6 +5,8 @@
 
 if onApt; then
 
+  sudoUse
+
   # Tor Browser
   # https://linuxize.com/post/how-to-install-tor-browser-on-ubuntu-18-04/
   specho Tor Browser ...

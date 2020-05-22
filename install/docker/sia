@@ -3,6 +3,8 @@
 # Based on the following container code
 # https://github.com/mtlynch/docker-sia
 
+sudoUse
+
 SIA_DATA=$HOME/data/sia
 mkdir -p ${SIA_DATA}
 

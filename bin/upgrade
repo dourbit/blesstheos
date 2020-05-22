@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# prompt for password at the top, as sudo will be invoked later on
-sudo echo "" > /dev/null
+sudoUse
 
 if check-x brew; then
   specho Homebrew ...

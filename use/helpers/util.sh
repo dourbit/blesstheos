@@ -1,9 +1,20 @@
-# spaced echo
+# spaced echo for more readble output with less code
 specho() {
   echo
   echo "$@"
 }
 export -f specho
+
+# will use sudo, make it clear at the top, especially for long-running scripts
+sudoUse() {
+  # use in scripts using sudo
+  # declare intent at the top
+  # prompts for password early
+  # when people are still looking
+  # as sudo will be used later on
+  sudo echo "" > /dev/null # does nothing except ask for password if necessary
+}
+export -f sudoUse
 
 # sometimes brew is unnecessary as it takes too long to install
 # that's especially true when there's a network or disk bottleneck
