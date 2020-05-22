@@ -16,4 +16,10 @@ if onApt; then
   echo '' >> ~/.bashrc # add an empty line spacer
   echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
 
+else
+
+  echo "You may need to setup java manually, let's see what you have installed:"
+  echo $JAVA_HOME
+  java -version
+
 fi
