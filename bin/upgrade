@@ -36,3 +36,15 @@ if check-x lein; then
   specho Leiningen User Profiles ...
   lein ancient upgrade-profiles ~/.lein/profiles.clj 2>/dev/null
 fi
+
+# Some things may not have been installed with brew...
+if ! brewOn; then
+  if check-x bb; then
+    specho Babashka ...
+    sudomy gh-install-xr borkdude/babashka install ~/tmp/
+  fi
+  if check-x clj-kondo; then
+    specho Clj-kondo ...
+    sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp/
+  fi
+fi

@@ -5,8 +5,7 @@ sudoUse
 # https://github.com/borkdude/babashka
 specho Babashka ...
 if brewOn; then
-  if [ "$1" == "upgrade" ]; then brew upgrade babashka
-  else brew install borkdude/brew/babashka; fi
+  brew install borkdude/brew/babashka
 else
   sudomy gh-install-xr borkdude/babashka install ~/tmp/
 fi
