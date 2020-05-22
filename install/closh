@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# https://github.com/dundalek/closh
+
+# Note the following dependencies:
+# install/shell (JSONPath.sh) for gh-get-bin
+# install/java for closh-zero.jar itself
+
+if check-x JSONPath.sh && check-x java; then
+  sudomy gh-get-bin dundalek/closh closh-zero.jar latest /usr/local/bin/
+  sudo chmod +x /usr/local/bin/closh-zero.jar
+else
+  echo "Unmet dependencies, cannot install closh."
+  exit 1
+fi

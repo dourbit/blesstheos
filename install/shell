@@ -44,7 +44,5 @@ specho JSONPretty.sh ...
 gh-install cute/JSONPretty.sh JSONPretty.sh ~/bin/
 
 # https://github.com/dundalek/closh
-# Note: gh-get-bin used below needs JSONPath.sh installed above
 specho Closh ...
-sudomy gh-get-bin dundalek/closh closh-zero.jar latest /usr/local/bin/
-sudo chmod +x /usr/local/bin/closh-zero.jar
+$(dirname $0)/closh # install here, because it's a shell

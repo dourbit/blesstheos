@@ -48,3 +48,8 @@ if ! brewOn; then
     sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp/
   fi
 fi
+
+if check-x closh; then
+  specho Closh ...
+  $(dirname $0)/../install/closh
+fi
