@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Run a function with sudo, as declared / exported by the current user.
+
 if [ $# -eq 0 ]; then
   echo "Usage: sudo-fn <function> [args]"
 else

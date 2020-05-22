@@ -8,9 +8,7 @@ if brewOn; then
   if [ "$1" == "upgrade" ]; then brew upgrade babashka
   else brew install borkdude/brew/babashka; fi
 else
-  gh-install borkdude/babashka install ~/tmp/
-  sudo ~/tmp/install
-  rm ~/tmp/install
+  sudomy gh-install-xr borkdude/babashka install ~/tmp/
 fi
 
 # http://www.bpkg.sh/
@@ -47,6 +45,7 @@ specho JSONPretty.sh ...
 gh-install cute/JSONPretty.sh JSONPretty.sh ~/bin/
 
 # https://github.com/dundalek/closh
+# Note: gh-get-bin used below needs JSONPath.sh installed above
 specho Closh ...
 CLOSH=closh-zero.jar
 gh-get-bin dundalek/closh $CLOSH

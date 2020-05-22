@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
+# Note: sh extension is for Atom to not treat it as Clojure code.
+
+sudoUse
+
 # Based on https://purelyfunctional.tv/guide/how-to-install-clojure/
 # https://clojure.org/guides/getting_started#_installation_on_linux
-# Version copied from above.
+# Version copied from the above link.
 CLOJURE_V="1.10.1.536"
 
 # Expected deps
@@ -11,7 +15,7 @@ java -version
 brewOn && brew --version
 
 # Leiningen
-sudo env "PATH=$PATH" gh-install technomancy/leiningen bin/lein /usr/local/bin/ stable
+sudomy gh-install technomancy/leiningen bin/lein /usr/local/bin/ stable
 
 # Leiningen User Profiles
 LPROF=".lein/profiles.clj"
@@ -19,7 +23,7 @@ LPROF=".lein/profiles.clj"
 [[ -f "$HOME/$LPROF" ]] || cp -r ${DOTS_HOME}/files/${LPROF} ~/${LPROF}
 lein version
 
-# Clojure
+# Clojure - rarely installed, change $CLOJURE_V at the top to reinstall another
 if brewOn; then brew install clojure/tools/clojure
 else
   cd ~/tmp
@@ -33,10 +37,9 @@ clj -e '(println (str "Clojure " (clojure-version)))'
 
 # Clj-kondo
 # https://github.com/borkdude/clj-kondo
-if brewOn; then brew install borkdude/brew/clj-kondo
+if brewOn; then
+  brew install borkdude/brew/clj-kondo
 else
-  gh-install borkdude/clj-kondo script/install-clj-kondo ~/tmp/
-  sudo ~/tmp/install-clj-kondo
-  rm ~/tmp/install-clj-kondo
+  sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp/
 fi
 clj-kondo --version

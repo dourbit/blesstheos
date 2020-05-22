@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Same as ./gh-install except it treats what is downloaded as an installer,
+# runs the code, then removes it after all done no matter how it finished.
+
+gh-install $@
+
+# count on same gh-install args
+INSTALLER=$(basename ${2})
+DIRECTORY=${3-"./"}
+
+# run it to install whatever
+${DIRECTORY}/${INSTALLER}
+
+# remove it for a clean exit
+rm "${DIRECTORY}/${INSTALLER}"

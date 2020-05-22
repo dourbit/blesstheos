@@ -16,6 +16,12 @@ sudoUse() {
 }
 export -f sudoUse
 
+# sudo with your own $PATH and maybe more in the future
+sudomy() {
+  sudo env "PATH=$PATH" $@
+}
+export -f sudomy
+
 # sometimes brew is unnecessary as it takes too long to install
 # that's especially true when there's a network or disk bottleneck
 # perhaps it is unwanted when installing a cloud server from scratch
