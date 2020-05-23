@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# `install/shell` for the JSONPath.sh
+# Must install/shell for `JSONPath.sh` dep.
 
 # Get a binary asset from GitHub, give it the following args:
 # $1 user/repo
@@ -8,22 +8,26 @@
 # $3 [tag-name] optional: defaults to "latest"
 # $4 [dir-name] destination directory optional: defaults to the current dir .
 
-# Require 2 args
-if [[ $# -lt 2 ]]; then
-    echo "Usage: $(basename $0) user/repo file-name [tag_name or latest] [save-to-dir or .]"
-    exit 1
-fi
+main() {
+  if [[ $# -lt 2 ]]; then
+      echo "Usage: $(basename $0) user/repo file-name [tag_name or latest] [save-to-dir or .]"
+      false; return
+  fi
 
-REPOPATH=$1
-FILENAME=$2
-TAG_NAME=${3-"latest"}
-SAVE_DIR=${4-$(pwd)}
-GET_THIS="https://api.github.com/repos/${REPOPATH}/releases/${TAG_NAME}"
-# https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
-DOWNLOAD=$(curl -sSL "${GET_THIS}" | JSONPath.sh '$.."browser_download_url"' | grep $FILENAME | awk '{print $NF}' | tr -d '"')
+  local REPOPATH=$1
+  local FILENAME=$2
+  local TAG_NAME=${3-"latest"}
+  local SAVE_DIR=${4-$(pwd)}
+  local GET_THIS="https://api.github.com/repos/${REPOPATH}/releases/${TAG_NAME}"
+  # https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
+  local DOWNLOAD=$(curl -sSL "${GET_THIS}" | JSONPath.sh '$.."browser_download_url"' | grep $FILENAME | awk '{print $NF}' | tr -d '"')
 
-if [ ! "$DOWNLOAD" ]; then
-  echo "Nothing for ${GET_THIS}"
-else
-  curl-install ${SAVE_DIR}/${FILENAME} ${DOWNLOAD} -H 'Accept:application/octet-stream'
-fi
+  if [ ! "$DOWNLOAD" ]; then
+    echo "Nothing for ${GET_THIS}"
+    false; return
+  else
+    curl-install ${SAVE_DIR}/${FILENAME} ${DOWNLOAD} -H 'Accept:application/octet-stream'
+  fi
+}
+
+main "$@"

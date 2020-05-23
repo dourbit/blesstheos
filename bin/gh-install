@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 
-# Require 2 args
-if [[ $# -lt 2 ]]; then
-  echo "Usage: $(basename $0) user/repo file-path [save-to-dir or ./] [branch or master]"
-  exit 1
-fi
+# Install some file from GitHub.
 
-REPOPATH=$1
-FILEPATH=$2
-FILENAME=$(basename ${FILEPATH})
-SAVE_DIR=${3-$(pwd)}
-BRANCH=${4-"master"}
+main() {
+  if [ $# -lt 2 ]; then
+    echo "Usage: $(basename $0) user/repo file-path [save-to-dir or ./] [branch or master]"
+    false; return
+  fi
 
-GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILEPATH}"
+  local REPOPATH=$1
+  local FILEPATH=$2
+  local FILENAME=$(basename ${FILEPATH})
+  local SAVE_DIR=${3-$(pwd)}
+  local BRANCH=${4-"master"}
 
-curl-install ${SAVE_DIR}/${FILENAME} ${GET_THIS}
+  local GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILEPATH}"
+
+  curl-install ${SAVE_DIR}/${FILENAME} ${GET_THIS}
+}
+
+main "$@"

@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
-curl-install() {
+# uses curl-report to download something and make it executable
+# at a given filepath as a 1st arg, the rest of args being same as curl-report
+# this was started as some downloads fail and thus installs become unpredictable
+
+main() {
   if [ $# -lt 2 ]; then
-    echo "Usage: curl-install <filepath> <url> [curl-options]"
+    echo "Usage: $(basename $0) <filepath> <url> [curl-options]"
     false; return
   else
     local FILEPATH=${1}
@@ -24,4 +28,4 @@ curl-install() {
   fi
 }
 
-curl-install $@
+main "$@"

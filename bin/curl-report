@@ -3,11 +3,10 @@
 # only for curl at this time - though could be generalized later...
 # for when we want to know how a command exits (success vs failure)
 # also for passing on the status code via true or false return
-# this was started as some downloads fail and thus installs become unpredictable
 
-curl-report() {
+main() {
   if [ $# -eq 0 ]; then
-    echo "Usage: curl-report <url> [curl-options]"
+    echo "Usage: $(basename $0) <url> [curl-options]"
     false; return
   else
     local cmd="curl -w %{http_code} -L $@"
@@ -30,4 +29,4 @@ curl-report() {
   fi
 }
 
-curl-report $@
+main "$@"

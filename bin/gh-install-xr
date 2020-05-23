@@ -3,7 +3,7 @@
 # Same as ./gh-install except it treats what is downloaded as an installer,
 # runs the code, then removes it after all done no matter how it finished.
 
-gh-install $@
+gh-install "$@"
 
-# count on same gh-install args
+# Count on the same gh-install args.
 install-xr ${3-"./"}/$(basename ${2})
