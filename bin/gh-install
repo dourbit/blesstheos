@@ -9,13 +9,16 @@ fi
 REPOPATH=$1
 FILEPATH=$2
 FILENAME=$(basename ${FILEPATH})
-SAVE_DIR=${3-"./"}
+SAVE_DIR=${3-$(pwd)}
 BRANCH=${4-"master"}
 
 GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILEPATH}"
 
-mkdir -p $SAVE_DIR
-cd $SAVE_DIR
-curl -LO $GET_THIS
-chmod +x $FILENAME
-cd - > /dev/null
+if curl-report ${GET_THIS} -o ~/tmp/${FILENAME}; then
+  chmod +x ~/tmp/${FILENAME} && mkdir -p ${SAVE_DIR}
+  mv ~/tmp/${FILENAME} ${SAVE_DIR}/${FILENAME}
+  echo "Located:"
+  echo "$(ls -l ${SAVE_DIR}/${FILENAME})"
+elif [ -f ~/tmp/${FILENAME} ]; then
+  rm ~/tmp/${FILENAME}
+fi

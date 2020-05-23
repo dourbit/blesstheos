@@ -7,7 +7,7 @@
 # install/java for closh-zero.jar itself
 
 if check-x JSONPath.sh && check-x java; then
-  sudomy gh-get-bin dundalek/closh closh-zero.jar latest /usr/local/bin/
+  sudomy gh-get-bin dundalek/closh closh-zero.jar latest /usr/local/bin
   sudo chmod +x /usr/local/bin/closh-zero.jar
 else
   echo "Unmet dependencies, cannot install closh."

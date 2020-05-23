@@ -17,7 +17,7 @@ fi
 REPOPATH=$1
 FILENAME=$2
 TAG_NAME=${3-"latest"}
-SAVE_DIR=${4-"."}
+SAVE_DIR=${4-$(pwd)}
 GET_THIS="https://api.github.com/repos/${REPOPATH}/releases/${TAG_NAME}"
 # https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 DOWNLOAD=$(curl -sSL "${GET_THIS}" | JSONPath.sh '$.."browser_download_url"' | grep $FILENAME | awk '{print $NF}' | tr -d '"')
@@ -25,8 +25,12 @@ DOWNLOAD=$(curl -sSL "${GET_THIS}" | JSONPath.sh '$.."browser_download_url"' | g
 if [ ! "$DOWNLOAD" ]; then
   echo "Nothing for ${GET_THIS}"
 else
-  echo "Getting: ${DOWNLOAD}"
-  if [ "$SAVE_DIR" != "." ]; then echo "To path: ${SAVE_DIR}/${FILENAME}"; fi
-  echo ""
-  curl -L ${DOWNLOAD} -o "${SAVE_DIR}/${FILENAME}" -H 'Accept: application/octet-stream'
+  if curl-report ${DOWNLOAD} -H 'Accept:application/octet-stream' -o ~/tmp/${FILENAME}; then
+    chmod +x ~/tmp/${FILENAME} && mkdir -p ${SAVE_DIR}
+    mv ~/tmp/${FILENAME} ${SAVE_DIR}/${FILENAME}
+    echo "Located:"
+    echo "$(ls -l ${SAVE_DIR}/${FILENAME})"
+  elif [ -f ~/tmp/${FILENAME} ]; then
+    rm ~/tmp/${FILENAME}
+  fi
 fi

@@ -7,7 +7,7 @@ specho Babashka ...
 if brewOn; then
   brew install borkdude/brew/babashka
 else
-  sudomy gh-install-xr borkdude/babashka install ~/tmp/
+  sudomy gh-install-xr borkdude/babashka install ~/tmp
 fi
 
 # http://www.bpkg.sh/
@@ -32,16 +32,16 @@ fi
 
 # https://github.com/dominictarr/JSON.sh
 specho JSON.sh ...
-gh-install dominictarr/JSON.sh JSON.sh ~/bin/
+gh-install dominictarr/JSON.sh JSON.sh ~/bin
 
 # https://github.com/mclarkson/JSONPath.sh
 # https://cburgmer.github.io/json-path-comparison/
 specho JSONPath.sh ...
-gh-install mclarkson/JSONPath.sh JSONPath.sh ~/bin/
+gh-install mclarkson/JSONPath.sh JSONPath.sh ~/bin
 
 # https://github.com/cute/JSONPretty
 specho JSONPretty.sh ...
-gh-install cute/JSONPretty.sh JSONPretty.sh ~/bin/
+gh-install cute/JSONPretty JSONPretty.sh ~/bin
 
 # https://github.com/dundalek/closh
 specho Closh ...

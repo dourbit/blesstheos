@@ -16,7 +16,7 @@ brewOn && brew --version
 
 # Leiningen
 specho Leiningen ...
-sudomy gh-install technomancy/leiningen bin/lein /usr/local/bin/ stable
+sudomy gh-install technomancy/leiningen bin/lein /usr/local/bin stable
 
 # Leiningen User Profiles
 LPROF=".lein/profiles.clj"
@@ -41,6 +41,6 @@ specho Clj-kondo ...
 if brewOn; then
   brew install borkdude/brew/clj-kondo
 else
-  sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp/
+  sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp
 fi
 clj-kondo --version

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# only for curl at this time - though could be generalized later...
+# for when we want to know how a command exits (success vs failure)
+# also for passing on the status code via true or false return
+# this was started as some downloads fail and thus installs become unpredictable
+
+curl-report() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: curl-report <url> [options]"
+    false; return
+  else
+    cmd="curl -w %{http_code} --create-dirs -L $@"
+    out=$($cmd)
+    ret=$?
+    if [ $ret != "0" ]; then
+      echo >&2 "Failure (Exit code $ret) for: $cmd"
+    elif [ "$out" != "200" ]; then
+      if [ $(echo "$out" | wc -w) != "1" ]; then
+        echo >&2 "Failure HTTP Status code for: $cmd"
+        echo >&2 "Unexpected multi-word status: $out"
+      else
+        echo >&2 "Failure HTTP (Status code $out) for: $cmd"
+      fi
+    else
+      echo "Success: $cmd"
+      true; return
+    fi
+    false; return
+  fi
+}
+
+curl-report $@
