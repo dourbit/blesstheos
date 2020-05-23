@@ -14,11 +14,4 @@ BRANCH=${4-"master"}
 
 GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILEPATH}"
 
-if curl-report ${GET_THIS} -o ~/tmp/${FILENAME}; then
-  chmod +x ~/tmp/${FILENAME} && mkdir -p ${SAVE_DIR}
-  mv ~/tmp/${FILENAME} ${SAVE_DIR}/${FILENAME}
-  echo "Located:"
-  echo "$(ls -l ${SAVE_DIR}/${FILENAME})"
-elif [ -f ~/tmp/${FILENAME} ]; then
-  rm ~/tmp/${FILENAME}
-fi
+curl-install ${SAVE_DIR}/${FILENAME} ${GET_THIS}

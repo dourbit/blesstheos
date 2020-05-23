@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+curl-install() {
+  if [ $# -lt 2 ]; then
+    echo "Usage: curl-install <filepath> <url> [curl-options]"
+    false; return
+  else
+    local FILEPATH=${1}
+    local RELOCATE=$(dirname ${FILEPATH})
+    local FILENAME=$(basename ${FILEPATH})
+    if curl-report ${@:2} --create-dirs -o ~/tmp/${FILENAME}; then
+      chmod +x ~/tmp/${FILENAME} && mkdir -p ${RELOCATE}
+      mv ~/tmp/${FILENAME} ${RELOCATE}/${FILENAME}
+      echo "Located:"
+      echo "$(ls -l ${RELOCATE}/${FILENAME})"
+    elif [ -f ~/tmp/${FILENAME} ]; then
+      rm ~/tmp/${FILENAME}
+    fi
+  fi
+}
+
+curl-install $@

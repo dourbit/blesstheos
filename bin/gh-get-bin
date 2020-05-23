@@ -25,12 +25,5 @@ DOWNLOAD=$(curl -sSL "${GET_THIS}" | JSONPath.sh '$.."browser_download_url"' | g
 if [ ! "$DOWNLOAD" ]; then
   echo "Nothing for ${GET_THIS}"
 else
-  if curl-report ${DOWNLOAD} -H 'Accept:application/octet-stream' -o ~/tmp/${FILENAME}; then
-    chmod +x ~/tmp/${FILENAME} && mkdir -p ${SAVE_DIR}
-    mv ~/tmp/${FILENAME} ${SAVE_DIR}/${FILENAME}
-    echo "Located:"
-    echo "$(ls -l ${SAVE_DIR}/${FILENAME})"
-  elif [ -f ~/tmp/${FILENAME} ]; then
-    rm ~/tmp/${FILENAME}
-  fi
+  curl-install ${SAVE_DIR}/${FILENAME} ${DOWNLOAD} -H 'Accept:application/octet-stream'
 fi

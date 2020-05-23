@@ -7,12 +7,12 @@
 
 curl-report() {
   if [ $# -eq 0 ]; then
-    echo "Usage: curl-report <url> [options]"
+    echo "Usage: curl-report <url> [curl-options]"
     false; return
   else
-    cmd="curl -w %{http_code} --create-dirs -L $@"
-    out=$($cmd)
-    ret=$?
+    local cmd="curl -w %{http_code} -L $@"
+    local out=$($cmd)
+    local ret=$?
     if [ $ret != "0" ]; then
       echo >&2 "Failure (Exit code $ret) for: $cmd"
     elif [ "$out" != "200" ]; then
