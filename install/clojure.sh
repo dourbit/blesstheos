@@ -28,10 +28,8 @@ lein version
 specho Clojure ...
 if brewOn; then brew install clojure/tools/clojure
 else
-  cd ~/tmp
-  curl -sLO "https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh"
-  sudomy install-xr "linux-install-${CLOJURE_V}.sh"
-  cd - > /dev/null
+  curl-install ~/tmp/linux-install-${CLOJURE_V}.sh https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh
+  sudomy install-xr ~/tmp/linux-install-${CLOJURE_V}.sh
 fi
 clj -e '(println (str "Clojure " (clojure-version)))'
 
