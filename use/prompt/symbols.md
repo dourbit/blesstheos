@@ -13,12 +13,14 @@ Cool characters, possibly useful for shell prompts:
 - ⚠ Warning sign
 - ☠ Skull
 - ⚚ Staff of Hermes
-- ▻\$1◅
+- ▻\$?◅
 - ☓ Saltire
 - ☮ Peace
 - ε [Epsilon](https://unicode-table.com/en/03B5)
 - ⌁ [Electric Arrow](https://www.compart.com/en/unicode/U+2301)
 - ❝ [Heavy Double Turned Comma Quotation Mark Ornament](https://www.compart.com/en/unicode/U+275D)
 - ❞ [Heavy Double Comma Quotation Mark Ornament](https://www.compart.com/en/unicode/U+275E)
+- ↳ [Downwards Arrow with Tip Rightwards](https://www.compart.com/en/unicode/U+21B3)
+- ↪ [Rightwards Arrow with Hook](https://www.compart.com/en/unicode/U+21AA)
 
 See [this](http://en.wikipedia.org/wiki/Miscellaneous_Symbols) for more...

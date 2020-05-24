@@ -64,7 +64,7 @@ my_sha() {
 # maybe look at more of the above possibilities some day
 bad_code() {
   if [ $1 -ne 0 ]; then
-    echo " $1 "
+    echo "↪ $1 "
   fi
 }
 
