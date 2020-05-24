@@ -27,8 +27,7 @@ lein version
 # Clojure - rarely installed, change $CLOJURE_V at the top to reinstall another
 specho Clojure ...
 if brewOn; then brew install clojure/tools/clojure
-else
-  curl-install ~/tmp/linux-install-${CLOJURE_V}.sh https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh
+elif onLinux && curl-report https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh --create-dirs -o ~/tmp/linux-install-${CLOJURE_V}.sh; then
   sudomy install-xr ~/tmp/linux-install-${CLOJURE_V}.sh
 fi
 clj -e '(println (str "Clojure " (clojure-version)))'

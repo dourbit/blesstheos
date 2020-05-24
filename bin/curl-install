@@ -10,16 +10,15 @@ main() {
     false; return
   else
     local FILEPATH=${1}
-    local SAVE_DIR=$(dirname ${FILEPATH})
+    local RELOCATE=$(dirname ${FILEPATH})
     local FILENAME=$(basename ${FILEPATH})
-    local RELOCATE=${SAVE_DIR}/${FILENAME}
     if curl-report ${@:2} --create-dirs -o ~/tmp/${FILENAME}; then
-      chmod +x ~/tmp/${FILENAME} && mkdir -p ${SAVE_DIR}
-      if [ ! ~/tmp/${FILENAME} -ef ${RELOCATE} ]; then
-        mv ~/tmp/${FILENAME} ${RELOCATE}
+      chmod +x ~/tmp/${FILENAME} && mkdir -p ${RELOCATE}
+      if [ ! ~/tmp/${FILENAME} -ef ${FILEPATH} ]; then
+        mv ~/tmp/${FILENAME} ${FILEPATH}
       fi
       echo "Located:"
-      echo "$(ls -l ${RELOCATE})"
+      echo "$(ls -l ${FILEPATH})"
       true; return
     elif [ -f ~/tmp/${FILENAME} ]; then
       rm ~/tmp/${FILENAME}
