@@ -65,5 +65,4 @@ bad_exit() {
   fi
 }
 
-
-PS1="${WHITE}⚚ $GREEN\$(hostname) $RED\$(bad_exit \$?)$WHITE\$(my_sha)$PURPLE\$(my_git_propmt)$RED\$(my_git_status)$YELLOW\w$WHITE ➔  $GREEN"
+PS1="${WHITE}ε $GREEN\$(hostname) $RED\$(bad_exit \$?)$WHITE\$(my_sha)$PURPLE\$(my_git_propmt)$RED\$(my_git_status)$YELLOW\w$WHITE ⌁ $GREEN"
