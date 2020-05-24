@@ -24,14 +24,6 @@ LPROF=".lein/profiles.clj"
 [[ -f "$HOME/$LPROF" ]] || cp -r ${DOTS_HOME}/files/${LPROF} ~/${LPROF}
 lein version
 
-# Clojure - rarely installed, change $CLOJURE_V at the top to reinstall another
-specho Clojure ...
-if brewOn; then brew install clojure/tools/clojure
-elif onLinux && curl-report https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh --create-dirs -o ~/tmp/linux-install-${CLOJURE_V}.sh; then
-  sudomy install-xr ~/tmp/linux-install-${CLOJURE_V}.sh
-fi
-clj -e '(println (str "Clojure " (clojure-version)))'
-
 # Clj-kondo
 # https://github.com/borkdude/clj-kondo
 specho Clj-kondo ...
@@ -41,3 +33,16 @@ else
   sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp
 fi
 clj-kondo --version
+
+# Clojure - rarely installed, change $CLOJURE_V at the top to reinstall another
+specho Clojure ...
+if brewOn; then brew install clojure/tools/clojure
+elif onLinux && curl-report https://download.clojure.org/install/linux-install-${CLOJURE_V}.sh --create-dirs -o ~/tmp/linux-install-${CLOJURE_V}.sh; then
+  sudomy install-xr ~/tmp/linux-install-${CLOJURE_V}.sh
+fi
+
+# There is a scenario for not brewOn && not onLinux,
+# when Clojure may not be installed ...
+if check-x clj; then
+  clj -e '(println (str "Clojure " (clojure-version)))'
+else echo "Clojure not installed."; fi
