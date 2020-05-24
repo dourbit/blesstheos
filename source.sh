@@ -17,9 +17,10 @@ uses helpers/tre.sh # needed by the bin/tre-* scripts: transmission-daemon tools
 # ... other helpers such as node.sh are sourced from elsewhere
 
 uses colors.sh
+uses prompt/PS1.sh
 uses systerm.sh # system/terminal-specific stuff
 uses aliases.sh # general-purpose, independent of systerm, etc.
-uses git.sh # also improves the prompt in non-git contexts
+uses git.sh
 uses jump.sh
 [ -n "$BASH" ] && uses bash.sh # bash-only stuff
 uses rundev.sh

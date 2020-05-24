@@ -59,10 +59,13 @@ my_sha() {
 }
 
 # non-zero exit status (of the last command) is bad
-bad_exit() {
-  if test $1 -ne 0 ; then
-    echo "▻$1◅ "
+# \$(bad_code \$?) works if it's the first function call in the $PS1 string
+# https://stackoverflow.com/questions/16715103/bash-prompt-with-last-exit-code
+# maybe look at more of the above possibilities some day
+bad_code() {
+  if [ $1 -ne 0 ]; then
+    echo " $1 "
   fi
 }
 
-PS1="${WHITE}ε $GREEN\$(hostname) $RED\$(bad_exit \$?)$WHITE\$(my_sha)$PURPLE\$(my_git_propmt)$RED\$(my_git_status)$YELLOW\w$WHITE ⌁ $GREEN"
+PS1="$RED\$(bad_code \$?)${WHITE}ε $GREEN\$(hostname) $WHITE\$(my_sha)$PURPLE\$(my_git_propmt)$RED\$(my_git_status)$YELLOW\w$WHITE ⌁ $GREEN"

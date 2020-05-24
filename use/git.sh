@@ -1,4 +1,3 @@
-uses prompt/git.sh # NOTE: this prompt is also used in non-git contexts!
 uses completion/git.sh
 
 GIT_PS1_SHOWDIRTYSTATE="false"
