@@ -33,7 +33,7 @@ mopidy #$ brew tap mopidy/mopidy
 mopidy-soundcloud
 ncdu # http://dev.yorhel.nl/ncdu
 nmap # https://nmap.org
-nvm # source $(brew --prefix nvm)/nvm.sh
+nvm # . $(brew --prefix nvm)/nvm.sh
 ocaml
 opam
 # osxfuse # https://osxfuse.github.io/ # with "MacFUSE Compatibility Layer" turned on

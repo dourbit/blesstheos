@@ -1,5 +1,5 @@
 uses() {
-  source "$DOTS_HOME/use/$1"
+  . "$DOTS_HOME/use/$1"
 }
 export -f uses
 

@@ -4,7 +4,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 if onMac; then
-  source $(brew --prefix nvm)/nvm.sh
+  . $(brew --prefix nvm)/nvm.sh
 fi
 
 if onLinux; then
