@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
+# Depends on ./gh-install and ./install-xr - if sourced.
+
 # Same as ./gh-install except it treats what is downloaded as an installer,
 # runs the code, then removes it after all done no matter how it finished.
 
-gh-install "$@"
+COMMAND_FN=gh-install-xr
+gh-install-xr() {
+  gh-install "$@"
 
-# Count on the same gh-install args.
-install-xr ${3-"./"}/$(basename ${2})
+  # Count on the same gh-install args.
+  install-xr ${3-"./"}/$(basename ${2})
+}
+
+[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"

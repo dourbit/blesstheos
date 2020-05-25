@@ -6,21 +6,26 @@
 # https://www.computerhope.com/unix/bash/declare.htm
 # `export -f` is same as `declare -fx` (at least for bash)
 
-if [ $# -eq 0 ]; then
-  count=0
-  while read LINE; do
-    echo $(echo $LINE | awk '{print $NF}')
-    count=$(($count + 1))
-  done < <(declare -Fx)
-  echo "="
-  echo "$count exported functions above"
-  echo "($(basename $0) name # for code)"
-else
-  declare -fp "$1" 2> /dev/null || {
-    echo "$1 is not a function"
-    shopt -s expand_aliases
-    ALIASES="$DOTS_HOME/use/aliases.sh"
-    [ -f "$ALIASES" ] && . "$ALIASES"
-    type "$1" 2> /dev/null
-  }
-fi
+COMMAND_FN=check-fn
+check-fn() {
+  if [ $# -eq 0 ]; then
+    count=0
+    while read LINE; do
+      echo $(echo $LINE | awk '{print $NF}')
+      count=$(($count + 1))
+    done < <(declare -Fx)
+    echo "="
+    echo "$count exported functions above"
+    echo "check-fn <name> # for the code"
+  else
+    declare -fp "$1" 2> /dev/null || {
+      echo "$1 is not a function"
+      shopt -s expand_aliases
+      ALIASES="$DOTS_HOME/use/aliases.sh"
+      [ -f "$ALIASES" ] && . "$ALIASES"
+      type "$1" 2> /dev/null
+    }
+  fi
+}
+
+[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"

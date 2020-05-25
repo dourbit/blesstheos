@@ -4,7 +4,8 @@
 # for when we want to know how a command exits (success vs failure)
 # also for passing on the status code via true or false return
 
-main() {
+COMMAND_FN=curl-report
+curl-report() {
   if [ $# -eq 0 ]; then
     echo "Usage: $(basename $0) <url> [curl-options]"
     false; return
@@ -29,4 +30,4 @@ main() {
   fi
 }
 
-main "$@"
+[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"

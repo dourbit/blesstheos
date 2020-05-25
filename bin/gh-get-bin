@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# Must install/shell for `JSONPath.sh` dep.
+# Depends on ./curl-install if sourced.
+# Also must install/shell the JSONPath.sh dependency.
 
 # Get a binary asset from GitHub, give it the following args:
 # $1 user/repo
@@ -8,7 +9,8 @@
 # $3 [tag-name] optional: defaults to "latest"
 # $4 [dir-name] destination directory optional: defaults to the current dir .
 
-main() {
+COMMAND_FN=gh-get-bin
+gh-get-bin() {
   if [[ $# -lt 2 ]]; then
       echo "Usage: $(basename $0) user/repo file-name [tag_name or latest] [save-to-dir or .]"
       false; return
@@ -30,4 +32,4 @@ main() {
   fi
 }
 
-main "$@"
+[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"

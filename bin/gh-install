@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+# Depends on ./curl-install if sourced.
+
 # Install some file from GitHub.
 
-main() {
+COMMAND_FN=gh-install
+gh-install() {
   if [ $# -lt 2 ]; then
     echo "Usage: $(basename $0) user/repo file-path [save-to-dir or ./] [branch or master]"
     false; return
@@ -19,4 +22,4 @@ main() {
   curl-install ${SAVE_DIR}/${FILENAME} ${GET_THIS}
 }
 
-main "$@"
+[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"
