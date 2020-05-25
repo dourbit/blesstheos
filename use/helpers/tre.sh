@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Some functions in use by the bin/tre-* scripts
+# i.e. transmission-daemon tools
 
 check-tre() {
   if ! onLinux; then

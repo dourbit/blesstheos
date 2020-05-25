@@ -1,3 +1,5 @@
+# For things that don't belong elsewhere.
+
 # spaced echo for more readble output with less code
 specho() {
   echo

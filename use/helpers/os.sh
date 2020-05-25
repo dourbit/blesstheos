@@ -1,3 +1,6 @@
+# identifies operating systems, many scripts use these
+# run `check-os` for a report on which functions match the current os
+
 export KERNEL_NAME=$(uname -s)
 
 onMac() {

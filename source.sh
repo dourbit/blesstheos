@@ -8,13 +8,7 @@ else
   export DOTS_HOME="$HOME/$HOME_DOTS"
 fi
 
-source "$DOTS_HOME/use/helpers/path.sh"
-
-# helper functions, in addition to helpers/path.sh
-uses helpers/os.sh # checks for system-specific stuff, many scripts will use it
-uses helpers/util.sh # for things which don't belong elsewhere
-uses helpers/tre.sh # needed by the bin/tre-* scripts: transmission-daemon tools
-# ... other helpers such as node.sh are sourced from elsewhere
+for helper in "${DOTS_HOME}/use/helpers"/*; do . "$helper"; done
 
 uses colors.sh
 uses prompt/PS1.sh
