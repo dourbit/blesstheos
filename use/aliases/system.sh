@@ -1,3 +1,5 @@
+# system /terminal-specific stuff
+
 # export ARCHFLAGS="-arch i386 -arch x86_64"
 # Because python compiles for the wrong architecture!
 # Is this a problem for Linux?

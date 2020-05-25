@@ -12,8 +12,7 @@ for SRC in "${DOTS_HOME}/use/helpers"/*; do . "$SRC"; done
 
 uses colors.sh
 uses prompt/PS1.sh
-uses system.sh # system / terminal-specific stuff
-uses aliases.sh # general-purpose, independent of systerm, etc.
+uses aliases.sh
 uses git.sh
 uses jump.sh
 [ -n "$BASH" ] && uses bash.sh # bash-only stuff
