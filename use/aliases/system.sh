@@ -29,8 +29,9 @@ if [ "$TERM" != "dumb" ]; then
   # . ~/.bash/jump.sh # is this only for non-dumb terminal?
 else
   color_option=''
-  # TODO: use path_helper to do this properly, first find out what for...
-  export PATH=/opt/local/bin:$PATH
+  # NOTE: this was PATH=opt/local/bin:$PATH
+  # maybe add_to_PATH_front later if needed
+  # ls /opt/local/bin # No such file or directory
 fi
 
 alias l="ls -CF $color_option"
