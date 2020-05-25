@@ -8,7 +8,7 @@ else
   export DOTS_HOME="$HOME/$HOME_DOTS"
 fi
 
-for helper in "${DOTS_HOME}/use/helpers"/*; do . "$helper"; done
+for SRC in "${DOTS_HOME}/use/helpers"/*; do . "$SRC"; done
 
 uses colors.sh
 uses prompt/PS1.sh
@@ -28,11 +28,8 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 #shopt -s globstar # research...
 
 
-# programming languages - platforms & packages:
-uses platforms/node.sh
-uses platforms/java.sh
-uses platforms/ruby.sh
-# uses platforms/haskell.sh
+# programming-languages aka platforms
+for SRC in $(ls "${DOTS_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$SRC"; done
 
 # thus far the PATH pas been added to from many places
 uses path.sh
