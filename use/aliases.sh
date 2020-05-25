@@ -1,3 +1,6 @@
+# NOTE: In general aliases aren't available for scripts to use,
+# though there is: `shopt -s expand_aliases && uses aliases.sh`...
+
 for SRC in "${DOTS_HOME}/use/aliases"/*; do . "$SRC"; done
 
 alias ..='cd ..'
@@ -14,8 +17,3 @@ alias more='less -R' # less is more -- would it pick the -R from the less alias?
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
-
-# NOTE: there are system-dependent aliases in system.sh
-# TODO: look into improving this - for `uses aliases.sh` becoming all there is
-# In general aliases aren't available for scripts to use,
-# although theres is: `shopt -s expand_aliases && uses aliases.sh`.
