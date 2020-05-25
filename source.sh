@@ -37,6 +37,7 @@ uses platforms/ruby.sh
 # thus far the PATH pas been added to from many places
 add_to_PATH  /usr/local/sbin
 add_to_PATH ${DOTS_HOME}/bin
+add_to_PATH ${DOTS_HOME}/bin-fn
 
 # TODO: add_to_PATH_front (for the rest of these paths)
 add_to_PATH .
