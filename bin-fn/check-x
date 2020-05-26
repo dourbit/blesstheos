@@ -1,19 +1,34 @@
 #!/usr/bin/env bash
 
-# check that a command or function or alias exists
-# thus conclude that something is installed
-# only missing -x check for the executables, which would depend on type
+# check that a command exists and is executable
+# alias to a command is also good
+# a 0 exit status means it's something that can be run,
+# therefore considered "installed"
 
 COMMAND_FN=check-x
 check-x() {
   if [ $# -eq 0 ]; then
     echo "Usage: check-x <command>"
     false; return
-  elif [ -z "$(command -v $1)" ]; then
-    # Empty string of command -v (is good enough)
-    # Don't check for ! [ -x ...] because that doesn't catch a function or alias
-    echo
-    echo "Command '$1' not found."
+  elif [ -x "$(command -v $1)" ]; then
+    # executable
+    true; return
+  else
+    # an alias?
+    if [ $(basename $0) = $COMMAND_FN ]; then
+      # a subshell without aliases...
+      shopt -s expand_aliases
+      local ALIASES="$DOTS_HOME/use/aliases.sh"
+      [ -f "$ALIASES" ] && . "$ALIASES"
+    fi
+    if alias $1 >/dev/null 2>&1; then
+      local CMD=$(echo ${BASH_ALIASES[$1]} | grep -o "^\S*")
+      if [ -x "$(command -v $CMD)" ]; then
+        # alias of a command that can be executed
+        true; return
+      fi
+    fi
+    # command `$1` not found
     false; return
   fi
 }
