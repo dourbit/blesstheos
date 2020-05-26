@@ -6,9 +6,19 @@ COMMAND_FN=sudo-fn
 sudo-fn() {
   if [ $# -eq 0 ]; then
     echo "Usage: sudo-fn <function> [args]"
+    false; return
   else
+    declare -fp $1 2> /dev/null|| {
+      # function not found, try to source it (only for functions w/o deps)
+      # TODO: find a way to define and recursively source a function's deps
+      local DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )
+      [ -f "$DIR/$1" ] && . "$DIR/$1" || {
+        echo "$1 function not found" >&2
+        false; return
+      }
+    }
     sudo bash -c "$(declare -f $1); $1 ${@:2}"
   fi
 }
 
-[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@" || export -f $COMMAND_FN
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

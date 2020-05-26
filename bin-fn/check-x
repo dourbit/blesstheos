@@ -15,7 +15,7 @@ check-x() {
     true; return
   else
     # an alias?
-    if [ $(basename $0) = $COMMAND_FN ]; then
+    if [ $(basename $0) = "$COMMAND_FN" ]; then
       # a subshell without aliases...
       shopt -s expand_aliases
       local ALIASES="$DOTS_HOME/use/aliases.sh"
