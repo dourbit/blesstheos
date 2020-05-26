@@ -20,7 +20,7 @@ uses rundev.sh
 
 umask 022
 
-export HISTSIZE=1000000 # not much?
+export HISTSIZE=10000 # much?
 export HISTCONTROL=ignoredups
 
 shopt -s checkwinsize # After each command, checks the windows size and changes lines and columns
