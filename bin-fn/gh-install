@@ -22,4 +22,4 @@ gh-install() {
   curl-install ${SAVE_DIR}/${FILENAME} ${GET_THIS}
 }
 
-[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"
+[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@" || export -f $COMMAND_FN
