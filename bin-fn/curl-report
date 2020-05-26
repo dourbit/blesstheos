@@ -30,4 +30,4 @@ curl-report() {
   fi
 }
 
-[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

@@ -6,6 +6,7 @@ for SRC in "${DOTS_HOME}/use/aliases"/*; do . "$SRC"; done
 alias ..='cd ..'
 alias ...='cd .. ; cd ..'
 
+alias type='type -a'
 alias please=sudo
 alias df='df -h -x squashfs -x tmpfs -x devtmpfs'
 alias grep='grep -i --color=auto' # case-insensitive

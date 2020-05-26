@@ -20,12 +20,10 @@ check-fn() {
   else
     declare -fp "$1" 2> /dev/null || {
       echo "$1 is not a function"
-      shopt -s expand_aliases
-      ALIASES="$DOTS_HOME/use/aliases.sh"
-      [ -f "$ALIASES" ] && . "$ALIASES"
-      type "$1" 2> /dev/null
+      echo "try: type $1"
+      false; return
     }
   fi
 }
 
-[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

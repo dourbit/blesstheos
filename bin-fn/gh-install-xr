@@ -13,4 +13,4 @@ gh-install-xr() {
   install-xr ${3-"./"}/$(basename ${2})
 }
 
-[ $(basename $0) = $COMMAND_FN ] && $COMMAND_FN "$@"
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
