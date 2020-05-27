@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
+# install/node && nvm use
+
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
 # See also:
 # `../bin/nvm-up` - upgrade of nvm itself
 # `../use/helpers/node.sh` - for switching between versions and upgrading
 # `../use/aliases/npm.sh` - useful command aliases
+
+# lts/* is the default node, call with "stable" if more recent node is preferred
+[[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
 
 if onMac; then
   echo "MacOS"
@@ -21,15 +26,11 @@ else
 fi
 
 # immediate nvm use without a new shell session
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+uses platforms/node.sh
 
-echo "stable" > ~/.nvmrc
-# though the alias below overrides this
-# `nvm use` will default to stable, for usually a more recent version of node
-node-in lts/* # if node is already installed, will reinstall current packages
-nvm alias default lts/*
+echo "$kind" > ~/.nvmrc # nvm use rather than nvm use default
+node-to "$kind" # if node already installed, will reinstall current packages
+# note that the above also makes "lts/*" the default + does `nvm use default`
 
 # TODO: perhaps this belongs to install/npm-local or just install/npm-develop
 if onMac; then

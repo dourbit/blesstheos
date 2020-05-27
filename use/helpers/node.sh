@@ -6,6 +6,7 @@
 # https://github.com/nvm-sh/nvm#migrating-global-packages-while-installing
 
 node-in() {
+  local kind
   [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
   nvm install ${kind} --reinstall-packages-from=current --latest-npm \
     || false; return
@@ -17,6 +18,7 @@ export -f node-in
 # same as node-in, except makes it the default alias and switches to it
 
 node-to() {
+  local kind
   [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
   node-in "$kind" \
     && nvm alias default "$kind" \
@@ -41,7 +43,7 @@ export -f node-v
 # "current" is the default and can work if it is set to "lts/*" or "stable"
 
 node-up() {
-  kind=${1-"current"}
+  local kind=${1-"current"}
   # check if $kind is valid
   if ! $(node-use.clj $kind)
   then
@@ -49,7 +51,7 @@ node-up() {
     echo "Make it one of: $(node-use.clj)"
     false; return
   elif [ "$kind" == "default" ] || [ "$kind" == "current" ]; then
-    kind_v=$(node-v $kind)
+    local kind_v=$(node-v $kind)
     if [ "$kind_v" == $(node-v lts/*) ]; then kind="lts/*"
     elif [ "$kind_v" == $(node-v stable) ]; then kind="stable"
     else
