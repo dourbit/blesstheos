@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# install/node && nvm use
+# install/node && uses platforms/node.sh && nvm use
 
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
@@ -12,14 +12,14 @@
 # lts/* is the default node, call with "stable" if more recent node is preferred
 [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
 
-if onMac; then
-  echo "MacOS"
-  mkdir -p ~/.nvm
-  cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
-elif onLinux; then
+if onLinux; then
   echo "Linux"
   mkdir -p ~/.nvm
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+elif onMac; then
+  echo "MacOS"
+  mkdir -p ~/.nvm
+  cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 else
   echo "System '${KERNEL_NAME}' is not supported."
   exit 1
