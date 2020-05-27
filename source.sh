@@ -8,15 +8,16 @@ else
   export DOTS_HOME="$HOME/$HOME_DOTS"
 fi
 
-for SRC in "${DOTS_HOME}/use/helpers"/*; do . "$SRC"; done
+for src in "${DOTS_HOME}/use/helpers"/*; do . "$src"; done
+add_to_PATH ${DOTS_HOME}/bin-fn
 
-uses colors.sh
-uses prompt/PS1.sh
-uses aliases.sh
-uses git.sh
-uses jump.sh
-[ -n "$BASH" ] && uses bash.sh # bash-only stuff
-uses rundev.sh
+uses colors
+uses prompt/PS1
+uses aliases
+uses git
+uses jump
+[ -n "$BASH" ] && uses bash # bash-only stuff
+uses rundev
 
 umask 022
 
@@ -28,7 +29,7 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 
 
 # programming-languages aka platforms
-for SRC in $(ls "${DOTS_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$SRC"; done
+for src in $(ls "${DOTS_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$src"; done
 
 # thus far the PATH pas been added to from many places
-uses path.sh
+uses path

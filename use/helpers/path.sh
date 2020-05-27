@@ -1,5 +1,14 @@
 uses() {
-  . "$DOTS_HOME/use/$1"
+  [ $# -eq 0 ] && {
+    echo "uses - sources filepath relative to use/ dir, with .sh ext optional"
+    false; return
+  }
+  local use="$DOTS_HOME/use/$1"
+  if [[ ! "$1" =~ .sh$ ]] && [ -s "$use.sh" ]; then
+     . "$use.sh"
+     true; return
+  fi
+  [ -s "$use" ] && . "$use" || false; return
 }
 export -f uses
 
