@@ -11,4 +11,6 @@ if onLinux; then
   [ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh
 fi
 
-# add_to_PATH "$(yarn global bin)" # nvm does put this is the $PATH
+# https://github.com/yarnpkg/yarn/issues/5353
+# after the nvm / npm global packages
+add_to_PATH "$(yarn global bin)"
