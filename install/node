@@ -28,12 +28,12 @@ export NVM_DIR="$HOME/.nvm"
 echo "stable" > ~/.nvmrc
 # though the alias below overrides this
 # `nvm use` will default to stable, for usually a more recent version of node
-nvm install lts/*
+node-in lts/* # if node is already installed, will reinstall current packages
 nvm alias default lts/*
-exec $SHELL
 
 # TODO: perhaps this belongs to install/npm-local or just install/npm-develop
 if onMac; then
+  echo "local-npm to be revived..."
   # TODO: extract to install local-npm via Docker for any development machine
   # NOTE: wait for local-npm 3.0 first
   # https://github.com/local-npm/local-npm
@@ -44,7 +44,7 @@ if onMac; then
   # curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
 fi
 
-# some npm options (reminders)
+# some npm options write to ~/.npmrc
 npm set save-exact true
 
 # always have the following packages installed
