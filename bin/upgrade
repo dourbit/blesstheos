@@ -9,6 +9,7 @@ fi
 
 if onLinux && check-x apt; then
   specho Apt ...
+  silent sudo apt update
   sudo apt -y upgrade
 fi
 
