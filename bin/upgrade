@@ -12,16 +12,19 @@ if onLinux && check-x apt; then
   sudo apt -y upgrade
 fi
 
-[ -s $NVM_DIR/nvm.sh ] && . $NVM_DIR/nvm.sh
-if check-x nvm; then
+uses platforms/node
+if type -t nvm > /dev/null; then
   specho NVM ...
   nvm-up
-  if check-x bb; then
-    specho NodeJS ...
-    node-up
-  else
-    specho "Babashka required, please install/shell"
+  if ! check-x bb; then
+    # using babashka for node-up
+    specho "Babashka missing, will install/shell ..."
+    $(dirname $0)/../install/shell
   fi
+  specho NodeJS ...
+  node-up
+  specho NPM and all global packages ...
+  nvm install-latest-npm && npm-check -g -y
 fi
 
 if check-x lein; then
