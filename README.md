@@ -9,32 +9,34 @@ though in the future perhaps absolute paths could be supported as well.
 Copy & modify any / all files that you need from `~/.dots/home` to `~`.
 These must be under the home directory.
 
-Touch and edit the following files:
+Append to the shell configs, by copy-pasting the following code blocks:
 
 > ~/.bash_profile
 
 ```bash
+tee -a ~/.bash_profile > /dev/null << END
+
 # source ~/.bashrc
 [ -f ~/.bashrc ] && . ~/.bashrc
 
 # code you don't want to run each time .bashrc is sourced
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+END
 ```
 
-> ~/.bashrc # append to the bottom end
+> ~/.bashrc
 
 ```bash
+tee -a ~/.bashrc > /dev/null << END
+
 export HOME_DOTS=".dots"
 export DOTS_PATH="$HOME/$HOME_DOTS"
 export BREW_ON=true # omit to reduce or skip Homebrew usage
 
 source "$HOME/.bashrc-pre"
 source "$DOTS_PATH/source.sh"
+END
 ```
-
-The bash-specific stuff should be contained in `use/bash.sh`.
-Though I have not tried using any of this with other shells.
-Try `.profile` instead?
 
 Run any `install` scripts after sourcing the above or with a new shell.
 A changed prompt would be a good indicator / confirmation to begin with.
