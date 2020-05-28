@@ -14,7 +14,7 @@ Append to the shell configs, by copy-pasting the following code blocks:
 > ~/.bash_profile
 
 ```bash
-tee -a ~/.bash_profile > /dev/null << END
+tee -a ~/.bash_profile > /dev/null << 'END'
 
 # source ~/.bashrc
 [ -f ~/.bashrc ] && . ~/.bashrc
@@ -27,7 +27,7 @@ END
 > ~/.bashrc
 
 ```bash
-tee -a ~/.bashrc > /dev/null << END
+tee -a ~/.bashrc > /dev/null << 'END'
 
 export HOME_DOTS=".dots"
 export DOTS_PATH="$HOME/$HOME_DOTS"
