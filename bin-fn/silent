@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Suppress STDOUT & STDERR for when we are only interested to
+# run something & get its exit status code back.
+# Often used for if-then-else conditionals.
+
+COMMAND_FN=silent
+silent() {
+  ${@:2} >/dev/null 2>&1
+}
+
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

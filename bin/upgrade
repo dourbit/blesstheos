@@ -13,7 +13,7 @@ if onLinux && check-x apt; then
 fi
 
 uses platforms/node
-if type -t nvm > /dev/null; then
+if silent type -t nvm; then
   specho NVM ...
   nvm-up
   if ! check-x bb; then
