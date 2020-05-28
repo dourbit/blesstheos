@@ -12,8 +12,12 @@ if onLinux && check-x apt; then
   sudo apt -y upgrade
 fi
 
-uses platforms/node
-if silent type -t nvm; then
+uses platforms/node # nvm
+# source silent and check-fn
+# because otherwise they would run in a subshell, not knowing about nvm
+. silent
+. check-fn
+if silent check-fn nvm; then
   specho NVM ...
   nvm-up
   if ! check-x bb; then

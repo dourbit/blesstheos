@@ -18,11 +18,11 @@ check-fn() {
     echo "$count exported functions above"
     echo "check-fn <name> # for the code"
   else
-    declare -fp "$1" 2> /dev/null || {
+    if ! declare -fp "$1" 2> /dev/null; then
       echo "$1 is not a function"
       echo "try: type $1"
       false; return
-    }
+    fi
   fi
 }
 
