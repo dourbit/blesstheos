@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+COMMAND_FN=urbito
+urbito() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: $COMMAND_FN <urbito-*> [args]"
+    false; return
+  else
+    cd "$HOME"/data/urbit
+    "urbito-$1" ${@:2}
+  fi
+}
+
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

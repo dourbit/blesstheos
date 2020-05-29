@@ -3,6 +3,7 @@
 # Various terminal tools
 
 if onApt; then
+  sudo apt install -y tmux
   sudo apt install -y ncdu # http://dev.yorhel.nl/ncdu NCurses Disk Usage
   # https://askubuntu.com/questions/257263/how-to-display-network-traffic-in-the-terminal
   sudo apt install -y htop glances # monitor system processes and much more
