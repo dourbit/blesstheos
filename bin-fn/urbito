@@ -1,15 +1,30 @@
 #!/usr/bin/env bash
 
 COMMAND_FN=urbito
+
+errcho() { cat <<< "$@" 1>&2; }
+
 urbito() {
   if [ $# -eq 0 ]; then
-    echo "Usage: $COMMAND_FN <urbito-*> [args]"
-    false; return
+    echo "Usage: $COMMAND_FN <command> [args]"
+    true; return
   elif [ $1 == "install" ]; then
     "$DOTS_HOME/install/urbit"
-  else
+  elif [ $1 == "cmd" ]; then
+    if [ $# -eq 1 ]; then
+      errcho "Usage: $COMMAND_FN cmd <command>"
+      false; return
+    elif check-x ~/bin/urbito/$2; then
+      echo ~/bin/urbito/$2
+    else
+      errcho "urbito $2 - Command not found"
+      false; return
+    fi
+  elif urbito cmd $1; then
     cd "$HOME"/data/urbit
     ~/bin/urbito/$1 ${@:2}
+  else
+    false; return
   fi
 }
 
