@@ -5,6 +5,8 @@ urbito() {
   if [ $# -eq 0 ]; then
     echo "Usage: $COMMAND_FN <urbito-*> [args]"
     false; return
+  elif [ $1 == "install" ]; then
+    "$DOTS_HOME/install/urbit"
   else
     cd "$HOME"/data/urbit
     "urbito-$1" ${@:2}
