@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Code modified from:
+# https://github.com/asssaf/urbit-docker/blob/master/scripts/run-backend
+
+SHIP="$1"
+
+if [ -z "$SHIP" ]
+then
+	>&2 echo "Usage: $(basename $0) <ship>"
+	exit 1
+fi
+
+: ${URBIT_IMAGE:="asssaf/urbit:latest"}
+
+docker run -t --name $SHIP \
+	--restart always \
+	--network host --expose 8080 \
+	-v $(pwd)/${SHIP}:/srv/${SHIP} \
+	--workdir /srv \
+	--user $(id -u):$(id -g) \
+	${URBIT_IMAGE} ${SHIP}

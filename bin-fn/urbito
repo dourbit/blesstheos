@@ -16,13 +16,15 @@ urbito() {
       false; return
     elif check-x ~/bin/urbito/$2; then
       echo ~/bin/urbito/$2
+    elif check-x "$DOTS_HOME"/bin/urbito/$2; then
+      echo "$DOTS_HOME"/bin/urbito/$2
     else
       errcho "urbito $2 - Command not found"
       false; return
     fi
   elif urbito cmd $1; then
     cd "$HOME"/data/urbit
-    ~/bin/urbito/$1 ${@:2}
+    $(urbito cmd $1) ${@:2}
   else
     false; return
   fi
