@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
-mkdir -p ~/data/urbit
+mkdir -p ~/data/urbit # for all ships' data - planets, comets and so on...
+mkdir -p ~/bin/urbito # not in the $PATH so will only run via the urbito script
 
-specho Install urbit-docker/scripts ...
+specho Install commands ...
 
-specho urbito-new-comet ...
+specho urbito new-comet ...
 gh-install asssaf/urbit-docker scripts/createcomet.sh ~/tmp && \
-  mv ~/tmp/createcomet.sh ~/bin/urbito-new-comet && \
-  echo Renamed: ~/bin/urbito-new-comet
+  mv ~/tmp/createcomet.sh ~/bin/urbito/new-comet && \
+  echo Renamed: ~/bin/urbito/new-comet
 
-specho urbito-new-ship ...
+specho urbito new-ship ...
 gh-install asssaf/urbit-docker scripts/createship.sh ~/tmp && \
-  mv ~/tmp/createship.sh ~/bin/urbito-new-ship && \
-  echo Renamed: ~/bin/urbito-new-ship
+  mv ~/tmp/createship.sh ~/bin/urbito/new-ship && \
+  echo Renamed: ~/bin/urbito/new-ship
 
-specho urbito-run ...
+specho urbito run ...
 gh-install asssaf/urbit-docker scripts/run ~/tmp && \
-  mv ~/tmp/run ~/bin/urbito-run && \
-  echo Renamed: ~/bin/urbito-run
+  mv ~/tmp/run ~/bin/urbito/run && \
+  echo Renamed: ~/bin/urbito/run

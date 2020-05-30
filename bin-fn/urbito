@@ -9,7 +9,7 @@ urbito() {
     "$DOTS_HOME/install/urbit"
   else
     cd "$HOME"/data/urbit
-    "urbito-$1" ${@:2}
+    ~/bin/urbito/$1 ${@:2}
   fi
 }
 
