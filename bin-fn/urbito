@@ -33,6 +33,7 @@ urbito() {
     elif check-x "$DOTS_HOME"/bin/urbito/$2; then
       echo "$DOTS_HOME"/bin/urbito/$2
     else
+      usage; echo
       errcho "urbito $2 - Command not found"
       false; return
     fi
