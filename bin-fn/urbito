@@ -10,6 +10,7 @@ The following commands can be run, some of which provide their own usage info:
   install > downloads some scripts from https://github.com/asssaf/urbit-docker
   cmd > check if a command exists, and can be run + return path to its script
   assets > a list of urbit vessels contained in ~/data/urbit available to run
+  hex-seed > hexdump -n 32 -e '4/4 "%08X"' /dev/random # for network keys gen
   new-ship > create a ship which is usually a planet for which you have a .key
   new-comet > get a new comet - usually takes some non-trivial time to mine
   run > boots a ship or comet - one of your urbit assets
@@ -24,6 +25,9 @@ urbito() {
     usage; true; return
   elif [ $1 == "install" ]; then
     "$DOTS_HOME/install/urbit"
+  elif [ $1 == "hex-seed" ]; then
+    hexdump -n 32 -e '4/4 "%08X"' /dev/random
+    echo
   elif [ $1 == "cmd" ]; then
     if [ $# -eq 1 ]; then
       errcho "Usage: $COMMAND_FN cmd <command>"
