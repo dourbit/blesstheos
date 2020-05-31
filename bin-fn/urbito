@@ -2,12 +2,26 @@
 
 COMMAND_FN=urbito
 
+usage() {
+  cat <<EOF
+Usage: $COMMAND_FN <command> [args]
+
+The following commands can be run, some of which provide their own usage info:
+  install > downloads some scripts from https://github.com/asssaf/urbit-docker
+  cmd > check if a command exists, and can be run + return path to its script
+  assets > a list of urbit vessels contained in ~/data/urbit available to run
+  new-ship > create a ship which is usually a planet for which you have a .key
+  new-comet > get a new comet - usually takes some non-trivial time to mine
+  run > boots a ship or comet - one of your urbit assets
+  run-localhost > the goal is to run a docker container in the background...
+EOF
+}
+
 errcho() { cat <<< "$@" 1>&2; }
 
 urbito() {
   if [ $# -eq 0 ]; then
-    echo "Usage: $COMMAND_FN <command> [args]"
-    true; return
+    usage; true; return
   elif [ $1 == "install" ]; then
     "$DOTS_HOME/install/urbit"
   elif [ $1 == "cmd" ]; then
@@ -22,6 +36,8 @@ urbito() {
       errcho "urbito $2 - Command not found"
       false; return
     fi
+  elif [ $1 == "assets" ]; then
+    ls "$HOME"/data/urbit | cat
   elif urbito cmd $1; then
     cd "$HOME"/data/urbit
     $(urbito cmd $1) ${@:2}
