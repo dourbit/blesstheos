@@ -41,7 +41,7 @@ urbito() {
       errcho "urbito $2 - Command not found"
       false; return
     fi
-  elif [ $1 == "assets" ]; then
+  elif [ $1 == "piers" ]; then
     ls "$HOME"/data/urbit | cat
   elif urbito cmd $1; then
     cd "$HOME"/data/urbit
