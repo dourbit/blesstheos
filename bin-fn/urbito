@@ -24,31 +24,35 @@ errcho() { cat <<< "$@" 1>&2; }
 urbito() {
   if [ $# -eq 0 ]; then
     usage; true; return
-  elif [ $1 == "install" ]; then
-    "$DOTS_HOME/install/urbit"
-  elif [ $1 == "hex-seed" ]; then
-    hexdump -n 32 -e '4/4 "%08X"' /dev/random
-    echo
-  elif [ $1 == "cmd" ]; then
-    if [ $# -eq 1 ]; then
-      errcho "Usage: $COMMAND_FN cmd <command>"
-      false; return
-    elif check-x ~/bin/urbito/$2; then
-      echo ~/bin/urbito/$2
-    elif check-x "$DOTS_HOME"/bin/urbito/$2; then
-      echo "$DOTS_HOME"/bin/urbito/$2
+  else
+    local cmd=$1
+    if [ $cmd == "install" ]; then
+      "$DOTS_HOME/install/urbit"
+    elif [ $cmd == "hex-seed" ]; then
+      hexdump -n 32 -e '4/4 "%08X"' /dev/random
+      echo
+    elif [ $cmd == "cmd" ]; then
+      if [ $# -eq 1 ]; then
+        errcho "Usage: $COMMAND_FN cmd <command>"
+        false; return
+      elif check-x ~/bin/urbito/$2; then
+        echo ~/bin/urbito/$2
+      elif check-x "$DOTS_HOME"/bin/urbito/$2; then
+        echo "$DOTS_HOME"/bin/urbito/$2
+      else
+        usage; echo
+        errcho "urbito $2 - Command not found"
+        false; return
+      fi
+    elif [ $cmd == "piers" ]; then
+      ls "$HOME"/data/urbit | cat
+    elif urbito cmd $cmd; then
+      # cmd is a file to be run
+      cd "$HOME"/data/urbit
+      $(urbito cmd $cmd) ${@:2}
     else
-      usage; echo
-      errcho "urbito $2 - Command not found"
       false; return
     fi
-  elif [ $1 == "piers" ]; then
-    ls "$HOME"/data/urbit | cat
-  elif urbito cmd $1; then
-    cd "$HOME"/data/urbit
-    $(urbito cmd $1) ${@:2}
-  else
-    false; return
   fi
 }
 
