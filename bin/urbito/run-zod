@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# https://github.com/asssaf/urbit-fakezod-docker
+
+SHIP="zod" # what's a "fakezod"
+[ -d "$SHIP" ] || mkdir "$SHIP"
+
+: ${URBIT_IFZOD:="asssaf/urbit-fakezod:latest"}
+
+if [ "$1" == "-d" ]
+then
+	DAEMON="-d"
+	shift
+fi
+
+docker run -t ${DAEMON:--i} --rm \
+	--net host \
+	-v $(pwd)/${SHIP}:/urbit/zod \
+	--user $(id -u):$(id -g) \
+	${URBIT_IFZOD} ${DAEMON} $*
