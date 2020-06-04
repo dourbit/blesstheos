@@ -17,7 +17,7 @@ if onUbuntu; then
      $(lsb_release -cs) \
      stable"
   sudo apt update
-  sudo apt install -y docker-ce docker-ce-cli containerd.io
+  sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose
 
   # https://docs.docker.com/install/linux/linux-postinstall/
   sudo groupadd docker
@@ -30,10 +30,13 @@ if onUbuntu; then
   sudo systemctl start docker
   sudo systemctl enable docker # start on boot
 
+  # TODO: find the best way to install docker-compose...
+  # is pip any better / more recent?
   # https://docs.docker.com/compose/install/
-  sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  sudo chmod +x /usr/local/bin/docker-compose
+
   docker --version
   docker-compose --version
+  echo
+  echo "Reboot your system to complete."
 
 fi
