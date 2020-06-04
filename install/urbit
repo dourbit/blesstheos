@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if ! check-x docker; then
+  onUbuntu && echo "Please first run ${DOTS_HOME}/install/ubuntu-docker" \
+           || echo "Please first install docker"
+  exit 0
+fi
+
 mkdir -p ~/data/urbit # for all ships' data - planets, comets and so on...
 mkdir -p ~/bin/urbito # not in the $PATH so will only run via the urbito script
 
