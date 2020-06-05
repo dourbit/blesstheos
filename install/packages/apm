@@ -2,6 +2,11 @@ sync-settings # everything installs automatically
 
 # themes:
 
+# light
+# NOTE: the daylight-ui issue reading package titles being impossible
+daylight-ui # +silkworm-syntax -- the current best light theme choice
+polymorph-ui # this one is great, but project pane doesn't scroll
+isotope-light-ui # +zenburn-prime-syntax hard to spot file on the lhs
 atom-material-syntax
 atom-material-syntax-light
 atom-material-ui
@@ -9,14 +14,14 @@ focus-dark
 focus-light
 
 # light / dusk
-polymorph-ui
+zenburn-plus-ui # +silkworm-syntax -- ui font isn't configurable: bug?
 duotone-dark-syntax
 duotone-dark-red-syntax
 duotone-dusk-syntax
 duotone-light-syntax
 
 # night - good for clojure code
-isotope-ui
+isotope-ui # +warm-night-syntax -- tabs and project pane hard to read!
 jonikorpi-atom-solarized-syntax
 
 # educational
@@ -25,17 +30,17 @@ clojure-color-scope-syntax
 # current clojure favs
 silkworm-syntax # light
 warm-night-syntax # dark
+zenburn-prime-syntax # js/ts and clojure
 
 # more themes for clojure
 borealis-syntax # explicitly for clojure
 gaslight-syntax # similar to borealis?
 flatwhite-syntax # very popular, has potential, though not so good for clojure yet
 foggy-night-syntax # good and easy dark, kind of a favorite
-miami-nights-syntax # very cool, dark, super-bright in places, a bit blinding :) tempted to tone it down for my personal use…
+miami-nights-syntax # very cool, dark, super-bright in places, a bit blinding :) can be toned down?
 reykjavik-syntax # kind of like it
 soft-charcoal-syntax # pretty good, a bit cold
 vector-syntax # good dark, I like how the pink is similar to silkworm-syntax
-zenburn-prime-syntax # has potential…
 
 
 # packages:
