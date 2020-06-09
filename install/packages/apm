@@ -3,6 +3,7 @@ sync-settings # everything installs automatically
 # themes:
 
 # light
+# BEST: one-light-ui + either sonho-syntax or ficus-syntax
 # NOTE: the daylight-ui issue reading package titles being impossible
 daylight-ui # +silkworm-syntax -- the current best light theme choice
 polymorph-ui # this one is great, but project pane doesn't scroll
