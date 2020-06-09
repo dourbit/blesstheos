@@ -2,7 +2,7 @@ sync-settings # everything installs automatically
 
 # themes:
 
-# light
+# LIGHT
 # BEST: one-light-ui + either sonho-syntax or ficus-syntax
 # NOTE: the daylight-ui issue reading package titles being impossible
 daylight-ui # +silkworm-syntax -- the current best light theme choice
@@ -14,14 +14,18 @@ atom-material-ui
 focus-dark
 focus-light
 
-# light / dusk
+# Dusk?
 zenburn-plus-ui # +silkworm-syntax -- ui font isn't configurable: bug?
 duotone-dark-syntax
 duotone-dark-red-syntax
 duotone-dusk-syntax
 duotone-light-syntax
 
-# night - good for clojure code
+# NIGHT - good for Clojure code...
+# BEST: with one-dark-ui
+ocarina-dark-syntax #1 is absolute favourite
+neptune-dark-syntax #2 three times the users
+# -
 isotope-ui # +warm-night-syntax -- tabs and project pane hard to read!
 jonikorpi-atom-solarized-syntax
 
