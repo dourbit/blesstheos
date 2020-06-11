@@ -18,6 +18,9 @@ if onLinux; then
 fi
 
 if onApt; then
+  # themes:
+  sudo apt -y install dconf-cli uuid-runtime
+  # tools:
   sudo apt install -y tmux
   sudo apt install -y ncdu # http://dev.yorhel.nl/ncdu NCurses Disk Usage
   # https://askubuntu.com/questions/257263/how-to-display-network-traffic-in-the-terminal
@@ -30,3 +33,7 @@ elif onMac; then
   # the following will add a line to .profile or .bash_profile / something
   curl -L https://iterm2.com/misc/install_shell_integration.sh | bash
 fi
+
+# changes theme on both Linux and MacOS iTerm:
+# bash -c  "$(wget -qO- https://git.io/vQgMr)"
+# though prefer xfce on Linux (skip for that)
