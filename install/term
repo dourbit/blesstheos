@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-# Various terminal tools
+# Various terminal themes and tools
+
+if onLinux; then
+  # URxvt & XTerm
+  if [ ! -f ~/.Xresources ]; then
+    cp "$DOTS_HOME"/home/.Xresources ~
+  else
+    echo ".Xresouces already exists, thus skipping use of:"
+    echo "$DOTS_HOME"/home/.Xresources
+  fi
+  cd ~; ln -s .Xresources .Xdefaults-$(hostname) # this could be just for Ubuntu
+  # Xfce4 Terminal Themes
+  mkdir -p ~/.local/share/xfce4/terminal/colorschemes
+  cp "$DOTS_HOME"/home/themes/xfce4/* ~/.local/share/xfce4/terminal/colorschemes
+fi
 
 if onApt; then
   sudo apt install -y tmux
