@@ -12,6 +12,7 @@ if onLinux; then
   fi
   cd ~; ln -s .Xresources .Xdefaults-$(hostname) # this could be just for Ubuntu
   # Xfce4 Terminal Themes
+  onApt && sudo apt -y install xfce4-terminal
   mkdir -p ~/.local/share/xfce4/terminal/colorschemes
   cp "$DOTS_HOME"/home/themes/xfce4/* ~/.local/share/xfce4/terminal/colorschemes
 fi
