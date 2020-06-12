@@ -28,6 +28,10 @@ if onLinux; then
   onApt && sudo apt -y install xfce4-terminal
   mkdir -p ~/.local/share/xfce4/terminal/colorschemes
   cp "$DOTS_HOME"/files/themes/xfce4/* ~/.local/share/xfce4/terminal/colorschemes
+  if [ ! -f  ~/.config/xfce4/terminal/terminalrc ]; then
+    mkdir -p ~/.config/xfce4/terminal
+    cp "$DOTS_HOME"/files/xfce4/terminalrc ~/.config/xfce4/terminal/terminalrc
+  fi
   # Fonts
   git clone git@github.com:kabootit/Iosevka.git ~/tmp/iosevka
   sudo mkdir -p /usr/share/fonts/truetype/iosevka-custom
