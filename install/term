@@ -41,6 +41,8 @@ if onLinux; then
 fi
 
 if onApt; then
+  # fonts:
+  sudo apt -y install fonts-firacode fonts-inconsolata fonts-hack-ttf
   # themes:
   sudo apt -y install dconf-cli uuid-runtime
   # tools:

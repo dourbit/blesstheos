@@ -12,7 +12,7 @@ for src in "${DOTS_HOME}/use/helpers"/*; do . "$src"; done
 add_to_PATH ${DOTS_HOME}/bin-fn
 
 uses colors
-uses prompt/PS1
+uses term
 uses aliases
 uses git
 uses jump

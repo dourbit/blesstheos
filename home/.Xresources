@@ -1,3 +1,9 @@
+! Iosevka
+! fc-list :scalable=true:spacing=mono: family | grep Iosevka
+xterm*faceName: Iosevka Term
+xterm*faceSize: 12
+xterm*renderFont: true
+
 ! Colour scheme: overgrowth (dark variant)
 ! By Protesilaos Stavrou
 ! https://protesilaos.com/overgrowth
