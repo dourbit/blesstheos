@@ -4,21 +4,22 @@
 
 if onApt; then
 
-  sudo apt install python-pip python-markdown python-tk
+  # python 2 is near end-of-life, skip packages
+  # sudo apt install python-pip python-markdown python-tk
 
   # prefer python 3
   sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 2
   sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 3
 
-  sudo apt install python3-pip python3-markdown python3-tk
+  sudo apt install -y python3-pip python3-markdown python3-tk
 
   # https://github.com/Coldcard/ckcc-protocol - see requirements / install:
-  sudo apt install python3-hidapi python3-ecdsa python3-pyaes python3-click
+  sudo apt install -y python3-hidapi python3-ecdsa python3-pyaes python3-click
   # https://github.com/signal11/hidapi/tree/master/linux
-  sudo apt install libhidapi-dev libusb-1.0-0-dev libudev-dev
+  sudo apt install -y libhidapi-dev libusb-1.0-0-dev libudev-dev
   # ckcc # Coldcard cli tool:
-  pip install 'ckcc-protocol[cli]'
-  ln -s ~/.local/bin/ckcc ~/bin/
+  pip3 install 'ckcc-protocol[cli]'
+  if [ ! -f ~/.local/bin/ckcc ]; then ln -s ~/.local/bin/ckcc ~/bin/; fi
 
   python --version #3
 
