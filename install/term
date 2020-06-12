@@ -2,6 +2,8 @@
 
 # Various terminal themes and tools
 
+sudoUse
+
 if onLinux; then
   # URxvt & XTerm
   if [ ! -f ~/.Xresources ]; then
@@ -15,6 +17,12 @@ if onLinux; then
   onApt && sudo apt -y install xfce4-terminal
   mkdir -p ~/.local/share/xfce4/terminal/colorschemes
   cp "$DOTS_HOME"/home/themes/xfce4/* ~/.local/share/xfce4/terminal/colorschemes
+  # Fonts
+  git clone git@github.com:kabootit/Iosevka.git ~/tmp/iosevka
+  sudo mkdir -p /usr/share/fonts/truetype/iosevka-custom
+  sudo cp ~/tmp/iosevka/dist/iosevka-custom/*.ttf /usr/share/fonts/truetype/iosevka-custom
+  fc-cache -f
+  rm -rf ~/tmp/iosevka
 fi
 
 if onApt; then
