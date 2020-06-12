@@ -52,6 +52,7 @@ if onApt; then
   sudo apt install -y speedometer # graph network traffic with custom chart max
   # speedometer -l  -t eth0 -r eth0 -m $(( 1024 * 1024 * 9 ))
 elif onMac; then
+  brewOn && brew tap homebrew/cask-fonts && brew cask install font-iosevka && brew cask install font-iosevka-slab
   specho iTerm2 Shell Integrations ...
   # the following will add a line to .profile or .bash_profile / something
   curl -L https://iterm2.com/misc/install_shell_integration.sh | bash
