@@ -29,6 +29,5 @@ brew tap beeftornado/rmtree
 # Here is a fresh start for what should end up as shared. None are necessary...
 if brewOn; then
   brew install gcc #suggested
-  brew install neovim #run as nvim
   if ! onApt; then brew install transmission-cli; fi # apt is preferable
 fi
