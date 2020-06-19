@@ -1,6 +1,6 @@
 ! Iosevka font face & size
 ! fc-list :scalable=true:spacing=mono: family | grep Iosevka
-xterm*faceName: Iosevka Term
+xterm*faceName: Iosevka Custom
 xterm*faceSize: 12
 xterm*renderFont: true
 

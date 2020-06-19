@@ -31,10 +31,9 @@ ColorForeground=#93afa4
 ColorBackground=#233f34
 ColorCursor=#93afa4
 ColorPalette=#233f34;#ca6a4a;#4ba212;#a8950d;#359fca;#bb6e8a;#15b59b;#d6d5c2;#334f44;#bb7628;#767562;#637f74;#a6a592;#8a6ebb;#93afa4;#e6e5d2
-FontName=Iosevka Term 12
+FontName=Iosevka Custom 12
 TextBlinkMode=TERMINAL_TEXT_BLINK_MODE_NEVER
 ColorSelection=#93afa4
 ColorSelectionBackground=#334f44
 ColorBold=#93afa4
 TabActivityColor=#4ba212
-

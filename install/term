@@ -33,11 +33,15 @@ if onLinux; then
     cp "$DOTS_HOME"/files/xfce4/terminalrc ~/.config/xfce4/terminal/terminalrc
   fi
   # Fonts
-  git clone git@github.com:kabootit/Iosevka.git ~/tmp/iosevka
-  sudo mkdir -p /usr/share/fonts/truetype/iosevka-custom
-  sudo cp ~/tmp/iosevka/dist/iosevka-custom/*.ttf /usr/share/fonts/truetype/iosevka-custom
+  $destination="/usr/share/fonts/truetype/iosevka-custom"
+  # Building my own Custom Iosevka here:
+  gh-install orlin/Iosevka dist/iosevka-custom/ttf.zip ~/tmp build
+  cd ~/tmp && rm -rf ttf && unzip ttf.zip
+  sudo rm -rf $destination
+  sudo mkdir -p $destination
+  sudo mv ~/tmp/ttf/*.ttf $destination
   fc-cache -f
-  rm -rf ~/tmp/iosevka
+  rm -rf ~/tmp/ttf*
 fi
 
 if onApt; then
