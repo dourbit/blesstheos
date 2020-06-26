@@ -2,18 +2,19 @@
 
 `git clone git@github.com:orlin/dots.git ~/.dots`
 
-This approach covers both login and non-login shells -- so far just for `bash`.
 Change `.dots` to wherever `dots` is cloned. It has to be relative to `$HOME`,
-though in the future perhaps absolute paths could be supported as well.
+though in the future perhaps absolute paths could be supported too.
 
 Copy & modify any / all files that you need from `~/.dots/home` to `~`.
-These must be under the home directory.
+These must be under the home directory. This is just for `.gitconfig`,
+as that contains my own user info.
 
-Append to the shell configs, by copy-pasting the following code blocks:
+Append to your bash configs, by copy-pasting the following code blocks:
 
 > ~/.bash_profile
 
 ```bash
+touch  ~/.bash_profile
 tee -a ~/.bash_profile > /dev/null << 'END'
 
 # source ~/.bashrc
@@ -27,22 +28,18 @@ END
 > ~/.bashrc
 
 ```bash
+touch  ~/.bashrc
 tee -a ~/.bashrc > /dev/null << 'END'
 
 export HOME_DOTS=".dots"
-export DOTS_PATH="$HOME/$HOME_DOTS"
-export BREW_ON=true # omit to reduce or skip Homebrew usage
+export BREW_ON=true # omit to decrease / skip Homebrew usage
 
-source "$HOME/.bashrc-pre"
-source "$DOTS_PATH/source.sh"
+[ -f ~/.bashrc-pre ] && . "$HOME"/.bashrc-pre
+. "$HOME/$HOME_DOTS"/source.sh
 END
+. ~/.bashrc
 ```
 
-Run any `install` scripts after sourcing the above or with a new shell.
-A changed prompt would be a good indicator / confirmation to begin with.
-It's a good idea to run any sudo command before running scripts that need sudo,
-e.g. `sudo ls` so that the password prompt does not trip-up the install.
-I basically start a new shell after each step to confirm it was successful.
 Sometimes installs depend on other installs, here is an example order:
 
 1. `atops` - needed for many of the install scripts, find the MacOS equivalents...
@@ -60,7 +57,8 @@ Sometimes installs depend on other installs, here is an example order:
 
 Packages are for the time being all installed manually.
 
-Atom restores to its configured state through a [sync-settings](http://atom.io/packages/sync-settings) package given the [id of a gist, such as this one](https://gist.github.com/orlin/0a47688f152d7ceccb646a23e8245449) and a GitHub Personal Access Token that can read & write to it. Remember to run `sync-settings:backup` through the [Command Palette](https://github.com/atom/command-palette) once in a while and especially after restore / upgrade / changes so that things stay relatively up-to-date for further reuse.
+Atom restores to its configured state through a [sync-settings](http://atom.io/packages/sync-settings) package given the [id of a gist, such as this one](https://gist.github.com/orlin/0a47688f152d7ceccb646a23e8245449) and a GitHub Personal Access Token that can read & write to it.
+Manual backup can be done with `sync-settings:backup` through the [Command Palette](https://github.com/atom/command-palette).
 
 ## License
 
