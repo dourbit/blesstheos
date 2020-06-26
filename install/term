@@ -37,7 +37,7 @@ if onLinux; then
   # Fonts
   $destination="/usr/share/fonts/truetype/iosevka-custom"
   # Building my own Custom Iosevka here:
-  gh-install orlin/Iosevka dist/iosevka-custom/ttf.zip ~/tmp build
+  gh-install orlin/Iosevka dist/iosevka-custom/ttf.zip ~/tmp
   cd ~/tmp && rm -rf ttf && unzip ttf.zip
   sudo rm -rf $destination
   sudo mkdir -p $destination
