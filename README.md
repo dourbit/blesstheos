@@ -55,8 +55,8 @@ Sometimes installs depend on other installs, here is an example order:
 8. `term` - it's just for Linux, almost...
 9. `editor` - mostly fully `apt install`
 10. `ubuntu-docker` and certain `docker/` containers
-11. `apt-python`
-12. `apt-desktop`
+11. `python` - only apt, though that will eventually change
+12. `ubuntu-desktop`
 
 Packages are for the time being all installed manually.
 
