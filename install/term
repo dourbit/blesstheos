@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
-# Various terminal themes and tools
+# Various terminal themes and ux improvements
+# as well as tools for use in a terminal - installed with apt.
 
-# changes theme on both Linux and MacOS iTerm:
+# Changes theme on both Linux and MacOS iTerm:
 # bash -c  "$(wget -qO- https://git.io/vQgMr)"
 # though prefer xfce on Linux (skip for that)
 
 sudoUse
 
 if check-x gsettings; then
-  # For Gnome, this will make the terminal window frame flash for a visual bell
+  # For Gnome, this will make the terminal window frame flash for a visual bell.
+  # Though not only, as all other apps will flash under certain conditions too.
   gsettings set org.gnome.desktop.wm.preferences audible-bell false
   gsettings set org.gnome.desktop.wm.preferences visual-bell true
   gsettings set org.gnome.desktop.wm.preferences visual-bell-type frame-flash
