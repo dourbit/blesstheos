@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+touch  ~/.bash_profile
+tee -a ~/.bash_profile > /dev/null << 'END'
+
+# source ~/.bashrc
+[ -f ~/.bashrc ] && . ~/.bashrc
+
+# code you don't want to run each time .bashrc is sourced
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+END
+
+touch  ~/.bashrc
+tee -a ~/.bashrc > /dev/null << 'END'
+
+export HOME_DOTS=".dots"
+export BREW_ON=true # omit to decrease / skip Homebrew usage
+
+[ -f ~/.bashrc-pre ] && . "$HOME"/.bashrc-pre
+. "$HOME/$HOME_DOTS"/source.sh
+END
+
+. ~/.bashrc

@@ -12,36 +12,9 @@ It must be relative to `$HOME`, some day absolute paths could work too.
 
 ## Configure
 
-Append to your bash configs, by copy-pasting the following code blocks:
-
-> ~/.bash_profile
-
-```bash
-touch  ~/.bash_profile
-tee -a ~/.bash_profile > /dev/null << 'END'
-
-# source ~/.bashrc
-[ -f ~/.bashrc ] && . ~/.bashrc
-
-# code you don't want to run each time .bashrc is sourced
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-END
-```
-
-> ~/.bashrc
-
-```bash
-touch  ~/.bashrc
-tee -a ~/.bashrc > /dev/null << 'END'
-
-export HOME_DOTS=".dots"
-export BREW_ON=true # omit to decrease / skip Homebrew usage
-
-[ -f ~/.bashrc-pre ] && . "$HOME"/.bashrc-pre
-. "$HOME/$HOME_DOTS"/source.sh
-END
-. ~/.bashrc
-```
+Modify your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
+[`bash-config`](https://github.com/orlin/dots/blob/master/bash-config).
+And perhaps post-edit the two relevant files according to preference...
 
 ## Personalize
 
