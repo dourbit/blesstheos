@@ -2,7 +2,7 @@
 
 `git clone git@github.com:orlin/dots.git ~/.dots`
 
-Change `.dots` to wherever `dots` is cloned. It has to be relative to `$HOME`,
+Change `.dots` to where you want it cloned. It must be relative to `$HOME`,
 though in the future perhaps absolute paths could be supported too.
 
 Copy & modify any / all files that you need from `~/.dots/home` to `~`.
@@ -40,20 +40,11 @@ END
 . ~/.bashrc
 ```
 
-Sometimes installs depend on other installs, here is an example order:
-
-1. `atops` - needed for many of the install scripts, find the MacOS equivalents...
-2. `brew` - [Homebrew](https://brew.sh/) usage depends on `export BREW_ON=true`; MacOS TODO...
-3. `shell` - scripting with `bash` + `bb` or `closh`; `brewOn` is applicable if wanted for `bb`
-4. `java` - unless Ubuntu / Debian: [download & install AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot) manually...
-5. `clojure` - depends on `java`, with `brewOn` possibly for some installs
-6. `node` - MacOS version has worked in the past, though not tested lately...
-7. `ruby` - via `brew` on a Mac - maybe unify for all to be brew-based...
-8. `term` - it's just for Linux, almost...
-9. `editor` - mostly fully `apt install`
-10. `ubuntu-docker` and certain `docker/` containers
-11. `python` - only apt, though that will eventually change
-12. `ubuntu-desktop`
+Nothing would really happen unless you run some of the
+[install scripts](https://github.com/orlin/dots/tree/master/install).
+Many installs depend on other installs.
+Run `install/_all` for everything, or look at the code
+for example order or comments.
 
 Packages are for the time being all installed manually.
 
