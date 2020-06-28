@@ -18,9 +18,15 @@ And perhaps post-edit the two relevant files according to preference...
 
 ## Personalize
 
-Copy & modify any / all files that you need from `~/.dots/home` to `~`.
-These must be under the home directory. This is just for `.gitconfig`,
-as that contains my own user info.
+Edit any of my `home/` files before or after they get copied to `$HOME`.
+So far nothing has been installed yet, nor copied either.
+For example the `.gitconfig` contains my own user info.
+An easy way is to setup your own files first, all those found in `home/`, etc.
+Any files that already exist will stay unmodified.
+Have them in place before continuing with install that's next.
+
+You may also want to edit what the "configure" step above has
+added to your `bash` configuration files - `~/.bash_profile` and `~/.bashrc`.
 
 ## Install
 
