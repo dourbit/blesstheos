@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+: ${URBIT_IMAGE:="asssaf/urbit:latest"}
+
+docker run -ti --rm \
+	--net host \
+	-v $(pwd):/urbit \
+	--user $(id -u):$(id -g) \
+	${URBIT_IMAGE} $*
