@@ -8,7 +8,10 @@
 *.swp
 tmp
 
-secret/
+
+use/repos/*
+!use/repos/readme.md
+use/secret/
 
 android/sdk
 legacy
