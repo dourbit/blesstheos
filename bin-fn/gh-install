@@ -16,7 +16,7 @@ gh-install() {
   local FILENAME=$(basename ${FILEPATH})
   local SAVE_DIR=${3-$(pwd)}
   local BRANCH=${4-"master"}
-  local MOVE_TO=$5
+  local MOVE_TO=$5 # a filename without a path will rename the file at $SAVE_DIR
 
   local GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILEPATH}"
 
@@ -25,14 +25,13 @@ gh-install() {
 
   # if success and a $MOVE_TO arg given
   if [[ $status -eq 0 && ! -z ${5+x} ]]; then
-    # we need this because don't want to overwrite existing target with a file that fails to download
-    # though I think curl-install properly handles that now ...
-    # or to simply rename a file
-    move-to ${SAVE_DIR}/${FILENAME} $MOVE_TO && \
-    echo Finally: $MOVE_TO
-  else
-    return $status
+    # move or simply rename the file if given a filename, or a path to it
+    local TARGET=$(move-to ${SAVE_DIR}/${FILENAME} $MOVE_TO --target 2>&1)
+    status=$?
+    [[ status -eq 0 ]] && echo "Finally: $TARGET" || echo $TARGET
   fi
+
+  return $status
 }
 
 [ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

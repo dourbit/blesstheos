@@ -3,8 +3,10 @@
 COMMAND_FN=move-to
 move-to() {
   if [ $# -lt 2 ]; then
-    echo "Usage: move-to from-path to-path"
+    echo "Usage: move-to from-path to-path [--target]"
+    echo
     echo "If the to-path is just a filename then it simply renames."
+    echo "If --target is asked for, then move-to does echo where it ends up."
     false; return
   fi
 
@@ -28,6 +30,9 @@ move-to() {
   fi
 
   mv "$ORIGIN" "$TARGET"
+  local status=$?
+  [[ $3 == "--target" && $status -eq 0 ]] && echo "$TARGET"
+  return $status
 }
 
 [ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

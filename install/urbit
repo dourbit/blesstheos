@@ -13,13 +13,13 @@ specho Download some urbit-os commands:
 echo
 
 gh-install orlin/urbit-docker scripts/createcomet.sh \
-          ~/tmp master ~/bin/urbit-os/new-comet \
+          ~/bin/urbit-os master new-comet \
           && echo
 
 gh-install orlin/urbit-docker scripts/createship.sh \
-          ~/tmp master ~/bin/urbit-os/new-ship \
+          ~/bin/urbit-os master new-ship \
           && echo
 
 gh-install orlin/urbit-docker scripts/run \
-          ~/tmp master ~/bin/urbit-os/run \
+          ~/bin/urbit-os \
           && echo
