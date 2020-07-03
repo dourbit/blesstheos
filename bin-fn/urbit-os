@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-COMMAND_FN=urbito
+COMMAND_FN=urbit-os
 
 usage() {
   cat <<EOF
 Usage: $COMMAND_FN <command> [args]
 
 The following commands can be run, some of which provide their own usage info:
+
   install > downloads some scripts from https://github.com/asssaf/urbit-docker
   version > report through urbit -R "build info", including other versions too
   run-zod > runs a fakezod ship called zod to use for development & no network
@@ -17,6 +18,7 @@ The following commands can be run, some of which provide their own usage info:
   new-comet > get a new comet - usually takes some non-trivial time to mine
   run > boots a ship or comet - one of your urbit assets
   run-localhost > the goal is to run a docker container in the background...
+
 EOF
 }
 
@@ -29,7 +31,7 @@ docker-image() {
   fi
 }
 
-urbito() {
+urbit-os() {
   if [ $# -eq 0 ]; then
     usage; true; return
   else
@@ -37,7 +39,7 @@ urbito() {
     if [ $cmd == "install" ]; then
       "$DOTS_HOME/install/urbit"
     elif [ $cmd == "version" ]; then
-      urbito urbit -R
+      urbit-os urbit -R
     elif [ $cmd == "hex-seed" ]; then
       hexdump -n 32 -e '4/4 "%08X"' /dev/random
       echo
@@ -45,25 +47,25 @@ urbito() {
       if [ $# -eq 1 ]; then
         errcho "Usage: $COMMAND_FN cmd <command>"
         false; return
-      elif check-x ~/bin/urbito/$2; then
-        echo ~/bin/urbito/$2
-      elif check-x "$DOTS_HOME"/bin/urbito/$2; then
-        echo "$DOTS_HOME"/bin/urbito/$2
+      elif check-x ~/bin/urbit-os/$2; then
+        echo ~/bin/urbit-os/$2
+      elif check-x "$DOTS_HOME"/bin/urbit-os/$2; then
+        echo "$DOTS_HOME"/bin/urbit-os/$2
       else
         usage; echo
-        errcho "urbito $2 - Command not found"
+        errcho "urbit-os $2 - Command not found"
         false; return
       fi
     elif [ $cmd == "piers" ]; then
       ls "$HOME"/data/urbit | cat
-    elif urbito cmd $cmd; then
+    elif urbit-os cmd $cmd; then
       # cmd is a file to be run
       cd "$HOME"/data/urbit
       docker-image
       if [[ "$cmd" =~ ^run ]] && [[ "$2" =~ ^~ ]]; then
-        $(urbito cmd $cmd) ${2:1} ${@:3} # remove the leading ~
+        $(urbit-os cmd $cmd) ${2:1} ${@:3} # remove the leading ~
       else
-        $(urbito cmd $cmd) ${@:2}
+        $(urbit-os cmd $cmd) ${@:2}
       fi
     else
       false; return

@@ -7,21 +7,21 @@ if ! check-x docker; then
 fi
 
 mkdir -p ~/data/urbit # for all ships' data - planets, comets and so on...
-mkdir -p ~/bin/urbito # not in the $PATH so will only run via the urbito script
+mkdir -p ~/bin/urbit-os # not in the $PATH so will only run via the urbit-os script
 
 specho Install commands ...
 
-specho urbito new-comet ...
+specho urbit-os new-comet ...
 gh-install orlin/urbit-docker scripts/createcomet.sh ~/tmp && \
-  mv ~/tmp/createcomet.sh ~/bin/urbito/new-comet && \
-  echo Renamed: ~/bin/urbito/new-comet
+  mv ~/tmp/createcomet.sh ~/bin/urbit-os/new-comet && \
+  echo Renamed: ~/bin/urbit-os/new-comet
 
-specho urbito new-ship ...
+specho urbit-os new-ship ...
 gh-install orlin/urbit-docker scripts/createship.sh ~/tmp && \
-  mv ~/tmp/createship.sh ~/bin/urbito/new-ship && \
-  echo Renamed: ~/bin/urbito/new-ship
+  mv ~/tmp/createship.sh ~/bin/urbit-os/new-ship && \
+  echo Renamed: ~/bin/urbit-os/new-ship
 
-specho urbito run ...
+specho urbit-os run ...
 gh-install orlin/urbit-docker scripts/run ~/tmp && \
-  mv ~/tmp/run ~/bin/urbito/run && \
-  echo Renamed: ~/bin/urbito/run
+  mv ~/tmp/run ~/bin/urbit-os/run && \
+  echo Renamed: ~/bin/urbit-os/run
