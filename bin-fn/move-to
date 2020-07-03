@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+COMMAND_FN=move-to
+move-to() {
+  if [ $# -lt 2 ]; then
+    echo "Usage: move-to from-path to-path"
+    false; return
+  fi
+
+  local ORIGIN="$1" # file must exist
+  local TARGET="$2" # if target doesn't exist assume it's a filepath rather than directory
+
+  if [ ! -f "$ORIGIN" ]; then
+    echo "Not Found: $ORIGIN"
+    false; return
+  fi
+
+  if [ ! -e "$TARGET" ]; then
+    # if target doesn't exist then
+    # assume it's a file path to a file
+    local DIR=$(dirname "$TARGET")
+    if [ ! -d "$DIR" ]; then
+      # make sure the $DIR exists
+      mkdir -p "$DIR"
+    fi
+  fi
+
+  mv "$ORIGIN" "$TARGET"
+}
+
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
