@@ -5,9 +5,37 @@
 # Install some file from GitHub.
 
 COMMAND_FN=gh-install
+
+move-to() {
+  if [ $# -lt 2 ]; then
+    echo "Usage: move-to from-path to-path"
+    false; return
+  fi
+
+  local ORIGIN="$1" # file must exist
+  local TARGET="$2" # if target doesn't exist assume it's a filepath rather than directory
+
+  if [ ! -f "$ORIGIN" ]; then
+    echo "Not Found: $ORIGIN"
+    false; return
+  fi
+
+  if [ ! -e "$TARGET" ]; then
+    # if target doesn't exist then
+    # assume it's a file path to a file
+    local DIR=$(dirname "$TARGET")
+    if [ ! -d "$DIR" ]; then
+      # make sure the $DIR exists
+      mkdir -p "$DIR"
+    fi
+  fi
+
+  mv "$ORIGIN" "$TARGET"
+}
+
 gh-install() {
   if [ $# -lt 2 ]; then
-    echo "Usage: $(basename $0) user/repo file-path [save-to-dir or ./] [branch or master]"
+    echo "Usage: $(basename $0) user/repo file-path [save-to-dir or ./] [branch or master] [move-to-path]"
     false; return
   fi
 
@@ -16,10 +44,23 @@ gh-install() {
   local FILENAME=$(basename ${FILEPATH})
   local SAVE_DIR=${3-$(pwd)}
   local BRANCH=${4-"master"}
+  local MOVE_TO=$5
 
   local GET_THIS="https://raw.githubusercontent.com/${REPOPATH}/${BRANCH}/${FILEPATH}"
 
   curl-install ${SAVE_DIR}/${FILENAME} ${GET_THIS}
+  local status=$?
+
+  # if success and a $MOVE_TO arg given
+  if [[ $status -eq 0 && ! -z ${5+x} ]]; then
+    # we need this because don't want to overwrite existing target with a file that fails to download
+    # though I think curl-install properly handles that now ...
+    # or to simply rename a file
+    move-to ${SAVE_DIR}/${FILENAME} $MOVE_TO && \
+    echo Finally: $MOVE_TO
+  else
+    return $status
+  fi
 }
 
 [ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

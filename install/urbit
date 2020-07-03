@@ -9,19 +9,17 @@ fi
 mkdir -p ~/data/urbit # for all ships' data - planets, comets and so on...
 mkdir -p ~/bin/urbit-os # not in the $PATH so will only run via the urbit-os script
 
-specho Install commands ...
+specho Download some urbit-os commands:
+echo
 
-specho urbit-os new-comet ...
-gh-install orlin/urbit-docker scripts/createcomet.sh ~/tmp && \
-  mv ~/tmp/createcomet.sh ~/bin/urbit-os/new-comet && \
-  echo Renamed: ~/bin/urbit-os/new-comet
+gh-install orlin/urbit-docker scripts/createcomet.sh \
+          ~/tmp master ~/bin/urbit-os/new-comet \
+          && echo
 
-specho urbit-os new-ship ...
-gh-install orlin/urbit-docker scripts/createship.sh ~/tmp && \
-  mv ~/tmp/createship.sh ~/bin/urbit-os/new-ship && \
-  echo Renamed: ~/bin/urbit-os/new-ship
+gh-install orlin/urbit-docker scripts/createship.sh \
+          ~/tmp master ~/bin/urbit-os/new-ship \
+          && echo
 
-specho urbit-os run ...
-gh-install orlin/urbit-docker scripts/run ~/tmp && \
-  mv ~/tmp/run ~/bin/urbit-os/run && \
-  echo Renamed: ~/bin/urbit-os/run
+gh-install orlin/urbit-docker scripts/run \
+          ~/tmp master ~/bin/urbit-os/run \
+          && echo
