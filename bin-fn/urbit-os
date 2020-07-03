@@ -2,6 +2,21 @@
 
 COMMAND_FN=urbit-os
 
+custom-image() {
+  if [ ! -z ${URBIT_IMAGE+x} ]; then
+    echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
+  fi
+}
+
+docker-image() {
+  echo $(docker --version)
+  if [ ! -z ${URBIT_IMAGE+x} ]; then
+    echo "URBIT_IMAGE=$URBIT_IMAGE"
+  else
+    echo "URBIT_IMAGE=asssaf/urbit:latest"
+  fi
+}
+
 usage() {
   cat <<EOF
 Usage: $COMMAND_FN <command> [args]
@@ -24,13 +39,6 @@ EOF
 
 errcho() { cat <<< "$@" 1>&2; }
 
-docker-image() {
-  # current default image is asssaf/urbit-fakezod:latest
-  if [ ! -z ${URBIT_IMAGE+x} ]; then
-    echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
-  fi
-}
-
 urbit-os() {
   if [ $# -eq 0 ]; then
     usage; true; return
@@ -40,6 +48,8 @@ urbit-os() {
       "$DOTS_HOME/install/urbit"
     elif [ $cmd == "version" ]; then
       urbit-os urbit -R
+      echo
+      docker-image
     elif [ $cmd == "hex-seed" ]; then
       hexdump -n 32 -e '4/4 "%08X"' /dev/random
       echo
@@ -52,7 +62,7 @@ urbit-os() {
       elif check-x "$DOTS_HOME"/bin/urbit-os/$2; then
         echo "$DOTS_HOME"/bin/urbit-os/$2
       else
-        usage; echo
+        usage
         errcho "urbit-os $2 - Command not found"
         false; return
       fi
@@ -61,7 +71,8 @@ urbit-os() {
     elif urbit-os cmd $cmd; then
       # cmd is a file to be run
       cd "$HOME"/data/urbit
-      docker-image
+      echo
+      custom-image
       if [[ "$cmd" =~ ^run ]] && [[ "$2" =~ ^~ ]]; then
         $(urbit-os cmd $cmd) ${2:1} ${@:3} # remove the leading ~
       else

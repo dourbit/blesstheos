@@ -2,6 +2,8 @@
 
 : ${URBIT_IMAGE:="asssaf/urbit:latest"}
 
+echo "urbit $*"
+
 docker run -ti --rm \
 	--net host \
 	-v $(pwd):/urbit \
