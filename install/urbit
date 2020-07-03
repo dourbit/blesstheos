@@ -23,3 +23,20 @@ gh-install orlin/urbit-docker scripts/createship.sh \
 gh-install orlin/urbit-docker scripts/run \
           ~/bin/urbit-os \
           && echo
+
+if [[ ! -e "${DOTS_HOME}/use/repos/urbit" ]]; then
+  git clone --depth 1 --single-branch --branch master \
+      https://github.com/urbit/urbit.git \
+      ${DOTS_HOME}/use/repos/urbit
+else
+  echo "Exists: ${DOTS_HOME}/use/repos/urbit"
+fi
+echo
+
+if [[ ! -e "${DOTS_HOME}/use/repos/urbit-docker" ]]; then
+  git clone https://github.com/orlin/urbit-docker.git \
+      ${DOTS_HOME}/use/repos/urbit-docker
+else
+  echo "Exists: ${DOTS_HOME}/use/repos/urbit-docker"
+fi
+echo
