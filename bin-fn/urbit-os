@@ -26,7 +26,8 @@ The following commands can be run, some of which provide their own usage info:
   run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
-  image     > shows the docker image currently in use, follow by: tag or id...
+  image     > shows the docker image currently configured and probably used
+  image-id  > shows the docker image id of the current urbit-os image, look up
   bin       > check if a command is an executable file and echo the path to it
   cmd       > check if a command exists; echo the path or its usage line
   piers     > a list of urbit assets contained in ~/data/urbit that can be run
@@ -71,6 +72,9 @@ urbit-os() {
 
     elif [ $cmd == "image" ]; then
       docker-image
+
+    elif [ $cmd == "image-id" ]; then
+      docker images -q $(docker-image) | head -n 1 # there is only 1
 
     elif [[ $cmd == "bin" || $cmd == "cmd" ]]; then
       # these are similar and related with a bit of code in common
