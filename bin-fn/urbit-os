@@ -73,41 +73,45 @@ urbit-os() {
       hexdump -n 32 -e '4/4 "%08X"' /dev/random
       echo
 
-    elif [ $cmd == "bin" ]; then
+    elif [[ $cmd == "bin" || $cmd == "cmd" ]]; then
+      # these are similar and related with a bit of code in common
       local name=$2
       if [ $# -eq 1 ]; then
         errcho "Usage: $COMMAND_FN $cmd <command>"
-        false; return
-      elif check-x ~/bin/urbit-os/$name; then
-        echo ~/bin/urbit-os/$name
-      elif check-x "$DOTS_HOME"/bin/urbit-os/$name; then
-        echo "$DOTS_HOME"/bin/urbit-os/$name
-      else
-        errcho "Not Found: $name"
         false; return
       fi
 
-    elif [ $cmd == "cmd" ]; then
-      local name=$2
-      local found=false
-      if [ $# -eq 1 ]; then
-        errcho "Usage: $COMMAND_FN $cmd <command>"
-        false; return
+      if [ $cmd == "bin" ]; then
+        if check-x ~/bin/urbit-os/$name; then
+          echo ~/bin/urbit-os/$name
+        elif check-x "$DOTS_HOME"/bin/urbit-os/$name; then
+          echo "$DOTS_HOME"/bin/urbit-os/$name
+        else
+          errcho "Not Found: $name"
+          false; return
+        fi
       fi
-      if silent urbit-os bin $name; then
-        urbit-os bin $name
-        found=true
-      fi
-      local pattern="^  $name "
-      usage | grep -q -e "$pattern"
-      if [ $? -eq 0 ]; then
-        echo $(usage | grep -e "$pattern")
-        found=true
-      fi
-      if ! $found; then
-        usage
-        errcho "Not Found: urbit-os $name"
-        false; return
+
+      if [ $cmd == "cmd" ]; then
+        local found=false
+        # is it a script?
+        if silent urbit-os bin $name; then
+          urbit-os bin $name
+          found=true
+        fi
+        # is it documented?
+        local pattern="^  $name "
+        usage | grep -q -e "$pattern"
+        if [ $? -eq 0 ]; then
+          echo $(usage | grep -e "$pattern")
+          found=true
+        fi
+        # unknown command
+        if ! $found; then
+          usage
+          errcho "Not Found: urbit-os $name"
+          false; return
+        fi
       fi
 
     elif [ $cmd == "piers" ]; then
