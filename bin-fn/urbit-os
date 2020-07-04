@@ -23,8 +23,9 @@ Usage: $COMMAND_FN <command> [args]
 
 The following commands can be run, some of which provide their own usage info:
 
-  install > downloads some scripts from https://github.com/asssaf/urbit-docker
+  install > downloads some scripts, clones git repos, and sets-up the system
   version > report through urbit -R "build info", including other versions too
+  latest  > shows the latest tags from urbit repo for possible build / upgrade
   run-zod > runs a fakezod ship called zod to use for development & no network
   cmd > check if a command exists, and can be run + return path to its script
   piers > a list of urbit assets contained in ~/data/urbit - available to run
@@ -39,6 +40,12 @@ EOF
 
 errcho() { cat <<< "$@" 1>&2; }
 
+latest() {
+  # excluding .rc tags
+  git tag -l "$1*" --format='%(creatordate:short)%09%(refname:strip=2)' \
+                   --sort=-creatordate | grep -v -e '\.rc' | head -n 1
+}
+
 urbit-os() {
   if [ $# -eq 0 ]; then
     usage; true; return
@@ -50,6 +57,10 @@ urbit-os() {
       urbit-os urbit -R
       echo
       docker-image
+    elif [ $cmd == "latest" ]; then
+      cd "${DOTS_HOME}/use/repos/urbit"
+      silent git fetch --depth=1 origin 'refs/tags/urbit-*:refs/tags/urbit-*'
+      echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
     elif [ $cmd == "hex-seed" ]; then
       hexdump -n 32 -e '4/4 "%08X"' /dev/random
       echo
