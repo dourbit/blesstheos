@@ -100,7 +100,7 @@ urbit-os() {
           found=true
         fi
         # is it documented?
-        local pattern="^  $name "
+        local pattern="^[[:blank:]]\+$name[[:blank:]]\+> "
         usage | grep -q -e "$pattern"
         if [ $? -eq 0 ]; then
           echo $(usage | grep -e "$pattern")
