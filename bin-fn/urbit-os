@@ -54,19 +54,24 @@ urbit-os() {
     usage; true; return
   else
     local cmd=$1
+
     if [ $cmd == "install" ]; then
       "$DOTS_HOME/install/urbit"
+
     elif [ $cmd == "version" ]; then
       urbit-os urbit -R
       echo
       docker-image
+
     elif [ $cmd == "latest" ]; then
       cd "${DOTS_HOME}/use/repos/urbit"
       silent git fetch --depth=1 origin 'refs/tags/urbit-*:refs/tags/urbit-*'
       echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
+
     elif [ $cmd == "hex-seed" ]; then
       hexdump -n 32 -e '4/4 "%08X"' /dev/random
       echo
+
     elif [ $cmd == "cmd" ]; then
       if [ $# -eq 1 ]; then
         errcho "Usage: $COMMAND_FN cmd <command>"
@@ -80,8 +85,10 @@ urbit-os() {
         errcho "urbit-os $2 - Command not found"
         false; return
       fi
+
     elif [ $cmd == "piers" ]; then
       ls "$HOME"/data/urbit | cat
+
     elif urbit-os cmd $cmd; then
       # cmd is a file to be run
       cd "$HOME"/data/urbit
