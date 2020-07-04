@@ -23,17 +23,17 @@ Usage: $COMMAND_FN <command> [args]
 
 The following commands can be run, some of which provide their own usage info:
 
-  install > downloads some scripts, clones git repos, and sets-up the system
-  version > report through urbit -R "build info", including other versions too
-  latest  > shows the latest tags from urbit repo for possible build / upgrade
-  run-zod > runs a fakezod ship called zod to use for development & no network
-  cmd > check if a command exists, and can be run + return path to its script
-  piers > a list of urbit assets contained in ~/data/urbit - available to run
-  hex-seed > hexdump -n 32 -e '4/4 "%08X"' /dev/random # for network keys gen
-  new-ship > create a ship which is usually a planet for which you have a .key
-  new-comet > get a new comet - usually takes some non-trivial time to mine
-  run > boots a ship or comet - one of your urbit assets
-  run-localhost > the goal is to run a docker container in the background...
+  install   > downloads some scripts, clones git repos, and sets-up the system
+  version   > report through urbit -R "build info", including other versions
+  latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
+  run-zod   > runs a fakezod ship called zod to use for development purposes
+  cmd       > check if a command exists, echo the path if it's a script
+  piers     > a list of urbit assets contained in ~/data/urbit that can be run
+  hex-seed  > hexdump -n 32 -e '4/4 "%08X"' /dev/random # for network keys gen
+  new-ship  > create a ship, usually a planet for which you have a .key
+  new-comet > get a new comet, usually takes some non-trivial time to mine
+  run       > boots a ship or comet - one of your urbit assets
+  host      > have it run a docker container in the background (wip)
 
 EOF
 }
