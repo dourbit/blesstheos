@@ -9,11 +9,10 @@ custom-image() {
 }
 
 docker-image() {
-  echo $(docker --version)
   if [ ! -z ${URBIT_IMAGE+x} ]; then
-    echo "URBIT_IMAGE=$URBIT_IMAGE"
+    echo $URBIT_IMAGE
   else
-    echo "URBIT_IMAGE=asssaf/urbit:latest"
+    echo "asssaf/urbit:latest"
   fi
 }
 
@@ -24,9 +23,10 @@ Usage: $COMMAND_FN <command> [args]
 The following commands can be run, some of which provide their own usage info:
 
   install   > downloads some scripts, clones git repos, and sets-up the system
+  run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
-  run-zod   > runs a fakezod ship called zod to use for development purposes
+  image     > shows the docker image currently in use, follow by: tag or id...
   bin       > check if a command is an executable file and echo the path to it
   cmd       > check if a command exists; echo the path or its usage line
   piers     > a list of urbit assets contained in ~/data/urbit that can be run
@@ -61,17 +61,16 @@ urbit-os() {
 
     elif [ $cmd == "version" ]; then
       urbit-os urbit -R
-      echo
-      docker-image
+      specho $(docker --version)
+      echo "URBIT_IMAGE=$(docker-image)"
 
     elif [ $cmd == "latest" ]; then
       cd "${DOTS_HOME}/use/repos/urbit"
       silent git fetch --depth=1 origin 'refs/tags/urbit-*:refs/tags/urbit-*'
       echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
 
-    elif [ $cmd == "hex-seed" ]; then
-      hexdump -n 32 -e '4/4 "%08X"' /dev/random
-      echo
+    elif [ $cmd == "image" ]; then
+      docker-image
 
     elif [[ $cmd == "bin" || $cmd == "cmd" ]]; then
       # these are similar and related with a bit of code in common
@@ -113,6 +112,10 @@ urbit-os() {
           false; return
         fi
       fi
+
+    elif [ $cmd == "hex-seed" ]; then
+      hexdump -n 32 -e '4/4 "%08X"' /dev/random
+      echo
 
     elif [ $cmd == "piers" ]; then
       ls "$HOME"/data/urbit | cat
