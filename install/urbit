@@ -7,21 +7,21 @@ if ! check-x docker; then
 fi
 
 mkdir -p ~/data/urbit # for all ships' data - planets, comets and so on...
-mkdir -p ~/bin/urbit-os # not in the $PATH so will only run via the urbit-os script
+mkdir -p ~/bin/dourbit # not in $PATH - run these scripts as dourbit commands
 
-specho Download some urbit-os commands:
+specho Download some urbit commands:
 echo
 
 gh-install orlin/urbit-docker scripts/createcomet.sh \
-          ~/bin/urbit-os master new-comet \
+          ~/bin/dourbit master new-comet \
           && echo
 
 gh-install orlin/urbit-docker scripts/createship.sh \
-          ~/bin/urbit-os master new-ship \
+          ~/bin/dourbit master new-ship \
           && echo
 
 gh-install orlin/urbit-docker scripts/run \
-          ~/bin/urbit-os \
+          ~/bin/dourbit \
           && echo
 
 if [[ ! -e "${DOTS_HOME}/use/repos/urbit" ]]; then
