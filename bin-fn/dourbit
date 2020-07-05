@@ -25,6 +25,7 @@ The following commands can be run, some of which provide their own usage info:
   install   > downloads some scripts, clones git repos, and sets-up the system
   run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
+  current   > a starter current, for now simply gets the urbit-v from above
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
   image     > shows the docker image currently configured and probably used
   image-id  > shows the docker image id of the current urbit or urbit-os image
@@ -64,6 +65,12 @@ dourbit() {
       dourbit urbit -R
       specho $(docker --version)
       echo "URBIT_IMAGE=$(docker-image)"
+
+    elif [ $cmd == "current" ]; then
+      silent docker pull $(docker-image)
+      echo "urbit-v$(dourbit urbit -R | \
+                     grep -e '^urbit [0-9]' | \
+                     grep -oe '[0-9]\+.*$')"
 
     elif [ $cmd == "latest" ]; then
       cd "${DOTS_HOME}/use/repos/urbit"
