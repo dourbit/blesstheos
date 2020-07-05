@@ -34,7 +34,7 @@ fi
 echo
 
 if [[ ! -e "${DOTS_HOME}/use/repos/urbit-docker" ]]; then
-  git clone https://github.com/orlin/urbit-docker.git \
+  git clone https://github.com/dourbit/urbit-docker.git \
       ${DOTS_HOME}/use/repos/urbit-docker
 else
   echo "Exists: ${DOTS_HOME}/use/repos/urbit-docker"
