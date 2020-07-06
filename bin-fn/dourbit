@@ -26,6 +26,7 @@ The following commands can be run, some of which provide their own usage info:
   run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
   current   > a starter current, for now simply gets the urbit-v from above
+  tagged    > all git releases that have been fetched with the filter applied
   recent    > all git releases newer than the current or a given tag version
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
   image     > shows the docker image currently configured and probably used
@@ -83,6 +84,10 @@ dourbit() {
                  | grep -e '^urbit [0-9]' \
                  | grep -oe '[0-9]\+.*$' \
                  | tr   -d  '[:space:]')"
+
+    elif [ $cmd == "tagged" ]; then
+      shift
+      tagged "$@"
 
     elif [ $cmd == "recent" ]; then
       local tag=${2-$(dourbit current)}
