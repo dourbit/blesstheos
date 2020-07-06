@@ -38,6 +38,7 @@ The following commands can be run, some of which provide their own usage info:
   update    > does git fetch && docker pull as URBIT_EAGER not set by default
   recent    > all git releases newer than the current or a given tag version
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
+  foremost  > the tag of the topmost latest release to use for default build
   image     > shows the docker image currently configured and probably used
   image-id  > shows the docker image id of the current urbit or urbit-os image
   bin       > check if a command is an executable file and echo the path to it
@@ -115,6 +116,11 @@ dourbit() {
 
     elif [ $cmd == "latest" ]; then
       echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
+
+    elif [ $cmd == "foremost" ]; then
+      dourbit tagged | head -n 1 \
+                     | grep -oe '[[:blank:]]\+.*$' \
+                     | tr   -d   '[:blank:]'
 
     elif [ $cmd == "image" ]; then
       docker-image
