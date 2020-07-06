@@ -26,6 +26,7 @@ The following commands can be run, some of which provide their own usage info:
   run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
   current   > a starter current, for now simply gets the urbit-v from above
+  recent    > all git releases newer than the current or a given tag version
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
   image     > shows the docker image currently configured and probably used
   image-id  > shows the docker image id of the current urbit or urbit-os image
@@ -43,13 +44,19 @@ EOF
 
 errcho() { cat <<< "$@" 1>&2; }
 
-latest() {
+tagged() {
   # excluding .rc tags
   local filter=${2-'\.rc'} # ideally comes from $URBIT_TAGS_FILTER
   # TODO: conditional filter - empty string, or no var set: so it won't filter
   # https://unix.stackexchange.com/questions/38310/conditional-pipeline#38312
+  cd "${DOTS_HOME}/use/repos/urbit"
+  silent git fetch --depth=1 origin 'refs/tags/urbit-*:refs/tags/urbit-*'
   git tag -l "$1*" --format='%(creatordate:short)%09%(refname:strip=2)' \
-                   --sort=-creatordate | grep -v -e "$filter" | head -n 1
+                   --sort=-creatordate | grep -v -e "$filter"
+}
+
+latest() {
+  tagged "$@" | head -n 1
 }
 
 dourbit() {
@@ -72,13 +79,16 @@ dourbit() {
         silent docker pull $(docker-image)
       fi
       #TODO: this should become the actual build tag rather oldest possible tag
-      echo "urbit-v$(dourbit urbit -R | \
-                     grep -e '^urbit [0-9]' | \
-                     grep -oe '[0-9]\+.*$')"
+      echo "urbit-v$(dourbit urbit -R \
+                 | grep -e '^urbit [0-9]' \
+                 | grep -oe '[0-9]\+.*$' \
+                 | tr   -d  '[:space:]')"
+
+    elif [ $cmd == "recent" ]; then
+      local tag=${2-$(dourbit current)}
+      tagged 'urbit-' | sed -e "/${tag}/q"
 
     elif [ $cmd == "latest" ]; then
-      cd "${DOTS_HOME}/use/repos/urbit"
-      silent git fetch --depth=1 origin 'refs/tags/urbit-*:refs/tags/urbit-*'
       echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
 
     elif [ $cmd == "image" ]; then
