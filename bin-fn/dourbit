@@ -34,8 +34,8 @@ The following commands can be run, some of which provide their own usage info:
   run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
   current   > a starter current, for now simply gets the urbit-v from above
-  tagged    > all git releases that have been fetched with the filter applied
   update    > does git fetch && docker pull as URBIT_EAGER not set by default
+  tagged    > all git releases that have been fetched with the filter applied
   recent    > all git releases newer than the current or a given tag version
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
   foremost  > the tag of the topmost latest release to use for default build
@@ -55,15 +55,24 @@ EOF
 
 errcho() { cat <<< "$@" 1>&2; }
 
+fetch() {
+  local tagpref=${1-'urbit-'}
+  local refspec="refs/tags/${tagpref}*:refs/tags/${tagpref}*"
+  cd "${DOTS_HOME}/use/repos/urbit"
+  git fetch --depth=1 origin "$refspec"
+}
+
+silent-fetch() {
+  if eager; then fetch >/dev/null 2>&1; fi
+}
+
 tagged() {
+  # NOTE: dourbit latest #calls this twice so we can't fetch here
   # excluding .rc tags
   local filter=${2-'\.rc'} # ideally comes from $URBIT_TAGS_FILTER
   # TODO: conditional filter - empty string, or no var set: so it won't filter
   # https://unix.stackexchange.com/questions/38310/conditional-pipeline#38312
   cd "${DOTS_HOME}/use/repos/urbit"
-  if eager; then
-    silent git fetch --depth=1 origin 'refs/tags/urbit-*:refs/tags/urbit-*'
-  fi
   git tag -l "${1}*" --format='%(creatordate:short)%09%(refname:strip=2)' \
                      --sort=-creatordate | grep -v -e "$filter"
 }
@@ -98,26 +107,29 @@ dourbit() {
                  | grep -oe '[0-9]\+.*$' \
                  | tr   -d  '[:space:]')"
 
-    elif [ $cmd == "tagged" ]; then
-      shift
-      tagged "$@"
-
     elif [ $cmd == "update" ]; then
       specho "Docker image ..."
       docker pull $(docker-image)
       specho "Urbit releases ..."
-      cd "${DOTS_HOME}/use/repos/urbit"
-      git fetch --depth=1 origin 'refs/tags/urbit-*:refs/tags/urbit-*'
+      fetch
       echo
 
+    elif [ $cmd == "tagged" ]; then
+      shift
+      silent-fetch
+      tagged "$@"
+
     elif [ $cmd == "recent" ]; then
+      silent-fetch
       local tag=${2-$(dourbit current)}
       tagged 'urbit-' | sed -e "/${tag}/q"
 
     elif [ $cmd == "latest" ]; then
+      silent-fetch
       echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
 
     elif [ $cmd == "foremost" ]; then
+      silent-fetch
       dourbit tagged | head -n 1 \
                      | grep -oe '[[:blank:]]\+.*$' \
                      | tr   -d   '[:blank:]'
