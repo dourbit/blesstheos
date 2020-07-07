@@ -43,7 +43,8 @@ The following commands can be run, some of which provide their own usage info:
   build     > initial docker build - takes an urbit tag or uses latest tag
   image     > shows the docker image currently configured and probably used
   image-id  > shows the docker image id of the current urbit or urbit-os image
-  clean-up  > make sure no dangling images remain and thus take up no space
+  dangling  > lists all dangling images & does exit 1 - keep for instant build
+  clean-up  > make sure no dangling images remain and thus waste no space
   bin       > check if a command is an executable file and echo the path to it
   cmd       > check if a command exists; echo the path above or its usage help
   piers     > a list of urbit assets contained in ~/data/urbit that can be run
@@ -184,10 +185,19 @@ dourbit() {
     elif [ $cmd == "image-id" ]; then
       docker images -q $(docker-image) | head -n 1 # there is only 1
 
-    elif [ $cmd == "clean-up" ]; then
+    elif [ $cmd == "dangling" ]; then
       if [ $(docker images --filter 'dangling=true' -q | wc -w) -ne 0 ]; then
         echo "Found dangling / <none> images:"
         docker images --filter "dangling=true" -q
+        exit 1
+      else
+        echo "Nothing is dangling."
+        exit 0
+      fi
+
+    elif [ $cmd == "clean-up" ]; then
+      silent $(dourbit dangling)
+      if [ $? -eq 1 ]; then
         echo "docker rmi"
         docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
       else
