@@ -186,6 +186,7 @@ dourbit() {
       docker images -q $(docker-image) | head -n 1 # there is only 1
 
     elif [ $cmd == "dangling" ]; then
+      # NOTE: there is nothing *urbit* about these images, only dangling ...
       if [ $(docker images --filter 'dangling=true' -q | wc -w) -ne 0 ]; then
         echo "Found dangling / <none> images:"
         docker images --filter "dangling=true" -q
