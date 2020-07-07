@@ -66,6 +66,14 @@ silent-fetch() {
   if eager; then fetch >/dev/null 2>&1; fi
 }
 
+silent-pull() {
+  if eager && docker-image | grep -qe ':latest$'; then
+    # if an image isn't tagged latest: assume fixed version / need not pull
+    # furthermore $URBIT_EAGER must be set in order to pull
+    silent docker pull $(docker-image)
+  fi
+}
+
 tagged() {
   # NOTE: dourbit latest #calls this twice so we can't fetch here
   # excluding .rc tags
@@ -96,11 +104,7 @@ dourbit() {
       echo "URBIT_IMAGE=$(docker-image)"
 
     elif [ $cmd == "current" ]; then
-      if docker-image | grep -qe ':latest$'; then
-        # if an image isn't tagged latest: assume fixed version / need not pull
-        # furthermore $URBIT_EAGER must be set in order to pull
-        if eager; then silent docker pull $(docker-image); fi
-      fi
+      silent-pull
       #TODO: this should become the actual build tag rather oldest possible tag
       echo "urbit-v$(dourbit urbit -R \
                  | grep -e '^urbit [0-9]' \
