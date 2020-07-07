@@ -90,6 +90,13 @@ latest() {
   tagged "$@" | head -n 1
 }
 
+toptag() {
+  # given a command that produces tags same as tagged function above or similar
+  $@ | head -n 1 \
+     | grep -oe '[[:blank:]]\+.*$' \
+     | tr   -d   '[:blank:]'
+}
+
 dourbit() {
   if [ $# -eq 0 ]; then
     usage; true; return
@@ -154,10 +161,9 @@ dourbit() {
       echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
 
     elif [ $cmd == "foremost" ]; then
+      shift
       silent-fetch
-      dourbit tagged | head -n 1 \
-                     | grep -oe '[[:blank:]]\+.*$' \
-                     | tr   -d   '[:blank:]'
+      toptag tagged "$@"
 
     elif [ $cmd == "image" ]; then
       docker-image
