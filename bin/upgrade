@@ -61,3 +61,8 @@ if check-x closh; then
   specho Closh ...
   $(dirname $0)/../install/closh
 fi
+
+if silent dourbit confirm; then
+  specho Urbit ...
+  dourbit update
+fi
