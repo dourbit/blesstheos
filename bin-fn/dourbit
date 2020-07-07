@@ -40,6 +40,7 @@ The following commands can be run, some of which provide their own usage info:
   recent    > all git releases newer than the current or a given tag version
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
   foremost  > the tag of the topmost latest release to use for default build
+  build     > initial docker build - takes an urbit tag or uses latest tag
   image     > shows the docker image currently configured and probably used
   image-id  > shows the docker image id of the current urbit or urbit-os image
   bin       > check if a command is an executable file and echo the path to it
@@ -163,7 +164,25 @@ dourbit() {
     elif [ $cmd == "foremost" ]; then
       shift
       silent-fetch
-      toptag tagged "$@"
+      toptag tagged ${1-'urbit-'} ${@:2}
+
+    elif [ $cmd == "build" ]; then
+      shift
+      local tag=$(URBIT_EAGER=true dourbit foremost $@)
+      if [ "$tag" == "" ]; then
+        echo "Not Found: ${1-'urbit-'}*"
+        exit 1
+      fi
+      cd "${DOTS_HOME}/use/repos/urbit-docker" \
+      && git pull \
+      && docker build -t $tag --build-arg branch=$tag . \
+      && [[ $(docker images --filter 'dangling=true' -q | wc -w) -ne 0 ]] \
+      && {
+        echo "remaining <none> images:"
+        docker images --filter "dangling=true" -q
+        echo "docker rmi #dangling"
+        docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+      }
 
     elif [ $cmd == "image" ]; then
       docker-image
