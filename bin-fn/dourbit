@@ -31,6 +31,7 @@ Usage: $COMMAND_FN <command> [args]
 The following commands can be run, some of which provide their own usage info:
 
   install   > downloads some scripts, clones git repos, and sets-up the system
+  confirm   > establish that dourbit install has been run / all appears well
   run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
   current   > a starter current, for now simply gets the urbit-v from above
@@ -97,6 +98,26 @@ dourbit() {
 
     if [ $cmd == "install" ]; then
       "$DOTS_HOME/install/urbit"
+
+    elif [ $cmd == "confirm" ]; then
+      # TODO: improve with checks based on exported env vars config
+      local good=true
+      local dirs=( "~/bin/dourbit"
+                   "${DOTS_HOME}/use/repos/urbit"
+                   "${DOTS_HOME}/use/repos/urbit-docker"
+                 )
+      for dir in "${dirs[@]}"; do
+        dir="${dir/#\~/$HOME}"
+        silent ls $dir
+        if [ $? -ne 0 ]; then
+          good=false
+          echo "Not Found: $dir"
+        fi
+      done
+      if ! $good; then
+        echo "Maybe run this for an easy fix: $COMMAND_FN install"
+        exit 1
+      fi
 
     elif [ $cmd == "version" ]; then
       dourbit urbit -R
