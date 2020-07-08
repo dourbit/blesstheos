@@ -39,6 +39,7 @@ The following commands can be run, some of which provide their own usage info:
   recent    > all git releases newer than the current or a given tag version
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
   foremost  > the tag of the topmost latest release to use for default build
+  existing  > checks that an image exists - so just use it rather than build
   build     > initial docker build - takes an urbit tag or uses latest tag
   image     > shows the docker image currently configured and probably used
   image-id  > shows the docker image id of the current urbit or urbit-os image
@@ -173,6 +174,18 @@ dourbit() {
       shift
       silent-fetch
       toptag tagged ${1-'urbit-'} ${@:2}
+
+    elif [ $cmd == "existing" ]; then
+      local wut=${2-$(docker-image)}
+      if [[ ! -z $(docker images -q $wut) ]]; then
+        echo $wut
+      else
+        echo "Not found: $wut"
+        if [[ ! -z $(dourbit tagged $wut) ]]; then
+          echo "Can build with: dourbit build $wut"
+        fi
+        exit 1
+      fi
 
     elif [ $cmd == "build" ]; then
       shift
