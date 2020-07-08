@@ -32,7 +32,6 @@ The following commands can be run, some of which provide their own usage info:
 
   install   > downloads some scripts, clones git repos, and sets-up the system
   confirm   > establish that dourbit install has been run / all appears well
-  run-zod   > runs a fakezod ship called zod to use for development purposes
   version   > report through urbit -R "build info", including other versions
   current   > a starter current, for now simply gets the urbit-v from above
   update    > does git fetch && docker pull as URBIT_EAGER not set by default
@@ -47,10 +46,11 @@ The following commands can be run, some of which provide their own usage info:
   clean-up  > make sure no dangling images remain and thus waste no space
   bin       > check if a command is an executable file and echo the path to it
   cmd       > check if a command exists; echo the path above or its usage help
-  piers     > a list of urbit assets contained in ~/data/urbit that can be run
+  run-zod   > runs a fakezod ship called zod to use for development purposes
   hex-seed  > hexdump -n 32 -e '4/4 "%08X"' /dev/random # for network keys gen
   new-ship  > create a ship, usually a planet for which you have a .key
   new-comet > get a new comet, usually takes some non-trivial time to mine
+  piers     > a list of urbit assets contained in ~/data/urbit that can be run
   run       > boots a ship or comet - one of your urbit assets
   host      > have it run a docker container in the background (wip)
 
