@@ -199,10 +199,17 @@ dourbit() {
       if [ "$tag" == "" ]; then
         echo "Not Found: ${1-'urbit-'}*"
         exit 1
+      elif [ $(dourbit existing $tag) ]; then
+        echo "Pointless, will not build."
+        echo "Have This: $tag"
+        printf "Docker ID: "
+        echo $(dourbit images $tag | grep $tag | sed -e "s/: ${tag}//g")
+        exit 0
+      else
+        cd $(repos)/urbit-docker && \
+          git pull && \
+          docker build -t $tag --build-arg branch=$tag .
       fi
-      cd $(repos)/urbit-docker && \
-        git pull && \
-        docker build -t $tag --build-arg branch=$tag .
 
     elif [ $cmd == "image" ]; then
       docker-image
