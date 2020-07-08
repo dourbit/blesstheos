@@ -202,8 +202,7 @@ dourbit() {
       elif [ $(dourbit existing $tag) ]; then
         echo "Pointless, will not build."
         echo "Have This: $tag"
-        printf "Docker ID: "
-        echo $(dourbit images $tag | grep $tag | sed -e "s/: ${tag}//g")
+        echo "Docker ID: $(dourbit image-id $tag)"
         exit 0
       else
         cd $(repos)/urbit-docker && \
@@ -212,10 +211,18 @@ dourbit() {
       fi
 
     elif [ $cmd == "image" ]; then
-      docker-image
+      dourbit existing $(docker-image)
 
     elif [ $cmd == "image-id" ]; then
-      docker images -q $(docker-image) | head -n 1 # there is only 1
+      shift
+      if [ $# -eq 0 ]; then
+        docker images -q $(docker-image) \
+        | head -n 1
+      else
+        local tag=$1
+        dourbit images $tag | grep $tag \
+        | head -n 1 | sed -e "s/: ${tag}//"
+      fi
 
     elif [ $cmd == "dangling" ]; then
       # NOTE: there is nothing *urbit* about these images, only dangling ...
