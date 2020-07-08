@@ -54,7 +54,8 @@ The following commands can be run, some of which provide their own usage info:
   new-comet > get a new comet, usually takes some non-trivial time to mine
   piers     > a list of urbit assets contained in ~/data/urbit that can be run
   run       > boots a ship or comet - one of your urbit assets
-  host      > have it run a docker container in the background (wip)
+  host      > have it run a docker container in the background - wip...
+  urbit     > WARNING: it can destroy your ship if no /urbit/SHIP vol. mounted
 
 EOF
 }
