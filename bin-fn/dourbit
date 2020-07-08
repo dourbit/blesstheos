@@ -59,10 +59,14 @@ EOF
 
 errcho() { cat <<< "$@" 1>&2; }
 
+repos() {
+  echo "${DOTS_HOME}/use/repos"
+}
+
 fetch() {
   local tagpref=${1-'urbit-'}
   local refspec="refs/tags/${tagpref}*:refs/tags/${tagpref}*"
-  cd "${DOTS_HOME}/use/repos/urbit"
+  cd $(repos)/urbit
   git fetch --depth=1 origin "$refspec"
 }
 
@@ -84,7 +88,7 @@ tagged() {
   local filter=${2-'\.rc'} # ideally comes from $URBIT_TAGS_FILTER
   # TODO: conditional filter - empty string, or no var set: so it won't filter
   # https://unix.stackexchange.com/questions/38310/conditional-pipeline#38312
-  cd "${DOTS_HOME}/use/repos/urbit"
+  cd $(repos)/urbit
   git tag -l "${1}*" --format='%(creatordate:short)%09%(refname:strip=2)' \
                      --sort=-creatordate | grep -v -e "$filter"
 }
@@ -113,8 +117,8 @@ dourbit() {
       # TODO: improve with checks based on exported env vars config
       local good=true
       local dirs=( "~/bin/dourbit"
-                   "${DOTS_HOME}/use/repos/urbit"
-                   "${DOTS_HOME}/use/repos/urbit-docker"
+                   $(repos)/urbit
+                   $(repos)/urbit-docker
                  )
       for dir in "${dirs[@]}"; do
         dir="${dir/#\~/$HOME}"
@@ -124,7 +128,9 @@ dourbit() {
           echo "Not Found: $dir"
         fi
       done
-      if ! $good; then
+      if $good; then
+        echo "All is in order."
+      else
         echo "Maybe run this for an easy fix: $COMMAND_FN install"
         exit 1
       fi
@@ -143,7 +149,7 @@ dourbit() {
                  | tr   -d  '[:space:]')"
 
     elif [ $cmd == "update" ]; then
-      specho "Docker image ..."
+      specho "Docker :latest ..."
       docker pull $(docker-image)
       specho "Urbit releases ..."
       fetch
@@ -175,7 +181,7 @@ dourbit() {
         echo "Not Found: ${1-'urbit-'}*"
         exit 1
       fi
-      cd "${DOTS_HOME}/use/repos/urbit-docker" && \
+      cd $(repos)/urbit-docker && \
         git pull && \
         docker build -t $tag --build-arg branch=$tag .
 
