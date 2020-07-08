@@ -40,6 +40,7 @@ The following commands can be run, some of which provide their own usage info:
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
   foremost  > the tag of the topmost latest release to use for default build
   existing  > checks that an image exists - so just use it rather than build
+  images    > shows all the docker images that have been pulled / built here
   build     > initial docker build - takes an urbit tag or uses latest tag
   image     > shows the docker image currently configured and probably used
   image-id  > shows the docker image id of the current urbit or urbit-os image
@@ -186,6 +187,11 @@ dourbit() {
         fi
         exit 1
       fi
+
+    elif [ $cmd == "images" ]; then
+      docker images --format "{{.ID}}: {{.Repository}}:{{.Tag}}" \
+      | grep 'urbit-v\|urbit-os-v' \
+      | sed -e 's/:latest$//g'
 
     elif [ $cmd == "build" ]; then
       shift
