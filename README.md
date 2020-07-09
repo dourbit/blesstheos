@@ -1,4 +1,4 @@
-# sysadmin bliss
+# ~/.holy - bless the os
 
 Helps with installing and maintaining operating systems.
 Some tools to make my life easier, contunually improved.
@@ -13,7 +13,7 @@ It must be relative to `$HOME`, some day absolute paths could work too.
 ## Configure
 
 Modify your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
-[`bash-config`](https://github.com/orlin/dots/blob/master/bash-config).
+[`holy-bash`](https://github.com/orlin/dots/blob/master/holy-bash).
 And perhaps post-edit the two relevant files according to preference...
 
 ## Personalize
