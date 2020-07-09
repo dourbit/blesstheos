@@ -18,15 +18,15 @@
   # whitespace used to be nowarn (it's probably the trailing) - text editor's job
   whitespace = warn
 [user]
-    name = Orlin M Bozhinov
-    email = orlin@apotelesmatic.com
+  name = Orlin M Bozhinov
+  email = orlin@apotelesmatic.com
 [gui]
-  recentrepo = ~/.dots
+  recentrepo = ~/.holy
 [core]
-    excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
   autocrlf = input
-    quotepath = false
-    editor = vim
+  quotepath = false
+  editor = vim
 [bash]
   showDirtyState = true
 [color]
@@ -43,10 +43,10 @@
   # Only push branches that have been set up to track a remote branch.
   default = current
 [filter "media"]
-    required = true
-    clean = git media clean %f
-    smudge = git media smudge %f
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
 [filter "lfs"]
-    clean = git lfs clean %f
-    smudge = git lfs smudge %f
-    required = true
+  clean = git lfs clean %f
+  smudge = git lfs smudge %f
+  required = true

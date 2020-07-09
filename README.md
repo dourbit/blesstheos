@@ -5,7 +5,7 @@ Some tools to make my life easier, contunually improved.
 
 ## Clone
 
-`git clone git@github.com:orlin/dots.git ~/.dots`
+`git clone git@github.com:orlin/dots.git ~/.holy`
 
 Clone this repo, or a fork, wherever you want. With one restriction...
 It must be relative to `$HOME`, some day absolute paths could work too.

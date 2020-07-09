@@ -13,7 +13,7 @@ END
 touch  ~/.bashrc
 tee -a ~/.bashrc > /dev/null << 'END'
 
-export HOME_DOTS=".dots"
+export HOME_DOTS=".holy"
 export BREW_ON=true # omit to decrease / skip Homebrew usage
 
 [ -f ~/.bashrc-pre ] && . "$HOME"/.bashrc-pre
