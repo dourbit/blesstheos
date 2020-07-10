@@ -1,5 +1,5 @@
 add_to_PATH  /usr/local/sbin
-add_to_PATH ${DOTS_HOME}/bin
+add_to_PATH ${HOLY_HOME}/bin
 
 # TODO: add_to_PATH_front (for the rest of these paths) via use/helpers/path.sh
 add_to_PATH .

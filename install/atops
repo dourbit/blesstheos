@@ -12,7 +12,7 @@ if onApt; then
   sudo apt update
   sudo apt install -y build-essential git file git-lfs
   git lfs install --force
-  if [ ! -f ~/.gitconfig ]; then cp "$DOTS_HOME"/home/.gitconfig ~/; fi
+  if [ ! -f ~/.gitconfig ]; then cp "$HOLY_HOME"/home/.gitconfig ~/; fi
   sudo apt install -y apt-transport-https curl wget
   sudo apt install \
         ca-certificates \

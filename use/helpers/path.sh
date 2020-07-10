@@ -3,7 +3,7 @@ uses() {
     echo "uses - sources filepath relative to use/ dir, with .sh ext optional"
     false; return
   }
-  local use="$DOTS_HOME/use/$1"
+  local use="$HOLY_HOME/use/$1"
   if [[ ! "$1" =~ .sh$ ]] && [ -s "$use.sh" ]; then
      . "$use.sh"
      true; return

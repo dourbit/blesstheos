@@ -18,7 +18,7 @@ check-x() {
     if [ $(basename $0) = "$COMMAND_FN" ]; then
       # a subshell without aliases...
       shopt -s expand_aliases
-      local ALIASES="$DOTS_HOME/use/aliases.sh"
+      local ALIASES="$HOLY_HOME/use/aliases.sh"
       [ -f "$ALIASES" ] && . "$ALIASES"
     fi
     if silent alias $1; then

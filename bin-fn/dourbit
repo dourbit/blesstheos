@@ -63,7 +63,7 @@ EOF
 errcho() { cat <<< "$@" 1>&2; }
 
 repos() {
-  echo "${DOTS_HOME}/use/repos"
+  echo "${HOLY_HOME}/use/repos"
 }
 
 fetch() {
@@ -114,7 +114,7 @@ dourbit() {
     local cmd=$1
 
     if [ $cmd == "install" ]; then
-      "$DOTS_HOME/install/urbit"
+      "$HOLY_HOME/install/urbit"
 
     elif [ $cmd == "confirm" ]; then
       # TODO: improve with checks based on exported env vars config
@@ -256,8 +256,8 @@ dourbit() {
       if [ $cmd == "bin" ]; then
         if check-x ~/bin/dourbit/$name; then
           echo ~/bin/dourbit/$name
-        elif check-x "$DOTS_HOME"/bin/dourbit/$name; then
-          echo "$DOTS_HOME"/bin/dourbit/$name
+        elif check-x "$HOLY_HOME"/bin/dourbit/$name; then
+          echo "$HOLY_HOME"/bin/dourbit/$name
         else
           errcho "Not Found: $name"
           false; return

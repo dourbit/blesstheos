@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 sudoUse
-cd "$DOTS_HOME"/install
+cd "$HOLY_HOME"/install
 
 ./atops   # needed for many of the install scripts; find the MacOS equivalents...
 ./brew    # Homebrew usage depends on `export BREW_ON=true`; MacOS may need update

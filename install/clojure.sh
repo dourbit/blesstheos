@@ -21,7 +21,7 @@ sudomy gh-install technomancy/leiningen bin/lein /usr/local/bin stable
 # Leiningen User Profiles
 LPROF=".lein/profiles.clj"
 # NOTE: would be nice to merge the profiles rather than the simple off / on
-[[ -f "$HOME/$LPROF" ]] || cp -r ${DOTS_HOME}/files/${LPROF} ~/${LPROF}
+[[ -f "$HOME/$LPROF" ]] || cp -r ${HOLY_HOME}/files/${LPROF} ~/${LPROF}
 lein version
 
 # Clj-kondo

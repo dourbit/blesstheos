@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-# NOTE: using $DOTS_HOME instead of the $DOT_HOLY used to set it!
+# NOTE: using $HOLY_HOME instead of the $DOT_HOLY used to set it!
 if [ -z $DOT_HOLY ]; then
-  export DOTS_HOME="$(dirname $0)"
+  export HOLY_HOME="$(dirname $0)"
 else
   # TODO: absolute path could be alowed - just check if it starts with /
-  export DOTS_HOME="$HOME/$DOT_HOLY"
+  export HOLY_HOME="$HOME/$DOT_HOLY"
 fi
 
-for src in "${DOTS_HOME}/use/helpers"/*; do . "$src"; done
-add_to_PATH ${DOTS_HOME}/bin-fn
+for src in "${HOLY_HOME}/use/helpers"/*; do . "$src"; done
+add_to_PATH ${HOLY_HOME}/bin-fn
 
 uses colors
 uses term
@@ -29,7 +29,7 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 
 
 # programming-languages aka platforms
-for src in $(ls "${DOTS_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$src"; done
+for src in $(ls "${HOLY_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$src"; done
 
 # thus far the PATH pas been added to from many places
 uses path

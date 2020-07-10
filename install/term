@@ -20,19 +20,19 @@ fi
 if onLinux; then
   # URxvt & XTerm
   if [ ! -f ~/.Xresources ]; then
-    cp "$DOTS_HOME"/home/.Xresources ~
+    cp "$HOLY_HOME"/home/.Xresources ~
   else
     echo ".Xresouces already exists, thus skipping use of:"
-    echo "$DOTS_HOME"/home/.Xresources
+    echo "$HOLY_HOME"/home/.Xresources
   fi
   cd ~; ln -s .Xresources .Xdefaults-$(hostname) # this could be just for Ubuntu
   # Xfce4 Terminal Themes
   onApt && sudo apt -y install xfce4-terminal
   mkdir -p ~/.local/share/xfce4/terminal/colorschemes
-  cp "$DOTS_HOME"/files/themes/xfce4/* ~/.local/share/xfce4/terminal/colorschemes
+  cp "$HOLY_HOME"/files/themes/xfce4/* ~/.local/share/xfce4/terminal/colorschemes
   if [ ! -f  ~/.config/xfce4/terminal/terminalrc ]; then
     mkdir -p ~/.config/xfce4/terminal
-    cp "$DOTS_HOME"/files/xfce4/terminalrc ~/.config/xfce4/terminal/terminalrc
+    cp "$HOLY_HOME"/files/xfce4/terminalrc ~/.config/xfce4/terminal/terminalrc
   fi
   # Fonts
   $destination="/usr/share/fonts/truetype/iosevka-custom"
