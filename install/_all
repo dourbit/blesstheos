@@ -4,7 +4,7 @@ sudoUse
 cd "$HOLY_HOME"/install
 
 ./atops   # needed for many of the install scripts; find the MacOS equivalents...
-./brew    # Homebrew usage depends on `export BREW_ON=true`; MacOS may need update
+./brew    # Homebrew usage depends on `export HOLY_BREW_ON=true`; MacOS may need update
 ./shell   # scripting with `bash` + `bb` or `closh`; `which bb` depends on `brewOn`
 ./java    # unless Ubuntu / Debian: manually download and install AdoptOpenJDK
           # https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
