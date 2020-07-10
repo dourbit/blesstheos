@@ -5,7 +5,7 @@ Some tools to make my life easier, contunually improved.
 
 ## Clone
 
-`git clone git@github.com:orlin/dots.git ~/.holy`
+`git clone git@github.com:dourbit/blesstheos.git ~/.holy`
 
 Clone this repo, or a fork, wherever you want. With one restriction...
 It must be relative to `$HOME`, some day absolute paths could work too.
@@ -13,7 +13,7 @@ It must be relative to `$HOME`, some day absolute paths could work too.
 ## Configure
 
 Modify your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
-[`holy-bash`](https://github.com/orlin/dots/blob/master/holy-bash).
+[`holy-bash`](https://github.com/dourbit/blesstheos/blob/master/holy-bash).
 And perhaps post-edit the two relevant files according to preference...
 
 ## Personalize
@@ -31,7 +31,7 @@ added to your `bash` configuration files - `~/.bash_profile` and `~/.bashrc`.
 ## Install
 
 Nothing would really happen unless you run some of the
-[install scripts](https://github.com/orlin/dots/tree/master/install).
+[install scripts](https://github.com/dourbit/blesstheos/tree/master/install).
 Many installs depend on other installs.
 Run `install/_all` for everything, or look at the code
 for example order or comments.
