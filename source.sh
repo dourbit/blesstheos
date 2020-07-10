@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# NOTE: using $DOTS_HOME instead of the $HOME_DOTS used to set it!
-if [ -z $HOME_DOTS ]; then
+# NOTE: using $DOTS_HOME instead of the $DOT_HOLY used to set it!
+if [ -z $DOT_HOLY ]; then
   export DOTS_HOME="$(dirname $0)"
 else
   # TODO: absolute path could be alowed - just check if it starts with /
-  export DOTS_HOME="$HOME/$HOME_DOTS"
+  export DOTS_HOME="$HOME/$DOT_HOLY"
 fi
 
 for src in "${DOTS_HOME}/use/helpers"/*; do . "$src"; done
