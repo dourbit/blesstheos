@@ -21,9 +21,10 @@ installable() {
   local able=$1
   local path="${HOLY_HOME}/install/${able}"
   if [ $# -eq 0 ]; then
-    # TODO: list all abilities that are executables in ${HOLY_HOME}/install
-    # inclusing subdirs though filtering packages/
-    ls -1 $path | grep -ve '.sh$\|-skip$'
+    find $HOLY_HOME/install -type f -executable -print \
+    | sed -e "s/^.*\/install\///g" | sort \
+    | grep -ve '.sh$\|-skip$'
+    # TODO: show help regarding what the above install ?
     true; return
   elif check-x $path; then
     true; return
@@ -43,11 +44,10 @@ holy() {
       local able=$1
       local path="${HOLY_HOME}/install/${able}"
       if [ $# -eq 0 ]; then
-        errcho "Usage: $COMMAND_FN $cmd <ability>"
-        errcho
+        echo "Usage: $COMMAND_FN $cmd <ability>"
+        echo
         installable
-        errcho
-        false; return
+        echo
       elif installable $able; then
         $path
         echo $(git show --format="%h" --no-patch) > $HOLY_HOME/on/ability/$able
