@@ -114,7 +114,7 @@ dourbit() {
     local cmd=$1
 
     if [ $cmd == "install" ]; then
-      "$HOLY_HOME/install/urbit"
+      holy install urbit
 
     elif [ $cmd == "confirm" ]; then
       # TODO: improve with checks based on exported env vars config
