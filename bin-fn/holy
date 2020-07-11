@@ -7,7 +7,7 @@ usage() {
 Usage: $COMMAND_FN <command> [args]
 
   install   > runs the install script of an <ability> and turns it on
-  on        > says in an <ability> has been istalled + it can holy on itself too
+  on        > says if an <ability> has been istalled + it can holy on itself too
   outdated  > same as ${HOLY_HOME}/bin/outdated
   upgrade   > same as ${HOLY_HOME}/bin/upgrade
 
@@ -15,6 +15,22 @@ EOF
 }
 
 errcho() { cat <<< "$@" 1>&2; }
+
+installable() {
+  local able=$1
+  local path="${HOLY_HOME}/install/${able}"
+  if [ $# -eq 0 ]; then
+    # TODO: list all abilities that are executables in ${HOLY_HOME}/install
+    # inclusing subdirs though filtering packages/ and symlinks
+    # also filtering abilities which end in -skip
+    # THEN: add as a command
+    true; return
+  elif check-x $path; then
+    true; return
+  else
+    false; return
+  fi
+}
 
 holy() {
   if [ $# -eq 0 ]; then
@@ -28,11 +44,9 @@ holy() {
       local path="${HOLY_HOME}/install/${able}"
       if [ $# -eq 0 ]; then
         errcho "Usage: $COMMAND_FN $cmd <ability>"
-        # TODO: list all abilities that are executables in ${HOLY_HOME}/install
-        # inclusing subdirs though filtering packages/ and symlinks
-        # also filtering abilities which end in -skip
+        # TODO: mention holy installable?
         false; return
-      elif check-x $path; then
+      elif installable $able; then
         $path
         echo $(git show --format="%h" --no-patch) > $HOLY_HOME/on/ability/$able
       else
@@ -56,8 +70,11 @@ holy() {
         if [ -f $path ]; then
           echo "Installed on $(stat -c %y "$path")"
           true; return
-        else
+        elif installable $able; then
           errcho "Turn on by: holy install $able"
+          false return
+        else
+          errcho "Ability '$able' not on, nor is it install-able."
           false return
         fi
       fi
