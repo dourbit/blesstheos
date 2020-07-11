@@ -22,9 +22,8 @@ installable() {
   local path="${HOLY_HOME}/install/${able}"
   if [ $# -eq 0 ]; then
     # TODO: list all abilities that are executables in ${HOLY_HOME}/install
-    # inclusing subdirs though filtering packages/ and symlinks
-    # also filtering abilities which end in -skip
-    # THEN: add as a command
+    # inclusing subdirs though filtering packages/
+    ls -1 $path | grep -ve '.sh$\|-skip$'
     true; return
   elif check-x $path; then
     true; return
@@ -45,7 +44,9 @@ holy() {
       local path="${HOLY_HOME}/install/${able}"
       if [ $# -eq 0 ]; then
         errcho "Usage: $COMMAND_FN $cmd <ability>"
-        # TODO: mention holy installable?
+        errcho
+        installable
+        errcho
         false; return
       elif installable $able; then
         $path
