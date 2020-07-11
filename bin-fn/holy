@@ -7,6 +7,7 @@ usage() {
 Usage: $COMMAND_FN <command> [args]
 
   install   > runs the install script of an <ability> and turns it on
+  on        > says in an <ability> has been istalled + it can holy on itself too
   outdated  > same as ${HOLY_HOME}/bin/outdated
   upgrade   > same as ${HOLY_HOME}/bin/upgrade
 
@@ -33,9 +34,32 @@ holy() {
         false; return
       elif check-x $path; then
         $path
+        echo $(git show --format="%h" --no-patch) > $HOLY_HOME/on/ability/$able
       else
         errcho "Not found: $path"
         false; return
+      fi
+
+    elif [ $cmd == "on" ]; then
+      local able=$1
+      local path="${HOLY_HOME}/on/ability/$able"
+      if [[ $# -eq 0 || $able == "holy" ]]; then
+        if [ -d "$HOLY_HOME" ]; then
+          echo "Holy On"
+          true; return
+        else
+          errcho "Holy Not On"
+          # TODO: echo how to install blesstheos itself
+          false; return
+        fi
+      else
+        if [ -f $path ]; then
+          echo "Installed on $(stat -c %y "$path")"
+          true; return
+        else
+          errcho "Turn on by: holy install $able"
+          false return
+        fi
       fi
 
     elif [ $cmd == "outdated" ]; then
