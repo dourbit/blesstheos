@@ -7,6 +7,8 @@ usage() {
 Usage: $COMMAND_FN <command> [args]
 
   install   > runs the install script of an <ability> and turns it on
+  outdated  > same as ${HOLY_HOME}/bin/outdated
+  upgrade   > same as ${HOLY_HOME}/bin/upgrade
 
 EOF
 }
@@ -35,6 +37,12 @@ holy() {
         errcho "Not found: $path"
         false; return
       fi
+
+    elif [ $cmd == "outdated" ]; then
+      "${HOLY_HOME}/bin/outdated"
+
+    elif [ $cmd == "upgrade" ]; then
+      "${HOLY_HOME}/bin/upgrade"
 
     else
       errcho "Not found: holy $cmd"
