@@ -7,7 +7,8 @@ usage() {
 Usage: $COMMAND_FN <command> [args]
 
   install   > runs the install script of an <ability> and turns it on
-  on        > says if an <ability> has been istalled + it can holy on itself too
+  on        > says if an <ability> has been istalled + it can holy on [holy]
+  update    > does a git pull for \${HOLY_HOME}
   outdated  > same as ${HOLY_HOME}/bin/outdated
   upgrade   > same as ${HOLY_HOME}/bin/upgrade
 
@@ -78,6 +79,9 @@ holy() {
           false return
         fi
       fi
+
+    elif [ $cmd == "update" ]; then
+      cd "$HOLY_HOME" && git pull
 
     elif [ $cmd == "outdated" ]; then
       "${HOLY_HOME}/bin/outdated"
