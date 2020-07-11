@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+COMMAND_FN=holy
+
+usage() {
+  cat <<EOF
+Usage: $COMMAND_FN <command> [args]
+
+  install   > runs the install script of an <ability> and turns it on
+
+EOF
+}
+
+errcho() { cat <<< "$@" 1>&2; }
+
+holy() {
+  if [ $# -eq 0 ]; then
+    usage; true; return
+  else
+    local cmd=$1
+    shift
+
+    if [ $cmd == "install" ]; then
+      local able=$1
+      local path="${HOLY_HOME}/install/${able}"
+      if [ $# -eq 0 ]; then
+        errcho "Usage: $COMMAND_FN $cmd <ability>"
+        # TODO: list all abilities that are executables in ${HOLY_HOME}/install
+        # inclusing subdirs though filtering packages/ and symlinks
+        # also filtering abilities which end in -skip
+        false; return
+      elif check-x $path; then
+        $path
+      else
+        errcho "Not found: $path"
+        false; return
+      fi
+
+    else
+      errcho "Not found: holy $cmd"
+      false; return
+    fi
+  fi
+}
+
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
