@@ -5,7 +5,6 @@
 # run the install/atop first and then this script
 
 if onUbuntu; then
-
   # Docker & Docker Compose
   # https://docs.docker.com/install/linux/docker-ce/ubuntu/
   sudo apt remove docker docker-engine docker.io containerd runc
@@ -39,4 +38,16 @@ if onUbuntu; then
   echo "try: docker run hello-world #or"
   echo "reboot your system to complete."
 
+else
+  # TODO: automate this with a reusable script (holy command?)
+  # add it to the other install scripts
+  echo "OS not supported for automatic docker install."
+  if check-x docker; then # TODO: use: holy confirm platforms/docker
+    echo "However docker appears to have been installed."
+    if ! silent holy on platforms/docker; then
+      echo "Vouch for this install with: holy vouch platforms/docker"
+    fi
+  else
+    exit 1
+  fi
 fi

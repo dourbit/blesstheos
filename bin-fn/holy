@@ -38,7 +38,7 @@ installable() {
   if [ $# -eq 0 ]; then
     find $HOLY_HOME/install -type f,l -executable -print \
     | sed -e "s/^.*\/install\///g" | sort \
-    | grep -ve '.sh$\|-skip$'
+    | grep -ve '\.sh$\|-skip$'
     # TODO: show help regarding what the above installs?
     true; return
   elif check-x $path; then
@@ -65,6 +65,7 @@ holy() {
     if [[ $cmd == "in" || $cmd == "install" ]]; then
       local able=$1
       local path="${HOLY_HOME}/install/${able}"
+      local onit="$HOLY_HOME/on/ability/$able"
       if [ $# -eq 0 ]; then
         echo "Usage: $COMMAND_FN $cmd <ability>"
         echo
@@ -72,7 +73,14 @@ holy() {
         echo
       elif installable $able; then
         $path
-        echo $(git show --format="%h" --no-patch) > $HOLY_HOME/on/ability/$able
+        if [ $? -eq 0 ]; then
+          cd "$HOLY_HOME"
+          mkdir -p $(echo "$onit" | rev | cut -d'/' -f2- | rev)
+          echo $(git show --format="%h" --no-patch) > $onit
+        else
+          errcho "Failed: $COMMAND_FN $cmd $@"
+          exit 1
+        fi
       else
         errcho "Not found: $path"
         false; return

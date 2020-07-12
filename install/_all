@@ -2,21 +2,41 @@
 
 sudoUse
 
-holy in atops   # needed for many of the install scripts; find the MacOS equivalents...
-holy in brew    # Homebrew usage depends on `export HOLY_BREW_ON=true`; MacOS may need update
-holy in shell   # scripting with `bash` + `bb` or `closh`; `which bb` depends on `brewOn`
-holy in java    # unless Ubuntu / Debian: manually download and install AdoptOpenJDK
-                # https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
-holy in clojure # depends on `java`, with `brewOn` for some of the installs
-node && uses platforms/node.sh && nvm use
-                # MacOS version has worked in the past, though not tested lately...
-holy in ruby    # via `brew` on a Mac - maybe unify for all to be brew-based...
-holy in term    # it's just for Linux, almost fully...
-holy in editor  # if not `onApt` (e.g. Ubuntu) then would have to install Atom by hand
-holy in python  # only apt, though that will eventually change
-holy in desktop-ubuntu
-holy in docker-ubuntu # and certain `docker` containers if wanted (after reboot)
-holy in urbit
+# needed for many of the install scripts; find the MacOS equivalents...
+holy in atops
+
+# Homebrew usage depends on `export HOLY_BREW_ON=true`; MacOS may need update
+holy in brew
+
+# scripting with `bash` + `bb` or `closh`; `which bb` depends on `brewOn`
+holy in shell
+
+# unless Ubuntu / Debian: manually download and install AdoptOpenJDK
+# https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
+holy in platforms/java
+
+# depends on `java`, with `brewOn` for some of the installs
+holy in platforms/clojure
+
+# MacOS version has worked in the past, though not tested lately...
+holy in platforms/node && uses platforms/node.sh && nvm use
+
+# via `brew` on a Mac - maybe unify for all to be brew-based...
+holy in platforms/ruby
+
+# only apt, though that will eventually change
+holy in platforms/python
+
+# it's just for Linux, almost fully...
+holy in term
+
+# if not `onApt` (e.g. Ubuntu) then would have to install Atom by hand
+holy in desktop/editor
+holy in desktop/ubuntu
+
+# and certain `docker` containers if wanted (after reboot)
+holy in platforms/docker
 
 # Note may need a reboot before using urbit
 # and also for running the docker container installs
+holy in urbit
