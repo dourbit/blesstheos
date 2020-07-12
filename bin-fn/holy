@@ -6,8 +6,10 @@ usage() {
   cat <<EOF
 Usage: $COMMAND_FN <command> [args]
 
+  in        > an alias to holy install - see next
   install   > runs the install script of an <ability> and turns it on
   on        > says if an <ability> has been istalled + it can holy on [holy]
+  up        > does update and upgrade, see the commands below
   update    > does a git pull for \${HOLY_HOME}
   outdated  > same as ${HOLY_HOME}/bin/outdated
   upgrade   > same as ${HOLY_HOME}/bin/upgrade
@@ -18,11 +20,14 @@ EOF
 errcho() { cat <<< "$@" 1>&2; }
 
 holy-on() {
+  # TODO: extract into a bin-fn/holy-on so that can run with silent holy-on
+  # make sure [ $# -eq 0 ] to not confuse with holy on (dash vs space + arg)
   if [ -d "$HOLY_HOME" ]; then
     echo "Holy On"
     true; return
   else
     echo "Holy Not On"
+    # TODO: echo how to install blesstheos itself
     false; return
   fi
 }
@@ -51,14 +56,13 @@ holy() {
     holy_on=$(holy-on) #assignment must be separate to capture $? (bash bug)
     if [ $? -ne 0 ]; then
       errcho $holy_on
-      # TODO: echo how to install blesstheos itself
       exit 1
     fi
 
     local cmd=$1
     shift
 
-    if [ $cmd == "install" ]; then
+    if [[ $cmd == "in" || $cmd == "install" ]]; then
       local able=$1
       local path="${HOLY_HOME}/install/${able}"
       if [ $# -eq 0 ]; then
@@ -91,6 +95,12 @@ holy() {
           false return
         fi
       fi
+
+    elif [ $cmd == "up" ]; then
+      sudoUse
+      echo
+      holy update && \
+      holy upgrade
 
     elif [ $cmd == "update" ]; then
       cd "$HOLY_HOME" && git pull
