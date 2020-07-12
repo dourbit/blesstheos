@@ -5,16 +5,22 @@ Some tools to make my life easier, contunually improved.
 
 ## Clone
 
-`git clone git@github.com:dourbit/blesstheos.git ~/.holy`
+```sh
+git clone git@github.com:dourbit/blesstheos.git ~/.holy
+```
 
 Clone this repo, or a fork, wherever you want. With one restriction...
-It must be relative to `$HOME`, some day absolute paths could work too.
+It must be relative to `~/`. Some day absolute paths could work too.
 
 ## Configure
 
 Modify your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
-[`holy-bash`](https://github.com/dourbit/blesstheos/blob/master/holy-bash).
-And perhaps post-edit the two relevant files according to preference...
+
+```sh
+holy init bash && source ~/.bashrc
+```
+
+Perhaps post-edit the affected files according to preference...
 
 ## Personalize
 

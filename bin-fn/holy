@@ -6,6 +6,7 @@ usage() {
   cat <<EOF
 Usage: $COMMAND_FN <command> [args]
 
+  init      > initializes holy for [bash] or another init/ <shell> use
   in        > an alias to holy install - see next
   install   > runs the install script of an <ability> and turns it on
   on        > says if an <ability> has been istalled + it can holy on [holy]
@@ -52,17 +53,31 @@ holy() {
   if [ $# -eq 0 ]; then
     usage; true; return
   else
-    local holy_on #declaration
-    holy_on=$(holy-on) #assignment must be separate to capture $? (bash bug)
-    if [ $? -ne 0 ]; then
-      errcho $holy_on
-      exit 1
-    fi
-
     local cmd=$1
     shift
 
-    if [[ $cmd == "in" || $cmd == "install" ]]; then
+    # check whether holy is on
+    local holy_on #declaration
+    holy_on=$(holy-on) #assignment must be separate to capture $? (bash bug)
+    local status=$?
+    # bad status and no exception command will not proceed
+    if [[ $cmd != "init" && $status -ne 0 ]]; then
+      errcho $holy_on
+      exit 1
+
+    elif [ $cmd == "init" ]; then
+      local shell=${1-'bash'}
+      if [ $status -eq 0 ]; then
+        echo "$holy_on"
+        echo "Already initialized."
+        echo "The following init/ scripts can be run directly, use with caution:"
+        find "$HOLY_HOME/init/" -type f -executable -print
+      else
+        # TODO: check if the init script exists and handle for prettier error?
+        ${HOLY_HOME}/init/${shell}
+      fi
+
+    elif [[ $cmd == "in" || $cmd == "install" ]]; then
       local able=$1
       local path="${HOLY_HOME}/install/${able}"
       local onit="$HOLY_HOME/on/ability/$able"
