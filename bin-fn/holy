@@ -17,6 +17,16 @@ EOF
 
 errcho() { cat <<< "$@" 1>&2; }
 
+holy-on() {
+  if [ -d "$HOLY_HOME" ]; then
+    echo "Holy On"
+    true; return
+  else
+    echo "Holy Not On"
+    false; return
+  fi
+}
+
 installable() {
   local able=$1
   local path="${HOLY_HOME}/install/${able}"
@@ -37,6 +47,14 @@ holy() {
   if [ $# -eq 0 ]; then
     usage; true; return
   else
+    local holy_on #declaration
+    holy_on=$(holy-on) #assignment must be separate to capture $? (bash bug)
+    if [ $? -ne 0 ]; then
+      errcho $holy_on
+      # TODO: echo how to install blesstheos itself
+      exit 1
+    fi
+
     local cmd=$1
     shift
 
@@ -60,14 +78,7 @@ holy() {
       local able=$1
       local path="${HOLY_HOME}/on/ability/$able"
       if [[ $# -eq 0 || $able == "holy" ]]; then
-        if [ -d "$HOLY_HOME" ]; then
-          echo "Holy On"
-          true; return
-        else
-          errcho "Holy Not On"
-          # TODO: echo how to install blesstheos itself
-          false; return
-        fi
+        echo $holy_on # only the true branch can get this far
       else
         if [ -f $path ]; then
           echo "Installed on $(stat -c %y "$path")"
