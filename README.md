@@ -17,7 +17,7 @@ It must be relative to `~/`. Some day absolute paths could work too.
 Modify your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
 
 ```sh
-holy init bash && source ~/.bashrc
+HOLY_HOME=~/.holy holy init && . ~/.bashrc
 ```
 
 Perhaps post-edit the affected files according to preference...
