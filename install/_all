@@ -15,5 +15,5 @@ cd "$HOLY_HOME"/install
 ./term    # it's just for Linux, almost fully...
 ./editor  # if not `onApt` (e.g. Ubuntu) then would have to install Atom by hand
 ./python  # only apt, though that will eventually change
-./ubuntu-docker # and certain `docker` containers
-./ubuntu-desktop
+./docker-ubuntu # and certain `docker` containers if wanted
+./desktop-ubuntu
