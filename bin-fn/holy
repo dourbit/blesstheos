@@ -74,7 +74,9 @@ holy() {
         find "$HOLY_HOME/init/" -type f -executable -print
       else
         # TODO: check if the init script exists and handle for prettier error?
-        ${HOLY_HOME}/init/${shell}
+        # also cover for when the init has been run but the ".*rc" not sourced
+        # will need to grep the contents of the files to detect initialization
+        ~/.holy/init/$shell
       fi
 
     elif [[ $cmd == "in" || $cmd == "install" ]]; then
