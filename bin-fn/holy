@@ -142,19 +142,26 @@ holy() {
 
     elif [ $cmd == "on" ]; then
       local able=$1
-      local path="${HOLY_HOME}/on/ability/$able"
+      local onit="${HOLY_HOME}/on/ability/$able"
       if [[ $# -eq 0 || $able == "holy" ]]; then
         echo $holy_on # only the true branch can get this far
       else
-        if [ -f $path ]; then
-          echo "Installed on $(stat -c %y "$path")"
+        # TODO: allow to check by filename - e.g. node or platforms/node same
+        if [ -f $onit ]; then
+          local stamp=$(stat -c %y "$onit")
+          if [ "$(cat $onit)" == "custom" ]; then
+            echo "Blessed on $stamp"
+          else
+            echo "Installed on $stamp"
+          fi
           true; return
         elif installable $able; then
           errcho "Turn on by: holy install $able"
-          false return
+          errcho "Optionally: holy bless $able"
+          false; return
         else
           errcho "Ability '$able' not on, nor is it install-able."
-          false return
+          false; return
         fi
       fi
 
