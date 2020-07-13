@@ -148,13 +148,21 @@ holy() {
       else
         # TODO: allow to check by filename - e.g. node or platforms/node same
         if [ -f $onit ]; then
-          local stamp=$(stat -c %y "$onit")
-          if [ "$(cat $onit)" == "custom" ]; then
-            echo "Blessed on $stamp"
+          if holy confirm $able; then
+            local stamp=$(stat -c %y "$onit")
+            if [ "$(cat $onit)" == "custom" ]; then
+              echo "Blessed on $stamp"
+            else
+              echo "Installed on $stamp"
+            fi
+            true; return
           else
-            echo "Installed on $stamp"
+            errcho "This ability can no longer be confirmed."
+            # TODO: refactor the code above into a function
+            # to report the details of installed or blessed
+            errcho "Perhaps fix with: holy install $able"
+            false; return
           fi
-          true; return
         elif installable $able; then
           errcho "Turn on by: holy install $able"
           errcho "Optionally: holy bless $able"
