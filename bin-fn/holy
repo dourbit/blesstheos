@@ -9,6 +9,7 @@ Usage: $COMMAND_FN <command> [args]
   init      > initializes holy for [bash] or another init/ <shell> use
   in        > an alias to holy install - see next
   install   > runs the install script of an <ability> and turns it on
+  ability   > checks an <ability> exists though also reports on all of them
   confirm   > some abilities have on/confirm scripts, to verify all is well
   bless     > vouches for a given <ability> installed by other means
   on        > says if an <ability> has been installed + it can holy on [holy]
@@ -105,6 +106,12 @@ holy() {
         false; return
       fi
 
+    elif [ $cmd == "ability" ]; then
+      installable $1
+      local status=$?
+      [[ $# -ne 0 && $status -eq 0 ]] && echo $1
+      exit $status
+
     elif [ $cmd == "confirm" ]; then
       local able=$1
       if [ $# -eq 0 ]; then
@@ -147,6 +154,7 @@ holy() {
         echo $holy_on # only the true branch can get this far
       else
         # TODO: allow to check by filename - e.g. node or platforms/node same
+        # perhaps create an enabled() function similar to installable()
         if [ -f $onit ]; then
           if holy confirm $able; then
             local stamp=$(stat -c %y "$onit")
