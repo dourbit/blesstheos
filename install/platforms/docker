@@ -45,7 +45,7 @@ else
   if check-x docker; then # TODO: use: holy confirm platforms/docker
     echo "However docker appears to have been installed."
     if ! silent holy on platforms/docker; then
-      echo "Vouch for this install with: holy vouch platforms/docker"
+      echo "Vouch for this install with: holy bless platforms/docker"
     fi
   else
     exit 1

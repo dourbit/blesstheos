@@ -9,8 +9,9 @@ Usage: $COMMAND_FN <command> [args]
   init      > initializes holy for [bash] or another init/ <shell> use
   in        > an alias to holy install - see next
   install   > runs the install script of an <ability> and turns it on
-  confirm   > some abilities have on/confirm scripts to verify all is well
-  on        > says if an <ability> has been istalled + it can holy on [holy]
+  confirm   > some abilities have on/confirm scripts, to verify all is well
+  bless     > vouches for a given <ability> installed by other means
+  on        > says if an <ability> has been installed + it can holy on [holy]
   up        > does update and upgrade, see the commands below
   update    > does a git pull for \${HOLY_HOME}
   outdated  > same as ${HOLY_HOME}/bin/outdated
@@ -97,7 +98,7 @@ holy() {
           echo $(git show --format="%h" --no-patch) > $onit
         else
           errcho "Failed: $COMMAND_FN $cmd $@"
-          exit 1
+          false; return
         fi
       else
         errcho "Not found: $path"
@@ -115,6 +116,28 @@ holy() {
         true; return #lack of confirm script means auto-confirm
       else
         ${HOLY_HOME}/on/confirm/$able; return
+      fi
+
+    elif [ $cmd == "bless" ]; then
+      local able=$1
+      local onit="$HOLY_HOME/on/ability/$able"
+      if [ $# -eq 0 ]; then
+        echo "Usage: $COMMAND_FN $cmd <ability>"
+        false; return
+      elif installable $able; then
+        if holy confirm $able; then
+          echo "Blessed be this ability."
+          mkdir -p $(echo "$onit" | rev | cut -d'/' -f2- | rev)
+          echo 'custom' > "$onit"
+          true; return
+        else
+          errcho "Failed: $COMMAND_FN $cmd $@"
+          errcho "Ability has failed to confirm."
+          false; return
+        fi
+      else
+        errcho "Ability not found for: $able"
+        false; return
       fi
 
     elif [ $cmd == "on" ]; then
