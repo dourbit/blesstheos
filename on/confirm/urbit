@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+confirm() {
+  # TODO: improve with checks based on exported env vars config
+  local good=true
+  local dirs=( "~/bin/dourbit"
+               $(repos)/urbit
+               $(repos)/urbit-docker
+             )
+  for dir in "${dirs[@]}"; do
+    dir="${dir/#\~/$HOME}"
+    silent ls $dir
+    if [ $? -ne 0 ]; then
+      good=false
+      echo "Not Found: $dir"
+    fi
+  done
+  $good; return
+}
+
+confirm

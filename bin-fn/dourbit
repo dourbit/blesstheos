@@ -117,21 +117,7 @@ dourbit() {
       holy install urbit
 
     elif [ $cmd == "confirm" ]; then
-      # TODO: improve with checks based on exported env vars config
-      local good=true
-      local dirs=( "~/bin/dourbit"
-                   $(repos)/urbit
-                   $(repos)/urbit-docker
-                 )
-      for dir in "${dirs[@]}"; do
-        dir="${dir/#\~/$HOME}"
-        silent ls $dir
-        if [ $? -ne 0 ]; then
-          good=false
-          echo "Not Found: $dir"
-        fi
-      done
-      if $good; then
+      if holy confirm urbit; then
         echo "All is in order."
       else
         echo "Maybe run this for an easy fix: $COMMAND_FN install"

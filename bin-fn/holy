@@ -9,6 +9,7 @@ Usage: $COMMAND_FN <command> [args]
   init      > initializes holy for [bash] or another init/ <shell> use
   in        > an alias to holy install - see next
   install   > runs the install script of an <ability> and turns it on
+  confirm   > some abilities have on/confirm scripts to verify all is well
   on        > says if an <ability> has been istalled + it can holy on [holy]
   up        > does update and upgrade, see the commands below
   update    > does a git pull for \${HOLY_HOME}
@@ -101,6 +102,19 @@ holy() {
       else
         errcho "Not found: $path"
         false; return
+      fi
+
+    elif [ $cmd == "confirm" ]; then
+      local able=$1
+      if [ $# -eq 0 ]; then
+        errcho "Usage: $COMMAND_FN $cmd <ability>"
+        false; return
+      elif [ ! -f "${HOLY_HOME}/on/confirm/$able" ]; then
+        # TODO: check if such ability exists
+        echo "No confirmation script; assume good: $able"
+        true; return #lack of confirm script means auto-confirm
+      else
+        ${HOLY_HOME}/on/confirm/$able; return
       fi
 
     elif [ $cmd == "on" ]; then
