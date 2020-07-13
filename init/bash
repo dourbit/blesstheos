@@ -19,5 +19,3 @@ export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
 [ -f ~/.bashrc-pre ] && . "$HOME"/.bashrc-pre
 . "$HOME/$DOT_HOLY"/source.sh
 END
-
-. ~/.bashrc
