@@ -7,6 +7,7 @@ usage() {
 Usage: $COMMAND_FN <command> [args]
 
   init      > initializes holy for [bash] or another init/ <shell> use
+  path      > provides the path to HOLY_HOME and relative paths or repos
   in        > an alias to holy install - see next
   install   > runs the install script of an <ability> and turns it on
   ability   > checks an <ability> exists though also reports on all of them
@@ -80,6 +81,18 @@ holy() {
         # also cover for when the init has been run but the ".*rc" not sourced
         # will need to grep the contents of the files to detect initialization
         ~/.holy/init/$shell
+      fi
+
+    elif  [ $cmd == "path" ]; then
+      if [ $# -eq 0 ]; then
+        echo "$HOLY_HOME"
+      elif [ $1 == "repos" ]; then
+        echo "$HOLY_HOME"/use/repos
+      elif [ -e "$HOLY_HOME/$1" ]; then
+        echo "$HOLY_HOME/$1"
+      else
+        errcho "Not Found: $HOLY_HOME/$1"
+        false; return
       fi
 
     elif [[ $cmd == "in" || $cmd == "install" ]]; then

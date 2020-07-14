@@ -4,8 +4,8 @@ confirm() {
   # TODO: improve with checks based on exported env vars config
   local good=true
   local dirs=( "~/bin/dourbit"
-               $(repos)/urbit
-               $(repos)/urbit-docker
+               "$(holy path repos)/urbit"
+               "$(holy path repos)/urbit-docker"
              )
   for dir in "${dirs[@]}"; do
     dir="${dir/#\~/$HOME}"
