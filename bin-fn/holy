@@ -22,8 +22,6 @@ Usage: $COMMAND_FN <command> [args]
 EOF
 }
 
-errcho() { cat <<< "$@" 1>&2; }
-
 holy-on() {
   # TODO: extract into a bin-fn/holy-on so that can run with silent holy-on
   # make sure [ $# -eq 0 ] to not confuse with holy on (dash vs space + arg)

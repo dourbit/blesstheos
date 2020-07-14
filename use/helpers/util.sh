@@ -1,5 +1,24 @@
 # For things that don't belong elsewhere.
 
+# true if env var is set to anything
+env-have() { return "$((!${#1}))"; }
+export -f env-have
+
+# true if env var is 1, yes, or true
+env-true() {
+  local var="$1"
+  if env-have $var; then
+    if [[ $var == '1' || $var == 'yes' || $var == 'true' ]]; then
+      true; return
+    fi
+  fi
+  false; return
+}
+export -f env-true
+
+errcho() { cat <<< "$@" 1>&2; }
+export -f errcho
+
 # spaced echo for more readble output with less code
 specho() {
   echo

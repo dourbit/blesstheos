@@ -2,28 +2,6 @@
 
 COMMAND_FN=dourbit
 
-# TODO: improve to take "false", "off", or 0 into account
-# https://unix.stackexchange.com/questions/185670/what-is-a-best-practice-to-represent-a-boolean-value-in-a-shell-script
-bool() { return "$((!${#1}))"; }
-eager() {
-  # git fetch & docker pull only with dourbit update
-  return $(bool "${URBIT_EAGER}")
-}
-
-custom-image() {
-  if [ ! -z ${URBIT_IMAGE+x} ]; then
-    echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
-  fi
-}
-
-docker-image() {
-  if [ ! -z ${URBIT_IMAGE+x} ]; then
-    echo $URBIT_IMAGE
-  else
-    echo "asssaf/urbit:latest"
-  fi
-}
-
 usage() {
   cat <<EOF
 Usage: $COMMAND_FN <command> [args]
@@ -60,10 +38,17 @@ The following commands can be run, some of which provide their own usage info:
 EOF
 }
 
-errcho() { cat <<< "$@" 1>&2; }
+docker-image() {
+  env-have $URBIT_IMAGE && echo $URBIT_IMAGE || echo "asssaf/urbit:latest"
+}
 
 repos() {
   echo "${HOLY_HOME}/use/repos"
+}
+
+eager() {
+  # git fetch and docker pull only with dourbit update, unless $URBIT_EAGER=true
+  $(env-true $URBIT_EAGER)
 }
 
 fetch() {
@@ -283,7 +268,7 @@ dourbit() {
       # that's a file to be executed with the rest of the given args
       cd "$HOME"/data/urbit
       echo
-      custom-image
+      env-have $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
       if [[ "$cmd" =~ ^run ]] && [[ "$2" =~ ^~ ]]; then
         $(dourbit bin $cmd) ${2:1} ${@:3} # remove the leading ~
       else
