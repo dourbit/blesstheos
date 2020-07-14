@@ -204,10 +204,12 @@ holy() {
       cd "$HOLY_HOME" && git pull
 
     elif [ $cmd == "outdated" ]; then
-      "${HOLY_HOME}/bin/outdated"
+      specho "Getting the latest blesstheos..."
+      holy update
+      $(holy path bin/outdated)
 
     elif [ $cmd == "upgrade" ]; then
-      "${HOLY_HOME}/bin/upgrade"
+      $(holy path bin/upgrade)
 
     else
       errcho "Not found: holy $cmd"
