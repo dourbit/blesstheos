@@ -19,9 +19,12 @@ if onApt; then
         gnupg-agent \
         software-properties-common
   sudo apt install -y gawk # needed for JSONPath.sh
+  exit 0
 
 elif onMac; then
   echo "MacOS - TODO..."
 else
   echo "No ${KERNEL_NAME} system match!"
 fi
+
+exit 1

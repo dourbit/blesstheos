@@ -80,6 +80,8 @@ holy() {
         installable
         echo
       elif installable $able; then
+        env-true $HOLY_EAGER &&\
+          silent holy update
         $path
         if [ $? -eq 0 ]; then
           cd "$HOLY_HOME"

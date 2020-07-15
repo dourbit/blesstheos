@@ -14,7 +14,7 @@ touch  ~/.bashrc
 tee -a ~/.bashrc > /dev/null << 'END'
 
 export DOT_HOLY=".holy"
-export HOLY_EAGER=true # holy outdated and holy up git pull blesstheos
+export HOLY_EAGER=false # git pull blesstheos only by holy update
 export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
 
 [ -f ~/.bashrc-pre ] && . "$HOME"/.bashrc-pre
