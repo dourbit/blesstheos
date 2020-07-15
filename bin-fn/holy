@@ -171,16 +171,18 @@ holy() {
 
     elif [ $cmd == "up" ]; then
       sudoUse
-      echo
-      holy update && \
+      env-true $HOLY_EAGER \
+      && echo && holy update
       holy upgrade
 
     elif [ $cmd == "update" ]; then
+      echo "Getting the latest blesstheos..."
       cd "$HOLY_HOME" && git pull
 
     elif [ $cmd == "outdated" ]; then
-      specho "Getting the latest blesstheos..."
-      holy update
+      if env-true "$HOLY_EAGER"; then
+        echo && holy update
+      fi
       $(holy path bin/outdated)
 
     elif [ $cmd == "upgrade" ]; then
