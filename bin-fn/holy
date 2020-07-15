@@ -22,35 +22,6 @@ Usage: $COMMAND_FN <command> [args]
 EOF
 }
 
-holy-on() {
-  # TODO: extract into a bin-fn/holy-on so that can run with silent holy-on
-  # make sure [ $# -eq 0 ] to not confuse with holy on (dash vs space + arg)
-  if [ -d "$HOLY_HOME" ]; then
-    echo "Holy On"
-    true; return
-  else
-    echo "Holy Not On"
-    # TODO: echo how to install blesstheos itself
-    false; return
-  fi
-}
-
-installable() {
-  local able=$1
-  local path="${HOLY_HOME}/install/${able}"
-  if [ $# -eq 0 ]; then
-    find $HOLY_HOME/install -type f,l -executable -print \
-    | sed -e "s/^.*\/install\///g" | sort \
-    | grep -ve '\.sh$\|-skip$'
-    # TODO: show help regarding what the above installs?
-    true; return
-  elif check-x $path; then
-    true; return
-  else
-    false; return
-  fi
-}
-
 holy() {
   if [ $# -eq 0 ]; then
     usage; true; return
@@ -62,12 +33,18 @@ holy() {
     local holy_on #declaration
     holy_on=$(holy-on) #assignment must be separate to capture $? (bash bug)
     local status=$?
-    # bad status and no exception command will not proceed
-    if [[ $cmd != "init" && $status -ne 0 ]]; then
+    if [ $status -eq 0 ]; then
+      # source any helper functions
+      . "$HOLY_HOME"/bin-fn/holy.sh
+    elif [ $cmd != "init"]; then
+      # bad status and no exception command will not proceed
       errcho $holy_on
       exit 1
+    fi
 
-    elif [ $cmd == "init" ]; then
+    # Command code-blocks:
+
+    if [ $cmd == "init" ]; then
       local shell=${1-'bash'}
       if [ $status -eq 0 ]; then
         echo "$holy_on"

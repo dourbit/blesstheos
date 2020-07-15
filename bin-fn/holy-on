@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+COMMAND_FN=holy-on
+
+holy-on() {
+  # TODO: make sure [ $# -eq 0 ]
+  # thus not confuse with holy on (dash vs space + arg)
+  if [ -d "$HOLY_HOME" ]; then
+    echo "Holy On"
+    true; return
+  else
+    echo "Holy Not On"
+    # TODO: echo how to install blesstheos itself
+    false; return
+  fi
+}
+
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
