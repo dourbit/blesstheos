@@ -1,3 +1,5 @@
+# Helpers for holy
+
 installable() {
   local able=$1
   local path="${HOLY_HOME}/install/${able}"

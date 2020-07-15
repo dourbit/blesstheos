@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Scripts that rely on holy setup can check with:
+# silent holy-on && { ... } # or
+# if silent holy-on; then ... fi
+
 COMMAND_FN=holy-on
 
 holy-on() {
