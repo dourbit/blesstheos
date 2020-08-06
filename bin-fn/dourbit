@@ -31,7 +31,7 @@ The following commands can be run, some of which provide their own usage info:
   new-ship  > create a ship, usually a planet for which you have a .key
   new-comet > get a new comet, usually takes some non-trivial time to mine
   piers     > a list of urbit assets contained in ~/data/urbit that can be run
-  run       > boots a ship or comet - one of your urbit assets
+  run       > boots a ship or comet - one of your urbit assets; can be zod too
   host      > have it run a docker container in the background - WIP...
   urbit     > WARNING: it can destroy your ship if no /urbit/SHIP vol. mounted
 
@@ -225,9 +225,28 @@ dourbit() {
       else
         env-have $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
       fi
-      if [[ "$cmd" =~ ^run ]] && [[ "$1" =~ ^~ ]]; then
-        $(dourbit bin $cmd) ${1:1} ${@:2} # remove the leading ~
+      # certain commands need special care
+      if [[ "$cmd" =~ ^run ]] || [[ "$cmd" =~ ^host ]]; then
+        # make sure a pier is given
+        if [ $# -eq 0 ]; then
+          errcho "Usage: $COMMAND_FN $cmd <pier> [urbit-args]"
+          false; return
+        fi
+        # remove a leading ~
+        local pier=$([[ "$1" =~ ^~ ]] && echo ${1:1} || echo "$1")
+        # make sure the pier exists as a directory
+        if ! [ -d "$pier" ]; then
+          errcho "Not found: $(pwd)/$pier"
+          false; return
+        # and appears to be a valid pier?
+        elif ! [ -d "$pier/.urb" ]; then
+          errcho "Not found: $(pwd)/$pier/.urb"
+          false; return
+        fi
+        # pier looks valid in principle...
+        $(dourbit bin $cmd) "$pier" ${@:2}
       else
+        # other valid command
         $(dourbit bin $cmd) "$@"
       fi
     else
