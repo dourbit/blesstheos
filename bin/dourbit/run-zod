@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
+# NOTE: once you have a zod (having run this once)...
+# it is possible to dourbit run zod # rather than run-zod (this stript)
+# skipping the hyphen - one would use the run command instead
+# with a possibly more recent version of $URBIT_IMAGE
+
 # https://github.com/asssaf/urbit-fakezod-docker
+: ${URBIT_IMAGE_0:="asssaf/urbit-fakezod:latest"}
 
 SHIP="zod" # what's a "fakezod"
 [ -d "$SHIP" ] || mkdir "$SHIP"
-
-: ${URBIT_IFZOD:="asssaf/urbit-fakezod:latest"}
 
 if [ "$1" == "-d" ]
 then
@@ -17,4 +21,4 @@ docker run -t ${DAEMON:--i} --rm \
 	--net host \
 	-v $(pwd)/${SHIP}:/urbit/zod \
 	--user $(id -u):$(id -g) \
-	${URBIT_IFZOD} ${DAEMON} $*
+	${URBIT_IMAGE_0} ${DAEMON} $*

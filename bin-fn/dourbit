@@ -32,7 +32,7 @@ The following commands can be run, some of which provide their own usage info:
   new-comet > get a new comet, usually takes some non-trivial time to mine
   piers     > a list of urbit assets contained in ~/data/urbit that can be run
   run       > boots a ship or comet - one of your urbit assets
-  host      > have it run a docker container in the background - wip...
+  host      > have it run a docker container in the background - WIP...
   urbit     > WARNING: it can destroy your ship if no /urbit/SHIP vol. mounted
 
 EOF
@@ -219,11 +219,16 @@ dourbit() {
       # that's a file to be executed with the rest of the given args
       cd "$HOME"/data/urbit
       echo
-      env-have $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
+      # zod commands(s) use a different fakezod image
+      if [ $cmd == "run-zod" ]; then
+        env-have $URBIT_IMAGE_0 && echo "Custom URBIT_IMAGE_0=$URBIT_IMAGE_0"
+      else
+        env-have $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
+      fi
       if [[ "$cmd" =~ ^run ]] && [[ "$1" =~ ^~ ]]; then
         $(dourbit bin $cmd) ${1:1} ${@:2} # remove the leading ~
       else
-        $(dourbit bin $cmd) ${@:1}
+        $(dourbit bin $cmd) "$@"
       fi
     else
       false; return
