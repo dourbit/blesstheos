@@ -50,9 +50,10 @@ dourbit() {
     usage; true; return
   else
     local cmd=$1
+    shift
 
     if [ $cmd == "install" ]; then
-      holy install urbit
+      holy in urbit
 
     elif [ $cmd == "confirm" ]; then
       if holy confirm urbit; then
@@ -69,7 +70,8 @@ dourbit() {
 
     elif [ $cmd == "current" ]; then
       silent-pull
-      #TODO: this should become the actual build tag rather oldest possible tag
+      # TODO: this should become the actual build tag
+      # instead of oldest possible tag?
       echo "urbit-v$(dourbit urbit -R \
                  | grep -e '^urbit [0-9]' \
                  | grep -oe '[0-9]\+.*$' \
@@ -83,13 +85,12 @@ dourbit() {
       echo
 
     elif [ $cmd == "tagged" ]; then
-      shift
       silent-fetch
       tagged "$@"
 
     elif [ $cmd == "recent" ]; then
       silent-fetch
-      local tag=${2-$(dourbit current)}
+      local tag=${1-$(dourbit current)}
       tagged 'urbit-' | sed -e "/${tag}/q"
 
     elif [ $cmd == "latest" ]; then
@@ -97,12 +98,11 @@ dourbit() {
       echo -e "$(latest 'urbit-v')\n$(latest 'urbit-os-v')" | sort -r
 
     elif [ $cmd == "foremost" ]; then
-      shift
       silent-fetch
       toptag tagged ${1-'urbit-'} ${@:2}
 
     elif [ $cmd == "existing" ]; then
-      local wut=${2-$(docker-image)}
+      local wut=${1-$(docker-image)}
       if [[ ! -z $(docker images -q $wut) ]]; then
         echo $wut
       else
@@ -119,7 +119,6 @@ dourbit() {
       | sed -e 's/:latest$//g'
 
     elif [ $cmd == "build" ]; then
-      shift
       local tag=$(URBIT_EAGER=true dourbit foremost $@)
       if [ "$tag" == "" ]; then
         echo "Not Found: ${1-'urbit-'}*"
@@ -139,7 +138,6 @@ dourbit() {
       dourbit existing $(docker-image)
 
     elif [ $cmd == "image-id" ]; then
-      shift
       if [ $# -eq 0 ]; then
         docker images -q $(docker-image) \
         | head -n 1
@@ -171,8 +169,8 @@ dourbit() {
 
     elif [[ $cmd == "bin" || $cmd == "cmd" ]]; then
       # these are similar and related with a bit of code in common
-      local name=$2
-      if [ $# -eq 1 ]; then
+      local name=$1
+      if [ $# -eq 0 ]; then
         errcho "Usage: $COMMAND_FN $cmd <command>"
         false; return
       fi
@@ -222,10 +220,10 @@ dourbit() {
       cd "$HOME"/data/urbit
       echo
       env-have $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
-      if [[ "$cmd" =~ ^run ]] && [[ "$2" =~ ^~ ]]; then
-        $(dourbit bin $cmd) ${2:1} ${@:3} # remove the leading ~
+      if [[ "$cmd" =~ ^run ]] && [[ "$1" =~ ^~ ]]; then
+        $(dourbit bin $cmd) ${1:1} ${@:2} # remove the leading ~
       else
-        $(dourbit bin $cmd) ${@:2}
+        $(dourbit bin $cmd) ${@:1}
       fi
     else
       false; return
