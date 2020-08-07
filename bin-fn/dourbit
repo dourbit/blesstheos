@@ -70,6 +70,12 @@ dourbit() {
         exit 1
       fi
 
+    # silently confirm urbit is installed, as the rest of commands will need it
+    elif ! silent holy on urbit; then
+      errcho "Not Installed."
+      dourbit confirm
+      exit 1
+
     elif [ $cmd == "version" ]; then
       dourbit urbit -R
       specho $(docker --version)
