@@ -20,6 +20,7 @@ The following commands can be run, some of which provide their own usage info:
   version   > report through urbit -R "build info", including other versions
   current   > a starter current, for now simply gets the urbit-v from above
   update    > does git fetch && docker pull as URBIT_EAGER not set by default
+  source    > does git fetch using the default filter or specify some tag*
   tagged    > all git releases that have been fetched with the filter applied
   recent    > all git releases newer than the current or a given tag version
   latest    > shows the latest tags from urbit repo of non-rc urbit & urbit-os
@@ -96,6 +97,9 @@ dourbit() {
       specho "Urbit releases ..."
       fetch
       echo
+
+    elif [ $cmd == "source" ]; then
+      fetch "$@"
 
     elif [ $cmd == "tagged" ]; then
       silent-fetch

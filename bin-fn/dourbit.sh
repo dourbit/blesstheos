@@ -16,8 +16,10 @@ eager() {
 fetch() {
   local tagpref=${1-'urbit-'}
   local refspec="refs/tags/${tagpref}*:refs/tags/${tagpref}*"
+  local command="git fetch --depth=1 origin $refspec"
   cd $(repos)/urbit
-  git fetch --depth=1 origin "$refspec"
+  echo $command
+  $($command)
 }
 
 silent-fetch() {
