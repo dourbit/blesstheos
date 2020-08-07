@@ -2,6 +2,13 @@
 
 COMMAND_FN=dourbit
 
+# If sourced, then depends on:
+# bin-fn/holy-on (and thus on holy having been installed)
+# bin-fn/dourbit.sh though this is always sourced through the holy requirement
+# use/helpers/util.sh which are also part of a holy-on environment setup
+# bin-fn/silent
+# bin-fn/check-x
+
 usage() {
   cat <<EOF
 Usage: $COMMAND_FN <command> [args]
@@ -41,7 +48,7 @@ EOF
 if silent holy-on; then
   . "$HOLY_HOME"/bin-fn/dourbit.sh
 else
-  echo "Depends on blesstheos.com"
+  errcho "Depends on blesstheos.com"
   exit 1
 fi
 
