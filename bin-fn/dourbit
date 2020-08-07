@@ -92,8 +92,14 @@ dourbit() {
                  | tr   -d  '[:space:]')"
 
     elif [ $cmd == "update" ]; then
-      specho "Docker :latest ..."
-      docker pull $(docker-image)
+      local image=$(docker-image)
+      echo
+      if pushed $image; then
+        echo "Docker :latest? ..."
+        local command="docker pull $image"
+        echo $command
+        $command
+      fi
       specho "Urbit releases ..."
       fetch
       echo

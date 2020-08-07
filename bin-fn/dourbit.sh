@@ -19,11 +19,23 @@ fetch() {
   local command="git fetch --depth=1 origin $refspec"
   cd $(repos)/urbit
   echo $command
-  $($command)
+  $command
 }
 
 silent-fetch() {
   if eager; then fetch >/dev/null 2>&1; fi
+}
+
+pushed() {
+  if [ $# -eq 0 ]; then
+    errcho "Docker image required - none cannot have been pushed."
+    false; return
+  elif [[ $(docker image inspect $1 -f '{{.RepoDigests}}') == "[]"  ]]; then
+    errcho "Docker image $1 has not been pushed."
+    false; return
+  else
+    true; return
+  fi
 }
 
 silent-pull() {
