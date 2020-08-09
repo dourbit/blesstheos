@@ -4,7 +4,7 @@ COMMAND_FN=holy
 
 usage() {
   cat <<EOF
-Usage: $COMMAND_FN [ one || dots ] <command> [<args>]
+Usage: $COMMAND_FN [ one || you ] <command> [<args>]
 
   init      > initializes holy for [bash] or another init/ <shell> use
   path      > provides the path to HOLY_HOME and relative paths or repos
@@ -24,12 +24,12 @@ EOF
 
 # validates a lead modifier
 lead() {
-  [[ "$1" == "one" || "$1" == "dots" ]] && true || false
+  [[ "$1" == "one" || "$1" == "you" ]] && true || false
 }
 
 holy() {
-  # NOTE: $HOLY_LEAD makes it possible to change the holy one to a dots default
-  # which only makes sense if dots is being used far more often than "holy one"
+  # NOTE: $HOLY_LEAD makes it possible to change the holy default to "you"
+  # which only makes sense if yours is used far more often than "holy one"
   local the=$(lead $HOLY_LEAD && echo $HOLY_LEAD || echo "one")
   if lead $1; then
     the=$1
