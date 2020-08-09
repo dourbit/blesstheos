@@ -46,14 +46,16 @@ holy() {
     local cmd=$1
     shift
 
-    # check whether holy is on
-    local holy_on #declaration
-    holy_on=$(holy-on) #assignment must be separate to capture $? (bash bug)
+    # check whether holy is on - nothing will be done without it...
+    local holy_on
+    # assignment must be separate to capture $? (bash bug)
+    holy_on=$(holy-on)
     local status=$?
     if [ $status -eq 0 ]; then
       # source any helper functions
       . "$HOLY_HOME"/bin-fn/holy.sh
-    elif [ $cmd != "init"]; then
+    # exception to the holy-on rule is `holy one init`
+    elif ! [[ $the == "one" && $cmd == "init" ]]; then
       # bad status and no exception command will not proceed
       errcho $holy_on
       exit 1
