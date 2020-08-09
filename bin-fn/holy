@@ -22,9 +22,16 @@ Usage: $COMMAND_FN [ one || dots ] <command> [<args>]
 EOF
 }
 
+# validates a lead modifier
+lead() {
+  [[ "$1" == "one" || "$1" == "dots" ]] && true || false
+}
+
 holy() {
-  local the="one"
-  if [[ "$1" == "one" || "$1" == "dots" ]]; then
+  # NOTE: $HOLY_LEAD makes it possible to change the holy one to a dots default
+  # which only makes sense if dots is being used far more often than "holy one"
+  local the=$(lead $HOLY_LEAD && echo $HOLY_LEAD || echo "one")
+  if lead $1; then
     the=$1
     shift
   fi
