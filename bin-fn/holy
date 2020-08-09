@@ -4,7 +4,7 @@ COMMAND_FN=holy
 
 usage() {
   cat <<EOF
-Usage: $COMMAND_FN <command> [args]
+Usage: $COMMAND_FN [ one || dots ] <command> [<args>]
 
   init      > initializes holy for [bash] or another init/ <shell> use
   path      > provides the path to HOLY_HOME and relative paths or repos
@@ -23,9 +23,19 @@ EOF
 }
 
 holy() {
+  local the="one"
+  if [[ "$1" == "one" || "$1" == "dots" ]]; then
+    the=$1
+    shift
+  fi
+  # command is required
   if [ $# -eq 0 ]; then
-    usage; true; return
+    echo
+    echo "Missing <command> from usage options below..."
+    echo; usage
+    true; return
   else
+    # the command
     local cmd=$1
     shift
 
