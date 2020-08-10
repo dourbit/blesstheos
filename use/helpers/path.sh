@@ -12,6 +12,24 @@ uses() {
 }
 export -f uses
 
+# generate an absolute path from any path
+a_path() {
+  # takes any path, including a path with non-escaped spaces
+  # echoes an absolute path if one exists
+  local a_path="$@"
+  local parent=$(dirname "${a_path}")
+
+  if [ -d "${a_path}" ]; then
+    echo "$(cd "${a_path}" && pwd)"
+  elif [ -d "${parent}" ]; then
+    local result="$(cd "${parent}" && pwd)/$(basename "${a_path}")"
+    if [ -e "${result}" ]; then
+      echo $result
+    fi
+  fi
+}
+export -f a_path
+
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
 add_to_PATH() {
   for d; do
