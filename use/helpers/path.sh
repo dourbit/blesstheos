@@ -12,8 +12,9 @@ uses() {
 }
 export -f uses
 
-# generate an absolute path from any path
-a_path() {
+# generate an absolute path from any path relative to the ./
+# absolute paths are simply verified
+a-path() {
   # takes any path, including a path with non-escaped spaces
   # echoes an absolute path if one exists
   local a_path="$@"
@@ -28,7 +29,27 @@ a_path() {
     fi
   fi
 }
-export -f a_path
+export -f a-path
+
+# give it a path that is relative to $HOME ~/ or an absolute path
+# will also accept any relative path if it turns out not based on ~/
+# this is a step-up from a-path as long as ~/ precedence to ./ is ok
+# receive an absolute path that is sure to exist
+a-ffix() {
+  local wanted="$@"
+  if [[ $wanted =~ ^/ ]] || [[ $wanted =~ ^~ ]]; then
+    echo $(a-path $wanted)
+  else
+    local result="$(a-path ~/$wanted)"
+    # fallback to relative ./ path
+    if [ "$result" == "" ]; then
+      echo $(a-path ./${wanted})
+    else
+      echo $result
+    fi
+  fi
+}
+export -f a-ffix
 
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
 add_to_PATH() {
