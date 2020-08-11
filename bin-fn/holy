@@ -74,7 +74,7 @@ holy() {
         # TODO: check if the init script exists and handle for prettier error?
         # also cover for when the init has been run but the ".*rc" not sourced
         # will need to grep the contents of the files to detect initialization
-        ~/.holy/init/$shell
+        $(dirname $0)/../init/$shell "$@"
       fi
 
     elif  [ $cmd == "path" ]; then

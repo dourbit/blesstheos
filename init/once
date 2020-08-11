@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 2 ]; then
+  echo "This $0 is missing required args:"
+  echo "- \$1 HOLY_HOME environment variable name"
+  echo "- \$2 path to config file that would export it"
+  exit 1
+fi
+
+home=$1
+this=$2 # a shell's config file that would set the $home environment var
+fine=$3
+
+# TODO: source $this # rather than searching through the file / do both?
+
+if [ -d "${!home}" ]; then
+  # TODO: check if $this file already sets the var / just echo a message
+  if [[ "$fine" == "-f" || "$fine" == "--force"  ]]; then
+    echo "Forcing an existing install, may have unintended consequences."
+    echo "Inspect the following config for similar / identical commands:"
+    # TODO: add "such as $home after line " join ", " all line occurences
+    echo $this
+  else
+    echo "Already configured: $this"
+    echo "Can re-init with -f or --force option."
+    exit 1
+  fi
+fi

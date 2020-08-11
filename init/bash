@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+HOLY_GOAL=HOLY_HOME
+HOLY_HERE=~/.bashrc
+
+set -eE # exit on error
+trap 'echo "Did not init $(basename $0)!"' ERR
+$(dirname $0)/once $HOLY_GOAL $HOLY_HERE "$@"
+
+
 touch  ~/.bash_profile
 tee -a ~/.bash_profile > /dev/null << 'END'
 
@@ -11,12 +19,12 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 END
 
 touch  ~/.bashrc
-tee -a ~/.bashrc > /dev/null << 'END'
+tee -a ~/.bashrc > /dev/null << END
 
 export DOT_HOLY=".holy"
 export HOLY_EAGER=false # git pull blesstheos only by holy update
 export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
 
-[ -f ~/.bashrc-pre ] && . "$HOME"/.bashrc-pre
-. "$HOME/$DOT_HOLY"/source.sh
+[ -f ~/.bashrc-pre ] && . "\$HOME"/.bashrc-pre
+. "\$HOME/\$DOT_HOLY"/source.sh
 END
