@@ -51,6 +51,26 @@ a-ffix() {
 }
 export -f a-ffix
 
+# given name and path it makes the path absolute and ensures it's a directory
+# if env var of the same name exists and the paths differ it echoes a warning
+# in any case it exports name=path as some kind of a home directory
+a-home() {
+  local name=$1
+  local home=${!name}
+  local want=$2
+  local path=$(a-path $want)
+  if ! [ -d "$path" ]; then
+    echo; echo "Path is not a directory and thus cannot be a home."
+    echo "Given: $([[ $path == "" ]] && echo $want || echo $path)"; echo
+    exit 1
+  elif [[ "$home" != "" && "$home" != "$path" ]]; then
+    echo; echo "Warning: \$$name is $home"
+    echo "Exporting here as $path"; echo
+  fi
+  export $name=$path
+}
+export -f a-home
+
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
 add_to_PATH() {
   for d; do

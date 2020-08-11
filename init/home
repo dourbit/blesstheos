@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
+name=HOLY_HOME
 home=$(dirname $0)/..
 source ${home}/use/helpers/path.sh
-home=$(a-path $home)
-echo $home
+a-home $name $home
+echo ${!name}
