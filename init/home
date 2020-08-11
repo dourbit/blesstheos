@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+home=$(dirname $0)/..
+source ${home}/use/helpers/path.sh
+home=$(a-path $home)
+echo $home
