@@ -64,17 +64,41 @@ holy() {
     # Command code-blocks:
 
     if [ $cmd == "init" ]; then
-      local shell=${1-'bash'}
-      if [ $status -eq 0 ]; then
-        echo "$holy_on"
-        echo "Already initialized."
-        echo "The following init/ scripts can be run directly, use with caution:"
-        find "$HOLY_HOME/init/" -type f -executable -print
+      if [ $# -eq 0 ]; then
+        echo "No argument given."
+        echo "Trying init for the current $SHELL shell."
+      fi
+      local shell=${1-$(basename $SHELL)}
+      local where=${HOLY_HOME}/init
+      # check if holy-on gave an error ($HOLY_HOME unknown)
+      if [ $status -ne 0 ]; then
+        # guess where $HOLY_HOME is (depending on the holy)
+        if [ $(basename $(dirname $0)) == "bin-fn" ]; then
+          # probably this as it's the actual holy script
+          where=$(dirname $0)/../init
+        else
+          # it's the holy symlink
+          where=$(dirname $0)/init
+        fi
+      fi
+      # check if init dir exists at $where /or something is wrong
+      if ! [ -d $where ]; then
+        echo "Not Found: $where"
+        false; return
+      fi
+      # there are scripts here that aren't shell init
+      # which can also be run (though not advertised)
+      local found=$where/$shell
+      if [ -x $found ]; then
+        # run the script
+        $found "$@"
       else
-        # TODO: check if the init script exists and handle for prettier error?
-        # also cover for when the init has been run but the ".*rc" not sourced
-        # will need to grep the contents of the files to detect initialization
-        $(dirname $0)/../init/$shell "$@"
+        echo "Not found: $shell"
+        echo -n "Can try it with: "
+        find "$where/" -type f -executable -exec basename {} \; \
+        | tr '\n' ' '
+        echo
+        false; return
       fi
 
     elif  [ $cmd == "path" ]; then

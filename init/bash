@@ -3,11 +3,8 @@
 HOLY_GOAL=HOLY_HOME
 HOLY_HERE=~/.bashrc
 
-set -eE # exit on error
-trap 'echo "Did not init $(basename $0)!"' ERR
-$(dirname $0)/once $HOLY_GOAL $HOLY_HERE "$@"
-
-export $HOLY_GOAL=$($(dirname $0)/home)
+# with the above two vars we validate first-time init + set the HOLY_GOAL home
+. $(dirname $0)/once.sh
 
 
 touch  ~/.bash_profile
@@ -23,6 +20,7 @@ END
 touch  ~/.bashrc
 tee -a ~/.bashrc > /dev/null << END
 
+# Bless the OS
 export $HOLY_GOAL="${!HOLY_GOAL}"
 
 export HOLY_EAGER=false # git pull blesstheos only by holy update
