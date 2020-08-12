@@ -6,18 +6,17 @@ Some tools to make my life easier, contunually improved.
 ## Clone
 
 ```sh
-git clone git@github.com:dourbit/blesstheos.git ~/.holy
+git clone git@github.com:dourbit/blesstheos.git ~/.holy && cd ~/.holy
 ```
 
-Clone this repo, or a fork, wherever you want. With one restriction...
-It must be relative to `~/`. Some day absolute paths could work too.
+Clone this repo, or a fork, to anywhere you want, and then cd into it.
 
 ## Configure
 
-Modify your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
+Setup your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
 
 ```sh
-HOLY_HOME=~/.holy holy init && . ~/.bashrc
+holy init bash && source ~/.bashrc
 ```
 
 Perhaps post-edit the affected files according to preference...

@@ -18,7 +18,7 @@ if [ -d "${!home}" ]; then
   if [[ "$fine" == "-f" || "$fine" == "--force"  ]]; then
     echo "Forcing an existing install, may have unintended consequences."
     echo "Inspect the following config for similar / identical commands:"
-    # TODO: add "such as $home after line " join ", " all line occurences
+    # TODO: add "such as $home after line " and join ", " line occurences
     echo $this
   else
     echo "Already configured: $this"

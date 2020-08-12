@@ -95,7 +95,9 @@ holy() {
       else
         echo "Not found: $shell"
         echo -n "Can try it with: "
+        # only executables + exclude a few files
         find "$where/" -type f -executable -exec basename {} \; \
+        | grep -Ev 'once|home' \
         | tr '\n' ' '
         echo
         false; return
