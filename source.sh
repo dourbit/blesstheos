@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# NOTE: using $HOLY_HOME instead of the $DOT_HOLY used to set it!
-if [ -z $DOT_HOLY ]; then
-  export HOLY_HOME="$(dirname $0)"
-else
-  # TODO: absolute path could be alowed - just check if it starts with /
-  export HOLY_HOME="$HOME/$DOT_HOLY"
+if [ -z "$HOLY_HOME" ]; then
+  echo "\$HOLY_HOME not set!"
+  exit 1
+elif ! [ -d "$HOLY_HOME" ]; then
+  echo "\$HOLY_HOME dir of $HOLY_HOME is Not Found!"
+  exit 1
 fi
 
 for src in "${HOLY_HOME}/use/helpers"/*; do . "$src"; done
