@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-name=HOLY_HOME
-home=$(dirname $0)/..
-source ${home}/use/helpers/path.sh
+name=${1-HOLY_HOME}
+home=${2-$(dirname $0)/..}
+if ! [ -d "$HOLY_HOME" ]; then
+  # TODO: maybe better to just check for a-path function?
+  source $(dirname $0)/../use/helpers/path.sh
+fi
 a-home $name $home
 echo ${!name}

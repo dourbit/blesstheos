@@ -20,6 +20,7 @@ END
 touch  ~/.bashrc
 tee -a ~/.bashrc > /dev/null << END
 
+
 # Bless the OS
 export $HOLY_GOAL="${!HOLY_GOAL}"
 

@@ -57,28 +57,40 @@ holy() {
     # exception to the holy-on rule is `holy one init`
     elif ! [[ $the == "one" && $cmd == "init" ]]; then
       # bad status and no exception command will not proceed
-      errcho $holy_on
+      echo $holy_on
       exit 1
     fi
 
     # Command code-blocks:
 
     if [ $cmd == "init" ]; then
-      if [ $# -eq 0 ]; then
-        echo "No argument given."
-        echo "Trying init for the current $SHELL shell."
-      fi
-      local shell=${1-$(basename $SHELL)}
       local where=${HOLY_HOME}/init
-      # check if holy-on gave an error ($HOLY_HOME unknown)
+      # check if holy-on gave an error - $HOLY_HOME unknown
       if [ $status -ne 0 ]; then
-        # guess where $HOLY_HOME is (depending on the holy)
-        if [ $(basename $(dirname $0)) == "bin-fn" ]; then
-          # probably this as it's the actual holy script
-          where=$(dirname $0)/../init
+        if [ $the == "one" ]; then
+          # guess where $HOLY_HOME is (depending on the holy)
+          if [ $(basename $(dirname $0)) == "bin-fn" ]; then
+            # probably this as it's the actual holy script
+            where=$(dirname $0)/../init
+          else
+            # it's the holy symlink
+            where=$(dirname $0)/init
+          fi
+        else # $the "you" / any other than "one" will require holy-on
+          echo $holy_on
+          false; return
+        fi
+      # you a special case because can be anywhere
+      elif [ $the == "you" ]; then
+        # NOTE: here holy and all helpers are available to use
+        # TODO: make the path optional if $DOTS_HOME is already set -
+        # can we use holy-on DOTS_HOME for this?
+        if [ $# -eq 0 ]; then
+          errcho "Please give a path to your dots."
+          false; return
         else
-          # it's the holy symlink
-          where=$(dirname $0)/init
+          where=$(a-path ${1}/init)
+          shift
         fi
       fi
       # check if init dir exists at $where /or something is wrong
@@ -86,6 +98,12 @@ holy() {
         echo "Not Found: $where"
         false; return
       fi
+      # now what do we run?
+      if [ $# -eq 0 ]; then
+        echo "No script was asked for."
+        echo "Trying init for the current $SHELL shell."
+      fi
+      local shell=${1-$(basename $SHELL)}
       # there are scripts here that aren't shell init
       # which can also be run (though not advertised)
       local found=$where/$shell
