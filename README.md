@@ -5,11 +5,11 @@ Some tools to make my life easier, contunually improved.
 
 ## Clone
 
+Clone this repo, or a fork, to anywhere you want, and then cd into it.
+
 ```sh
 git clone git@github.com:dourbit/blesstheos.git ~/.holy && cd ~/.holy
 ```
-
-Clone this repo, or a fork, to anywhere you want, and then cd into it.
 
 ## Configure
 

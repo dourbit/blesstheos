@@ -2,10 +2,8 @@
 
 if [ -z "$HOLY_HOME" ]; then
   echo "\$HOLY_HOME not set!"
-  exit 1
 elif ! [ -d "$HOLY_HOME" ]; then
   echo "\$HOLY_HOME dir of $HOLY_HOME is Not Found!"
-  exit 1
 fi
 
 for src in "${HOLY_HOME}/use/helpers"/*; do . "$src"; done

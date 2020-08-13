@@ -22,6 +22,7 @@ if [ -d "${!home}" ]; then
     echo $this
   else
     echo "Already configured: $this"
+    echo "If your \$$home has moved - simply edit the file above."
     echo "Can re-init with -f or --force option."
     exit 1
   fi
