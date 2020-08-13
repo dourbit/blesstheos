@@ -239,17 +239,18 @@ dourbit() {
       ls "$HOME"/data/urbit | cat
 
     elif dourbit bin $cmd; then
-      # that's a file to be executed with the rest of the given args
+      # that's a script to be executed with the rest of the given args
+      # some of these commands operate on a pier in the current dir ./
       cd "$HOME"/data/urbit
-      echo
       # zod commands(s) use a different fakezod image
       if [ $cmd == "run-zod" ]; then
         env-have $URBIT_IMAGE_0 && echo "Custom URBIT_IMAGE_0=$URBIT_IMAGE_0"
       else
         env-have $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
       fi
+      echo
       # certain commands need special care
-      if [[ "$cmd" =~ ^run ]] || [[ "$cmd" =~ ^host ]]; then
+      if [[ "$cmd" == "run" || "$cmd" == "host" ]]; then
         # make sure a pier is given
         if [ $# -eq 0 ]; then
           errcho "Usage: $COMMAND_FN $cmd <pier> [urbit-args]"
