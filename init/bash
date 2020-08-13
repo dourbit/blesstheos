@@ -14,8 +14,10 @@ export HOLY_EAGER=false # git pull blesstheos only by holy update
 export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
 
 [ -f ~/.bashrc-pre ] && . "\$HOME"/.bashrc-pre
+
 . "\$$HOLY_GOAL"/source.sh
 END
+
 
 touch  ~/.bash_profile
 tee -a ~/.bash_profile > /dev/null << 'END'
