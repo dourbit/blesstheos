@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 
+HOLY_COPY="Bless the OS"
 HOLY_GOAL=HOLY_HOME
 HOLY_HERE=~/.bashrc
 
 # with the above two vars we validate first-time init + set the HOLY_GOAL home
 . $(dirname $0)/once.sh
 
+
+tee -a ~/.bashrc > /dev/null << END
+
+export HOLY_EAGER=false # git pull blesstheos only by holy update
+export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
+
+[ -f ~/.bashrc-pre ] && . "\$HOME"/.bashrc-pre
+. "\$$HOLY_GOAL"/source.sh
+END
 
 touch  ~/.bash_profile
 tee -a ~/.bash_profile > /dev/null << 'END'
@@ -15,18 +25,4 @@ tee -a ~/.bash_profile > /dev/null << 'END'
 
 # code you don't want to run each time .bashrc is sourced
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-END
-
-touch  ~/.bashrc
-tee -a ~/.bashrc > /dev/null << END
-
-
-# Bless the OS
-export $HOLY_GOAL="${!HOLY_GOAL}"
-
-export HOLY_EAGER=false # git pull blesstheos only by holy update
-export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
-
-[ -f ~/.bashrc-pre ] && . "\$HOME"/.bashrc-pre
-. "\$$HOLY_GOAL"/source.sh
 END
