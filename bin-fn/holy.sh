@@ -1,5 +1,10 @@
 # Helpers for holy
 
+# validates a lead modifier
+lead() {
+  [[ "$1" == "one" || "$1" == "you" ]] && true || false
+}
+
 shell-rc() {
   local shell=${1-$(basename $SHELL)}
   if [ $shell == "bash" ]; then

@@ -25,29 +25,37 @@ EOF
 
 # a $HOLY_HOME guaranteed
 home() {
-  if silent holy-on; then
-    echo $HOLY_HOME
-  else
+  local where="$HOLY_HOME"
+  if ! [ -d "$where" ]; then
     # guess where $HOLY_HOME is (depending on the holy)
-    if [ $(basename $(dirname $0)) == "bin-fn" ]; then
-      # probably this as it's the actual holy script
+    where=$(dirname $0)
+    if [ $(basename $where) == "bin-fn" ]; then
+      # probably this as it's the actual script
       where=$(dirname $0)/..
-    else
-      # it's the holy symlink
-      where=$(dirname $0)
     fi
-    # TODO: some validation
-    echo $where
+  fi
+  # does it have holy symlink in it?
+  if [ -s $where/holy ]; then
+    echo "$where"
+    true; return
+  else
+    >&2 echo "No \$HOLY_HOME $where"
+    false; return
   fi
 }
 
-# validates a lead modifier and needed here rather than holy.sh helpers,
-# just to keep the code readable and simple
-lead() {
-  [[ "$1" == "one" || "$1" == "you" ]] && true || false
-}
-
 holy() {
+  HOLY_HOME=$(home)
+  local status=$?
+  if [ $status -ne 0 ]; then
+    # One should always know where $HOLY_HOME is
+    >&2 echo "This is highly unexpected: Holy is lost as to where we are!"
+    false; return
+  fi
+
+  # source the helper functions
+  . "$HOLY_HOME"/bin-fn/holy.sh
+
   # NOTE: $HOLY_LEAD makes it possible to change the holy default to "you"
   # which only makes sense if yours is used far more often than "holy one"
   local the=$(lead $HOLY_LEAD && echo $HOLY_LEAD || echo "one")
@@ -71,19 +79,15 @@ holy() {
     local holy_on
     # assignment must be separate to capture $? (bash bug)
     holy_on=$(holy-on)
-    local status=$?
+    status=$?
     if [ $status -ne 0 ]; then
-      HOLY_HOME=$(home)
       # exception to the holy-on rule are the following commands:
       if [[ $cmd == "rc" || $cmd == "init" ]]; then
         # bad status and no exception command, will not proceed any further
         echo $holy_on
-        exit 1
+        false; return
       fi
     fi
-
-    # source the helper functions
-    . "$HOLY_HOME"/bin-fn/holy.sh
 
 
     # Command code-blocks:
@@ -104,7 +108,6 @@ holy() {
         fi
       # you a special case because can be anywhere
       elif [ $the == "you" ]; then
-        # NOTE: here holy and all helpers are available to use
         # TODO: make the path optional if $DOTS_HOME is already set -
         # can we use holy-on DOTS_HOME for this?
         if [ $# -eq 0 ]; then
