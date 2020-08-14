@@ -1,7 +1,13 @@
 # Requires one env var:
 # 1. $HOLY_GOAL
+
+# The rest are optional:
 # 2. $HOLY_HERE - based on $0 so if your script name != shell then set it!
-# 3. $HOLY_COPY - becomes a comment in the $HOLY_HERE config (optional)
+# 3. $HOLY_COPY - becomes a comment in the $HOLY_HERE config
+
+# There is also derived:
+# $HOLY_RC - is the file name aka basename of the $HOLY_HERE
+
 # TODO: add checks to make it official with basic validation
 
 # Does:
@@ -29,6 +35,7 @@ fi
 if [ "$HOLY_HERE" == "" ]; then
   HOLY_HERE=~/$(shell-rc $(basename $0))
 fi
+HOLY_RC=$(basename $HOLY_HERE)
 
 # NOTE: init/once & init/home reused by everyone
 ${path}/once  $HOLY_GOAL $HOLY_HERE "$@"

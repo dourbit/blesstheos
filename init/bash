@@ -7,7 +7,7 @@ HOLY_GOAL=HOLY_HOME
 . $(dirname $0)/once.sh
 
 
-tee -a ~/.bashrc > /dev/null << END
+tee -a $HOLY_HERE > /dev/null << END
 
 export HOLY_EAGER=false # git pull blesstheos only by holy update
 export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
@@ -19,11 +19,11 @@ END
 
 
 touch  ~/.bash_profile
-tee -a ~/.bash_profile > /dev/null << 'END'
+tee -a ~/.bash_profile > /dev/null << END
 
-# source ~/.bashrc
-[ -f ~/.bashrc ] && . ~/.bashrc
+# source ~/$HOLY_RC
+[ -f ~/$HOLY_RC ] && . ~/$HOLY_RC
 
 # code you don't want to run each time .bashrc is sourced
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv > /dev/null; then eval "\$(rbenv init -)"; fi
 END
