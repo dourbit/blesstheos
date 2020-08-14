@@ -1,5 +1,12 @@
 # Helpers for holy
 
+shell-rc() {
+  local shell=${1-$(basename $SHELL)}
+  if [ $shell == "bash" ]; then
+    echo ".bashrc"
+  fi
+}
+
 installable() {
   local able=$1
   local path="${HOLY_HOME}/install/${able}"

@@ -6,6 +6,7 @@ usage() {
   cat <<EOF
 Usage: $COMMAND_FN [ one || you ] <command> [<args>]
 
+  rc        > runtime configuration file for your current or given shell
   init      > initializes holy for [bash] or another init/ <shell> use
   path      > provides the path to HOLY_HOME and relative paths or repos
   in        > an alias to holy install - see next
@@ -22,7 +23,26 @@ Usage: $COMMAND_FN [ one || you ] <command> [<args>]
 EOF
 }
 
-# validates a lead modifier
+# a $HOLY_HOME guaranteed
+home() {
+  if silent holy-on; then
+    echo $HOLY_HOME
+  else
+    # guess where $HOLY_HOME is (depending on the holy)
+    if [ $(basename $(dirname $0)) == "bin-fn" ]; then
+      # probably this as it's the actual holy script
+      where=$(dirname $0)/..
+    else
+      # it's the holy symlink
+      where=$(dirname $0)
+    fi
+    # TODO: some validation
+    echo $where
+  fi
+}
+
+# validates a lead modifier and needed here rather than holy.sh helpers,
+# just to keep the code readable and simple
 lead() {
   [[ "$1" == "one" || "$1" == "you" ]] && true || false
 }
@@ -35,6 +55,7 @@ holy() {
     the=$1
     shift
   fi
+
   # command is required
   if [ $# -eq 0 ]; then
     echo
@@ -46,37 +67,38 @@ holy() {
     local cmd=$1
     shift
 
-    # check whether holy is on - nothing will be done without it...
+    # check whether holy is on - nothing will be done without it, almost...
     local holy_on
     # assignment must be separate to capture $? (bash bug)
     holy_on=$(holy-on)
     local status=$?
-    if [ $status -eq 0 ]; then
-      # source any helper functions
-      . "$HOLY_HOME"/bin-fn/holy.sh
-    # exception to the holy-on rule is `holy one init`
-    elif ! [[ $the == "one" && $cmd == "init" ]]; then
-      # bad status and no exception command will not proceed
-      echo $holy_on
-      exit 1
+    if [ $status -ne 0 ]; then
+      HOLY_HOME=$(home)
+      # exception to the holy-on rule are the following commands:
+      if [[ $cmd == "rc" || $cmd == "init" ]]; then
+        # bad status and no exception command, will not proceed any further
+        echo $holy_on
+        exit 1
+      fi
     fi
+
+    # source the helper functions
+    . "$HOLY_HOME"/bin-fn/holy.sh
+
 
     # Command code-blocks:
 
-    if [ $cmd == "init" ]; then
+    if [ $cmd == "rc" ]; then
+      # $1 is optional $SHELL
+      local rc=$(shell-rc $1)
+      echo "~/$rc"
+
+    elif [ $cmd == "init" ]; then
       local where=${HOLY_HOME}/init
       # check if holy-on gave an error - $HOLY_HOME unknown
       if [ $status -ne 0 ]; then
-        if [ $the == "one" ]; then
-          # guess where $HOLY_HOME is (depending on the holy)
-          if [ $(basename $(dirname $0)) == "bin-fn" ]; then
-            # probably this as it's the actual holy script
-            where=$(dirname $0)/../init
-          else
-            # it's the holy symlink
-            where=$(dirname $0)/init
-          fi
-        else # $the "you" / any other than "one" will require holy-on
+        if [ $the != "one" ]; then
+          # $the = "you": any other than "one" will require holy-on
           echo $holy_on
           false; return
         fi

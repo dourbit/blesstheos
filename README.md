@@ -13,13 +13,17 @@ git clone git@github.com:dourbit/blesstheos.git ~/.holy && cd ~/.holy
 
 ## Configure
 
-Setup your `bash`, i.e. `~/.bash_profile` and `~/.bashrc`, by running:
+Setup your shell by running:
 
 ```sh
-holy init bash && source ~/.bashrc
+holy init && . holy rc
 ```
 
-Perhaps post-edit the affected files according to preference...
+It will configure `$SHELL`, or you can request a specific one,
+though only `bash` is available so far...
+
+Perhaps post-edit the affected files according to preference -
+for `bash` that would be `~/.bashrc` and `~/.bash_profile`.
 
 ## Personalize
 
