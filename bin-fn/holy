@@ -8,6 +8,7 @@ Usage: $COMMAND_FN [ one || you ] <command> [<args>]
 
   rc        > runtime configuration file for your current or given shell
   init      > initializes holy for [bash] or another init/ <shell> use
+  home      > the path to the one \$HOLY_HOME even if holy isn't on yet
   path      > provides the path to HOLY_HOME and relative paths or repos
   in        > an alias to holy install - see next
   install   > runs the install script of an <ability> and turns it on
@@ -82,7 +83,7 @@ holy() {
     status=$?
     if [ $status -ne 0 ]; then
       # exception to the holy-on rule are the following commands:
-      if [[ $cmd == "rc" || $cmd == "init" ]]; then
+      if [[ $cmd == "rc" || $cmd == "home" || $cmd == "init" ]]; then
         # bad status and no exception command, will not proceed any further
         echo $holy_on
         false; return
@@ -96,6 +97,11 @@ holy() {
       # $1 is optional $SHELL
       local rc=$(shell-rc $1)
       echo "~/$rc"
+
+    # differentiate from holy path because this simply exposes home()
+    # $the "you" mod is irrelevant here, all is about the "one"
+    elif  [ $cmd == "home" ]; then
+      echo $(a-path $HOLY_HOME)
 
     elif [ $cmd == "init" ]; then
       local where=${HOLY_HOME}/init
