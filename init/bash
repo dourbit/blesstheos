@@ -2,7 +2,6 @@
 
 HOLY_COPY="Bless the OS"
 HOLY_GOAL=HOLY_HOME
-HOLY_HERE=~/.bashrc
 
 # with the above two vars we validate first-time init + set the HOLY_GOAL home
 . $(dirname $0)/once.sh

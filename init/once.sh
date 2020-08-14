@@ -1,8 +1,8 @@
-# Requires two env vars:
+# Requires one env var:
 # 1. $HOLY_GOAL
-# 2. $HOLY_HERE
+# 2. $HOLY_HERE - based on $0 so if your script name != shell then set it!
 # 3. $HOLY_COPY - becomes a comment in the $HOLY_HERE config (optional)
-# TODO: add checks to make it official
+# TODO: add checks to make it official with basic validation
 
 # Does:
 # failsafe a first-time init (hence "once") - unless forced
@@ -16,10 +16,18 @@ trap 'echo "Did not init $(basename $0)!"' ERR
 
 if [ ${HOLY_GOAL} == "HOLY_HOME" ]; then
   path=$(dirname $0)
+  # NOTE: we can set $HOLY_HOME here;
+  # and also ${holy} if it has to be run
 else
-  # NOTE: here we have holy & all its helper functions guaranteed by holy init
-  # though we don't need much from it
+  # NOTE: here we have holy guaranteed by holy init
   path=$(holy one path init)
+fi
+
+# helpers sourced from here on
+. $path/../bin-fn/holy.sh
+
+if [ "$HOLY_HERE" == "" ]; then
+  HOLY_HERE=~/$(shell-rc $(basename $0))
 fi
 
 # NOTE: init/once & init/home reused by everyone
