@@ -89,11 +89,15 @@ holy() {
           errcho "Please give a path to your dots."
           false; return
         else
+          # turn it into an absolute path
           where=$(a-path ${1}/init)
+          # if that fails then use the original
+          [ "$where" == "" ] && where=${1}/init
           shift
         fi
       fi
-      # check if init dir exists at $where /or something is wrong
+      # check if init dir exists at $where / or something is wrong
+      # probably $the you path from above as the one should always be found
       if ! [ -d $where ]; then
         echo "Not Found: $where"
         false; return
@@ -113,8 +117,8 @@ holy() {
       else
         echo "Not found: $shell"
         echo -n "Can try it with: "
-        # only executables + exclude a few files
-        find "$where/" -type f -executable -exec basename {} \; \
+        # only the executables minus some files excluded via the grep below
+        find "$where" -type f -executable -exec basename {} \; \
         | grep -Ev 'once|home' \
         | tr '\n' ' '
         echo
