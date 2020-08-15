@@ -12,13 +12,15 @@
 
 # The rest are optional:
 # 2. $HOLY_COPY - becomes a comment in the $HOLY_HERE config, or an empty one
-# 3. $HOLY_PATH - is $(dirname $0)/.. as an init dir is a child of a home dir
-# 4. $HOLY_HERE - based on $0 so if your script name != shell then set it!
+# 3. $HOLY_HERE - based on $0 so if your script name != shell then set it!
 
 # There is also the always derived:
 # $HOLY_RC - is the file name aka basename of the $HOLY_HERE
+# $HOLY_PATH - is $(dirname $0)/.. as an init dir is a child of a home dir
+# see comments where these are set if extra complexity would be introduced
 
-# TODO: add checks to make it official with basic validation
+# TODO: add checks to make it official with basic validation;
+# also echo notices if ppl are setting vars unnecessarily
 
 
 set -eE # exit on error
@@ -37,9 +39,13 @@ fi
 . $path/../bin-fn/holy.sh
 
 # setup the optional / derived vars -- defaults ok by convention
-[ "$HOLY_PATH" == "" ] && HOLY_PATH=$(dirname $0)/..
 [ "$HOLY_HERE" == "" ] && HOLY_HERE=~/$(shell-rc $(basename $0))
 HOLY_RC=$(basename $HOLY_HERE)
+
+# NOTE: $HOLY_PATH should always be automatic - TODO: YAGNI ...
+# if we ever use anything hierarchical rather than a flat init/
+# just cd .. intil init/ is reached + add the extra steps of /.. needed
+[ "$HOLY_PATH" == "" ] && HOLY_PATH=$(dirname $0)/..
 
 
 # a failsafe to prevent re-init of same thing
