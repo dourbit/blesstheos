@@ -1,3 +1,10 @@
+# init/once.sh is reused by everyone
+# must be sourced from a file that's in a subdirectory of a project's root dir
+# init is such a dir and init/once does nothing useful to be called directly
+# it's just a safety mechanism, whereas init.sh sets up the environment, and
+# also does a most basic setup that constitutes a successful init
+# all of it happens here below
+
 # Requires one env var:
 # 1. $HOLY_GOAL
 
@@ -37,12 +44,15 @@ if [ "$HOLY_HERE" == "" ]; then
 fi
 HOLY_RC=$(basename $HOLY_HERE)
 
-# NOTE: init/once & init/home reused by everyone
-${path}/once  $HOLY_GOAL $HOLY_HERE "$@"
-home=$(${path}/home $HOLY_GOAL $(dirname $0)/..)
 
+# a failsafe to prevent re-init of same thing
+${path}/once $HOLY_GOAL $HOLY_HERE "$@"
 
-export $HOLY_GOAL="$home"
+# exports an absolute path to a home by convention (one directory down)
+# TODO: holy init always knows the home path, just give it to the script?
+# that would mean adding a new var such as $HOME_PATH
+a-home $HOLY_GOAL $(dirname $0)/..
+
 
 touch  $HOLY_HERE
 tee -a $HOLY_HERE > /dev/null << END
