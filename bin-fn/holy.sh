@@ -18,11 +18,17 @@ goal() {
   esac
 }
 
+# test exported var
+exported() {
+  # TODO: cover for functions (opt-in $1 arg) with \-fx and \n instead of =
+  export -p | grep -q "\-x ${1}="
+}
+
 # is holy one or you on / has holy init been run for this shell?
 holy-on() {
   the=${1-one}
   name=$(goal $the)
-  if [ -d "${!name}" ]; then
+  if exported $name && [ -d "${!name}" ]; then
     echo "Holy ${the^} On"
     true; return
   else
