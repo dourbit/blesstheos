@@ -1,27 +1,24 @@
-# init/once.sh is reused by everyone
-# must be sourced from a file that's in a subdirectory of a project's root dir
-# init is such a dir and init/once does nothing useful to be called directly
-# it's just a safety mechanism, whereas init.sh sets up the environment, and
-# also does a most basic setup that constitutes a successful init
-# all of it happens here below
+# Note: init/once.sh is reused by init of dourbit/dots and also its forks...
+
+# Does:
+# failsafe a first-time init (hence "once") - unless forced with an override
+# ensure the $HOLY_HERE remains unchanged unless the conditions are met
+# export the $HOLY_GOAL path, without requiring that a path be explicitly given
+# append the $HOLY_GOAL to $HOLY_HERE, starting with a # $HOLY_COPY
+# append the least possible code to the $HOLY_HERE $HOLY_RC
 
 # Requires one env var:
-# 1. $HOLY_GOAL
+# 1. $HOLY_GOAL - name of the home var
 
 # The rest are optional:
-# 2. $HOLY_HERE - based on $0 so if your script name != shell then set it!
-# 3. $HOLY_COPY - becomes a comment in the $HOLY_HERE config
+# 2. $HOLY_COPY - becomes a comment in the $HOLY_HERE config, or an empty one
+# 3. $HOLY_PATH - is $(dirname $0)/.. as an init dir is a child of a home dir
+# 4. $HOLY_HERE - based on $0 so if your script name != shell then set it!
 
-# There is also derived:
+# There is also the always derived:
 # $HOLY_RC - is the file name aka basename of the $HOLY_HERE
 
 # TODO: add checks to make it official with basic validation
-
-# Does:
-# failsafe a first-time init (hence "once") - unless forced
-# export the $HOLY_GOAL path, without requiring that a path be explicitly given
-# append the $HOLY_GOAL to $HOLY_HERE, starting with a # $HOLY_COPY
-# ensure the $HOLY_HERE remains unchanges unless all is as expected
 
 
 set -eE # exit on error
@@ -39,19 +36,17 @@ fi
 # helpers sourced from here on
 . $path/../bin-fn/holy.sh
 
-if [ "$HOLY_HERE" == "" ]; then
-  HOLY_HERE=~/$(shell-rc $(basename $0))
-fi
+# setup the optional / derived vars -- defaults ok by convention
+[ "$HOLY_PATH" == "" ] && HOLY_PATH=$(dirname $0)/..
+[ "$HOLY_HERE" == "" ] && HOLY_HERE=~/$(shell-rc $(basename $0))
 HOLY_RC=$(basename $HOLY_HERE)
 
 
 # a failsafe to prevent re-init of same thing
 ${path}/once $HOLY_GOAL $HOLY_HERE "$@"
 
-# exports an absolute path to a home by convention (one directory down)
-# TODO: holy init always knows the home path, just give it to the script?
-# that would mean adding a new var such as $HOME_PATH
-a-home $HOLY_GOAL $(dirname $0)/..
+# export the $HOLY_PATH as a $HOLY_GOAL absolute path
+a-home $HOLY_GOAL $HOLY_PATH
 
 
 touch  $HOLY_HERE

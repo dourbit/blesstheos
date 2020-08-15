@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# NOTE: this script should be used through sourcing once.sh
+
 if [ $# -lt 2 ]; then
   echo "This $0 is missing required args:"
   echo "- \$1 HOLY_HOME environment variable name"
