@@ -47,7 +47,7 @@ EOF
 }
 
 if silent holy one on; then
-  . "$HOLY_HOME"/bin-fn/dourbit.sh
+  . "$HOLY_HOME"/cmd/dourbit.sh
 else
   errcho "Depends on blesstheos.com"
   exit 1

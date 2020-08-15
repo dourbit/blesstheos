@@ -31,8 +31,8 @@ home() {
   if ! [ -d "$where" ]; then
     # guess where $HOLY_HOME is (depending on the holy)
     where=$(dirname $0)
-    if [ $(basename $where) == "bin-fn" ]; then
-      # probably this as it's the actual script
+    if [ $(basename $where) == "cmd" ]; then
+      # usually this one as it's in the path (and really no other option)
       where=$(dirname $0)/..
     fi
   fi
@@ -56,7 +56,7 @@ holy() {
   fi
 
   # source the helper functions
-  . "$HOLY_HOME"/bin-fn/holy.sh
+  . "$HOLY_HOME"/cmd/holy.sh
 
   # NOTE: $HOLY_LEAD makes it possible to change the holy default to "you"
   # which only makes sense if yours is used far more often than "holy one"

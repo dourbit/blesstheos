@@ -7,6 +7,8 @@ elif ! [ -d "$HOLY_HOME" ]; then
 fi
 
 for src in "${HOLY_HOME}/use/helpers"/*; do . "$src"; done
+
+add_to_PATH ${HOLY_HOME}/cmd
 add_to_PATH ${HOLY_HOME}/bin-fn
 
 uses colors
