@@ -89,6 +89,7 @@ holy() {
       if ! echo $except | grep -wq $cmd; then
         # bad status and no exception command, will not proceed any further
         echo $holy_on
+        # TODO: echo how to install blesstheos itself - simply holy init #?
         false; return
       fi
     fi
@@ -116,7 +117,7 @@ holy() {
       # check if holy-on gave an error - $HOLY_HOME unknown
       if [ $status -ne 0 ]; then
         if [ $the != "one" ]; then
-          # $the = "you": any other than "one" will require holy-on
+          # $the = "you": any other than "one" will require holy one on
           echo $holy_on
           false; return
         fi

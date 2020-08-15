@@ -3,9 +3,9 @@
 COMMAND_FN=dourbit
 
 # If sourced, then depends on:
-# bin-fn/holy-on (and thus on holy having been installed)
+# holy one on
 # bin-fn/dourbit.sh though this is always sourced through the holy requirement
-# use/helpers/util.sh which are also part of a holy-on environment setup
+# use/helpers/util.sh which are also part of a holy setup
 # bin-fn/silent
 # bin-fn/check-x
 
@@ -46,7 +46,7 @@ The following commands can be run, some of which provide their own usage info:
 EOF
 }
 
-if silent holy-on; then
+if silent holy one on; then
   . "$HOLY_HOME"/bin-fn/dourbit.sh
 else
   errcho "Depends on blesstheos.com"

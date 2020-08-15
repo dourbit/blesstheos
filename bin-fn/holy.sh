@@ -18,6 +18,19 @@ goal() {
   esac
 }
 
+# is holy one or you on / has holy init been run for this shell?
+holy-on() {
+  the=${1-one}
+  name=$(goal $the)
+  if [ -d "${!name}" ]; then
+    echo "Holy ${the^} On"
+    true; return
+  else
+    echo "Holy ${the^} Not On"
+    false; return
+  fi
+}
+
 # the rc file for a shell; to use by holy init; relative to ~/.
 shell-rc() {
   local shell=${1-$(basename $SHELL)}
