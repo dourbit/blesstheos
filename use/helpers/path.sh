@@ -57,13 +57,14 @@ export -f a-ffix
 a-home() {
   local name=$1
   local home=${!name}
-  local want=$2
+  local want="$@"
   local path=$(a-path $want)
   if ! [ -d "$path" ]; then
     echo; echo "Path is not a directory and thus cannot be a home."
     echo "Given: $([[ $path == "" ]] && echo $want || echo $path)"; echo
     exit 1
   elif [[ "$home" != "" && "$home" != "$path" ]]; then
+    # a change of home to another path
     echo; echo "Warning: \$$name is $home"
     echo "Exporting here as $path"; echo
   fi
