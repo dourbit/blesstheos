@@ -18,7 +18,7 @@ goal() {
   esac
 }
 
-# test exported var
+# test exported var + note fn must remain here as prior to holy on one
 exported() {
   # TODO: cover for functions (opt-in $1 arg) with \-fx and \n instead of =
   export -p | grep -q "\-x ${1}="
