@@ -18,7 +18,7 @@ goal() {
   esac
 }
 
-# test exported var + note fn must remain here as prior to holy on one
+# test exported var + note fn must remain here as prior to holy one on
 exported() {
   # TODO: cover for functions (opt-in $1 arg) with \-fx and \n instead of =
   export -p | grep -q "\-x ${1}="
@@ -28,7 +28,15 @@ exported() {
 holy-on() {
   the=${1-one}
   name=$(goal $the)
-  if exported $name && [ -d "${!name}" ]; then
+  if exported $name; then
+    # the holy home is guaranteed to exist, as the code is holy-sourced
+    # for $the not one though we still need to test the you / other dir
+    # TODO: maybe check for some file specific to dots / grep README.md?
+    if [[ $the != "one" && ! -d "${!name}" ]]; then
+      echo "Not Found: ${!name}"
+      echo "Holy ${the^} Not On"
+      false; return
+    fi
     echo "Holy ${the^} On"
     true; return
   else
