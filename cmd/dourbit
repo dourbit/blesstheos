@@ -58,7 +58,7 @@ The following commands can be run, some of which provide their own usage info:
 EOF
 }
 
-if silent holy one on; then
+if holy one on >/dev/null 2>&1; then
   . "$HOLY_HOME"/cmd/dourbit.sh
 else
   . $(dirname $0)/holy.sh
