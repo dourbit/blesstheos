@@ -2,6 +2,11 @@
 
 COMMAND_FN=holy
 
+if [ $(basename $0) != $COMMAND_FN ]; then
+  echo "The $COMMAND_FN script cannot be sourced."
+  return 1
+fi
+
 usage() {
   cat <<EOF
 Usage: $COMMAND_FN [ one || you ] <command> [<args>]
@@ -45,6 +50,7 @@ home() {
     false; return
   fi
 }
+
 
 holy() {
   HOLY_HOME=$(home)
@@ -305,4 +311,4 @@ holy() {
   fi
 }
 
-[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
+$COMMAND_FN "$@"

@@ -42,7 +42,7 @@ holy-on() {
   fi
 }
 
-# in echoed text, to read if on, and so we know
+# of echoed text, to read if on, and so we know
 holy-say-on() {
   if [ $# -lt 1 ]; then
     >&2 echo "Missing expected args:"

@@ -2,6 +2,11 @@
 
 COMMAND_FN=dourbit
 
+if [ $(basename $0) != $COMMAND_FN ]; then
+  echo "The $COMMAND_FN script cannot be sourced."
+  return 1
+fi
+
 # Depends on:
 
 # holy one on
@@ -56,7 +61,7 @@ if silent holy one on; then
   . "$HOLY_HOME"/cmd/dourbit.sh
 else
   errcho "Depends on blesstheos.com"
-  exit 1
+  return 1
 fi
 
 
@@ -286,4 +291,4 @@ dourbit() {
   fi
 }
 
-[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
+$COMMAND_FN "$@"
