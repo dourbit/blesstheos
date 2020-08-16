@@ -78,18 +78,16 @@ holy() {
     shift
 
     # check whether holy is on - nothing will be done without it, almost...
-    local holy_on
-    # assignment must be separate to capture $? (bash bug)
-    holy_on=$(holy-on)
-    status=$?
+    $(holy-on); status=$?
     if [ $status -ne 0 ]; then
       # exception to the holy-on rule are the following commands:
       local except="rc call home init"
       # negate a whole-word quiet match
       if ! echo $except | grep -wq $cmd; then
         # bad status and no exception command, will not proceed any further
-        echo $holy_on
+        echo $(holy-say-on one $status)
         # TODO: echo how to install blesstheos itself - simply holy init #?
+        # Should this be part of the holy-say-on code? Because used elsewhere!
         false; return
       fi
     fi
@@ -118,7 +116,7 @@ holy() {
       if [ $status -ne 0 ]; then
         if [ $the != "one" ]; then
           # $the = "you": any other than "one" will require holy one on
-          echo $holy_on
+          echo $(holy-say-on one $status)
           false; return
         fi
       # you a special case because can be anywhere
@@ -249,7 +247,9 @@ holy() {
       local able=$1
       local onit="${HOLY_HOME}/on/ability/$able"
       if [[ $# -eq 0 || $able == "holy" ]]; then
-        echo $holy_on # only the true branch can get this far
+        $(holy-on $the); status=$?
+        echo $(holy-say-on $the $status)
+        return $status
       else
         # TODO: allow to check by filename - e.g. node or platforms/node same
         # perhaps create an enabled() function similar to installable()

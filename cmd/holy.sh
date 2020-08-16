@@ -26,23 +26,35 @@ exported() {
 
 # is holy one or you on / has holy init been run for this shell?
 holy-on() {
-  the=${1-one}
-  name=$(goal $the)
+  local the=${1-one}
+  local name=$(goal $the)
   if exported $name; then
     # the holy home is guaranteed to exist, as the code is holy-sourced
     # for $the not one though we still need to test the you / other dir
     # TODO: maybe check for some file specific to dots / grep README.md?
     if [[ $the != "one" && ! -d "${!name}" ]]; then
-      echo "Not Found: ${!name}"
-      echo "Holy ${the^} Not On"
+      >&2 echo "Not Found: ${!name}"
       false; return
     fi
-    echo "Holy ${the^} On"
     true; return
   else
-    echo "Holy ${the^} Not On"
     false; return
   fi
+}
+
+# in echoed text, to read if on, and so we know
+holy-say-on() {
+  if [ $# -lt 1 ]; then
+    >&2 echo "Missing expected args:"
+    >&2 echo '* $1 - the one or you'
+    >&2 echo '* $2 - 1=false or 0=true'
+    false; return
+  fi
+  local the=$1
+  local on=$2
+  local not=$(if [ $on -eq 0 ]; then echo; else echo " Not"; fi)
+  echo "Holy ${the^}$not On"
+  return $on
 }
 
 # the rc file for a shell; to use by holy init; relative to ~/.
