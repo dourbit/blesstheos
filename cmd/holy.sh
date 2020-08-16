@@ -54,6 +54,9 @@ holy-say-on() {
   local on=$2
   local not=$(if [ $on -eq 0 ]; then echo; else echo " Not"; fi)
   echo "Holy ${the^}$not On"
+  if [[ $the == "one" && on -ne 0 ]]; then
+    echo "Please: holy one init"
+  fi
   return $on
 }
 

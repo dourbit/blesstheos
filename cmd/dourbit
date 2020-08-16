@@ -62,7 +62,7 @@ if silent holy one on; then
   . "$HOLY_HOME"/cmd/dourbit.sh
 else
   . $(dirname $0)/holy.sh
-  echo $(holy-say-on one 1)
+  echo "$(holy-say-on one 1)"
   exit 1
 fi
 
