@@ -2,12 +2,18 @@
 
 COMMAND_FN=dourbit
 
-# If sourced, then depends on:
+# Depends on:
+
 # holy one on
-# bin-fn/dourbit.sh though this is always sourced through the holy requirement
-# use/helpers/util.sh which are also part of a holy setup
-# bin-fn/silent
+# holy on urbit
+# cmd/dourbit.sh - always sourced every time dourbit is run
+# use/helpers/ - path.sh and util.sh
 # bin-fn/check-x
+# bin-fn/silent
+# install/urbit - depends on more holy stuff ...
+
+# NOTE: dourbit and holy are very much meant to be together
+
 
 usage() {
   cat <<EOF
@@ -52,6 +58,7 @@ else
   errcho "Depends on blesstheos.com"
   exit 1
 fi
+
 
 dourbit() {
   if [ $# -eq 0 ]; then
