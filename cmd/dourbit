@@ -16,6 +16,7 @@ fi
 # bin-fn/check-x
 # bin-fn/silent
 # install/urbit - depends on more holy stuff ...
+# if ! holy one on; then . ./holy.sh for the holy-say-on fn
 
 # NOTE: dourbit and holy are very much meant to be together
 
@@ -60,8 +61,9 @@ EOF
 if silent holy one on; then
   . "$HOLY_HOME"/cmd/dourbit.sh
 else
-  errcho "Depends on blesstheos.com"
-  return 1
+  . $(dirname $0)/holy.sh
+  echo $(holy-say-on one 1)
+  exit 1
 fi
 
 
