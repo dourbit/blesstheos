@@ -36,7 +36,7 @@ else
 fi
 
 # helpers sourced from here on
-. $path/../bin-fn/holy.sh
+. $path/../cmd/holy.sh
 
 # setup the optional / derived vars -- defaults ok by convention
 [ "$HOLY_HERE" == "" ] && HOLY_HERE=~/$(shell-rc $(basename $0))

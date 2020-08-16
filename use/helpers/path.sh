@@ -56,6 +56,7 @@ export -f a-ffix
 # in any case it exports name=path as some kind of a home directory
 a-home() {
   local name=$1
+  shift
   local home=${!name}
   local want="$@"
   local path=$(a-path $want)
