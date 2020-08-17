@@ -1,7 +1,7 @@
 # dourbit helper functions
 
 docker-image() {
-  env-have $URBIT_IMAGE && echo $URBIT_IMAGE || echo "asssaf/urbit:latest"
+  is-some $URBIT_IMAGE && echo $URBIT_IMAGE || echo "asssaf/urbit:latest"
 }
 
 repos() {
@@ -10,7 +10,7 @@ repos() {
 
 eager() {
   # git fetch and docker pull only with dourbit update, unless $URBIT_EAGER=true
-  $(env-true $URBIT_EAGER)
+  $(is-true $URBIT_EAGER)
 }
 
 fetch() {

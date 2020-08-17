@@ -190,7 +190,7 @@ holy() {
         installable
         echo
       elif installable $able; then
-        env-true $HOLY_EAGER &&\
+        is-true $HOLY_EAGER && \
           silent holy update
         $path
         if [ $? -eq 0 ]; then
@@ -285,7 +285,7 @@ holy() {
 
     elif [ $cmd == "up" ]; then
       sudoUse
-      env-true $HOLY_EAGER \
+      is-true $HOLY_EAGER \
       && echo && holy update
       holy upgrade
 
@@ -294,7 +294,7 @@ holy() {
       cd "$HOLY_HOME" && git pull
 
     elif [ $cmd == "outdated" ]; then
-      if env-true "$HOLY_EAGER"; then
+      if is-true $HOLY_EAGER; then
         echo && holy update
       fi
       $(holy path bin/outdated)

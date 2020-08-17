@@ -252,9 +252,9 @@ dourbit() {
       cd "$HOME"/data/urbit
       # zod commands(s) use a different fakezod image
       if [ $cmd == "run-zod" ]; then
-        env-have $URBIT_IMAGE_0 && echo "Custom URBIT_IMAGE_0=$URBIT_IMAGE_0"
+        is-some $URBIT_IMAGE_0 && echo "Custom URBIT_IMAGE_0=$URBIT_IMAGE_0"
       else
-        env-have $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
+        is-some $URBIT_IMAGE && echo "Custom URBIT_IMAGE=$URBIT_IMAGE"
       fi
       echo
       # certain commands need special care

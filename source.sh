@@ -8,7 +8,7 @@ fi
 
 . "${HOLY_HOME}/src/core.sh"
 
-if env-true ${HOLY_SOURCE}; then
+if is-true $HOLY_SOURCE; then
   for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do
     . "$src"
   done

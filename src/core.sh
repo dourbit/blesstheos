@@ -1,18 +1,18 @@
-# true if env var is set to anything
-env-have() { return "$((!${#1}))"; }
-export -f env-have
+# true if anything other than nothing
+is-some() { return "$((!${#1}))"; }
+export -f is-some
 
-# true if env var is 0, yes, or true
-env-true() {
+# true - i.e. 0 - for yes or true too
+is-true() {
   local var="$1"
-  if env-have $var; then
-    if [[ "$var" == '0' || "$var" == 'yes' || "$var" == 'true' ]]; then
+  if is-some $var; then
+    if [[ "$var" == "0" || "$var" == "yes" || "$var" == "true" ]]; then
       true; return
     fi
   fi
   false; return
 }
-export -f env-true
+export -f is-true
 
 # sources use/ scripts + extra features...
 uses() {
