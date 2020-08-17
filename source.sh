@@ -6,7 +6,15 @@ elif ! [ -d "$HOLY_HOME" ]; then
   return 1
 fi
 
-for src in "${HOLY_HOME}/src"/*; do . "$src"; done
+. "${HOLY_HOME}/src/core.sh"
+
+if env-true ${HOLY_EXPORT}; then
+  for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do
+    . "$src"
+  done
+else
+  . "${HOLY_HOME}/src/os.sh"
+fi
 
 add_to_PATH ${HOLY_HOME}/cmd
 add_to_PATH ${HOLY_HOME}/bin-fn

@@ -4,10 +4,11 @@
 # i.e. transmission-daemon tools
 
 check-tre() {
-  if ! onLinux; then
-    echo "Only Linux supported so far."
-    false; return
-  elif [ ! -x "$(command -v transmission-remote)" ]; then
+  # TODO: functions not exported cannot be used (need holy-src helper)
+  # if ! onLinux; then
+  #   echo "Only Linux supported so far."
+  #   false; return
+  if [ ! -x "$(command -v transmission-remote)" ]; then
     echo "Command 'transmission-remote' not found."
     if onApt; then
       echo "The following command can install:"

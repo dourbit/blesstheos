@@ -9,8 +9,9 @@ HOLY_GOAL=HOLY_HOME
 
 tee -a $HOLY_HERE > /dev/null << END
 
-export HOLY_EAGER=false # git pull blesstheos only by holy update
-export HOLY_BREW_ON=true # omit to decrease / skip Homebrew usage
+export HOLY_EAGER=no # git pull blesstheos only by holy update / up
+export HOLY_EXPORT=yes # source everything in src - global exported helpers
+export HOLY_BREW_ON=yes # omit to decrease / skip Homebrew usage
 
 [ -f ~/.bashrc-pre ] && . "\$HOME"/.bashrc-pre
 
