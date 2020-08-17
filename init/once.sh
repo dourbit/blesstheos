@@ -26,6 +26,7 @@
 set -eE # exit on error
 trap 'echo "Did not init $(basename $0)!"' ERR
 
+# need the $path to this init/ dir
 if [ ${HOLY_GOAL} == "HOLY_HOME" ]; then
   path=$(dirname $0)
   # NOTE: we can set $HOLY_HOME here;

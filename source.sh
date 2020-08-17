@@ -6,7 +6,7 @@ elif ! [ -d "$HOLY_HOME" ]; then
   return 1
 fi
 
-for src in "${HOLY_HOME}/use/helpers"/*; do . "$src"; done
+for src in "${HOLY_HOME}/src"/*; do . "$src"; done
 
 add_to_PATH ${HOLY_HOME}/cmd
 add_to_PATH ${HOLY_HOME}/bin-fn

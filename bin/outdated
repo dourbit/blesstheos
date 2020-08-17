@@ -10,7 +10,7 @@ if onLinux && check-x apt; then
   apt list --upgradeable
 fi
 
-# TODO: Write a node-upgradeable function in use/helpers/node.sh to use here.
+# TODO: Write a node-upgradeable function, and add to src/node.sh to use here.
 
 if check-x lein; then
   specho Leiningen User Profiles ...

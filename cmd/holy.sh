@@ -1,4 +1,4 @@
-# Helpers for holy
+# holy helper functions
 
 # validates a lead mod aka modifier
 lead() {

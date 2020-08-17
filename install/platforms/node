@@ -5,9 +5,9 @@
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
 # See also:
-# `../bin/nvm-up` - upgrade of nvm itself
-# `../use/helpers/node.sh` - for switching between versions and upgrading
-# `../use/aliases/npm.sh` - useful command aliases
+# `bin/nvm-up` - upgrade of nvm itself
+# `src/node.sh` - for switching between versions and upgrading
+# `use/aliases/npm.sh` - useful command aliases
 
 # lts/* is the default node, call with "stable" if more recent node is preferred
 [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"

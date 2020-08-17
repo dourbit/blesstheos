@@ -1,7 +1,8 @@
 add_to_PATH  /usr/local/sbin
 add_to_PATH ${HOLY_HOME}/bin
 
-# TODO: add_to_PATH_front (for the rest of these paths) via use/helpers/path.sh
+# TODO: add_to_PATH_front (for the rest of these paths) via src/path.sh
+
 add_to_PATH .
 mkdir -p ~/bin
 add_to_PATH ~/bin

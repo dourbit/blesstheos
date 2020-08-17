@@ -10,7 +10,7 @@ fi
 if holy one on >/dev/null 2>&1; then
   . "$HOLY_HOME"/cmd/dourbit.sh
   # also depends on:
-  # use/helpers/ - path.sh & util.sh
+  # src/ - path.sh & util.sh
   # bin-fn/check-x
   # bin-fn/silent
 else

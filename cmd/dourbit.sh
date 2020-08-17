@@ -1,4 +1,4 @@
-# Helpers of dourbit
+# dourbit helper functions
 
 docker-image() {
   env-have $URBIT_IMAGE && echo $URBIT_IMAGE || echo "asssaf/urbit:latest"
