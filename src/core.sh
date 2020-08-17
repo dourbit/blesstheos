@@ -4,6 +4,7 @@ is-some() {
   if [ $# -lt 2 ]; then
     return "$((!${#1}))"
   else
+    # whole-word quiet match
     echo $1 | grep -wq $2
   fi
 }
