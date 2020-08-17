@@ -7,17 +7,19 @@ if [ $(basename $0) != $COMMAND_FN ]; then
   return 1
 fi
 
-# Depends on:
+if holy one on >/dev/null 2>&1; then
+  . "$HOLY_HOME"/cmd/dourbit.sh
+  # also depends on:
+  # use/helpers/ - path.sh & util.sh
+  # bin-fn/check-x
+  # bin-fn/silent
+else
+  . $(dirname $0)/holy.sh
+  echo "$(holy-say-on one 1)"
+  exit 1
+fi
 
-# holy one on
-# holy on urbit
-# cmd/dourbit.sh - always sourced every time dourbit is run
-# use/helpers/ - path.sh and util.sh
-# bin-fn/check-x
-# bin-fn/silent
 # install/urbit - depends on more holy stuff ...
-# if ! holy one on; then . ./holy.sh for the holy-say-on fn
-
 # NOTE: dourbit and holy are very much meant to be together
 
 
@@ -57,14 +59,6 @@ The following commands can be run, some of which provide their own usage info:
 
 EOF
 }
-
-if holy one on >/dev/null 2>&1; then
-  . "$HOLY_HOME"/cmd/dourbit.sh
-else
-  . $(dirname $0)/holy.sh
-  echo "$(holy-say-on one 1)"
-  exit 1
-fi
 
 
 dourbit() {
