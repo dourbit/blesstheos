@@ -1,14 +1,19 @@
 # true if anything other than nothing
-is-some() { return "$((!${#1}))"; }
+# when $# >= 2 one of $1 must be = $2
+is-some() {
+  if [ $# -lt 2 ]; then
+    return "$((!${#1}))"
+  else
+    echo $1 | grep -wq $2
+  fi
+}
 export -f is-some
 
 # true - i.e. 0 - for yes or true too
 is-true() {
   local var="$1"
-  if is-some $var; then
-    if [[ "$var" == "0" || "$var" == "yes" || "$var" == "true" ]]; then
-      true; return
-    fi
+  if is-some "0 yes true" $var; then
+    true; return
   fi
   false; return
 }
