@@ -25,6 +25,12 @@ holy-one() {
 }
 export -f holy-one
 
+# we would want to have customized holy you be reachable too
+holy-you() {
+  is-some $DOTS_HOME && [ -d $DOTS_HOME ]
+}
+export -f holy-you
+
 # sources use/ scripts + extra features...
 uses() {
   [ $# -eq 0 ] && {
