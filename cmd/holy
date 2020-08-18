@@ -11,6 +11,7 @@ usage() {
   cat <<EOF
 Usage: $COMMAND_FN [ one || you ] <command> [<args>]
 
+  dot       > sources files; guesses any relative paths; -f for fn exports
   rc        > runtime configuration file for your current or given shell
   init      > initializes holy for [bash] or another init/ <shell> use
   call      > easy way to invoke holy.sh functions without sourcing it
@@ -64,12 +65,21 @@ holy() {
   # source the helper functions
   . "$HOLY_HOME"/cmd/holy.sh
 
+  # TODO: here sources everything that holy will depend on
+
   # NOTE: $HOLY_LEAD makes it possible to change the holy default to "you"
   # which only makes sense if yours is used far more often than "holy one"
   local the=$(lead $HOLY_LEAD && echo $HOLY_LEAD || echo "one")
   if lead $1; then
     the=$1
     shift
+  fi
+
+  # there is always a valid $LEAD_HOME
+  LEAD_HOME="$HOLY_HOME"
+  if [ $the == "you" ] && holy-on you >/dev/null 2>&1; then
+    LEAD_HOME="$DOTS_HOME"
+    NEXT_HOME="$HOLY_HOME"
   fi
 
   # command is required
@@ -87,7 +97,7 @@ holy() {
     $(holy-on); status=$?
     if [ $status -ne 0 ]; then
       # exception to the holy-on rule are the following commands:
-      local except="rc call home init"
+      local except="dot rc call home init"
       if ! is-some $cmd $except; then
         # bad status and no exception command, will not proceed any further
         echo "$(holy-say-on one $status)"
@@ -98,8 +108,12 @@ holy() {
 
     # Command code-blocks:
 
-    if [ $cmd == "rc" ]; then
-      # $1 is optional $SHELL
+    if [ $cmd == "dot" ]; then
+      # found in holy.sh
+      sources $@
+
+    elif [ $cmd == "rc" ]; then
+      # $1 defaults to $SHELL - just the name is enough
       local rc=$(shell-rc $1)
       echo "~/$rc"
 
