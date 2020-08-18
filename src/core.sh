@@ -19,6 +19,12 @@ is-true() {
 }
 export -f is-true
 
+# OS has holy and $HOLY_HOME is set too - just a quick check without guarantees
+holy-one() {
+  command -v holy > /dev/null && is-some $HOLY_HOME && [ -d $HOLY_HOME ]
+}
+export -f holy-one
+
 # sources use/ scripts + extra features...
 uses() {
   [ $# -eq 0 ] && {
