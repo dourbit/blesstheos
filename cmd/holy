@@ -88,7 +88,7 @@ holy() {
     if [ $status -ne 0 ]; then
       # exception to the holy-on rule are the following commands:
       local except="rc call home init"
-      if ! is-some $except $cmd; then
+      if ! is-some $cmd $except; then
         # bad status and no exception command, will not proceed any further
         echo "$(holy-say-on one $status)"
         false; return

@@ -1,19 +1,18 @@
-# true if anything other than nothing
-# when $# >= 2 one of $1 must be = $2
+# true if $1 is some rather than none, i.e. has any value other than blank (or)
+# if $# >= 2; then is $1 = some of $2 = a space-separated words match-list
+# NOTE: in the latter case, quote the "$1" (or blank produces a false positive)
 is-some() {
   if [ $# -lt 2 ]; then
     return "$((!${#1}))"
   else
-    # whole-word quiet match
-    echo $1 | grep -wq $2
+    echo $2 | grep -wq "$1"
   fi
 }
 export -f is-some
 
-# true - i.e. 0 - for yes or true too
+# true ($?) status of 0 / yes / true (anything else would be a false 1 return)
 is-true() {
-  local var="$1"
-  if is-some "0 yes true" $var; then
+  if is-some "$1" "0 yes true"; then
     true; return
   fi
   false; return
