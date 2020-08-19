@@ -1,6 +1,7 @@
 # OS has holy and variations on holy one on
 holy-one() {
-  # level 0 is silent
+  # $1 option:
+  # level 0 is silent (the default)
   # level 1 is verbose about not finding a $HOLY_HOME
   # level 2 or whatever else will delegate to holy on
   local level="${1-0}"

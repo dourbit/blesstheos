@@ -20,8 +20,26 @@ is-true() {
 export -f is-true
 
 # we would want to have customized holy you be reachable too
+# imitates the holy-one fn - see source.sh for reference
+# this one is simpler & assumes holy-one is already true
 holy-you() {
-  is-some $DOTS_HOME && [ -d $DOTS_HOME ]
+  # $1 option:
+  # level 0 is silent (the default)
+  # level 1 is verbose about not finding a $DOTS_HOME
+  # level 2 or whatever else will delegate to holy on
+  local level="${1-0}"
+  if [[ $level == "1" || $level == "0" ]]; then
+    if ! is-some $DOTS_HOME; then
+      [ $level == "1" ] && echo "\$DOTS_HOME not set!"
+      return 1
+    elif ! [ -d "$DOTS_HOME" ]; then
+      [ $level == "1" ] && echo "\$DOTS_HOME dir of $DOTS_HOME is Not Found!"
+      return 1
+    fi
+    return 0
+  else
+    holy you on
+  fi
 }
 export -f holy-you
 
