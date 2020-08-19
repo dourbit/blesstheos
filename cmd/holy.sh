@@ -24,25 +24,6 @@ exported() {
   export -p | grep -q "\-x ${1}="
 }
 
-# holy dot runs this in the context of one or you (may be a flawed idea)...
-# NOTE: it seems the sources function must be moved to src/core.sh
-# because: how would it export for other commands?
-sources() {
-  local exports=no
-  if [ "$1" == "-f" ]; then
-    exports=yes; shift
-  fi
-  # TODO: implement exports (so far just an intention)
-  if [ $# -eq 0 ]; then
-    >&2 echo "No files specified - nothing to source!"
-    false; return
-  fi
-  for path in "$@"; do
-    . "$LEAD_HOME"/$path
-    # TODO: implement $NEXT_HOME
-  done
-}
-
 # is holy one or you on / has holy init been run for this shell?
 holy-on() {
   local the=${1-one}

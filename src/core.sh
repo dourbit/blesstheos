@@ -67,6 +67,24 @@ holy-env() {
 }
 export -f holy-env
 
+# sources files; guesses any relative paths; -f for fn exports; wip...
+holy-dot() {
+  local exports=no
+  if [ "$1" == "-f" ]; then
+    exports=yes; shift
+  fi
+  # TODO: implement exports (so far just an intention)
+  if [ $# -eq 0 ]; then
+    >&2 echo "No files specified - nothing to source!"
+    false; return
+  fi
+  for path in "$@"; do
+    . "$LEAD_HOME"/$path
+    # TODO: implement $NEXT_HOME
+  done
+}
+export -f holy-dot
+
 # sources use/ scripts + extra features...
 uses() {
   [ $# -eq 0 ] && {

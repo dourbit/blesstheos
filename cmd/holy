@@ -11,7 +11,6 @@ usage() {
   cat <<EOF
 Usage: $COMMAND_FN [ one || you ] <command> [<args>]
 
-  dot       > sources files; guesses any relative paths; -f for fn exports
   rc        > runtime configuration file for your current or given shell
   init      > initializes holy for [bash] or another init/ <shell> use
   call      > easy way to invoke holy.sh functions without sourcing it
@@ -104,11 +103,7 @@ holy() {
 
     # Command code-blocks:
 
-    if [ $cmd == "dot" ]; then
-      # found in holy.sh
-      sources $@
-
-    elif [ $cmd == "rc" ]; then
+    if [ $cmd == "rc" ]; then
       # $1 defaults to $SHELL - just the name is enough
       local rc=$(shell-rc $1)
       echo "~/$rc"
