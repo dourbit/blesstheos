@@ -5,16 +5,19 @@ holy-one() {
   # level 2 or whatever else will delegate to holy on
   local level="${1-0}"
   local holy="$HOLY_HOME"/holy
+  local wtf="Very odd that \$HOLY_HOME has no holy in it!"
   command -v $holy > /dev/null
   local status=$?
   if [[ $level == "0" || $level == "1" ]]; then
     if [ -z "$HOLY_HOME" ]; then
-        [ $level == "1" ] && echo "\$HOLY_HOME not set!"
-        return 1
+      [ $level == "1" ] && echo "\$HOLY_HOME not set!"
+      return 1
     elif ! [ -d "$HOLY_HOME" ]; then
-        [ $level == "1" ] && echo "\$HOLY_HOME dir of $HOLY_HOME is Not Found!"
-        return 1
+      [ $level == "1" ] && echo "\$HOLY_HOME dir of $HOLY_HOME is Not Found!"
+      return 1
     else
+      [[ $level == "1" && $status -ne 0 ]] && \
+        echo $wtf
       return $status
     fi
   elif [ $status -eq 0 ]; then
@@ -22,6 +25,7 @@ holy-one() {
     $holy one on
   else
     # holy is not known
+    echo $wtf
     false; return
   fi
 }
