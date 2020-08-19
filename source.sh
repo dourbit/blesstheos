@@ -1,4 +1,4 @@
-# OS has holy and variations on holy one on
+# OS has holy and wide variety of holy-one-on ways to check that it's all good
 holy-one() {
   # $1 option:
   # level 0 is silent (the default)
