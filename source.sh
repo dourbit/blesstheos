@@ -34,6 +34,7 @@ export -f holy-one
 
 # holy-one and src/core.sh - needed to bootstrap
 holy-one 1 && . "${HOLY_HOME}/src/core.sh" || return 1
+holy-env
 
 if is-true $HOLY_SOURCE; then
   for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do

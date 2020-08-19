@@ -43,22 +43,27 @@ holy-you() {
 }
 export -f holy-you
 
+# export $LEAD_HOME & $NEXT_HOME
+# if you not on: just $LEAD_HOME and return false
 holy-env() {
   local the=${1-${HOLY_LEAD-"one"}}
-  if holy-one; then
-    if holy-you; then
-      if [ $the == "one" ]; then
-        export LEAD_HOME="$HOLY_HOME"
-        export NEXT_HOME="$DOTS_HOME"
-      elif [ $the == "you" ]; then
-        export LEAD_HOME="$DOTS_HOME"
-        export NEXT_HOME="$HOLY_HOME"
-      fi
-    else
-      # only holy-one
+  local level=$2 # give it a 1 to complain if holy-you not found
+  # NOTE: holy-one has already validated, for this to be sourced
+  local yours=1 # false status of holy-you (tested below)
+  if holy-you $level; then
+    yours=0 # is true
+    if [ $the == "one" ]; then
       export LEAD_HOME="$HOLY_HOME"
+      export NEXT_HOME="$DOTS_HOME"
+    elif [ $the == "you" ]; then
+      export LEAD_HOME="$DOTS_HOME"
+      export NEXT_HOME="$HOLY_HOME"
     fi
+  else
+    # only holy-one
+    export LEAD_HOME="$HOLY_HOME"
   fi
+  return $yours
 }
 export -f holy-env
 
