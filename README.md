@@ -1,4 +1,4 @@
-# ~/.holy - bless the os
+# holy init #bless the os
 
 Helps with installing and maintaining operating systems.
 Some tools to make my life easier, contunually improved.
