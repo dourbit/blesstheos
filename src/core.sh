@@ -31,6 +31,25 @@ holy-you() {
 }
 export -f holy-you
 
+holy-env() {
+  local the=${1-${HOLY_LEAD-"one"}}
+  if holy-one; then
+    if holy-you; then
+      if [ $the == "one" ]; then
+        export LEAD_HOME="$HOLY_HOME"
+        export NEXT_HOME="$DOTS_HOME"
+      elif [ $the == "you" ]; then
+        export LEAD_HOME="$DOTS_HOME"
+        export NEXT_HOME="$HOLY_HOME"
+      fi
+    else
+      # only holy-one
+      export LEAD_HOME="$HOLY_HOME"
+    fi
+  fi
+}
+export -f holy-env
+
 # sources use/ scripts + extra features...
 uses() {
   [ $# -eq 0 ] && {

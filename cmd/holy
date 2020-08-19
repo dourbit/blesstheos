@@ -75,12 +75,8 @@ holy() {
     shift
   fi
 
-  # there is always a valid $LEAD_HOME
-  LEAD_HOME="$HOLY_HOME"
-  if [ $the == "you" ] && holy-on you >/dev/null 2>&1; then
-    LEAD_HOME="$DOTS_HOME"
-    NEXT_HOME="$HOLY_HOME"
-  fi
+  # export $LEAD_HOME & $NEXT_HOME for use within this subshell
+  holy-env $the
 
   # command is required
   if [ $# -eq 0 ]; then
