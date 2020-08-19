@@ -1,12 +1,34 @@
-if [ -z "$HOLY_HOME" ]; then
-  echo "\$HOLY_HOME not set!"
-  return 1
-elif ! [ -d "$HOLY_HOME" ]; then
-  echo "\$HOLY_HOME dir of $HOLY_HOME is Not Found!"
-  return 1
-fi
+# OS has holy and variations on holy one on
+holy-one() {
+  # level 0 is silent
+  # level 1 is verbose about not finding a $HOLY_HOME
+  # level 2 or whatever else will delegate to holy on
+  local level="${1-0}"
+  local holy="$HOLY_HOME"/holy
+  command -v $holy > /dev/null
+  local status=$?
+  if [[ $level == "0" || $level == "1" ]]; then
+    if [ -z "$HOLY_HOME" ]; then
+        [ $level == "1" ] && echo "\$HOLY_HOME not set!"
+        return 1
+    elif ! [ -d "$HOLY_HOME" ]; then
+        [ $level == "1" ] && echo "\$HOLY_HOME dir of $HOLY_HOME is Not Found!"
+        return 1
+    else
+      return $status
+    fi
+  elif [ $status -eq 0 ]; then
+    # any other / unknown level delegates to $holy
+    $holy one on
+  else
+    # holy is not known
+    false; return
+  fi
+}
+export -f holy-one
 
-. "${HOLY_HOME}/src/core.sh"
+# holy-one and src/core.sh - needed to bootstrap
+holy-one 1 && . "${HOLY_HOME}/src/core.sh" || return 1
 
 if is-true $HOLY_SOURCE; then
   for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do

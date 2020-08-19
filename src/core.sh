@@ -19,12 +19,6 @@ is-true() {
 }
 export -f is-true
 
-# OS has holy and $HOLY_HOME is set too - just a quick check without guarantees
-holy-one() {
-  command -v holy > /dev/null && is-some $HOLY_HOME && [ -d $HOLY_HOME ]
-}
-export -f holy-one
-
 # we would want to have customized holy you be reachable too
 holy-you() {
   is-some $DOTS_HOME && [ -d $DOTS_HOME ]
