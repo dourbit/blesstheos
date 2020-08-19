@@ -67,6 +67,8 @@ holy() {
   # TODO: here sources everything that holy will depend on
   # NOTE: do it here, before holy-env context, in order to
   # always have a fixed holy-dot source order no matter what $the is = to
+  # detect we have a context by checking holy-one, or source the src/core.sh
+  # holy-dot is what sourcing generally means here or anywhere else...
 
   # NOTE: $HOLY_LEAD makes it possible to change the holy default to "you"
   # which only makes sense if yours is used far more often than "holy one"
