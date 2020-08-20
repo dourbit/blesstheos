@@ -1,11 +1,9 @@
 # generate an absolute path from any path relative to the ./
 # absolute paths are simply verified
 a-path() {
-  # takes any path, including a path with non-escaped spaces
-  # echoes an absolute path if one exists
-  local a_path="$@"
+  # takes any path, echoes an absolute path if one exists
+  local a_path="$1"
   local parent=$(dirname "${a_path}")
-
   if [ -d "${a_path}" ]; then
     echo "$(cd "${a_path}" && pwd)"
   elif [ -d "${parent}" ]; then
@@ -22,7 +20,7 @@ export -f a-path
 # this is a step-up from a-path as long as ~/ precedence to ./ is ok
 # receive an absolute path that is sure to exist
 a-ffix() {
-  local wanted="$@"
+  local wanted="$1"
   if [[ $wanted =~ ^/ ]] || [[ $wanted =~ ^~ ]]; then
     echo $(a-path $wanted)
   else
@@ -41,20 +39,25 @@ export -f a-ffix
 # if env var of the same name exists and the paths differ it echoes a warning
 # in any case it exports name=path as some kind of a home directory
 a-home() {
+  if [ $# -lt 2 ]; then
+      echo "Please call a-home with:"
+      echo "- \$1 env var name"
+      echo "- \$2 path to export"
+      return 0
+  fi
   local name=$1
-  shift
   local home=${!name}
-  local want="$@"
+  local want="$2"
   local path=$(a-path $want)
   if ! [ -d "$path" ]; then
     echo; echo "Path is not a directory and thus cannot be a home."
     echo "Given: $([[ $path == "" ]] && echo $want || echo $path)"; echo
-    exit 1
+    return 1
   elif [[ "$home" != "" && "$home" != "$path" ]]; then
     # a change of home to another path
     echo; echo "Warning: \$$name is $home"
     echo "Exporting here as $path"; echo
   fi
-  export $name=$path
+  export $name="$path"
 }
 export -f a-home
