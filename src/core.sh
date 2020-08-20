@@ -52,10 +52,10 @@ holy-env() {
   local yours=1 # false status of holy-you (tested below)
   if holy-you $level; then
     yours=0 # is true
-    if [ $the == "one" ]; then
+    if [[ $the == "one" ]]; then
       export LEAD_HOME="$HOLY_HOME"
       export NEXT_HOME="$DOTS_HOME"
-    elif [ $the == "you" ]; then
+    elif [[ $the == "you" ]]; then
       export LEAD_HOME="$DOTS_HOME"
       export NEXT_HOME="$HOLY_HOME"
     fi
