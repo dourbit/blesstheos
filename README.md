@@ -16,7 +16,7 @@ git clone git@github.com:dourbit/blesstheos.git ~/.holy && cd ~/.holy
 Setup your shell by running:
 
 ```sh
-holy init && . holy rc
+holy init && . ~/$(holy rc)
 ```
 
 It will configure `$SHELL`, or you can request a specific one,

@@ -109,8 +109,7 @@ holy() {
 
     if [ $cmd == "rc" ]; then
       # $1 defaults to $SHELL - just the name is enough
-      local rc=$(shell-rc $1)
-      echo "~/$rc"
+      echo $(shell-rc $1)
 
     # makes development of holy.sh easier; maybe other benefits?
     elif  [ $cmd == "call" ]; then
