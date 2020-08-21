@@ -19,6 +19,22 @@ is-true() {
 }
 export -f is-true
 
+# validates a holy lead mod / modifier
+holy-be() {
+  [[ "$1" == "one" || "$1" == "you" ]] && true || false
+}
+export -f holy-be
+
+# echoes the valid $HOLY_LEAD with "one" being default
+holy-lead() {
+  if holy-be $HOLY_LEAD; then
+    echo $HOLY_LEAD
+  else
+    echo "one"
+  fi
+}
+export -f holy-lead
+
 # we would want to have customized holy you be reachable too
 # imitates the holy-one fn - see source.sh for reference
 # this one is simpler & assumes holy-one is already true
@@ -49,8 +65,8 @@ holy-env() {
   local the=$1 # the holy subshell uses this with each run
   [[ -n "$the" ]] || the=$HOLY_LEAD # system-wide optional config
   [[ -n "$the" ]] || the="one" # the default
-  local level=$2 # give it a 1 to complain if holy-you not found
   # NOTE: holy-one has already validated, for this to be sourced
+  local level=$2 # give it a 1 to complain if holy-you not found
   local yours=1 # false status of holy-you (tested below)
   if holy-you $level; then
     yours=0 # is true

@@ -1,10 +1,5 @@
 # holy helper functions
 
-# validates a lead mod aka modifier
-lead() {
-  [[ "$1" == "one" || "$1" == "you" ]] && true || false
-}
-
 # return the holy var name of a mod with which to get its home path
 # if unknown mod then echo a "HOLY_HOME" default
 goal() {
