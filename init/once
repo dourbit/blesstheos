@@ -38,7 +38,6 @@ if [ -d "${!home}" ]; then
       echo "Though not finding the export of \$$home in it!"
       echo "If you have edited the file, please open a new shell."
     fi
-    # echo "Can re-init with -f or --force option."
     exit 1
   fi
 elif [ $found -eq 0 ]; then

@@ -163,6 +163,16 @@ holy() {
       if [ -x $found ]; then
         # run the script
         $found "$@"
+        if [ $? -ne 0 ]; then
+          echo "Can re-init with a -f or --force option."
+          echo "Please don't do this! Only for example:"
+          echo "$found -f"
+          # NOTE: if this is to be fully implemented
+          # holy needs to properly parse its options
+          # then there would be much less explaining
+          # TODO: reduce the echoes above
+          false; return
+        fi
       else
         echo "Not found: $shell"
         echo -n "Can try it with: "
