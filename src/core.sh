@@ -28,6 +28,7 @@ export -f holy-be
 # echoes the valid $HOLY_LEAD with "one" being default
 holy-lead() {
   if holy-be $HOLY_LEAD; then
+    # optional system default
     echo $HOLY_LEAD
   else
     echo "one"
@@ -63,17 +64,22 @@ export -f holy-you
 # if you not on: just $LEAD_HOME and return false
 holy-env() {
   local the=$1 # the holy subshell uses this with each run
-  [[ -n "$the" ]] || the=$HOLY_LEAD # system-wide optional config
-  [[ -n "$the" ]] || the="one" # the default
   # NOTE: holy-one has already validated, for this to be sourced
   local level=$2 # give it a 1 to complain if holy-you not found
+  if ! holy-be $the; then
+    the=$(holy-lead)
+    if [ $# -eq 1 ]; then
+      # invalid $1 hereby interpreted as $level if just 1 arg is given
+      level=$1
+    fi
+  fi
   local yours=1 # false status of holy-you (tested below)
   if holy-you $level; then
     yours=0 # is true
     if [[ $the == "one" ]]; then
       export LEAD_HOME="$HOLY_HOME"
       export NEXT_HOME="$DOTS_HOME"
-    elif [[ $the == "you" ]]; then
+    else
       export LEAD_HOME="$DOTS_HOME"
       export NEXT_HOME="$HOLY_HOME"
     fi
