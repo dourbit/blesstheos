@@ -46,7 +46,9 @@ export -f holy-you
 # export $LEAD_HOME & $NEXT_HOME
 # if you not on: just $LEAD_HOME and return false
 holy-env() {
-  local the=${1-${HOLY_LEAD-"one"}}
+  local the=$1 # the holy subshell uses this with each run
+  [[ -n "$the" ]] || the=$HOLY_LEAD # system-wide optional config
+  [[ -n "$the" ]] || the="one" # the default
   local level=$2 # give it a 1 to complain if holy-you not found
   # NOTE: holy-one has already validated, for this to be sourced
   local yours=1 # false status of holy-you (tested below)
