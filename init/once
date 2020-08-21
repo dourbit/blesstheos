@@ -31,13 +31,24 @@ if [ -d "${!home}" ]; then
     echo "$where"
   else
     echo "Already configured: $this"
-    echo "$where"
-    echo "If your \$$home has moved - simply edit the file above."
-    echo "Can re-init with -f or --force option."
+    if [ $found -eq 0 ]; then
+      echo "$where"
+      echo "If \$$home has moved - simply edit the file above."
+    else
+      echo "Though not finding the export of \$$home in it!"
+      echo "If you have edited the file, please open a new shell."
+    fi
+    # echo "Can re-init with -f or --force option."
     exit 1
   fi
 elif [ $found -eq 0 ]; then
   echo "It seems you forgot to run: source $this"
   echo "$where"
+  # the home dir doesn't exist where it is expected
+  # due to being in this branch, and if home is set, so...
+  if [ -n "${!home}" ]; then
+    # this is a logical interpretation of the issue
+    echo "Has your ${!home} been moved by any chance?"
+  fi
   exit 1
 fi
