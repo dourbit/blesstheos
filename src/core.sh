@@ -60,7 +60,7 @@ holy-you() {
 }
 export -f holy-you
 
-# export $LEAD_HOME & $NEXT_HOME
+# export $LEAD_HOME & $NEXT_HOME depending on the $1 or $HOLY_LEAD
 # if you not on: just $LEAD_HOME and return false
 holy-env() {
   local the=$1 # the holy subshell uses this with each run
@@ -86,6 +86,7 @@ holy-env() {
   else
     # only holy-one
     export LEAD_HOME="$HOLY_HOME"
+    unset NEXT_HOME # maybe holy-you went off - this cleans the env
   fi
   return $yours
 }

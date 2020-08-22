@@ -64,7 +64,20 @@ shell-rc() {
 }
 
 
-# The rest of these require a holy one on.
+# The rest of these require holy-one on:
+
+# assumes holy-one; echoes a current sequence of one and you - for loops, etc.
+order() {
+  if holy-you; then
+    if [ "$HOLY_HOME" == "$LEAD_HOME" ]; then
+      echo "one you"
+    else
+      echo "you one"
+    fi
+  else
+    echo "one"
+  fi
+}
 
 installable() {
   local able=$1

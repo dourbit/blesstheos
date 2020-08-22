@@ -13,6 +13,7 @@ Usage: $COMMAND_FN [ one || you ] <command> [<args>]
 
   rc        > runtime configuration file for your current or given shell
   init      > initializes holy for [bash] or another init/ <shell> use
+  here      > whereby the home paths, their order and exports revealed
   call      > easy way to invoke holy.sh functions without sourcing it
   home      > the path to the one \$HOLY_HOME even if holy isn't on yet
   path      > provides the path to HOLY_HOME and relative paths or repos
@@ -112,14 +113,21 @@ holy() {
       echo $(shell-rc $1)
 
     # makes development of holy.sh easier; maybe other benefits?
-    elif  [ $cmd == "call" ]; then
+    elif [ $cmd == "call" ]; then
       $@
 
     # a-path $(holy call home)
     # differentiate from holy path because this simply exposes home()
     # $the "you" mod is irrelevant here, all is about the "one"
-    elif  [ $cmd == "home" ]; then
+    elif [ $cmd == "home" ]; then
       echo $(a-path $HOLY_HOME)
+
+    elif [ $cmd == "here" ]; then
+      local mod goal
+      for mod in $(order); do
+        goal=$(goal $mod)
+        echo "$mod: ${!goal}"
+      done
 
     elif [ $cmd == "init" ]; then
       local where=${HOLY_HOME}/init

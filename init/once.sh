@@ -24,7 +24,7 @@
 
 
 set -eE # exit on error
-trap 'echo "Did not init $(basename $0)!"' ERR
+trap 'echo "Will not init $(basename $0), again!"' ERR
 
 # need the $path to this init/ dir
 if [ ${HOLY_GOAL} == "HOLY_HOME" ]; then
