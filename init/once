@@ -17,6 +17,9 @@ lines=$(on-lines "^export ${home}=" $this)
 found=$? # $this already exports ${home}? (0 means export not found)
 if [ $found -ne 0 ]; then
   where="Export of $home found on line: $lines"
+  if [ $found -gt 1 ]; then
+    where="${where}\nNoticing: $home is exported on many lines! Forced?"
+  fi
 fi
 
 if [ -d "${!home}" ]; then
@@ -24,12 +27,12 @@ if [ -d "${!home}" ]; then
     echo "Forcing an existing install, may have unintended consequences."
     echo "Inspect the following config for similar / identical commands:"
     echo "$this"
-    echo "$where"
+    echo -e "$where"
   else
     echo "Already configured: $this"
     if [ $found -ne 0 ]; then
-      echo "$where"
-      echo "If \$$home has moved - simply edit the file above."
+      echo -e "$where"
+      echo "If \$$home has moved - just change the file above."
     else
       echo "Though not finding the export of \$$home in it!"
       echo "If you have edited the file, please open a new shell."
@@ -38,7 +41,7 @@ if [ -d "${!home}" ]; then
   fi
 elif [ $found -ne 0 ]; then
   echo "It seems you forgot to run: source $this"
-  echo "$where"
+  echo -e "$where"
   # the home dir doesn't exist where it is expected
   # due to being in this branch, and if home is set, so...
   if [ -n "${!home}" ]; then
