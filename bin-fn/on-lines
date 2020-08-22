@@ -9,7 +9,7 @@ on-lines() {
     >&2 echo "- \$2 path to file"
     false; return
   fi
-  local lines=$(grep -n "$1" $2)
+  local lines=$(grep -En "$1" $2)
   if [ -n "$lines" ]; then
     # TODO: make the next line optional based on a flag for more than numbers
     lines=$(echo "$lines" | grep -Eo '^[0-9]*' | awk 'ORS=", "' | head -c -2)
