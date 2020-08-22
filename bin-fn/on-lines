@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# NOTE: return here means the count of matches rather than an error code ...
+# in a way 0 is the error as it means there is no match at all, so watch out
+
 COMMAND_FN=on-lines
 on-lines() {
   if [ $# -lt 2 ]; then
@@ -7,16 +10,17 @@ on-lines() {
     >&2 echo "required args:"
     >&2 echo "- \$1 regular expression"
     >&2 echo "- \$2 path to file"
-    false; return
+    return 0
   fi
   local lines=$(grep -En "$1" $2)
   if [ -n "$lines" ]; then
+    local count=$(echo "$lines" | wc -l)
     # TODO: make the next line optional based on a flag for more than numbers
     lines=$(echo "$lines" | grep -Eo '^[0-9]*' | awk 'ORS=", "' | head -c -2)
-    echo "$lines"
-    true
+    echo "${lines}"
+    return $count
   else
-    false
+    return 0
   fi
 }
 

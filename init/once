@@ -14,8 +14,8 @@ this=$2 # a shell's config file that would set the $home environment var
 fine=$3 # which means will force it with a warning
 
 lines=$(on-lines "^export ${home}=" $this)
-found=$? # $this already exports ${home}? (maybe file not sourced)
-if [ $found -eq 0 ]; then
+found=$? # $this already exports ${home}? (0 means export not found)
+if [ $found -ne 0 ]; then
   where="Export of $home found on line: $lines"
 fi
 
@@ -27,7 +27,7 @@ if [ -d "${!home}" ]; then
     echo "$where"
   else
     echo "Already configured: $this"
-    if [ $found -eq 0 ]; then
+    if [ $found -ne 0 ]; then
       echo "$where"
       echo "If \$$home has moved - simply edit the file above."
     else
@@ -36,7 +36,7 @@ if [ -d "${!home}" ]; then
     fi
     exit 1
   fi
-elif [ $found -eq 0 ]; then
+elif [ $found -ne 0 ]; then
   echo "It seems you forgot to run: source $this"
   echo "$where"
   # the home dir doesn't exist where it is expected
