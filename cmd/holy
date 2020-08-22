@@ -123,14 +123,15 @@ holy() {
       echo $(a-path $HOLY_HOME)
 
     elif [ $cmd == "here" ]; then
-      local mod goal lines rc
+      local mod goal lines rc you
       for mod in $(order); do
         goal=$(goal $mod)
         echo "holy ${mod}: ${!goal}"
       done
       rc=~/"$(shell-rc)"
       lines=$(on-lines "^export (HOLY_HOME|DOTS_HOME)=" $rc)
-      echo "here via: ${rc} - line ${lines}"
+      you=$([ $? -ne 0 ] && echo 's') # you makes it plural
+      echo "here via: ${rc} - line${you} ${lines}"
 
     elif [ $cmd == "init" ]; then
       local where=${HOLY_HOME}/init
