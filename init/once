@@ -13,7 +13,7 @@ home=$1 # name of the var
 this=$2 # a shell's config file that would set the $home environment var
 fine=$3 # which means will force it with a warning
 
-lines=$(on-lines "export ${home}=" $this)
+lines=$(on-lines "^export ${home}=" $this)
 found=$? # $this already exports ${home}? (maybe file not sourced)
 if [ $found -eq 0 ]; then
   where="Export of $home found on line: $lines"

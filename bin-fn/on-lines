@@ -9,15 +9,15 @@ on-lines() {
     >&2 echo "- \$2 path to file"
     false; return
   fi
-  local match="$1"
-  local where="$2"
-  local found=1 # false
-  if grep -q "$match" $where; then
-    found=0 # true
-    lines=$(grep -n "$match" $where | grep -Eo '^[0-9]*' | awk 'ORS=", "' | head -c -2)
-    [ -n "$lines" ] && echo "$lines"
+  local lines=$(grep -n "$1" $2)
+  if [ -n "$lines" ]; then
+    # TODO: make the next line optional based on a flag for more than numbers
+    lines=$(echo "$lines" | grep -Eo '^[0-9]*' | awk 'ORS=", "' | head -c -2)
+    echo "$lines"
+    true
+  else
+    false
   fi
-  return $found
 }
 
 [ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
