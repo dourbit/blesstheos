@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+COMMAND_FN=on-lines
+on-lines() {
+  if [ $# -lt 2 ]; then
+    >&2 echo "$COMMAND_FN ${1+"'$1'"} ${@:2}"
+    >&2 echo "required args:"
+    >&2 echo "- \$1 regular expression"
+    >&2 echo "- \$2 path to file"
+    false; return
+  fi
+  local match="$1"
+  local where="$2"
+  local found=1 # false
+  if grep -q "$match" $where; then
+    found=0 # true
+    lines=$(grep -n "$match" $where | grep -Eo '^[0-9]*' | awk 'ORS=", "' | head -c -2)
+    [ -n "$lines" ] && echo "$lines"
+  fi
+  return $found
+}
+
+[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"

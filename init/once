@@ -13,14 +13,10 @@ home=$1 # name of the var
 this=$2 # a shell's config file that would set the $home environment var
 fine=$3 # which means will force it with a warning
 
-match="export ${home}="
-found=1 # false for does $this already export $home? (maybe file not sourced)
-# NOTE: could just have sourced $this, rather than searching through the file
-if grep -q "$match" $this; then
-  found=0 # true
-  lines=$(grep -n "$match" $this | grep -Eo '^[0-9]*' | awk 'ORS=", "' | head -c -2)
+lines=$(on-lines "export ${home}=" $this)
+found=$? # $this already exports ${home}? (maybe file not sourced)
+if [ $found -eq 0 ]; then
   where="Export of $home found on line: $lines"
-  # the reward is reusing this in many places - see the echoes below
 fi
 
 if [ -d "${!home}" ]; then
