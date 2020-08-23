@@ -13,6 +13,8 @@ home=$1 # name of the var
 this=$2 # a shell's config file that would set the $home environment var
 fine=$3 # which means will force it with a warning
 
+# on-lines must be sourced for a first-time holy init -- not in $PATH yet
+command -v on-lines > /dev/null || . $(dirname $0)/../bin-fn/on-lines
 lines=$(on-lines "^export ${home}=" $this)
 found=$? # $this already exports ${home}? (0 means export not found)
 if [ $found -ne 0 ]; then
