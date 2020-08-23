@@ -79,6 +79,31 @@ order() {
   fi
 }
 
+# same as $(holy here) command
+holy-here() {
+  local mod goal lines rc you count warn
+  for mod in $(order); do
+    goal=$(goal $mod)
+    echo "holy ${mod}: ${!goal}"
+  done
+  rc=~/"$(shell-rc)"
+  lines=$(on-lines "^export (HOLY_HOME|DOTS_HOME)=" $rc)
+  count=$?
+  you=$([ $count -ne 0 ] && echo 's:') # you making it plural
+  echo "here via: ${rc} (line${you} ${lines})"
+  if [[ $(echo $(order) | wc -w) -eq 1 && $count -gt 1 ]]; then
+    warn="Noticing: More than 1 export of \$${goal}! Forced holy init?"
+  elif [ $count -gt 2 ]; then
+    warn="Noticing: More than 2 exports - check the lines above! Forced?"
+  fi
+  # was an issue detected?
+  if [ -n "$warn" ]; then
+    echo; echo "$warn"
+    # considered as error
+    false; return
+  fi
+}
+
 installable() {
   local able=$1
   local path="${HOLY_HOME}/install/${able}"
