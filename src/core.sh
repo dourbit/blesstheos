@@ -39,9 +39,13 @@ export -f holy-lead
 # because some functions such as holy-dot & uses
 # prefer to source these rather than those files -
 # code would favor code from the same repo first -
-# unless $here is under $DOTS_HOME the one leads
+# unless $here is under $DOTS_HOME the one leads -
+# given a $HOLY_HOME or $DOTS_HOME becomes $here
 this-that() {
-  local here=$(cd $(dirname $0) && pwd)
+  local here=$(cd $(dirname $0) && pwd) status=0
+  [ -n "$1" ] \
+    && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]] \
+    && here=$1 && status=1
   if holy-you; then
     if grep -q "^$DOTS_HOME" <<< "$here"; then
       echo "you one"
@@ -51,6 +55,7 @@ this-that() {
   else
     echo "one"
   fi
+  return $status # is never an error, 1 just means a home path was given as $1
 }
 export -f this-that
 
@@ -134,9 +139,12 @@ uses() {
     echo "uses -- source filepaths relative to use/ dir, with .sh ext optional"
     false; return
   }
-  local use path the found base
-  local these=$(this-that)
+  local use path the found base these
   local status=0
+  these=$(this-that $1)
+  if [ $? -eq 1 ]; then
+    shift
+  fi
   for path; do
     found=0
     for the in $these; do
