@@ -128,23 +128,31 @@ holy-dot() {
 }
 export -f holy-dot
 
-# sources use/ scripts + extra features...
+# sources use/ scripts - based on this-that
 uses() {
   [ $# -eq 0 ] && {
     echo "uses -- source filepaths relative to use/ dir, with .sh ext optional"
     false; return
   }
-  local use path status=0
+  local use path the found base
+  local these=$(this-that)
+  local status=0
   for path; do
-    use="${HOLY_HOME}/use/${path}"
-    if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
-      . "${use}.sh"
-    elif [ -s "$use" ]; then
-      . "$use"
-    else
-      >&2 echo "Not found: $use"
-      status=1
-    fi
+    found=0
+    for the in $these; do
+      base=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
+      use="${base}/use/${path}"
+      if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
+        . "${use}.sh"
+        found=1; break
+      elif [ -s "$use" ]; then
+        . "$use"
+        found=1; break
+      else
+        status=1
+      fi
+    done
+    [ $found -eq 0 ] && >&2 echo "Not found in \"$these\" by: uses $path"
   done
   return $status
 }
