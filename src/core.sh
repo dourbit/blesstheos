@@ -113,15 +113,22 @@ export -f holy-dot
 # sources use/ scripts + extra features...
 uses() {
   [ $# -eq 0 ] && {
-    echo "uses - sources filepath relative to use/ dir, with .sh ext optional"
+    echo "uses -- source filepaths relative to use/ dir, with .sh ext optional"
     false; return
   }
-  local use="$HOLY_HOME/use/$1"
-  if [[ ! "$1" =~ .sh$ ]] && [ -s "$use.sh" ]; then
-     . "$use.sh"
-     true; return
-  fi
-  [ -s "$use" ] && . "$use" || false; return
+  local use path status=0
+  for path; do
+    use="${HOLY_HOME}/use/${path}"
+    if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
+      . "${use}.sh"
+    elif [ -s "$use" ]; then
+      . "$use"
+    else
+      >&2 echo "Not found: $use"
+      status=1
+    fi
+  done
+  return $status
 }
 export -f uses
 

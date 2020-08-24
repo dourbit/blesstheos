@@ -44,16 +44,14 @@ else
   . "${HOLY_HOME}/src/os.sh"
 fi
 
-add_to_PATH ${HOLY_HOME}/cmd
-add_to_PATH ${HOLY_HOME}/bin-fn
+add_to_PATH \
+  ${HOLY_HOME}/cmd \
+  ${HOLY_HOME}/bin-fn
 
-uses colors
-uses term
-uses aliases
-uses git
-uses jump
-[ -n "$BASH" ] && uses bash # bash-only stuff
-uses rundev
+uses colors term aliases git jump rundev
+
+# bash-only stuff
+[ -n "$BASH" ] && uses bash
 
 umask 022
 
