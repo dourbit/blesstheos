@@ -25,7 +25,7 @@ holy-be() {
 }
 export -f holy-be
 
-# echoes the valid $HOLY_LEAD with "one" being default
+# echoes $HOLY_LEAD, if valid, or the "one" default
 holy-lead() {
   if holy-be $HOLY_LEAD; then
     # optional system default
@@ -35,6 +35,24 @@ holy-lead() {
   fi
 }
 export -f holy-lead
+
+# because some functions such as holy-dot & uses
+# prefer to source these rather than those files -
+# code would favor code from the same repo first -
+# unless $here is under $DOTS_HOME the one leads
+this-that() {
+  local here=$(cd $(dirname $0) && pwd)
+  if holy-you; then
+    if grep -q "^$DOTS_HOME" <<< "$here"; then
+      echo "you one"
+    else
+      echo "one you"
+    fi
+  else
+    echo "one"
+  fi
+}
+export -f this-that
 
 # we would want to have customized holy you be reachable too
 # imitates the holy-one fn - see source.sh for reference
