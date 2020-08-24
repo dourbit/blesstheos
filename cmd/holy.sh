@@ -67,8 +67,10 @@ shell-rc() {
 # The rest of these require holy-one on:
 
 # assumes holy-one; echoes a current sequence of one and you - for loops, etc.
-order() {
+# similar to this-that, however this function is crucial to some of holy mode
+lead-next() {
   if holy-you; then
+    # the $LEAD_HOME would vary based on holy one, me or you (over the default)
     if [ "$HOLY_HOME" == "$LEAD_HOME" ]; then
       echo "one you"
     else
@@ -82,7 +84,7 @@ order() {
 # same as $(holy here) command
 holy-here() {
   local mod goal lines rc you count warn
-  for mod in $(order); do
+  for mod in $(lead-next); do
     goal=$(goal $mod)
     echo "holy ${mod}: ${!goal}"
   done
@@ -91,7 +93,7 @@ holy-here() {
   count=$?
   you=$([ $count -ne 0 ] && echo 's:') # you making it plural
   echo "here via: ${rc} (line${you} ${lines})"
-  if [[ $(echo $(order) | wc -w) -eq 1 && $count -gt 1 ]]; then
+  if [[ $(echo $(lead-next) | wc -w) -eq 1 && $count -gt 1 ]]; then
     warn="Noticing: More than 1 export of \$${goal}! Forced holy init?"
   elif [ $count -gt 2 ]; then
     warn="Noticing: More than 2 exports - check the lines above! Forced?"
