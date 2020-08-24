@@ -21,7 +21,7 @@ export -f is-true
 
 # validates a holy lead mod / modifier
 holy-be() {
-  [[ "$1" == "one" || "$1" == "you" ]] && true || false
+  is-some "$1" "one me you" && true || false
 }
 export -f holy-be
 

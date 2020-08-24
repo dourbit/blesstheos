@@ -9,7 +9,7 @@ fi
 
 usage() {
   cat <<EOF
-Usage: $COMMAND_FN [ one || you ] <command> [<args>]
+Usage: $COMMAND_FN [ one || me || you ] <command> [<args>]
 
   rc        > runtime configuration file for your current or given shell
   init      > initializes holy for [bash] or another init/ <shell> use
@@ -78,6 +78,8 @@ holy() {
     the=$1
     shift
   fi
+  # me is same as you
+  [ $the == "me" ] && the="you"
 
   # export $LEAD_HOME & $NEXT_HOME for use within this subshell
   holy-env $the
@@ -127,19 +129,18 @@ holy() {
 
     elif [ $cmd == "init" ]; then
       local where=${HOLY_HOME}/init
-      # check if holy-on gave an error - $HOLY_HOME unknown
-      if [ $status -ne 0 ]; then
-        if [ $the != "one" ]; then
-          # $the = "you": any other than "one" will require holy one on
+      # the "me" / "you" case needs extra validation and logic
+      if [ $the != "one" ]; then
+        # did holy-on give an error (i.e. $HOLY_HOME unknown)?
+        if [ $status -ne 0 ]; then
+          # will require holy one on
           echo "$(holy-say-on one $status)"
           false; return
-        fi
-      # you a special case because can be anywhere
-      elif [ $the == "you" ]; then
+        # whereas one is here, you is a special case because it can be anywhere
         # TODO: make the path optional if $DOTS_HOME is already set -
         # can we use holy-on DOTS_HOME for this?
-        if [ $# -eq 0 ]; then
-          errcho "Please give a path to your dots."
+        elif [ $# -eq 0 ]; then
+          echo "Missing path to your dots."
           false; return
         else
           # turn it into an absolute path
@@ -152,6 +153,7 @@ holy() {
       # check if init dir exists at $where / or something is wrong
       # probably $the you path from above as the one should always be found
       if ! [ -d $where ]; then
+        echo "Attempted: holy $the init"
         echo "Not Found: $where"
         false; return
       fi
