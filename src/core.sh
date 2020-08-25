@@ -126,6 +126,35 @@ holy-env() {
 }
 export -f holy-env
 
+# will export all functions found in a file - it just looks for patterns -
+# these functions must have already been sourced - or else expect errors
+export-f() {
+  if [ $# -eq 0 ]; then
+    >&2 echo "export-f: path required"
+    false; return
+  elif ! [ -f $1 ]; then
+    >&2 echo "export-f: nothing found at $1"
+    false; return
+  elif ! [ -s $1 ]; then
+    >&2 echo "export-f: empty file at $1"
+    false; return
+  fi
+  local status fn fns
+  # NOTE: '^name() {$' - a rather strict regex for function matches
+  fns=$(grep -E '^.*() {$' $1 | grep -Eo '^[^(]*')
+  status=$?
+  [ $status -ne 0 ] && {
+    >&2 echo "export-f: functions not found in $1"
+  }
+  for fn in $fns; do
+    export -f $fn
+    # not-a-function error?
+    [ $? -ne 0 ] && status=1
+  done
+  return $status
+}
+export -f export-f
+
 # sources files; guesses any relative paths; -f for fn exports; wip...
 holy-dot() {
   local exports=no
