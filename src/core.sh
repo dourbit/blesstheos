@@ -180,7 +180,7 @@ uses() {
     false; return
   }
   local status=0
-  local use path the found base these
+  local use path the found home these
   if [ $# -gt 1 ]; then
     # $1 could be a home path request
     these=$(this-that $1)
@@ -191,8 +191,8 @@ uses() {
   for path; do
     found=0
     for the in $these; do
-      base=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
-      use="${base}/use/${path}"
+      home=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
+      use="${home}/use/${path}"
       if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
         . "${use}.sh"
         found=1; break
