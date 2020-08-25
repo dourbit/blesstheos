@@ -44,7 +44,16 @@ export -f holy-one
 
 
 # holy-one and src/core.sh - needed to bootstrap
-holy-one 1 && . "${HOLY_HOME}/src/core.sh" || return 1
+if holy-one 1; then
+  . "${HOLY_HOME}/src/core.sh"
+else
+  # holy-one somehow isn't on
+  # clean-up here
+  unset THIS_HOME
+  return 1
+fi
+
+# global $LEAD_HOME - $NEXT_HOME is not exported yet
 holy-env
 
 if is-true $HOLY_SOURCE; then
