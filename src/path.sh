@@ -13,7 +13,6 @@ a-path() {
     fi
   fi
 }
-export -f a-path
 
 # give it a path that is relative to $HOME ~/ or an absolute path
 # will also accept any relative path if it turns out not based on ~/
@@ -33,7 +32,6 @@ a-ffix() {
     fi
   fi
 }
-export -f a-ffix
 
 # given name and path it makes the path absolute and ensures it's a directory
 # if env var of the same name exists and the paths differ it echoes a warning
@@ -60,4 +58,3 @@ a-home() {
   fi
   export $name="$path"
 }
-export -f a-home

@@ -37,6 +37,7 @@ else
 fi
 
 # helpers sourced from here on
+. $path/../src/path.sh
 . $path/../cmd/holy.sh
 
 # setup the optional / derived vars -- defaults ok by convention

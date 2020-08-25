@@ -64,7 +64,7 @@ shell-rc() {
 }
 
 
-# The rest of these require holy-one on:
+# The rest of these require holy-one on in order to have meaning / run at all.
 
 # assumes holy-one; echoes a current sequence of one and you - for loops, etc.
 # similar to this-that, however this function is crucial to some of holy mode

@@ -28,14 +28,12 @@ check-tre() {
     false; return
   fi
 }
-export -f check-tre
 
 if [ ! -z "${TRANSMISSION_RE}" ] && check-tre; then
 
   tre() {
     eval $(command -v transmission-remote) ${TRANSMISSION_RE} ${@}
   }
-  export -f tre
 
   tre-ids-pipe() {
     # give it a function or script to call
@@ -48,7 +46,6 @@ if [ ! -z "${TRANSMISSION_RE}" ] && check-tre; then
       stdbuf -oL tre-ids | eval $1 "${@:2}"
     fi
   }
-  export -f tre-ids-pipe
 
 else false; return
 fi

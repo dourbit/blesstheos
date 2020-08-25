@@ -11,7 +11,6 @@ node-in() {
   nvm install ${kind} --reinstall-packages-from=current --latest-npm \
     || false; return
 }
-export -f node-in
 
 
 # node-to [specify]
@@ -25,7 +24,6 @@ node-to() {
     && nvm use default \
     || false; return
 }
-export -f node-to
 
 
 # node-v [specify]
@@ -34,7 +32,6 @@ export -f node-to
 node-v() {
   [[ $# -eq 0 ]] && echo $(node -v) || echo $(nvm ls $1 | awk '{print $NF}')
 }
-export -f node-v
 
 
 # node-up [specify]
@@ -64,4 +61,3 @@ node-up() {
   nvm use $kind > /dev/null
   node-to $kind
 }
-export -f node-up

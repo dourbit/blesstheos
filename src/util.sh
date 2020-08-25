@@ -1,14 +1,14 @@
 # For things that don't belong elsewhere.
 
-errcho() { cat <<< "$@" 1>&2; }
-export -f errcho
+errcho() {
+  cat <<< "$@" 1>&2
+}
 
 # spaced echo for more readble output with less code
 specho() {
   echo
   echo "$@"
 }
-export -f specho
 
 # will use sudo, make it clear at the top, especially for long-running scripts
 sudoUse() {
@@ -19,13 +19,11 @@ sudoUse() {
   # as sudo will be used later on
   sudo echo "" > /dev/null # does nothing except ask for password if necessary
 }
-export -f sudoUse
 
 # sudo with your own $PATH and maybe more in the future
 sudomy() {
   sudo env "PATH=$PATH" $@
 }
-export -f sudomy
 
 # sometimes brew is unnecessary as it takes too long to install
 # that's especially true when there's a network or disk bottleneck
@@ -34,4 +32,3 @@ export -f sudomy
 brewOn() {
   [ "$HOLY_BREW_ON" = true ] && check-x brew && { true; return; } || { false; return; }
 }
-export -f brewOn

@@ -144,7 +144,8 @@ holy() {
           false; return
         else
           # turn it into an absolute path
-          where=$(a-path ${1}/init)
+          # TODO: remove leading check-fn once holy-dot is implemented
+          where=$(check-fn a-path > /dev/null 2>&1 && a-path ${1}/init)
           # if that fails then use the original
           [ "$where" == "" ] && where=${1}/init
           shift
