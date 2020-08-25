@@ -1,3 +1,13 @@
+#
+export THIS_HOME="$HOLY_HOME"
+# see it unset at the end of this source.sh
+# exists for more concise calls of uses and holy-dot
+# thus this-that needs no path arg, for the time being...
+# only ever an issue when sourcing from the outside, e.g. ~/.bashrc, etc.
+# essential for code portability between blesstheos and dots or its forks -
+# it is an indicator of bootstrapping in progress...
+
+
 # OS has holy and wide variety of holy-one-on ways to check that it's all good
 holy-one() {
   # $1 option:
@@ -31,6 +41,7 @@ holy-one() {
   fi
 }
 export -f holy-one
+
 
 # holy-one and src/core.sh - needed to bootstrap
 holy-one 1 && . "${HOLY_HOME}/src/core.sh" || return 1
@@ -67,3 +78,5 @@ for src in $(ls "${HOLY_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$src";
 
 # thus far the PATH pas been added to from many places
 uses path
+
+unset THIS_HOME

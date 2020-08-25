@@ -40,13 +40,24 @@ export -f holy-lead
 # prefer to source these rather than those files -
 # code would favor code from the same repo first -
 # unless $here is under $DOTS_HOME the one leads -
-# given a $HOLY_HOME or $DOTS_HOME becomes $here
+# given a $HOLY_HOME or $DOTS_HOME becomes $here -
+# else if $THIS_HOME is set it will become $here -
+# there's no holy-you until holy-one has sourced
 this-that() {
-  local here=$(cd $(dirname $0) && pwd) status=0
-  [ -n "$1" ] \
-    && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]] \
-    && here=$1 && status=1
+  status=0
+  local here=$(cd $(dirname $0) && pwd)
+  if [ -n "$1" ] && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]]; then
+    # is given a specific home, which also checks out as valid
+    here=$1
+    status=1
+  elif [ -n "$THIS_HOME" ]; then
+    # available while sourcing either of the 2 source.sh files
+    # a convenience and for code portability among dots, forks, or the "one"
+    here=$THIS_HOME
+  fi
+  # $here is all-set; check if holy-you is on:
   if holy-you; then
+    # is $here a $DOTS_HOME path?
     if grep -q "^$DOTS_HOME" <<< "$here"; then
       echo "you one"
     else
@@ -139,11 +150,14 @@ uses() {
     echo "uses -- source filepaths relative to use/ dir, with .sh ext optional"
     false; return
   }
-  local use path the found base these
   local status=0
-  these=$(this-that $1)
-  if [ $? -eq 1 ]; then
-    shift
+  local use path the found base these
+  if [ $# -gt 1 ]; then
+    # $1 could be a home path request
+    these=$(this-that $1)
+    [ $? -eq 1 ] && shift # yes it is
+  else
+    these=$(this-that)
   fi
   for path; do
     found=0
