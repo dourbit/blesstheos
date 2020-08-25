@@ -45,7 +45,7 @@ export -f holy-one
 
 # holy-one and src/core.sh - needed to bootstrap
 if holy-one 1; then
-  . "${HOLY_HOME}/src/core.sh"
+  . "${HOLY_HOME}/core.sh"
 else
   # holy-one somehow isn't on
   # clean-up here
