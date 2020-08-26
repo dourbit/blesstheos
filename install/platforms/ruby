@@ -35,7 +35,7 @@ elif onApt; then
   # This plugin is deprecated since its behavior is now included in rbenv core.
   # git clone https://github.com/rbenv/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 else
-  echo "No ${KERNEL_NAME} system match!"
+  echo "No ${HOLY_KERNEL} system match!"
 fi
 
 if [ ! -f ~/.bundle/config ]; then mkdir -p ~/.bundle && printf -- "---\nBUNDLE_PATH: vendor/bundle\n" >> ~/.bundle/config; fi

@@ -24,7 +24,7 @@ if onApt; then
 elif onMac; then
   echo "MacOS - TODO..."
 else
-  echo "No ${KERNEL_NAME} system match!"
+  echo "No ${HOLY_KERNEL} system match!"
 fi
 
 exit 1

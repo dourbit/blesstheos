@@ -21,7 +21,7 @@ elif onMac; then
   mkdir -p ~/.nvm
   cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 else
-  echo "System '${KERNEL_NAME}' is not supported."
+  echo "System '${HOLY_KERNEL}' is not supported."
   exit 1
 fi
 
