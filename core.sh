@@ -144,19 +144,30 @@ holy-export() {
     >&2 echo "holy-export: empty file at $1"
     false; return
   fi
-  local status fn fns cmd
+  local it fns vars cmd code=() status=0
   # NOTE: '^name() {$' - a rather strict regex for function matches
   fns=$(grep -E '^.*() {$' $1 | grep -Eo '^[^(]*')
   status=$?
-  [ $status -ne 0 ] && {
+  # NOTE: expect at least one function to be found (perhaps wrong?)
+  if [ $status -ne 0 ]; then
     >&2 echo "holy-export: functions not found in $1"
-  }
-  for fn in $fns; do
-    if is-true $HOLY_EXPORT; then
-      cmd="export -f $fn"
-    else
-      cmd="export -fn $fn"
-    fi
+  else
+    for it in $fns; do
+      if is-true $HOLY_EXPORT; then
+        code+=("export -f $it")
+      else
+        code+=("export -fn $it")
+      fi
+    done
+  fi
+  # it can un-export vars as well
+  if ! is-true $HOLY_EXPORT; then
+    vars=$(grep -oP '(?<=export ).*(?==)' $1)
+    for it in $vars; do
+      code+=("export -n $it")
+    done
+  fi
+  for cmd in "${code[@]}"; do
     # just show or run it?
     if is-true $dry; then
       echo "$cmd"
