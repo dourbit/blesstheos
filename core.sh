@@ -10,9 +10,10 @@ is-some() {
 }
 export -f is-some
 
-# true ($?) status of 0 / yes / true (anything else would be a false 1 return)
+# true ($?) status of 0, on, yes, and of-course true
+# anything else would be a false 1 return
 is-true() {
-  if is-some "$1" "0 yes true"; then
+  if is-some "$1" "0 on yes true"; then
     true; return
   fi
   false; return
@@ -151,9 +152,13 @@ holy-export() {
     >&2 echo "holy-export: functions not found in $1"
   }
   for fn in $fns; do
-    cmd="export -f $fn"
+    if is-true $HOLY_EXPORT; then
+      cmd="export -f $fn"
+    else
+      cmd="export -fn $fn"
+    fi
+    # just show or run it?
     if is-true $dry; then
-      # just show
       echo "$cmd"
     else
       $cmd

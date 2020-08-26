@@ -59,11 +59,11 @@ holy-env
 if is-true $HOLY_SOURCE; then
   for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do
     . "$src"
-    is-true $HOLY_EXPORT && holy-export "$src"
+    holy-export "$src"
   done
 else
   . "${HOLY_HOME}/src/os.sh"
-  is-true $HOLY_EXPORT && holy-export "${HOLY_HOME}/src/os.sh"
+  holy-export "${HOLY_HOME}/src/os.sh"
 fi
 
 add_to_PATH \
