@@ -136,6 +136,7 @@ uses() {
   done
   return $status
 }
+export -f uses
 
 
 # holy-one and src/core.sh - needed to bootstrap
