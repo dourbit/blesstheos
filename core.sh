@@ -239,7 +239,7 @@ uses() {
 export -f uses
 
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
-add_to_PATH() {
+PATH-add() {
   for d; do
     # d=$(cd -- "$d" && { pwd -P || pwd; }) 2>/dev/null  # canonicalize symbolic links
     # if [ -z "$d" ]; then continue; fi  # skip nonexistent directory
@@ -250,4 +250,4 @@ add_to_PATH() {
     esac
   done
 }
-export -f add_to_PATH
+export -f PATH-add

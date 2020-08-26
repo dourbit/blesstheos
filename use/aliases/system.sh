@@ -30,7 +30,7 @@ if [ "$TERM" != "dumb" ]; then
 else
   color_option=''
   # NOTE: this was PATH=opt/local/bin:$PATH
-  # maybe add_to_PATH_front later if needed
+  # maybe add-PATH later if needed
   # ls /opt/local/bin # No such file or directory
 fi
 

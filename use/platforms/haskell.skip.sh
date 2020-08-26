@@ -1,10 +1,10 @@
 # NOTE: on a Mac, one must setup the /Applications/GHC.app (download, extract and rename)
 # http://ghcformacosx.github.io/
 if onMac; then
-  add_to_PATH /Applications/GHC.app/Contents/bin
+  PATH-add /Applications/GHC.app/Contents/bin
 fi
 
-# add_to_PATH ~/.cabal/bin
+# PATH-add ~/.cabal/bin
 
 # https://halcyon.sh/
 # I'd like to use the above, however there are some issues with it...

@@ -66,7 +66,7 @@ else
   holy-export "${HOLY_HOME}/src/os.sh"
 fi
 
-add_to_PATH \
+PATH-add \
   ${HOLY_HOME}/cmd \
   ${HOLY_HOME}/bin-fn
 

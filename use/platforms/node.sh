@@ -11,4 +11,4 @@ fi
 
 # https://github.com/yarnpkg/yarn/issues/5353
 # after the nvm / npm global packages
-check-x yarn && add_to_PATH "$(yarn global bin)"
+check-x yarn && PATH-add "$(yarn global bin)"

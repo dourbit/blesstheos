@@ -4,4 +4,4 @@ if onMac; then
   export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
-add_to_PATH ${JAVA_HOME}
+PATH-add ${JAVA_HOME}

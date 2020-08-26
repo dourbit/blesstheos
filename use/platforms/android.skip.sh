@@ -4,5 +4,5 @@
 
 # for android development; one would also need to install java ...
 export ANDROID_HOME=$HOLY_HOME/android/sdk # if installed here ...
-add_to_PATH $ANDROID_HOME/platform-tools
-add_to_PATH $ANDROID_HOME/tools
+PATH-add $ANDROID_HOME/platform-tools
+PATH-add $ANDROID_HOME/tools
