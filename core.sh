@@ -130,7 +130,7 @@ export -f holy-env
 # will export all functions found in a file - it just looks for patterns -
 # these functions must have already been sourced - or else expect errors
 holy-export() {
-  local dry="no"
+  local dry="no" var="no"
   [ "$1" == "--dry-run" ] && {
     dry="yes"; shift
   }
@@ -160,9 +160,12 @@ holy-export() {
       fi
     done
   fi
-  # it can un-export vars as well
-  if ! is-true $HOLY_EXPORT; then
-    vars=$(grep -oP '(?<=export ).*(?==)' $1)
+  # it can un-export vars as well --
+  # though that's turned off by default due to edge cases, also it's a bad idea
+  # holy exports very few vars, which are very well-named, to cause no trouble
+  # code is here though, and there would be an option to enable it:
+  if is-true $var && ! is-true $HOLY_EXPORT; then
+    vars=$(grep -oP '(?<=export )[^\$].*(?==)' $1)
     for it in $vars; do
       code+=("export -n $it")
     done
