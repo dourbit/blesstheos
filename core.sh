@@ -129,6 +129,10 @@ export -f holy-env
 # will export all functions found in a file - it just looks for patterns -
 # these functions must have already been sourced - or else expect errors
 export-f() {
+  local dry="no"
+  [ "$1" == "--dry-run" ] && {
+    dry="yes"; shift
+  }
   if [ $# -eq 0 ]; then
     >&2 echo "export-f: path required"
     false; return
@@ -139,7 +143,7 @@ export-f() {
     >&2 echo "export-f: empty file at $1"
     false; return
   fi
-  local status fn fns
+  local status fn fns cmd
   # NOTE: '^name() {$' - a rather strict regex for function matches
   fns=$(grep -E '^.*() {$' $1 | grep -Eo '^[^(]*')
   status=$?
@@ -147,9 +151,15 @@ export-f() {
     >&2 echo "export-f: functions not found in $1"
   }
   for fn in $fns; do
-    export -f $fn
-    # not-a-function error?
-    [ $? -ne 0 ] && status=1
+    cmd="export -f $fn"
+    if is-true $dry; then
+      # just show
+      echo "$cmd"
+    else
+      $cmd
+      # not-a-function error?
+      [ $? -ne 0 ] && status=1
+    fi
   done
   return $status
 }
