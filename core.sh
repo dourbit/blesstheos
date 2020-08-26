@@ -130,9 +130,12 @@ export -f holy-env
 # will export all functions found in a file - it just looks for patterns -
 # these functions must have already been sourced - or else expect errors
 holy-export() {
-  local dry="no" var="no"
+  local dry="no" var="no" force="no"
   [ "$1" == "--dry-run" ] && {
     dry="yes"; shift
+  }
+  [[ "$1" == "-f" || "$1" == "--force" ]] && {
+    force="yes"; shift
   }
   if [ $# -eq 0 ]; then
     >&2 echo "holy-export: path required"
@@ -153,7 +156,7 @@ holy-export() {
     >&2 echo "holy-export: functions not found in $1"
   else
     for it in $fns; do
-      if is-true $HOLY_EXPORT; then
+      if is-true $HOLY_EXPORT || is-true $force; then
         code+=("export -f $it")
       else
         code+=("export -fn $it")
