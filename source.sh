@@ -64,7 +64,7 @@ holy-export() {
   fi
   local it fns vars cmd code=() status=0
   # NOTE: '^name() {$' - a rather strict regex for function matches
-  fns=$(grep -E '^.*() {$' $1 | grep -Eo '^[^(]*')
+  fns=$(grep -E '^.*\(\) {$' $1 | grep -Eo '^[^(]*')
   status=$?
   # NOTE: expect at least one function to be found (perhaps wrong?)
   if [ $status -ne 0 ]; then
