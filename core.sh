@@ -91,7 +91,7 @@ holy-you() {
 
 # export $LEAD_HOME & $NEXT_HOME depending on the $1 or $HOLY_LEAD
 # if you not on: just $LEAD_HOME and return false
-holy-env() {
+holy-sort() {
   local the=$1 # the holy subshell uses this with each run
   # NOTE: holy-one has already validated, for this to be sourced
   local level=$2 # give it a 1 to complain if holy-you not found

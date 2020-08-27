@@ -54,8 +54,8 @@ else
   return 1
 fi
 
-# global $LEAD_HOME - $NEXT_HOME is not exported yet
-holy-env
+# exports $LEAD_HOME
+holy-sort
 
 if is-true $HOLY_SOURCE; then
   for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do
