@@ -120,6 +120,100 @@ holy-env() {
   return $yours
 }
 
+# will export all functions found in a file - it just looks for patterns -
+# these functions must have already been sourced - or else expect errors
+holy-export() {
+  local dry="no" var="no" force="no"
+  [ "$1" == "--dry-run" ] && {
+    dry="yes"; shift
+  }
+  [[ "$1" == "-f" || "$1" == "--force" ]] && {
+    force="yes"; shift
+  }
+  if [ $# -eq 0 ]; then
+    >&2 echo "holy-export: path required"
+    false; return
+  elif ! [ -f $1 ]; then
+    >&2 echo "holy-export: nothing found at $1"
+    false; return
+  elif ! [ -s $1 ]; then
+    >&2 echo "holy-export: empty file at $1"
+    false; return
+  fi
+  local it fns vars cmd code=() status=0
+  # NOTE: '^name() {$' - a rather strict regex for function matches
+  fns=$(grep -E '^.*\(\) {$' $1 | grep -Eo '^[^(]*')
+  status=$?
+  # NOTE: expect at least one function to be found (perhaps wrong?)
+  if [ $status -ne 0 ]; then
+    >&2 echo "holy-export: functions not found in $1"
+  else
+    for it in $fns; do
+      if is-true $HOLY_EXPORT || is-true $force; then
+        code+=("export -f $it")
+      else
+        code+=("export -fn $it")
+      fi
+    done
+  fi
+  # it can un-export vars as well --
+  # though that's turned off by default due to edge cases, also it's a bad idea
+  # holy exports very few vars, which are very well-named, to cause no trouble
+  # code is here though, and there would be an option to enable it:
+  if is-true $var && ! is-true $HOLY_EXPORT; then
+    vars=$(grep -oP '(?<=export )[^\$].*(?==)' $1)
+    for it in $vars; do
+      code+=("export -n $it")
+    done
+  fi
+  for cmd in "${code[@]}"; do
+    # just show or run it?
+    if is-true $dry; then
+      echo "$cmd"
+    else
+      $cmd
+      # not-a-function error?
+      [ $? -ne 0 ] && status=1
+    fi
+  done
+  return $status
+}
+
+# sources use/ scripts - based on this-that
+uses() {
+  [ $# -eq 0 ] && {
+    echo "uses -- source filepaths relative to use/ dir, with .sh ext optional"
+    false; return
+  }
+  local status=0
+  local use path the found home these
+  if [ $# -gt 1 ]; then
+    # $1 could be a home path request
+    these=$(this-that $1)
+    [ $? -eq 1 ] && shift # yes it is
+  else
+    these=$(this-that)
+  fi
+  for path; do
+    found=0
+    for the in $these; do
+      home=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
+      use="${home}/use/${path}"
+      if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
+        . "${use}.sh"
+        found=1; break
+      elif [ -s "$use" ]; then
+        . "$use"
+        found=1; break
+      else
+        status=1
+      fi
+    done
+    [ $found -eq 0 ] && >&2 echo "Not found in \"$these\" by: uses $path"
+  done
+  return $status
+}
+
 # sources files; guesses any relative paths; -f for fn exports; wip...
 holy-dot() {
   local exports=no
