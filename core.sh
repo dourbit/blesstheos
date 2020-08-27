@@ -130,6 +130,9 @@ holy-export() {
       --dry-run)
         dry="yes"
         ;;
+      --vars)
+        var="yes"
+        ;;
       -f|--force)
         force="yes"
         ;;
@@ -167,7 +170,7 @@ holy-export() {
   # it can un-export vars as well --
   # though that's turned off by default due to edge cases, also it's a bad idea
   # holy exports very few vars, which are very well-named, to cause no trouble
-  # code is here though, and there would be an option to enable it:
+  # code is here though, and there is a --vars option that allows for this
   if tis-true $var && ! tis-true $HOLY_EXPORT; then
     vars=$(grep -oP '(?<=export )[^\$].*(?==)' $1)
     for it in $vars; do
