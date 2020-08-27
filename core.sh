@@ -1,7 +1,7 @@
 # true if $1 is some rather than none, i.e. has any value other than blank (or)
 # if $# >= 2; then is $1 = some of $2 = a space-separated words match-list
 # NOTE: in the latter case, quote the "$1" (or blank produces a false positive)
-is-some() {
+tis-some() {
   if [ $# -lt 2 ]; then
     return "$((!${#1}))"
   else
@@ -11,8 +11,8 @@ is-some() {
 
 # true ($?) status of 0, on, yes, and of-course true
 # anything else would be a false 1 return
-is-true() {
-  if is-some "$1" "0 on yes true"; then
+tis-true() {
+  if tis-some "$1" "0 on yes true"; then
     true; return
   fi
   false; return
@@ -20,7 +20,7 @@ is-true() {
 
 # validates a holy lead mod / modifier
 holy-be() {
-  is-some "$1" "one me you" && true || false
+  tis-some "$1" "one me you" && true || false
 }
 
 # echoes $HOLY_LEAD, if valid, or the "one" default
@@ -76,7 +76,7 @@ holy-you() {
   # level 2 or whatever else will delegate to holy on
   local level="${1-0}"
   if [[ $level == "1" || $level == "0" ]]; then
-    if ! is-some $DOTS_HOME; then
+    if ! tis-some $DOTS_HOME; then
       [ $level == "1" ] && echo "\$DOTS_HOME not set!"
       return 1
     elif ! [ -d "$DOTS_HOME" ]; then
@@ -149,7 +149,7 @@ holy-export() {
     >&2 echo "holy-export: functions not found in $1"
   else
     for it in $fns; do
-      if is-true $HOLY_EXPORT || is-true $force; then
+      if tis-true $HOLY_EXPORT || tis-true $force; then
         code+=("export -f $it")
       else
         code+=("export -fn $it")
@@ -160,7 +160,7 @@ holy-export() {
   # though that's turned off by default due to edge cases, also it's a bad idea
   # holy exports very few vars, which are very well-named, to cause no trouble
   # code is here though, and there would be an option to enable it:
-  if is-true $var && ! is-true $HOLY_EXPORT; then
+  if tis-true $var && ! tis-true $HOLY_EXPORT; then
     vars=$(grep -oP '(?<=export )[^\$].*(?==)' $1)
     for it in $vars; do
       code+=("export -n $it")
@@ -168,7 +168,7 @@ holy-export() {
   fi
   for cmd in "${code[@]}"; do
     # just show or run it?
-    if is-true $dry; then
+    if tis-true $dry; then
       echo "$cmd"
     else
       $cmd

@@ -57,7 +57,7 @@ fi
 # exports $LEAD_HOME
 holy-sort
 
-if is-true $HOLY_SOURCE; then
+if tis-true $HOLY_SOURCE; then
   for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do
     . "$src"
     holy-export "$src"

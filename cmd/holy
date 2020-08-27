@@ -100,7 +100,7 @@ holy() {
     if [ $status -ne 0 ]; then
       # exception to the holy-on rule are the following commands:
       local except="dot rc call home init"
-      if ! is-some $cmd $except; then
+      if ! tis-some $cmd $except; then
         # bad status and no exception command, will not proceed any further
         echo "$(holy-say-on one $status)"
         false; return
@@ -214,7 +214,7 @@ holy() {
         installable
         echo
       elif installable $able; then
-        is-true $HOLY_EAGER && \
+        tis-true $HOLY_EAGER && \
           silent holy update
         $path
         if [ $? -eq 0 ]; then
@@ -309,7 +309,7 @@ holy() {
 
     elif [ $cmd == "up" ]; then
       sudoUse
-      is-true $HOLY_EAGER \
+      tis-true $HOLY_EAGER \
       && echo && holy update
       holy upgrade
 
@@ -318,7 +318,7 @@ holy() {
       cd "$HOLY_HOME" && git pull
 
     elif [ $cmd == "outdated" ]; then
-      if is-true $HOLY_EAGER; then
+      if tis-true $HOLY_EAGER; then
         echo && holy update
       fi
       $(holy path bin/outdated)
