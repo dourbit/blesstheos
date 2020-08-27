@@ -124,12 +124,20 @@ holy-sort() {
 # these functions must have already been sourced - or else expect errors
 holy-export() {
   local dry="no" var="no" force="no"
-  [ "$1" == "--dry-run" ] && {
-    dry="yes"; shift
-  }
-  [[ "$1" == "-f" || "$1" == "--force" ]] && {
-    force="yes"; shift
-  }
+  # NOTE: option flags expected before filepath
+  while :; do
+    case $1 in
+      --dry-run)
+        dry="yes"
+        ;;
+      -f|--force)
+        force="yes"
+        ;;
+      *)
+        break
+    esac
+    shift
+  done
   if [ $# -eq 0 ]; then
     >&2 echo "holy-export: path required"
     false; return
