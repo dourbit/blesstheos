@@ -123,7 +123,7 @@ holy-sort() {
 # will export all functions found in a file - it just looks for patterns -
 # these functions must have already been sourced - or else expect errors
 holy-export() {
-  local dry="no" var="no" force="no"
+  local exports dry="no" var="no" force="no" none="no"
   # NOTE: option flags expected before filepath
   while :; do
     case $1 in
@@ -136,11 +136,21 @@ holy-export() {
       -f|--force)
         force="yes"
         ;;
+      -n|--none|-fn)
+        none="yes"
+        ;;
       *)
         break
     esac
     shift
   done
+  if tis-true $none; then
+    exports="no"
+  elif tis-true $force; then
+    exports="yes"
+  else
+    exports="$HOLY_EXPORT"
+  fi
   if [ $# -eq 0 ]; then
     >&2 echo "holy-export: path required"
     false; return
@@ -160,7 +170,7 @@ holy-export() {
     >&2 echo "holy-export: functions not found in $1"
   else
     for it in $fns; do
-      if tis-true $HOLY_EXPORT || tis-true $force; then
+      if tis-true $exports; then
         code+=("export -f $it")
       else
         code+=("export -fn $it")
@@ -171,7 +181,7 @@ holy-export() {
   # though that's turned off by default due to edge cases, also it's a bad idea
   # holy exports very few vars, which are very well-named, to cause no trouble
   # code is here though, and there is a --vars option that allows for this
-  if tis-true $var && ! tis-true $HOLY_EXPORT; then
+  if tis-true $var && ! tis-true $exports; then
     vars=$(grep -oP '(?<=export )[^\$].*(?==)' $1)
     for it in $vars; do
       code+=("export -n $it")
