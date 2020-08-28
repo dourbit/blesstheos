@@ -162,28 +162,22 @@ holy-export() {
     local status=0 path
     for path in "$@"; do
       if ! [ -f $path ]; then
-        >&2 echo "holy-export: nothing found at $path"
+        >&2 echo "holy-export: no file at $path"
         status=1; continue
       elif ! [ -s $path ]; then
         >&2 echo "holy-export: empty file at $path"
         status=1; continue
       fi
       local it fns vars cmd code=()
-      # NOTE: '^name() {$' - a rather strict regex for function matches
+      # NOTE: a rather strict regex for function matches
       fns=$(grep -E '^.*\(\) {$' $path | grep -Eo '^[^(]*')
-      status=$?
-      # NOTE: expect at least one function to be found (perhaps wrong?)
-      if [ $status -ne 0 ]; then
-        >&2 echo "holy-export: functions not found in $path"
-      else
-        for it in $fns; do
-          if tis-true $exports; then
-            code+=("export -f $it")
-          else
-            code+=("export -fn $it")
-          fi
-        done
-      fi
+      for it in $fns; do
+        if tis-true $exports; then
+          code+=("export -f $it")
+        else
+          code+=("export -fn $it")
+        fi
+      done
       # it can un-export vars as well --
       # though that's turned off by default due to edge cases, also it's a bad idea
       # holy exports very few vars, which are very well-named, to cause no trouble
@@ -194,16 +188,21 @@ holy-export() {
           code+=("export -n $it")
         done
       fi
-      for cmd in "${code[@]}"; do
-        # just show or run it?
-        if tis-true $dry; then
-          echo "$cmd"
-        else
-          $cmd
-          # not-a-function error?
-          [ $? -ne 0 ] && status=1
-        fi
-      done
+      if [ ${#code[@]} -eq 0 ]; then
+        status=1
+        >&2 echo "holy-export: useless is $path"
+      else
+        for cmd in "${code[@]}"; do
+          # just show or run it?
+          if tis-true $dry; then
+            echo "$cmd"
+          else
+            $cmd
+            # not-a-function error?
+            [ $? -ne 0 ] && status=1
+          fi
+        done
+      fi
     done
     return $status
   fi
