@@ -139,6 +139,9 @@ holy-export() {
       -n|--none|-fn)
         none="yes"
         ;;
+      -?*)
+        >&2 echo "Not an option: holy-export $1"
+        ;;
       *)
         break
     esac
