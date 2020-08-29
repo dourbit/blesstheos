@@ -170,9 +170,9 @@ holy-export() {
       fi
       local it fns vars cmd code=()
       # NOTE: a permissive regex for function matches
-      # it can handle a function keyword, and extra spaces
-      fns=$(grep -Po '(?<=^).+(?=[[:space:]]*\(\)[[:space:]]*\{)' $path \
-          | grep -Eo '[^ ]+[ ]*$') # 2nd grep matches the last word for fn name
+      # ignores the function keyword, or extra spaces
+      # though doesn't support `function NAME { CMDS; }`
+      fns=$(grep -Po '[^ ]+(?=[[:space:]]*\(\)[[:space:]]*\{)' $path)
       for it in $fns; do
         if tis-true $exports; then
           code+=("export -f $it")
