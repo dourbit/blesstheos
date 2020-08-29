@@ -1,8 +1,6 @@
 # For things that don't belong elsewhere.
 
-errcho() {
-  cat <<< "$@" 1>&2
-}
+errcho() { cat <<< "$@" 1>&2; }
 
 # spaced echo for more readble output with less code
 specho() {
