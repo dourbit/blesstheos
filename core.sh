@@ -124,7 +124,7 @@ holy-sort() {
 # these functions must have already been sourced - or else expect errors
 holy-export() {
   local dry="no" var="no" force="no" none="no"
-  # NOTE: option flags expected before paths
+  # NOTE: expects options before the paths
   while :; do
     case $1 in
       --dry-run)
@@ -210,10 +210,26 @@ holy-export() {
   fi
 }
 
-# sources use/ scripts - based on this-that
-uses() {
+# sources files based on this-that, with optional .sh ext,
+# guesses relative paths, and exports via holy-export wip...
+holy-dot() {
+  local base="use" opts=()
+  # NOTE: expects options before the paths
+  while :; do
+    case $1 in
+      --base)
+        base="$2"; shift
+        ;;
+      -?*)
+        opts+=($1)
+        ;;
+      *)
+        break
+    esac
+    shift
+  done
   [ $# -eq 0 ] && {
-    echo "uses -- source filepaths relative to use/ dir, with .sh ext optional"
+    echo "Usage: holy-dot [options] [home-dir] <files> ..."
     false; return
   }
   local status=0
@@ -229,7 +245,7 @@ uses() {
     found=0
     for the in $these; do
       home=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
-      use="${home}/use/${path}"
+      use="${home}/${base}/${path}"
       if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
         . "${use}.sh"
         found=1; break
@@ -240,26 +256,14 @@ uses() {
         status=1
       fi
     done
-    [ $found -eq 0 ] && >&2 echo "Not found in \"$these\" by: uses $path"
+    [ $found -eq 0 ] && >&2 echo "Not found in \"$these\" by: holy-dot $path"
   done
   return $status
 }
 
-# sources files; guesses any relative paths; -f for fn exports; wip...
-holy-dot() {
-  local exports=no
-  if [ "$1" == "-f" ]; then
-    exports=yes; shift
-  fi
-  # TODO: implement exports (so far just an intention)
-  if [ $# -eq 0 ]; then
-    >&2 echo "No files specified - nothing to source!"
-    false; return
-  fi
-  for path in "$@"; do
-    . "$LEAD_HOME"/$path
-    # TODO: implement $NEXT_HOME
-  done
+# sources use/ scripts
+uses() {
+  holy-dot $@
 }
 
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
