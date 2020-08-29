@@ -58,13 +58,12 @@ fi
 holy-sort
 
 if tis-true $HOLY_SOURCE; then
-  for src in $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$' | sort -r); do
-    . "$src"
-    holy-export "$src"
-  done
+  holy-dot -x ${HOLY_HOME}/src/*
+  # or get more fancy, such as:
+  # holy-dot -x $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$')
 else
-  . "${HOLY_HOME}/src/os.sh"
-  holy-export "${HOLY_HOME}/src/os.sh"
+  # must be sourced, maybe exported:
+  holy-dot -x ${HOLY_HOME}/src/os.sh
 fi
 
 

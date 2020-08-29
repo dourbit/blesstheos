@@ -248,7 +248,21 @@ holy-dot() {
     found=0
     for the in $these; do
       home=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
-      use="${home}/${base}${path}"
+      if ! [[ $path =~ ^/ ]]; then
+        # a relative $path
+        use=${home}/${base}${path}
+      else
+        # an absolute path given
+        if grep -q "^$home" <<< "$path"; then
+          # expected to be $home-based
+          use=${path}
+        else
+          # uncool, though maybe still a good $path, will find-out...
+          # could be $the "that" of this-that $these (if there is another)
+          status=1
+          continue
+        fi
+      fi
       if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
         . "${use}.sh"
         files+=("${use}.sh")
