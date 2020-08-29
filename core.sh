@@ -211,14 +211,17 @@ holy-export() {
 }
 
 # sources files based on this-that, with optional .sh ext,
-# guesses relative paths, and exports via holy-export wip...
+# guesses relative paths, and exports via holy-export
 holy-dot() {
-  local base="use" opts=()
+  local base="" export="no" opts=()
   # NOTE: expects options before the paths
   while :; do
     case $1 in
+      -x)
+        export="yes"
+        ;;
       --base)
-        base="$2"; shift
+        base="$2"/; shift
         ;;
       -?*)
         opts+=($1)
@@ -232,7 +235,7 @@ holy-dot() {
     echo "Usage: holy-dot [options] [home-dir] <files> ..."
     false; return
   }
-  local status=0
+  local status=0 files=()
   local use path the found home these
   if [ $# -gt 1 ]; then
     # $1 could be a home path request
@@ -245,25 +248,33 @@ holy-dot() {
     found=0
     for the in $these; do
       home=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
-      use="${home}/${base}/${path}"
+      use="${home}/${base}${path}"
       if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
         . "${use}.sh"
+        files+=("${use}.sh")
         found=1; break
       elif [ -s "$use" ]; then
         . "$use"
+        files+=("$use")
         found=1; break
       else
         status=1
       fi
     done
-    [ $found -eq 0 ] && >&2 echo "Not found in \"$these\" by: holy-dot $path"
+    if [ $found -eq 0 ]; then
+      >&2 echo "Not found in \"${these}\" by: holy-dot ${base}${path}"
+    fi
   done
+  if tis-true $export && [ ${#files[@]} -ne 0 ]; then
+    holy-export ${opts[@]} ${files[@]}
+    [ $? -ne 0 ] && status=1
+  fi
   return $status
 }
 
 # sources use/ scripts
 uses() {
-  holy-dot $@
+  holy-dot --base use $@
 }
 
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
