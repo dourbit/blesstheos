@@ -237,8 +237,13 @@ holy-dot() {
   }
   local status=0 files=()
   local use path the found home these
-  if [ $# -gt 1 ]; then
-    # $1 could be a home path request
+  if [[ $# -gt 1 && $1 =~ ^/ ]]; then
+    # the args count isn't much of an indicator
+    # though a single path would skip this test
+    # notice the absolute path requirement --
+    # one can just use $DOTS_HOME for example
+    # however it's usually, correctly guessed
+    # anyway: $1 could be a home path request
     these=$(this-that $1)
     [ $? -eq 1 ] && shift # yes it is
   else
