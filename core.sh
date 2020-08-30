@@ -33,44 +33,6 @@ holy-lead() {
   fi
 }
 
-# because some functions, just holy-dot so far,
-# prefer to source these rather than those files -
-# code would favor code from the same repo first -
-# unless $here is under $DOTS_HOME the one leads -
-# given a $HOLY_HOME or $DOTS_HOME becomes $here -
-# else if $THIS_HOME is set it will become $here -
-# there's no holy-you until holy-one has sourced
-this-that() {
-  local status=0 dir=no here=$(cd $(dirname $0) && pwd)
-  # TODO: add proper options parsing + take an option for custom delimiter
-  # so if paths have spaces the code will still be ok
-  # holy-dot takes and passes on the same option so the user can call this
-  [ "$1" == "--dir" ] && dir=yes && shift
-  if [ -n "$1" ] && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]]; then
-    # is given a specific home, which also checks out as valid
-    here=$1
-    status=1
-  elif [ -n "$THIS_HOME" ]; then
-    # available while sourcing either of the 2 source.sh files
-    # a convenience and for code portability among dots, forks, or the "one"
-    here=$THIS_HOME
-  fi
-  # $here is all-set; check if holy-you is on:
-  if holy-you; then
-    # is $here a $DOTS_HOME path?
-    if grep -q "^$DOTS_HOME" <<< "$here"; then
-      tis-true $dir && echo "$DOTS_HOME $HOLY_HOME" || echo "you one"
-    else
-      tis-true $dir && echo "$HOLY_HOME $DOTS_HOME" || echo "one you"
-    fi
-  else
-    tis-true $dir && echo "$HOLY_HOME" || echo one
-  fi
-  # cannot be an error status -
-  # 1 just means a given path matched a home path, making it a "this" first
-  return $status
-}
-
 # we would want to have customized holy you be reachable too
 # imitates the holy-one fn - see source.sh for reference
 # this one is simpler & assumes holy-one is already true
@@ -123,6 +85,44 @@ holy-sort() {
     unset NEXT_HOME # maybe holy-you went off - this cleans the env
   fi
   return $yours
+}
+
+# because some functions, just holy-dot so far,
+# prefer to source these rather than those files -
+# code would favor code from the same repo first -
+# unless $here is under $DOTS_HOME the one leads -
+# given a $HOLY_HOME or $DOTS_HOME becomes $here -
+# else if $THIS_HOME is set it will become $here -
+# there's no holy-you until holy-one has sourced
+this-that() {
+  local status=0 dir=no here=$(cd $(dirname $0) && pwd)
+  # TODO: add proper options parsing + take an option for custom delimiter
+  # so if paths have spaces the code will still be ok
+  # holy-dot takes and passes on the same option so the user can call this
+  [ "$1" == "--dir" ] && dir=yes && shift
+  if [ -n "$1" ] && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]]; then
+    # is given a specific home, which also checks out as valid
+    here=$1
+    status=1
+  elif [ -n "$THIS_HOME" ]; then
+    # available while sourcing either of the 2 source.sh files
+    # a convenience and for code portability among dots, forks, or the "one"
+    here=$THIS_HOME
+  fi
+  # $here is all-set; check if holy-you is on:
+  if holy-you; then
+    # is $here a $DOTS_HOME path?
+    if grep -q "^$DOTS_HOME" <<< "$here"; then
+      tis-true $dir && echo "$DOTS_HOME $HOLY_HOME" || echo "you one"
+    else
+      tis-true $dir && echo "$HOLY_HOME $DOTS_HOME" || echo "one you"
+    fi
+  else
+    tis-true $dir && echo "$HOLY_HOME" || echo one
+  fi
+  # cannot be an error status -
+  # 1 just means a given path matched a home path, making it a "this" first
+  return $status
 }
 
 # will export all functions found in given files - just looks for patterns -
