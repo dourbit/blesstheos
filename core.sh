@@ -229,12 +229,16 @@ holy-export() {
 # sources files based on this-that, with optional .sh ext,
 # guesses relative paths, and exports via holy-export
 holy-dot() {
-  local export="no" opts=()
+  local export="no" ifs=":" opts=()
   # NOTE: expects options before the paths
   while :; do
     case $1 in
       -x)
         export="yes"
+        ;;
+      --ifs)
+        ifs="$2"
+        shift
         ;;
       -?*)
         opts+=($1)
@@ -249,7 +253,7 @@ holy-dot() {
     false; return
   }
   local status=0 files=() that=no
-  local use path the found home these homes base
+  local use path the found home these homes homed base
   if [[ $# -gt 1 && $1 =~ ^/ ]]; then
     # the args count isn't much of an indicator
     # though a single path would skip this test
@@ -257,14 +261,14 @@ holy-dot() {
     # one can just use $DOTS_HOME for example
     # however it's usually, correctly guessed
     # anyway: $1 could be a home path request
-    homes=$(this-that --dir $1)
+    homes=$(this-that --ifs "$ifs" --dir $1)
     if [ $? -eq 1 ]; then
       # yes it is
       these=$(this-that $1)
       shift
     fi
   else
-    homes=$(this-that --dir)
+    homes=$(this-that --ifs "$ifs" --dir)
     these=$(this-that)
   fi
   [[ $these =~ '[[:space:]]+' ]] && that=yes
@@ -279,7 +283,8 @@ holy-dot() {
         continue # to the next $path
     fi
     found=0
-    for home in $homes; do
+    IFS="$ifs" read -a homed <<< $homes
+    for home in ${homed[@]}; do
       if ! [[ $path =~ ^/ ]]; then
         # a relative $path
         use=${home}/${base}${path}
