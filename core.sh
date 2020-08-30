@@ -33,7 +33,7 @@ holy-lead() {
   fi
 }
 
-# because some functions such as holy-dot & uses
+# because some functions, just holy-dot so far,
 # prefer to source these rather than those files -
 # code would favor code from the same repo first -
 # unless $here is under $DOTS_HOME the one leads -
@@ -41,8 +41,8 @@ holy-lead() {
 # else if $THIS_HOME is set it will become $here -
 # there's no holy-you until holy-one has sourced
 this-that() {
-  status=0
-  local here=$(cd $(dirname $0) && pwd)
+  local status=0 dir=no here=$(cd $(dirname $0) && pwd)
+  [ "$1" == "--dir" ] && dir=yes && shift
   if [ -n "$1" ] && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]]; then
     # is given a specific home, which also checks out as valid
     here=$1
@@ -52,18 +52,35 @@ this-that() {
     # a convenience and for code portability among dots, forks, or the "one"
     here=$THIS_HOME
   fi
+  local order
   # $here is all-set; check if holy-you is on:
   if holy-you; then
     # is $here a $DOTS_HOME path?
     if grep -q "^$DOTS_HOME" <<< "$here"; then
-      echo "you one"
+      order="you one"
     else
-      echo "one you"
+      order="one you"
     fi
   else
-    echo "one"
+    order="one"
   fi
-  return $status # is never an error, 1 just means a home path was given as $1
+  # has a dir been asked for?
+  if tis-true $dir; then
+    local the result=()
+    for the in $order; do
+      if [ $the == "one" ]; then
+        result+=("$HOLY_HOME")
+      else
+        result+=("$DOTS_HOME")
+      fi
+    done
+    echo "${result[@]}"
+  else
+    echo "$order"
+  fi
+  # cannot be an error status -
+  # 1 just means a given path matched a home path, making it a "this" first
+  return $status
 }
 
 # we would want to have customized holy you be reachable too
