@@ -95,11 +95,22 @@ holy-sort() {
 # else if $THIS_HOME is set it will become $here -
 # there's no holy-you until holy-one has sourced
 this-that() {
-  local status=0 dir=no here=$(cd $(dirname $0) && pwd)
-  # TODO: add proper options parsing + take an option for custom delimiter
-  # so if paths have spaces the code will still be ok
-  # holy-dot takes and passes on the same option so the user can call this
-  [ "$1" == "--dir" ] && dir=yes && shift
+  local status=0 dir=no ifs=" " here=$(cd $(dirname $0) && pwd)
+  # NOTE: expects any options before the optional $here path
+  while :; do
+    case $1 in
+      --dir)
+        dir="yes"
+        ;;
+      --ifs)
+        ifs="$2"
+        shift
+        ;;
+      *)
+        break
+    esac
+    shift
+  done
   if [ -n "$1" ] && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]]; then
     # is given a specific home, which also checks out as valid
     here=$1
@@ -113,9 +124,9 @@ this-that() {
   if holy-you; then
     # is $here a $DOTS_HOME path?
     if grep -q "^$DOTS_HOME" <<< "$here"; then
-      tis-true $dir && echo "$DOTS_HOME $HOLY_HOME" || echo "you one"
+      tis-true $dir && echo "${DOTS_HOME}${ifs}${HOLY_HOME}" || echo "you one"
     else
-      tis-true $dir && echo "$HOLY_HOME $DOTS_HOME" || echo "one you"
+      tis-true $dir && echo "${HOLY_HOME}${ifs}${DOTS_HOME}" || echo "one you"
     fi
   else
     tis-true $dir && echo "$HOLY_HOME" || echo one
