@@ -42,6 +42,9 @@ holy-lead() {
 # there's no holy-you until holy-one has sourced
 this-that() {
   local status=0 dir=no here=$(cd $(dirname $0) && pwd)
+  # TODO: add proper options parsing + take an option for custom delimiter
+  # so if paths have spaces the code will still be ok
+  # holy-dot takes and passes on the same option so the user can call this
   [ "$1" == "--dir" ] && dir=yes && shift
   if [ -n "$1" ] && [[ "$1" == "$HOLY_HOME" || "$1" == "$DOTS_HOME" ]]; then
     # is given a specific home, which also checks out as valid
@@ -52,31 +55,16 @@ this-that() {
     # a convenience and for code portability among dots, forks, or the "one"
     here=$THIS_HOME
   fi
-  local order
   # $here is all-set; check if holy-you is on:
   if holy-you; then
     # is $here a $DOTS_HOME path?
     if grep -q "^$DOTS_HOME" <<< "$here"; then
-      order="you one"
+      tis-true $dir && echo "$DOTS_HOME $HOLY_HOME" || echo "you one"
     else
-      order="one you"
+      tis-true $dir && echo "$HOLY_HOME $DOTS_HOME" || echo "one you"
     fi
   else
-    order="one"
-  fi
-  # has a dir been asked for?
-  if tis-true $dir; then
-    local the result=()
-    for the in $order; do
-      if [ $the == "one" ]; then
-        result+=("$HOLY_HOME")
-      else
-        result+=("$DOTS_HOME")
-      fi
-    done
-    echo "${result[@]}"
-  else
-    echo "$order"
+    tis-true $dir && echo "$HOLY_HOME" || echo one
   fi
   # cannot be an error status -
   # 1 just means a given path matched a home path, making it a "this" first
@@ -274,7 +262,7 @@ holy-dot() {
     if tis-true $that \
       && [[ -d "${HOLY_HOME}/${path}" || -d "${DOTS_HOME}/${path}" ]] \
       || [ -d "${homes}/${path}" ]; then
-        # $path is a relative $base directory
+        # $path is a relative $base directory for sure
         base=$path/ # expected without trailing / though a // is not a problem
         shift # this base-dir
         continue # to the next $path
