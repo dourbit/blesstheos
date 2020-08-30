@@ -282,7 +282,7 @@ holy-dot() {
         shift # this base-dir
         continue # to the next $path
     fi
-    found=0
+    found=none
     IFS="$ifs" read -a homed <<< $homes
     for home in ${homed[@]}; do
       if ! [[ $path =~ ^/ ]]; then
@@ -303,16 +303,18 @@ holy-dot() {
       if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
         . "${use}.sh"
         files+=("${use}.sh")
-        found=1; break
+        found=yes
+        break
       elif [ -s "$use" ]; then
         . "$use"
         files+=("$use")
-        found=1; break
+        found=yes
+        break
       else
         status=1
       fi
     done
-    if [ $found -eq 0 ]; then
+    if ! tis-true ${found}; then
       >&2 echo "Not found in \"${these}\" by: holy-dot ${base}${path}"
     fi
   done
