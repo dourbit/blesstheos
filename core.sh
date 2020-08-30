@@ -249,8 +249,8 @@ holy-dot() {
     echo "Usage: holy-dot [options] [home-dir] [base-dirs] <file-paths> ..."
     false; return
   }
-  local status=0 files=()
-  local use path the found home these base
+  local status=0 files=() that=no
+  local use path the found home these homes base
   if [[ $# -gt 1 && $1 =~ ^/ ]]; then
     # the args count isn't much of an indicator
     # though a single path would skip this test
@@ -258,25 +258,29 @@ holy-dot() {
     # one can just use $DOTS_HOME for example
     # however it's usually, correctly guessed
     # anyway: $1 could be a home path request
-    these=$(this-that $1)
-    [ $? -eq 1 ] && shift # yes it is
+    homes=$(this-that --dir $1)
+    if [ $? -eq 1 ]; then
+      # yes it is
+      these=$(this-that $1)
+      shift
+    fi
   else
+    homes=$(this-that --dir)
     these=$(this-that)
   fi
+  [[ $these =~ '[[:space:]]+' ]] && that=yes
   for path; do
-    found=0
-    for the in $these; do
-      home=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
-      # NOTE: ideally check with any one of $these to not miss a dir -
-      # it's a rather crude check at the moment...
-      # TODO: it would better to check 2 directories only if two of $these
-      if [[ -d "${HOLY_HOME}/${path}" || -d "${HOLY_HOME}/${path}" ]]; then
+    # check if a base-dir: in either home if two of $these, or just "this" one
+    if tis-true $that \
+      && [[ -d "${HOLY_HOME}/${path}" || -d "${DOTS_HOME}/${path}" ]] \
+      || [ -d "${homes}/${path}" ]; then
         # $path is a relative $base directory
         base=$path/ # expected without trailing / though a // is not a problem
         shift # this base-dir
-        found=1 # no error at the tail of the loop
-        break # out of the inner loop and onto the next $path
-      fi
+        continue # to the next $path
+    fi
+    found=0
+    for home in $homes; do
       if ! [[ $path =~ ^/ ]]; then
         # a relative $path
         use=${home}/${base}${path}
