@@ -213,15 +213,12 @@ holy-export() {
 # sources files based on this-that, with optional .sh ext,
 # guesses relative paths, and exports via holy-export
 holy-dot() {
-  local base="" export="no" opts=()
+  local export="no" opts=()
   # NOTE: expects options before the paths
   while :; do
     case $1 in
       -x)
         export="yes"
-        ;;
-      --base)
-        base="$2"/; shift
         ;;
       -?*)
         opts+=($1)
@@ -232,11 +229,11 @@ holy-dot() {
     shift
   done
   [ $# -eq 0 ] && {
-    echo "Usage: holy-dot [options] [home-dir] <files> ..."
+    echo "Usage: holy-dot [options] [home-dir] [base-dirs] <file-paths> ..."
     false; return
   }
   local status=0 files=()
-  local use path the found home these
+  local use path the found home these base
   if [[ $# -gt 1 && $1 =~ ^/ ]]; then
     # the args count isn't much of an indicator
     # though a single path would skip this test
@@ -253,6 +250,16 @@ holy-dot() {
     found=0
     for the in $these; do
       home=$([ $the == "one" ] && echo $HOLY_HOME || echo $DOTS_HOME)
+      # NOTE: ideally check with any one of $these to not miss a dir -
+      # it's a rather crude check at the moment...
+      # TODO: it would better to check 2 directories only if two of $these
+      if [[ -d "${HOLY_HOME}/${path}" || -d "${HOLY_HOME}/${path}" ]]; then
+        # $path is a relative $base directory
+        base=$path/ # expected without trailing / though a // is not a problem
+        shift # this base-dir
+        found=1 # no error at the tail of the loop
+        break # out of the inner loop and onto the next $path
+      fi
       if ! [[ $path =~ ^/ ]]; then
         # a relative $path
         use=${home}/${base}${path}
@@ -293,7 +300,7 @@ holy-dot() {
 
 # sources use/ scripts
 uses() {
-  holy-dot --base use $@
+  holy-dot use $@
 }
 
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
