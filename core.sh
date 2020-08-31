@@ -136,98 +136,9 @@ this-that() {
   return $status
 }
 
-# will export all functions found in given files - just looks for patterns -
-# these functions must have already been sourced - or else expect errors
-holy-export() {
-  local dry="no" var="no" force="no" none="no"
-  # NOTE: expects options before the paths
-  while :; do
-    case $1 in
-      --dry-run)
-        dry="yes"
-        ;;
-      --vars)
-        var="yes"
-        ;;
-      -f|--force)
-        force="yes"
-        ;;
-      -n|--none|-fn)
-        none="yes"
-        ;;
-      -?*)
-        >&2 echo "Not an option: holy-export $1"
-        ;;
-      *)
-        break
-    esac
-    shift
-  done
-  if [ $# -eq 0 ]; then
-    >&2 echo "holy-export: path required"
-    false; return
-  else
-    local exports
-    if tis-true $none; then
-      exports="no"
-    elif tis-true $force; then
-      exports="yes"
-    else
-      exports="$HOLY_EXPORT"
-    fi
-    local status=0 path
-    for path in "$@"; do
-      if ! [ -f $path ]; then
-        >&2 echo "holy-export: no file at $path"
-        status=1; continue
-      elif ! [ -s $path ]; then
-        >&2 echo "holy-export: empty file at $path"
-        status=1; continue
-      fi
-      local it fns vars cmd code=()
-      # NOTE: a permissive regex for function matches
-      # ignores the function keyword, or extra spaces
-      # though doesn't support `function NAME { CMDS; }`
-      fns=$(grep -Po '[^ ]+(?=[[:space:]]*\(\)[[:space:]]*\{)' $path)
-      for it in $fns; do
-        if tis-true $exports; then
-          code+=("export -f $it")
-        else
-          code+=("export -fn $it")
-        fi
-      done
-      # it can un-export vars as well --
-      # though that's turned off by default due to edge cases, also it's a bad idea
-      # holy exports very few vars, which are very well-named, to cause no trouble
-      # code is here though, and there is a --vars option that allows for this
-      if tis-true $var && ! tis-true $exports; then
-        vars=$(grep -oP '(?<=export )[^\$].*(?==)' $path)
-        for it in $vars; do
-          code+=("export -n $it")
-        done
-      fi
-      if [ ${#code[@]} -eq 0 ]; then
-        status=1
-        >&2 echo "holy-export: useless is $path"
-      else
-        for cmd in "${code[@]}"; do
-          # just show or run it?
-          if tis-true $dry; then
-            echo "$cmd"
-          else
-            $cmd
-            # not-a-function error?
-            [ $? -ne 0 ] && status=1
-          fi
-        done
-      fi
-    done
-    return $status
-  fi
-}
-
-# sources files based on this-that, with optional .sh ext,
-# guesses relative paths, and exports via holy-export
+# sources files based on this-that, with optional .sh ext;
+# with a -x option: uses holy-export and passes on options to it +
+# guesses relative paths with great flexibility and alternatives
 holy-dot() {
   local export="no" ifs=":" opts=()
   # NOTE: expects options before the paths
@@ -323,6 +234,99 @@ holy-dot() {
     [ $? -ne 0 ] && status=1
   fi
   return $status
+}
+
+# based on HOLY_EXPORT preference or explicit -f (or -n / -fn)...
+# will export all functions found in given files - just looks for patterns -
+# these functions must have already been sourced - or else expect errors
+# in reverse, it un-exports using export -fn, to ensure no export was made
+# optionally, can also uset all variables that the given files export
+holy-export() {
+  local dry="no" var="no" force="no" none="no"
+  # NOTE: expects options before the paths
+  while :; do
+    case $1 in
+      --dry-run)
+        dry="yes"
+        ;;
+      --vars)
+        var="yes"
+        ;;
+      -f|--force)
+        force="yes"
+        ;;
+      -n|--none|-fn)
+        none="yes"
+        ;;
+      -?*)
+        >&2 echo "Not an option: holy-export $1"
+        ;;
+      *)
+        break
+    esac
+    shift
+  done
+  if [ $# -eq 0 ]; then
+    >&2 echo "holy-export: path required"
+    false; return
+  else
+    local exports
+    if tis-true $none; then
+      exports="no"
+    elif tis-true $force; then
+      exports="yes"
+    else
+      exports="$HOLY_EXPORT"
+    fi
+    local status=0 path
+    for path in "$@"; do
+      if ! [ -f $path ]; then
+        >&2 echo "holy-export: no file at $path"
+        status=1; continue
+      elif ! [ -s $path ]; then
+        >&2 echo "holy-export: empty file at $path"
+        status=1; continue
+      fi
+      local it fns vars cmd code=()
+      # NOTE: a permissive regex for function matches
+      # ignores the function keyword, or extra spaces
+      # though doesn't support `function NAME { CMDS; }`
+      fns=$(grep -Po '[^ ]+(?=[[:space:]]*\(\)[[:space:]]*\{)' $path)
+      for it in $fns; do
+        if tis-true $exports; then
+          code+=("export -f $it")
+        else
+          code+=("export -fn $it")
+        fi
+      done
+      # it can un-export vars as well --
+      # though that's turned off by default due to edge cases, also it's a bad idea
+      # holy exports very few vars, which are very well-named, to cause no trouble
+      # code is here though, and there is a --vars option that allows for this
+      if tis-true $var && ! tis-true $exports; then
+        vars=$(grep -oP '(?<=export )[^\$].*(?==)' $path)
+        for it in $vars; do
+          code+=("export -n $it")
+        done
+      fi
+      if [ ${#code[@]} -eq 0 ]; then
+        status=1
+        >&2 echo "holy-export: useless is $path"
+      else
+        for cmd in "${code[@]}"; do
+          # just show or run it?
+          if tis-true $dry; then
+            echo "$cmd"
+          else
+            $cmd
+            # not-a-function error?
+            [ $? -ne 0 ] && status=1
+          fi
+        done
+      fi
+    done
+    return $status
+  fi
 }
 
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
