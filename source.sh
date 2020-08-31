@@ -1,7 +1,7 @@
 #
 export THIS_HOME="$HOLY_HOME"
 # see it unset at the end of this source.sh
-# exists for more concise calls of uses and holy-dot
+# exists for more concise calls of holy-dot
 # thus this-that needs no path arg, for the time being...
 # only ever an issue when sourcing from the outside, e.g. ~/.bashrc, etc.
 # essential for code portability between blesstheos and dots or its forks -
@@ -71,10 +71,10 @@ PATH-add \
   ${HOLY_HOME}/cmd \
   ${HOLY_HOME}/bin-fn
 
-uses colors term aliases git jump rundev
+holy-dot use colors term aliases git jump rundev
 
 # bash-only stuff
-[ -n "$BASH" ] && uses bash
+[ -n "$BASH" ] && holy-dot use bash
 
 umask 022
 
@@ -88,7 +88,7 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 # programming-languages aka platforms
 for src in $(ls "${HOLY_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$src"; done
 
-# thus far the PATH pas been added to from many places
-uses path
+# so far the PATH pas been added to from many places
+holy-dot use path
 
 unset THIS_HOME

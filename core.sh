@@ -325,11 +325,6 @@ holy-dot() {
   return $status
 }
 
-# sources use/ scripts
-uses() {
-  holy-dot use $@
-}
-
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
 PATH-add() {
   for d; do

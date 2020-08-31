@@ -1,7 +1,7 @@
 # NOTE: In general aliases aren't available for scripts to use,
-# though there is: `shopt -s expand_aliases && uses aliases.sh`...
+# though there is: `shopt -s expand_aliases && . aliases.sh`...
 
-for src in "${HOLY_HOME}/use/aliases"/*; do . "$src"; done
+for src in "${THIS_HOME}/use/aliases"/*; do . "$src"; done
 
 alias ..='cd ..'
 alias ...='cd .. ; cd ..'
