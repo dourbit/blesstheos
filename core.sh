@@ -238,15 +238,22 @@ holy-dot() {
   tis-true $glob && bases+=($base)
   if [ ${#bases[@]} -ne 0 ]; then
     for base in "${bases[@]}"; do
+      found=not
       for home in ${homed[@]}; do
         # because base is a relative path wrto either of this-that --dir
         if [ -d ${home}/${base} ]; then
           for use in ${home}/${base}${all}; do
+            [ -f "$use" ] || continue
             . "$use"; files+=("$use")
+            found=yes
           done
-          break # onto another base
+          break # onto a next base
         fi
       done
+      if ! tis-true ${found}; then
+        status=1
+        >&2 echo "Not found in \"${these}\" by: holy-dot ${base}${all}"
+      fi
     done
   fi
   # export / unexport all the files if asked to
@@ -254,6 +261,7 @@ holy-dot() {
     holy-export ${opts[@]} ${files[@]}
     [ $? -ne 0 ] && status=1
   fi
+  # errors would return 1
   return $status
 }
 
