@@ -140,7 +140,7 @@ this-that() {
 # with a -x option: uses holy-export and passes on options to it +
 # guesses relative paths with great flexibility and alternatives
 holy-dot() {
-  local export="no" ifs=":" opts=()
+  local opts=() export="no" ifs=":" all="*.sh"
   # NOTE: expects options before the paths
   while :; do
     case $1 in
@@ -148,8 +148,10 @@ holy-dot() {
         export="yes"
         ;;
       --ifs)
-        ifs="$2"
-        shift
+        ifs="$2"; shift
+        ;;
+      --all)
+        all="$2"; shift
         ;;
       -?*)
         opts+=($1)
@@ -232,13 +234,14 @@ holy-dot() {
       >&2 echo "Not found in \"${these}\" by: holy-dot ${base}${path}"
     fi
   done
+  # $bases without explicit files will get $all their files sourced, etc.
   tis-true $glob && bases+=($base)
   if [ ${#bases[@]} -ne 0 ]; then
     for base in "${bases[@]}"; do
       for home in ${homed[@]}; do
         # because base is a relative path wrto either of this-that --dir
         if [ -d ${home}/${base} ]; then
-          for use in ${home}/${base}*; do
+          for use in ${home}/${base}${all}; do
             . "$use"; files+=("$use")
           done
           break # onto another base
@@ -246,6 +249,7 @@ holy-dot() {
       done
     done
   fi
+  # export / unexport all the files if asked to
   if tis-true $export && [ ${#files[@]} -ne 0 ]; then
     holy-export ${opts[@]} ${files[@]}
     [ $? -ne 0 ] && status=1
