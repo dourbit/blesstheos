@@ -163,8 +163,8 @@ holy-dot() {
     echo "Usage: holy-dot [options] [home-dir] [base-dirs] <file-paths> ..."
     false; return
   }
-  local status=0 files=() that=no
-  local use path the found home these homes homed base
+  local status=0 files=() bases=() that=not
+  local use path the found home these homes homed base glob
   if [[ $# -gt 1 && $1 =~ ^/ ]]; then
     # the args count isn't much of an indicator
     # though a single path would skip this test
@@ -182,19 +182,21 @@ holy-dot() {
     homes=$(this-that --ifs "$ifs" --dir)
     these=$(this-that)
   fi
-  [[ $these =~ '[[:space:]]+' ]] && that=yes
+  IFS="$ifs" command read -a homed <<< $homes
+  [[ $these =~ ' ' ]] && that=yes # space match
   for path; do
     # check if a base-dir: in either home if two of $these, or just "this" one
     if tis-true $that \
       && [[ -d "${HOLY_HOME}/${path}" || -d "${DOTS_HOME}/${path}" ]] \
       || [ -d "${homes}/${path}" ]; then
         # $path is a relative $base directory for sure
+        tis-true $glob && bases+=($base) # previous $path also a $base
         base=$path/ # expected without trailing / though a // is not a problem
+        glob=yes # follow a base by one or more files - or all files sourced!
         shift # this base-dir
         continue # to the next $path
     fi
     found=none
-    IFS="$ifs" read -a homed <<< $homes
     for home in ${homed[@]}; do
       if ! [[ $path =~ ^/ ]]; then
         # a relative $path
@@ -214,21 +216,36 @@ holy-dot() {
       if [[ ! "$use" =~ '.sh$' ]] && [ -s "${use}.sh" ]; then
         . "${use}.sh"
         files+=("${use}.sh")
-        found=yes
+        found=yes; glob=not
         break
       elif [ -s "$use" ]; then
         . "$use"
         files+=("$use")
-        found=yes
+        found=yes; glob=not
         break
       else
         status=1
       fi
     done
     if ! tis-true ${found}; then
+      glob=not # in order to prevent sourcing all for a current base by mistake
       >&2 echo "Not found in \"${these}\" by: holy-dot ${base}${path}"
     fi
   done
+  tis-true $glob && bases+=($base)
+  if [ ${#bases[@]} -ne 0 ]; then
+    for base in "${bases[@]}"; do
+      for home in ${homed[@]}; do
+        # because base is a relative path wrto either of this-that --dir
+        if [ -d ${home}/${base} ]; then
+          for use in ${home}/${base}*; do
+            . "$use"; files+=("$use")
+          done
+          break # onto another base
+        fi
+      done
+    done
+  fi
   if tis-true $export && [ ${#files[@]} -ne 0 ]; then
     holy-export ${opts[@]} ${files[@]}
     [ $? -ne 0 ] && status=1
