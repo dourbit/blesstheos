@@ -43,12 +43,12 @@ holy-one() {
 export -f holy-one
 
 
-# holy-one and src/core.sh - needed to bootstrap
+# holy-one and core.sh functions to bootstrap with
 if holy-one 1; then
   . "${HOLY_HOME}/core.sh"
   holy-export -f "${HOLY_HOME}/core.sh"
 else
-  # holy-one somehow isn't on
+  # holy-one somehow isn't on, unexpected but possible
   # clean-up here
   unset THIS_HOME
   return 1
@@ -58,12 +58,12 @@ fi
 holy-sort
 
 if tis-true $HOLY_SOURCE; then
-  holy-dot -x ${HOLY_HOME}/src/*
+  holy-dot -x src
   # or get more fancy, such as:
-  # holy-dot -x $(find "${HOLY_HOME}/src" -type f | grep -e '.sh$')
+  # holy-dot -x $(find "${HOLY_HOME}/src" -type f | grep '.sh$')
 else
   # must be sourced, maybe exported:
-  holy-dot -x ${HOLY_HOME}/src/os.sh
+  holy-dot -x src/os.sh
 fi
 
 
