@@ -7,8 +7,8 @@ if [ $(basename $0) != $COMMAND_FN ]; then
   return 1
 fi
 
-# NOTE: dourbit & holy are very much meant to be together
-if holy one on >/dev/null 2>&1; then
+# NOTE: dourbit and holy - very much meant to be together
+if holy-one 2> /dev/null; then
   holy-dot cmd/dourbit.sh
   # NOTE: this script has no further dependencies, except for install/urbit
 else
