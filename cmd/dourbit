@@ -7,20 +7,15 @@ if [ $(basename $0) != $COMMAND_FN ]; then
   return 1
 fi
 
+# NOTE: dourbit & holy are very much meant to be together
 if holy one on >/dev/null 2>&1; then
-  . "$HOLY_HOME"/cmd/dourbit.sh
-  # also depends on:
-  # src/ - path.sh & util.sh
-  # bin-fn/check-x
-  # bin-fn/silent
+  holy-dot cmd/dourbit.sh
+  # NOTE: this script has no further dependencies, except for install/urbit
 else
   . $(dirname $0)/holy.sh
   echo "$(holy-say-on one 1)"
   exit 1
 fi
-
-# install/urbit - depends on more holy stuff ...
-# NOTE: dourbit and holy are very much meant to be together
 
 
 usage() {
@@ -79,15 +74,15 @@ dourbit() {
         exit 1
       fi
 
-    # silently confirm urbit is installed, as the rest of commands will need it
-    elif ! silent holy on urbit; then
-      errcho "Not Installed."
-      dourbit confirm
-      exit 1
+    # silently confirm urbit is installed, the rest of commands will need it
+    elif ! holy on urbit >/dev/null 2>&1; then
+        >&2 echo "Not Installed."
+        dourbit confirm
+        exit 1
 
     elif [ $cmd == "version" ]; then
       dourbit urbit -R
-      specho $(docker --version)
+      echo; docker --version
       echo "URBIT_IMAGE=$(docker-image)"
 
     elif [ $cmd == "current" ]; then
@@ -108,7 +103,7 @@ dourbit() {
         echo $command
         $command
       fi
-      specho "Urbit releases ..."
+      echo; echo "Urbit releases ..."
       fetch
       echo
 
@@ -183,36 +178,35 @@ dourbit() {
       if [ $(docker images --filter 'dangling=true' -q | wc -w) -ne 0 ]; then
         echo "Found dangling / <none> images:"
         docker images --filter "dangling=true" -q
-        exit 1
+        false; return
       else
         echo "Nothing is dangling."
-        exit 0
+        true; return
       fi
 
     elif [ $cmd == "clean-up" ]; then
-      silent $(dourbit dangling)
-      if [ $? -eq 1 ]; then
+      if dourbit dangling >/dev/null 2>&1; then
+        echo "Nothing to clean-up."
+      else
         echo "docker rmi"
         docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
-      else
-        echo "Nothing to clean-up."
       fi
 
     elif [[ $cmd == "bin" || $cmd == "cmd" ]]; then
       # these are similar and related with a bit of code in common
       local name=$1
       if [ $# -eq 0 ]; then
-        errcho "Usage: $COMMAND_FN $cmd <command>"
+        >&2 echo "Usage: $COMMAND_FN $cmd <command>"
         false; return
       fi
 
       if [ $cmd == "bin" ]; then
-        if check-x ~/bin/dourbit/$name; then
+        if [ -x "$(command -v ~/bin/dourbit/$name)" ]; then
           echo ~/bin/dourbit/$name
-        elif check-x "$HOLY_HOME"/bin/dourbit/$name; then
+        elif [ -x "$(command -v ${HOLY_HOME}/bin/dourbit/${name})" ]; then
           echo "$HOLY_HOME"/bin/dourbit/$name
         else
-          errcho "Not Found: $name"
+          >&2 echo "Not Found: $name"
           false; return
         fi
       fi
@@ -220,7 +214,7 @@ dourbit() {
       if [ $cmd == "cmd" ]; then
         local found=false
         # is it a script?
-        if silent dourbit bin $name; then
+        if dourbit bin $name >/dev/null 2>&1; then
           dourbit bin $name
           found=true
         fi
@@ -234,7 +228,7 @@ dourbit() {
         # unknown command
         if ! $found; then
           usage
-          errcho "Not Found: dourbit $name"
+          >&2 echo "Not Found: dourbit $name"
           false; return
         fi
       fi
@@ -261,18 +255,18 @@ dourbit() {
       if [[ "$cmd" == "run" || "$cmd" == "host" ]]; then
         # make sure a pier is given
         if [ $# -eq 0 ]; then
-          errcho "Usage: $COMMAND_FN $cmd <pier> [urbit-args]"
+          >&2 echo "Usage: $COMMAND_FN $cmd <pier> [urbit-args]"
           false; return
         fi
         # remove a leading ~
         local pier=$([[ "$1" =~ ^~ ]] && echo ${1:1} || echo "$1")
         # make sure the pier exists as a directory
         if ! [ -d "$pier" ]; then
-          errcho "Not found: $(pwd)/$pier"
+          >&2 echo "Not found: $(pwd)/$pier"
           false; return
         # and appears to be a valid pier?
         elif ! [ -d "$pier/.urb" ]; then
-          errcho "Not found: $(pwd)/$pier/.urb"
+          >&2 echo "Not found: $(pwd)/$pier/.urb"
           false; return
         fi
         # pier looks valid in principle...

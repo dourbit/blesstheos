@@ -28,10 +28,10 @@ silent-fetch() {
 
 pushed() {
   if [ $# -eq 0 ]; then
-    errcho "Docker image required - none cannot have been pushed."
+    >&2 echo "Docker image required - none cannot have been pushed."
     false; return
   elif [[ $(docker image inspect $1 -f '{{.RepoDigests}}') == "[]"  ]]; then
-    errcho "Docker image $1 has not been pushed."
+    >&2 echo "Docker image $1 has not been pushed."
     false; return
   else
     true; return
@@ -42,7 +42,7 @@ silent-pull() {
   if eager && docker-image | grep -qe ':latest$'; then
     # if an image isn't tagged latest: assume fixed version / need not pull
     # furthermore $URBIT_EAGER must be set in order to pull
-    silent docker pull $(docker-image)
+    docker pull $(docker-image) >/dev/null 2>&1
   fi
 }
 
