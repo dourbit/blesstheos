@@ -5,7 +5,13 @@
 # a 0 exit status means it's something that can be run,
 # therefore considered "installed"
 
+# TODO: depends on BASH_ALIASES & thus only for bash - change for zsh support
+# NOTE: all would be so much easier if aliases not checked -- is that needed?
+# ... I think there was a special case because of closh
+
 COMMAND_FN=check-x
+DEPENDS_ON="src/os" # aliases use that
+
 check-x() {
   if [ $# -eq 0 ]; then
     echo "Usage: check-x <command>"
@@ -15,13 +21,12 @@ check-x() {
     true; return
   else
     # an alias?
-    if [ $(basename $0) = "$COMMAND_FN" ]; then
+    if [ $(basename $0) == "$COMMAND_FN" ]; then
       # a subshell without aliases...
       shopt -s expand_aliases
-      local ALIASES="$HOLY_HOME/use/aliases.sh"
-      [ -f "$ALIASES" ] && . "$ALIASES"
+      holy-dot use/aliases.sh
     fi
-    if silent alias $1; then
+    if alias $1 >/dev/null 2>&1; then
       local CMD=$(echo ${BASH_ALIASES[$1]} | grep -o "^\S*")
       if [ -x "$(command -v $CMD)" ]; then
         # alias of a command that can be executed
@@ -33,4 +38,7 @@ check-x() {
   fi
 }
 
-[ $(basename $0) != $COMMAND_FN ] && export -f $COMMAND_FN || $COMMAND_FN "$@"
+if [ $(basename $0) == "$COMMAND_FN" ]; then
+  [ -n "$DEPENDS_ON" ] && holy-dot -x -f $DEPENDS_ON
+  $COMMAND_FN "$@"
+fi
