@@ -38,7 +38,5 @@ check-x() {
   fi
 }
 
-if [ $(basename $0) == "$COMMAND_FN" ]; then
-  [ -n "$DEPENDS_ON" ] && holy-dot -x -f $DEPENDS_ON
-  $COMMAND_FN "$@"
-fi
+[ -n "$DEPENDS_ON" ] && holy-dot $DEPENDS_ON
+[ $(basename $0) == "$COMMAND_FN" ] && $COMMAND_FN "$@"
