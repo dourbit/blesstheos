@@ -13,7 +13,7 @@ check-tre() {
     if onApt; then
       echo "The following command can install:"
       echo "sudo apt install transmission-cli"
-    elif check-x brew; then
+    elif brewOn; then
       echo "Since you have brew installed:"
       echo "brew install transmission-cli"
     else

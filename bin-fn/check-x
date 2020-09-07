@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
+COMMAND_FN=check-x
+DEPENDS_ON="src/os" # aliases use that
+
 # check that a command exists and is executable
 # alias to a command is also good
 # a 0 exit status means it's something that can be run,
 # therefore considered "installed"
 
+# NOTE: phasing it out, especially with regards to sourced use/**/*.sh scripts
+# perormance reasons, also because it basically does [ -x "$(command -v $1)" ]
+
 # TODO: depends on BASH_ALIASES & thus only for bash - change for zsh support
 # NOTE: all would be so much easier if aliases not checked -- is that needed?
 # ... I think there was a special case because of closh
 
-COMMAND_FN=check-x
-DEPENDS_ON="src/os" # aliases use that
 
 check-x() {
   if [ $# -eq 0 ]; then

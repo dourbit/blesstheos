@@ -115,7 +115,7 @@ installable() {
     | grep -ve '\.sh$\|-skip$'
     # TODO: show help regarding what the above installs?
     true; return
-  elif check-x $path; then
+  elif [ -x "$(command -v $path)" ]; then
     true; return
   else
     false; return

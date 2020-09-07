@@ -28,5 +28,6 @@ sudomy() {
 # perhaps it is unwanted when installing a cloud server from scratch
 # when getting a machine from from zero to running is of the essence
 brewOn() {
-  [ "$HOLY_BREW_ON" = true ] && check-x brew && { true; return; } || { false; return; }
+  [ "$HOLY_BREW_ON" = true ] && [ -x "$(command -v brew)" ] \
+  && { true; return; } || { false; return; }
 }
