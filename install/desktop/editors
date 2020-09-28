@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Ubuntu use so far, or any other apt Linux,
+# though nvim would install with brew as an alternative option
+
+holy in desktop/editor/atom
+holy in desktop/editor/nvim

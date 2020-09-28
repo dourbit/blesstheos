@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if onApt; then
+  check-x nvim && echo "notice nvim is already installed" && type nvim
+  sudo apt install -y neovim
+elif brewOn; then
+  # notice how apt is preferable
+  brew install neovim
+else
+  exit 1
+fi
+
+type nvim
