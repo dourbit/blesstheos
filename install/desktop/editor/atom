@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+holy-dot src/os
+
 if onApt; then
   check-x atom && echo "notice atom is already installed" && type atom
   wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
