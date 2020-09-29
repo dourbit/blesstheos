@@ -159,7 +159,7 @@ holy() {
       # probably $the you path from above as the one should always be found
       if ! [ -d $where ]; then
         echo "Attempted: holy $the init"
-        echo "Not Found: $where"
+        >&2 echo "Not Found: $where"
         false; return
       fi
       # now what do we run?
@@ -185,7 +185,7 @@ holy() {
           false; return
         fi
       else
-        echo "Not found: $shell"
+        >&2 echo "Not found: $shell"
         echo -n "Can try it with: "
         # only the executables minus some files excluded via the grep below
         # that has remained to be just once for the time being
@@ -238,7 +238,7 @@ holy() {
       installable $1
       local status=$?
       [[ $# -ne 0 && $status -eq 0 ]] && echo $1
-      exit $status
+      return $status
 
     elif [ $cmd == "confirm" ]; then
       local able=$1

@@ -71,14 +71,14 @@ dourbit() {
         echo "All is in order."
       else
         echo "Maybe run this for an easy fix: $COMMAND_FN install"
-        exit 1
+        false; return
       fi
 
     # silently confirm urbit is installed, the rest of commands will need it
     elif ! holy on urbit >/dev/null 2>&1; then
         >&2 echo "Not Installed."
         dourbit confirm
-        exit 1
+        false; return
 
     elif [ $cmd == "version" ]; then
       dourbit urbit -R
@@ -132,11 +132,11 @@ dourbit() {
       if [[ ! -z $(docker images -q $wut) ]]; then
         echo $wut
       else
-        echo "Not found: $wut"
+        >&2 echo "Not found: $wut"
         if [[ ! -z $(dourbit tagged $wut) ]]; then
           echo "Can build with: dourbit build $wut"
         fi
-        exit 1
+        false; return
       fi
 
     elif [ $cmd == "images" ]; then
@@ -147,13 +147,13 @@ dourbit() {
     elif [ $cmd == "build" ]; then
       local tag=$(URBIT_EAGER=true dourbit foremost $@)
       if [ "$tag" == "" ]; then
-        echo "Not Found: ${1-'urbit-'}*"
-        exit 1
+        >&2 echo "Not Found: ${1-'urbit-'}*"
+        false; return
       elif [ $(dourbit existing $tag) ]; then
         echo "Pointless, will not build."
         echo "Have This: $tag"
         echo "Docker ID: $(dourbit image-id $tag)"
-        exit 0
+        true; return
       else
         cd $(repos)/urbit-docker && \
           git pull && \
