@@ -3,7 +3,7 @@
 holy-dot src os util
 
 if onApt; then
-  check-x nvim && echo "notice nvim is already installed" && type nvim
+  check-x nvim && echo "Notice: nvim is already installed" && type nvim
   sudo apt install -y neovim
 elif brewOn; then
   # notice how apt is preferable

@@ -225,6 +225,7 @@ holy() {
           cd "$HOLY_HOME"
           mkdir -p $(echo "$onit" | rev | cut -d'/' -f2- | rev)
           echo $(git show --format="%h" --no-patch) > $onit
+          if [ $? -ne 0 ]; then >&2 echo "Targeting: '$onit'"; fi
         else
           >&2 echo "Failed: $COMMAND_FN $cmd $@"
           false; return
@@ -285,7 +286,7 @@ holy() {
       else
         # TODO: allow to check by filename - e.g. node or platforms/node same
         # perhaps create an enabled() function similar to installable()
-        if [ -f $onit ]; then
+        if [ -f "$onit" ]; then
           if holy confirm $able; then
             local stamp=$(stat -c %y "$onit")
             if [ "$(cat $onit)" == "custom" ]; then

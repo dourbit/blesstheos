@@ -3,8 +3,15 @@
 # Ubuntu use so far, or any other apt Linux,
 # though nvim would install with brew as an alternative option
 
-for editor in "atom nvim"; do
-  if ! holy on "desktop/editor/$editor"; then
-    holy in "desktop/editor/$editor"
+editors="atom nvim"
+
+echo "Editor: $editors"
+for editor in $editors; do
+  echo
+  echo "Install $editor"
+  path="desktop/editor/$editor"
+  if ! holy on $path; then
+    holy in $path
   fi
 done
+echo
