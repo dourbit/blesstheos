@@ -3,7 +3,7 @@
 # Ubuntu use so far, or any other apt Linux,
 # though nvim would install with brew as an alternative option
 
-editors="atom nvim"
+editors="atom code nvim"
 
 echo "Editor: $editors"
 for editor in $editors; do
