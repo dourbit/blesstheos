@@ -62,14 +62,17 @@ holy() {
     false; return
   fi
 
-  # source the helper functions
-  . "$HOLY_HOME"/cmd/holy.sh
-
-  # TODO: here sources everything that holy will depend on
+  # Here source everything that holy will depend on in general.
   # NOTE: do it here, before holy-sort context - in order to...
   # always have a fixed holy-dot source order no matter what $the is = to
   # detect we have a context by checking holy-one, or source the src/core.sh
-  # holy-dot is what sourcing generally means here or anywhere else...
+  # holy-dot is what sourcing generally means here or anywhere else
+  # just the helper functions are so far necessary -- core and holy
+  # if a command has one-off requerement - no need to holy-dot at the top /
+  # for example look at holy home
+
+  holy-one 2> /dev/null || . "$HOLY_HOME"/core.sh
+  . "$HOLY_HOME"/cmd/holy.sh # would use holy-dot if more stuff to source
 
   # NOTE: $HOLY_LEAD makes it possible to change the holy default to "you"
   # which only makes sense if yours is used far more often than "holy one"
@@ -122,6 +125,7 @@ holy() {
     # differentiate from holy path because this simply exposes home()
     # $the "you" mod is irrelevant here, all is about the "one"
     elif [ $cmd == "home" ]; then
+      holy-dot src/path
       echo $(a-path $HOLY_HOME)
 
     elif [ $cmd == "here" ]; then
@@ -200,7 +204,7 @@ holy() {
       elif [ -e "$HOLY_HOME/$1" ]; then
         echo "$HOLY_HOME/$1"
       else
-        errcho "Not Found: $HOLY_HOME/$1"
+        >&2 echo "Not Found: $HOLY_HOME/$1"
         false; return
       fi
 
@@ -215,18 +219,18 @@ holy() {
         echo
       elif installable $able; then
         tis-true $HOLY_EAGER && \
-          silent holy update
+          holy update >/dev/null 2>&1
         $path
         if [ $? -eq 0 ]; then
           cd "$HOLY_HOME"
           mkdir -p $(echo "$onit" | rev | cut -d'/' -f2- | rev)
           echo $(git show --format="%h" --no-patch) > $onit
         else
-          errcho "Failed: $COMMAND_FN $cmd $@"
+          >&2 echo "Failed: $COMMAND_FN $cmd $@"
           false; return
         fi
       else
-        errcho "Not found: $path"
+        >&2 echo "Not found: $path"
         false; return
       fi
 
@@ -239,7 +243,7 @@ holy() {
     elif [ $cmd == "confirm" ]; then
       local able=$1
       if [ $# -eq 0 ]; then
-        errcho "Usage: $COMMAND_FN $cmd <ability>"
+        >&2 echo "Usage: $COMMAND_FN $cmd <ability>"
         false; return
       elif [ ! -f "${HOLY_HOME}/on/confirm/$able" ]; then
         # TODO: check if such ability exists
@@ -262,12 +266,12 @@ holy() {
           echo 'custom' > "$onit"
           true; return
         else
-          errcho "Failed: $COMMAND_FN $cmd $@"
-          errcho "Ability has failed to confirm."
+          >&2 echo "Failed: $COMMAND_FN $cmd $@"
+          >&2 echo "Ability has failed to confirm."
           false; return
         fi
       else
-        errcho "Ability not found for: $able"
+        >&2 echo "Ability not found for: $able"
         false; return
       fi
 
@@ -291,26 +295,27 @@ holy() {
             fi
             true; return
           else
-            errcho "This ability can no longer be confirmed."
+            >&2 echo "This ability can no longer be confirmed."
             # TODO: refactor the code above into a function
             # to report the details of installed or blessed
-            errcho "Perhaps fix with: holy install $able"
+            >&2 echo "Perhaps fix with: holy install $able"
             false; return
           fi
         elif installable $able; then
-          errcho "Turn on by: holy install $able"
-          errcho "Optionally: holy bless $able"
+          >&2 echo "Turn on by: holy install $able"
+          >&2 echo "Optionally: holy bless $able"
           false; return
         else
-          errcho "Ability '$able' not on, nor is it install-able."
+          >&2 echo "Ability '$able' not on, nor is it install-able."
           false; return
         fi
       fi
 
     elif [ $cmd == "up" ]; then
-      sudoUse
+      sudo echo "" > /dev/null # sudoUse
       tis-true $HOLY_EAGER \
-      && echo && holy update
+        && echo \
+        && holy update
       holy upgrade
 
     elif [ $cmd == "update" ]; then
@@ -327,7 +332,7 @@ holy() {
       $(holy path bin/upgrade)
 
     else
-      errcho "Not found: holy $cmd"
+      >&2 echo "Not found: holy $cmd"
       false; return
     fi
   fi
