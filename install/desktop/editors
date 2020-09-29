@@ -6,12 +6,15 @@
 editors="atom code nvim"
 
 echo "Editor: $editors"
+
 for editor in $editors; do
   echo
   echo "Install $editor"
   path="desktop/editor/$editor"
   if ! holy on $path; then
     holy in $path
+  else
+    type $editor
   fi
 done
 echo
