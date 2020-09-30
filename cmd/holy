@@ -284,7 +284,7 @@ holy() {
         echo "$(holy-say-on $the $status)"
         return $status
       else
-        # TODO: allow to check by filename - e.g. node or platforms/node same
+        # TODO: allow to check by filename - e.g. node or platform/node same
         # perhaps create an enabled() function similar to installable()
         if [ -f "$onit" ]; then
           if holy confirm $able; then

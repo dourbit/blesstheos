@@ -85,8 +85,8 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 #shopt -s globstar # research...
 
 
-# programming-languages aka platforms
-for src in $(ls "${HOLY_HOME}/use/platforms"/* | grep -v .skip.sh); do . "$src"; done
+# programming-languages aka platform
+for src in $(ls "${HOLY_HOME}/use/platform"/* | grep -v .skip.sh); do . "$src"; done
 
 # so far the PATH pas been added to from many places
 holy-dot use path

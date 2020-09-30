@@ -13,19 +13,19 @@ holy in shell
 
 # unless Ubuntu / Debian: manually download and install AdoptOpenJDK
 # https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
-holy in platforms/java
+holy in platform/java
 
 # depends on `java`, with `brewOn` for some of the installs
-holy in platforms/clojure
+holy in platform/clojure
 
 # MacOS version has worked in the past, though not tested lately...
-holy in platforms/node && holy-dot use platforms/node.sh && nvm use
+holy in platform/node && holy-dot use platform/node.sh && nvm use
 
 # via `brew` on a Mac - maybe unify for all to be brew-based...
-holy in platforms/ruby
+holy in platform/ruby
 
 # only apt, though that will eventually change
-holy in platforms/python
+holy in platform/python
 
 # it's just for Linux, almost fully...
 holy in term
@@ -35,7 +35,7 @@ holy in desktop/editor
 holy in desktop/ubuntu
 
 # and certain `docker` containers if wanted (after reboot)
-holy in platforms/docker
+holy in platform/docker
 
 # Note may need a reboot before using urbit
 # and also for running the docker container installs

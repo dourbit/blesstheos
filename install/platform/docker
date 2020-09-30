@@ -42,10 +42,10 @@ else
   # TODO: automate this with a reusable script (holy command?)
   # add it to the other install scripts
   echo "OS not supported for automatic docker install."
-  if check-x docker; then # TODO: use: holy confirm platforms/docker
+  if check-x docker; then # TODO: use: holy confirm platform/docker
     echo "However docker appears to have been installed."
-    if ! silent holy on platforms/docker; then
-      echo "Vouch for this install with: holy bless platforms/docker"
+    if ! silent holy on platform/docker; then
+      echo "Vouch for this install with: holy bless platform/docker"
     fi
   else
     exit 1

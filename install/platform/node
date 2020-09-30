@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# install/node && . use/platforms/node && nvm use
+# install/node && . use/platform/node && nvm use
 
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
@@ -26,7 +26,7 @@ else
 fi
 
 # immediate nvm use without a new shell session
-holy-dot use platforms/node
+holy-dot use platform/node
 
 echo "$kind" > ~/.nvmrc # nvm use rather than nvm use default
 node-to "$kind" # if node already installed, will reinstall current packages
