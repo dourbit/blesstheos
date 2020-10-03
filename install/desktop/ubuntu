@@ -7,6 +7,16 @@ if onUbuntu; then
 
   sudoUse
 
+  # Flatpak - simply easier to install certain apps with, at least for now...
+  # https://flatkill.org/
+  # https://news.ycombinator.com/item?id=18180017
+  sudo apt install -y flatpak gnome-software-plugin-flatpak
+  # TODO: look into $XDG_DATA_DIRS
+  # /var/lib/flatpak/exports/share
+  # ~/.local/share/flatpak/exports/share
+  # Because: applications installed by Flatpak may not appear on your desktop -
+  # until the session is restarted.
+
   # Tor Browser
   # https://linuxize.com/post/how-to-install-tor-browser-on-ubuntu-18-04/
   specho Tor Browser ...
