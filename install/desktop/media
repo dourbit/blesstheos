@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
 # Using: sudoUse; onApt; snapOn; flatpakOn
-holy-dot src os util
+holy-dot src/install src os util
 
+status=0
 sudoUse
 
 specho "Audio / Music Apps..."
-flatpakOn && flatpak install flathub org.gnome.Lollypop
+flatpakOn && flatpak install flathub org.gnome.Lollypop \
+  || noInstall Lollypop
 
 specho "Podcast Apps..."
-flatpakOn && flatpak install flathub org.gpodder.gpodder
+flatpakOn && flatpak install flathub org.gpodder.gpodder \
+  || noInstall gPodder
 
 specho "Video Apps..."
 snapOn && sudo snap install vlc \
-  || onApt && sudo apt install -y vlc
+  || onApt && sudo apt install -y vlc \
+  || noInstall VLC
+
+echo
+exit $status
