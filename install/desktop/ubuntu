@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-# only for Ubuntu
-# here I get into the habit of documenting what I install for easier "next time"
+# Here I get into the habit of documenting what I install for easier "next time"
+
+# using: onUbuntu; sudoUse; specho
+holy-dot src os util
 
 if onUbuntu; then
 
@@ -44,17 +46,4 @@ if onUbuntu; then
   sudo apt update
   sudo apt install balena-etcher-electron
 
-
-  if false; then
-    # Things I plan to stop using.
-
-    # Keybase
-    # https://keybase.io/docs/the_app/install_linux
-    specho Keybase ...
-    curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
-    sudo apt install ./keybase_amd64.deb
-    rm ./keybase_amd64.deb
-    run_keybase
-
-  fi
 fi

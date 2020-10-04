@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-# Ubuntu use so far, or any other apt Linux,
+# Ubuntu use so far, or any other apt Linux - not obvious from this script -
 # though nvim would install with brew as an alternative option
 
 editors="atom code nvim"
 
 echo "Editor: $editors"
 
+# TODO: think about extracting the following to a function helper for reuse
+# it needs a path and optional list of files as a second argument / install all
 for editor in $editors; do
   echo
   echo "Install $editor"
