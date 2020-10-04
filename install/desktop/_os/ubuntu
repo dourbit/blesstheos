@@ -10,8 +10,6 @@ if onUbuntu; then
   sudoUse
 
   # Flatpak - simply easier to install certain apps with, at least for now...
-  # https://flatkill.org/
-  # https://news.ycombinator.com/item?id=18180017
   sudo apt install -y flatpak gnome-software-plugin-flatpak
   # TODO: look into $XDG_DATA_DIRS
   # /var/lib/flatpak/exports/share

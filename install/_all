@@ -30,9 +30,10 @@ holy in platform/python
 # it's just for Linux, almost fully...
 holy in term
 
-# if not `onApt` (e.g. Ubuntu) then would have to install Atom by hand
-holy in desktop/editor
-holy in desktop/ubuntu
+# if not `onUbuntu` then may have to re-install some of these later
+holy in desktop/_os/ubuntu
+holy in desktop/editors
+holy in desktop/media
 
 # and certain `docker` containers if wanted (after reboot)
 holy in platform/docker

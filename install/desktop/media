@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Using: sudoUse; onApt; snapOn; flatpakOn
+holy-dot src os util
+
+sudoUse
+
+specho "Audio / Music Apps..."
+flatpakOn && flatpak install flathub org.gnome.Lollypop
+
+specho "Podcast Apps..."
+flatpakOn && flatpak install flathub org.gpodder.gpodder
+
+specho "Video Apps..."
+snapOn && sudo snap install vlc \
+  || onApt && sudo apt install -y vlc

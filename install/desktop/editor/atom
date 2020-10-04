@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# using: check-x; onApt; sudoUse
+# Depends on aton
+# Using: check-x; onApt; sudoUse
 holy-dot bin-fn/check-x src os util
 
 if onApt; then

@@ -31,3 +31,17 @@ brewOn() {
   [ "$HOLY_BREW_ON" = true ] && [ -x "$(command -v brew)" ] \
   && { true; return; } || { false; return; }
 }
+
+# NOTE: for a current Ubuntu this is automatically so, however...
+# TODO: maybe add $HOLY_SNAP_ON because using snap may be unwanted by some
+# though this logic may change further with use of other operating systems
+snapOn() {
+  [ -x "$(command -v snap)" ] && { true; return; } || { false; return; }
+}
+
+# NOTE: same as the above, or worse, read these criticisms:
+# https://flatkill.org/
+# https://news.ycombinator.com/item?id=18180017
+flatpakOn() {
+  [ -x "$(command -v flatpak)" ] && { true; return; } || { false; return; }
+}
