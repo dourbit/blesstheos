@@ -54,6 +54,7 @@ if onApt; then
   # tools:
   sudo apt install -y tmux
   sudo apt install -y ncdu # http://dev.yorhel.nl/ncdu NCurses Disk Usage
+  sudo apt install -y neofetch # https://github.com/dylanaraps/neofetch
   # TODO: add more ways to install bashtop, for Mac and other Linux distros
   if onUbuntu; then
     if $(bb -i "(< $(lsb_release -rs) 20.10)"); then
