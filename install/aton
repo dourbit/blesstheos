@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-mkdir -p ~/tmp
-touch ~/.bashrc-pre
+status=0
+holy-dot src/os
 
 # only for Debian / Ubuntu so far...
 # what is generally needed by a system (for other installs)
 
 if onApt; then
-
   echo "Apt Linux"
   sudo apt update
   sudo apt install -y build-essential git file git-lfs
@@ -19,12 +18,14 @@ if onApt; then
         gnupg-agent \
         software-properties-common
   sudo apt install -y gawk # needed for JSONPath.sh
-  exit 0
-
-elif onMac; then
-  echo "MacOS - TODO..."
 else
-  echo "No ${HOLY_KERNEL} system match!"
+  >&2 echo "No ${HOLY_KERNEL} system match!"
+  status=1
 fi
 
-exit 1
+if [ $status -eq 0 ]; then
+  mkdir -p ~/tmp
+  touch ~/.bashrc-pre
+fi
+
+exit $status
