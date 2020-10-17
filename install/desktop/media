@@ -19,5 +19,9 @@ snapOn && sudo snap install vlc \
   || onApt && sudo apt install -y vlc \
   || noInstall VLC
 
+specho "Ebook Apps..."
+snapOn && sudo snap install foliate \
+  || noInstall Foliate
+
 echo
 exit $status
