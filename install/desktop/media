@@ -24,9 +24,13 @@ onApt && sudo add-apt-repository -y ppa:stebbins/handbrake-releases \
   && sudo apt install -y handbrake-gtk handbrake-cli \
   || noInstall HandBrake
 
-specho "Ebook Apps..."
+specho "Document / Ebook Apps..."
 snapOn && sudo snap install foliate \
   || noInstall Foliate
+# Pandoc
+brewOn && brew install pandoc \
+  && onApt && sudo apt install -y wkhtmltopdf librsvg2-bin \
+  || noInstall Pandoc
 
 specho "Conference..."
 onApt && cd /tmp && wget https://zoom.us/client/latest/zoom_amd64.deb \
