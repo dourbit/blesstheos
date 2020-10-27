@@ -25,8 +25,14 @@ onApt && sudo add-apt-repository -y ppa:stebbins/handbrake-releases \
   || noInstall HandBrake
 
 specho "Document / Ebook Apps..."
+# Foliate Reader
 snapOn && sudo snap install foliate \
   || noInstall Foliate
+# Calibre Manager (does not update)
+# https://calibre-ebook.com/download_linux
+onLinux && sudo -v \
+  && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin \
+  || noInstall Calibre
 # Pandoc
 brewOn && brew install pandoc \
   && onApt && sudo apt install -y wkhtmltopdf librsvg2-bin \
