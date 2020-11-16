@@ -7,24 +7,43 @@ status=0
 sudoUse
 
 specho "Audio / Music Apps..."
-flatpakOn && flatpak install flathub org.gnome.Lollypop \
+flatpakOn && flatpak install -y flathub org.gnome.Lollypop \
   || noInstall Lollypop
 
 specho "Podcast Apps..."
-flatpakOn && flatpak install flathub org.gpodder.gpodder \
+flatpakOn && flatpak install -y flathub org.gpodder.gpodder \
   || noInstall gPodder
 
 specho "Video Apps..."
+# VLC media player
 snapOn && sudo snap install vlc \
-  || onApt && sudo apt install -y vlc \
+  || onUbuntu && sudo apt install -y vlc \
   || noInstall VLC
-# HandBrake
+# HandBrake converter
 onApt && sudo add-apt-repository -y ppa:stebbins/handbrake-releases \
   && sudo apt update \
   && sudo apt install -y handbrake-gtk handbrake-cli \
   || noInstall HandBrake
 
-specho "Document / Ebook Apps..."
+specho "Document - writing and conversion..."
+# Writing Editor - various apps available...
+# ghostwriter is a very cool app
+# TODO: add themes from the following repo?
+# https://github.com/jggouvea/ghostwriter-themes
+onUbuntu && sudo apt install -y ghostwriter \
+  || noInstall ghostwriter
+# Mark Text is great but memory-heavy (starts at 1GB thanks to Electron)
+flatpakOn && flatpak install -y flathub com.github.marktext.marktext \
+  || noInstall "Mark Text"
+# Abricotine is neat, but isn't easily update-able on Linux
+# https://github.com/brrd/abricotine/blob/master/docs/installation-and-usage.md
+#
+# Pandoc
+brewOn && brew install pandoc \
+  && onUbuntu && sudo apt install -y wkhtmltopdf librsvg2-bin \
+  || noInstall Pandoc
+
+specho "Ebook Apps..."
 # Foliate Reader
 snapOn && sudo snap install foliate \
   || noInstall Foliate
@@ -33,10 +52,6 @@ snapOn && sudo snap install foliate \
 onLinux && sudo -v \
   && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin \
   || noInstall Calibre
-# Pandoc
-brewOn && brew install pandoc \
-  && onApt && sudo apt install -y wkhtmltopdf librsvg2-bin \
-  || noInstall Pandoc
 
 specho "Conference..."
 onApt && cd /tmp && wget https://zoom.us/client/latest/zoom_amd64.deb \
