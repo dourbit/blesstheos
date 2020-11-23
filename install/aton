@@ -13,10 +13,11 @@ if onApt; then
   git lfs install --force
   if [ ! -f ~/.gitconfig ]; then cp "$HOLY_HOME"/home/.gitconfig ~/; fi
   sudo apt install -y apt-transport-https curl wget
-  sudo apt install \
+  sudo apt install -y \
         ca-certificates \
         gnupg-agent \
-        software-properties-common
+        software-properties-common \
+        ppa-purge
   sudo apt install -y gawk # needed for JSONPath.sh
 else
   >&2 echo "No ${HOLY_KERNEL} system match!"
