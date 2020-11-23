@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Depends on holy on aton
+
+# Using: sudoUse; onUbuntu; snapOn
+holy-dot src/install src os util
+
+status=0
+
+if onUbuntu; then
+
+  sudoUse
+  specho "Anbox..."
+
+  # TODO: check ls -1 /dev/{ashmem,binder} or Ubuntu >= 19.04
+  sudo add-apt-repository -y ppa:morphis/anbox-support \
+    && sudo apt update \
+    && sudo apt install -y linux-headers-generic anbox-modules-dkms \
+    && sudo apt install -y adb \
+    || noInstall "anbox-support"
+
+  snapOn && sudo snap install --devmode --beta anbox \
+    || noInstall anbox
+
+else
+  noInstall "Anbox just for Ubuntu, please install manually or pull-request."
+  echo "https://anbox.io"
+fi
+
+echo
+exit $status
