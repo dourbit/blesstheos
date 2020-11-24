@@ -18,7 +18,7 @@ if onUbuntu; then
     || noInstall "anbox-support"
   fi
   # for installing apps from apk files
-  sudo apt install -y adb \
+  sudo apt install -y \
     android-tools-adb android-tools-fastboot || noInstall adb
 else
   echo "Please ensure all the necessary kernel modules are installed."
@@ -32,6 +32,9 @@ specho "Probing for ashmem and binder modules:"
 sudo modprobe ashmem_linux
 sudo modprobe binder_linux
 lsmod | grep -e ashmem_linux -e binder_linux
+
+echo
+anbox check-features
 
 echo
 exit $status
