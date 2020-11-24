@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+opt="apk"
+
+if [[ "$1" == "apk" || "$1" == "=" ]]; then
+  shift 1
+fi
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $(basename $0) [ apk || = ] <search-options-for-grep>"
+  echo "For example: $(basename $0) contacts"
+  echo "The search is case-insensitive."
+  echo "Give it anything grep can take."
+  echo "The apk default gives just the names for adb uninstall use."
+  exit 1
+fi
+
+# TODO: apk option complete
+
+adb shell 'pm list packages -f' | grep -i $@

@@ -17,9 +17,9 @@ if onUbuntu; then
     && sudo apt install -y linux-headers-generic anbox-modules-dkms \
     || noInstall "anbox-support"
   fi
-  # for installing apps from apk files
+  # For installing apps from apk files, etc.
   sudo apt install -y \
-    android-tools-adb android-tools-fastboot || noInstall adb
+    android-tools-adb android-tools-fastboot || noInstall "android-tools-*"
 else
   echo "Please ensure all the necessary kernel modules are installed."
   echo "https://docs.anbox.io/userguide/install_kernel_modules.html"
