@@ -18,7 +18,8 @@ if onUbuntu; then
     || noInstall "anbox-support"
   fi
   # for installing apps from apk files
-  sudo apt install -y adb || noInstall adb
+  sudo apt install -y adb \
+    android-tools-adb android-tools-fastboot || noInstall adb
 else
   echo "Please ensure all the necessary kernel modules are installed."
   echo "https://docs.anbox.io/userguide/install_kernel_modules.html"
