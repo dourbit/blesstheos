@@ -27,10 +27,10 @@ fi
 echo
 snapOn && sudo snap install --devmode --beta anbox || noInstall anbox
 
-echo
+specho "Probing for ashmem and binder modules:"
 sudo modprobe ashmem_linux
 sudo modprobe binder_linux
-ls -1 /dev/{ashmem,binder}
+lsmod | grep -e ashmem_linux -e binder_linux
 
 echo
 exit $status
