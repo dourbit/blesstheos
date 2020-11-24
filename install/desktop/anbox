@@ -4,36 +4,33 @@
 
 # Using: sudoUse; onUbuntu; snapOn
 holy-dot src/install src os util
-
 status=0
 
+sudoUse
+specho "Anbox..."
+
+echo
 if onUbuntu; then
-
-  sudoUse
-  specho "Anbox..."
-
   if $(bb -i "(< $(lsb_release -rs) 19.04)"); then
     sudo add-apt-repository -y ppa:morphis/anbox-support \
     && sudo apt update -y \
     && sudo apt install -y linux-headers-generic anbox-modules-dkms \
     || noInstall "anbox-support"
   fi
-
-  snapOn && sudo snap install --devmode --beta anbox \
-    || noInstall anbox
-
-  sudo apt install -y adb \
-    || noInstall adb
-
+  # for installing apps from apk files
+  sudo apt install -y adb || noInstall adb
 else
-  noInstall "Anbox just for Ubuntu, please install manually or pull-request."
-  echo "https://anbox.io"
+  echo "Please ensure all the necessary kernel modules are installed."
+  echo "https://docs.anbox.io/userguide/install_kernel_modules.html"
 fi
 
-# TODO:
-# sudo modprobe ashmem_linux
-# sudo modprobe binder_linux
-# ls -1 /dev/{ashmem,binder}
+echo
+snapOn && sudo snap install --devmode --beta anbox || noInstall anbox
+
+echo
+sudo modprobe ashmem_linux
+sudo modprobe binder_linux
+ls -1 /dev/{ashmem,binder}
 
 echo
 exit $status
