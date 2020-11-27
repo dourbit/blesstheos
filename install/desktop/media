@@ -59,5 +59,9 @@ onApt && cd /tmp && wget https://zoom.us/client/latest/zoom_amd64.deb \
   && rm ./zoom_amd64.deb && cd - \
   || noInstall Zoom
 
+specho "Compression..."
+onApt && sudo apt install -y rar unrar \
+  || noInstall "*rar"
+
 echo
 exit $status
