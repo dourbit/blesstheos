@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Using: sudoUse; onApt; snapOn; flatpakOn
-holy-dot src/install src os util
+holy-dot src/ install os util
 
 status=0
 sudoUse

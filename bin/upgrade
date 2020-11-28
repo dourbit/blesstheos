@@ -13,7 +13,7 @@ if onLinux && check-x apt; then
   sudo apt -y upgrade
 fi
 
-holy-dot use platform/node
+holy-dot use/platform/node
 # source silent and check-fn
 # because otherwise they would run in a subshell, not knowing about nvm
 . silent

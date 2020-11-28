@@ -26,7 +26,7 @@ else
 fi
 
 # immediate nvm use without a new shell session
-holy-dot use platform/node
+holy-dot use/platform/node
 
 echo "$kind" > ~/.nvmrc # nvm use rather than nvm use default
 node-to "$kind" # if node already installed, will reinstall current packages

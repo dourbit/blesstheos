@@ -19,7 +19,7 @@ holy in platform/java
 holy in platform/clojure
 
 # MacOS version has worked in the past, though not tested lately...
-holy in platform/node && holy-dot use platform/node.sh && nvm use
+holy in platform/node && holy-dot use/platform/node.sh && nvm use
 
 # via `brew` on a Mac - maybe unify for all to be brew-based...
 holy in platform/ruby

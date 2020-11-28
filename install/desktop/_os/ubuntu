@@ -3,7 +3,7 @@
 # Here I get into the habit of documenting what I install for easier "next time"
 
 # using: onUbuntu; sudoUse; specho
-holy-dot src os util
+holy-dot src/ os util
 
 if onUbuntu; then
 

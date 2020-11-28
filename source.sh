@@ -58,7 +58,7 @@ fi
 holy-sort
 
 if tis-true $HOLY_SOURCE; then
-  holy-dot -x src
+  holy-dot -x src/
   # or get more fancy, such as:
   # holy-dot -x $(find "${HOLY_HOME}/src" -type f | grep '.sh$')
 else
@@ -71,10 +71,10 @@ PATH-add \
   ${HOLY_HOME}/cmd \
   ${HOLY_HOME}/bin-fn
 
-holy-dot use colors term aliases git jump rundev
+holy-dot use/ colors term aliases git jump rundev
 
 # bash-only stuff
-[ -n "$BASH" ] && holy-dot use bash
+[ -n "$BASH" ] && holy-dot use/bash
 
 umask 022
 
@@ -89,6 +89,6 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 for src in $(ls "${HOLY_HOME}/use/platform"/* | grep -v .skip.sh); do . "$src"; done
 
 # so far the PATH pas been added to from many places
-holy-dot use path
+holy-dot use/path
 
 unset THIS_HOME

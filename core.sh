@@ -162,7 +162,7 @@ holy-dot() {
     shift
   done
   [ $# -eq 0 ] && {
-    echo "Usage: holy-dot [options] [home-dir] [base-dirs] <file-paths> ..."
+    echo "Usage: holy-dot [options] [home-dir] [base-dirs/] <file-paths> [...]"
     false; return
   }
   local status=0 files=() bases=() that=not
@@ -188,12 +188,18 @@ holy-dot() {
   [[ $these =~ ' ' ]] && that=yes # space match
   for path; do
     # check if a base-dir: in either home if two of $these, or just "this" one
-    if tis-true $that \
+    # NOTE: expected with a trailing / which is because of these requirements:
+    # 1. base/ dir precedes any file paths relative to it (must confirm first)
+    # 2. two consecutive base1/ base2/ dirs are allowed (source all the files)
+    # 3. current base context must take precedence over a new base context...
+    # this is what caused the requirement -- src/ install vs. src/ install/
+    # in this case install is both a file in current context and a base dir
+    if [[ $path =~ /$ ]] && tis-true $that \
       && [[ -d "${HOLY_HOME}/${path}" || -d "${DOTS_HOME}/${path}" ]] \
       || [ -d "${homes}/${path}" ]; then
-        # $path is a relative $base directory for sure
         tis-true $glob && bases+=($base) # previous $path also a $base
-        base=$path/ # expected without trailing / though a // is not a problem
+        # $path is a relative $base directory for sure (though files assumed)
+        base=$path # not checked in advance, just it being a directory is ok.
         glob=yes # follow a base by one or more files - or all files sourced!
         shift # this base-dir
         continue # to the next $path
