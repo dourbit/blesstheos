@@ -14,6 +14,15 @@ flatpakOn() {
   [ -x "$(command -v flatpak)" ] && { true; return; } || { false; return; }
 }
 
+# sometimes brew is unnecessary as it takes too long to install
+# that's especially true when there's a network or disk bottleneck
+# perhaps it is unwanted when installing a cloud server from scratch
+# when getting a machine from from zero to running is of the essence
+brewOn() {
+  [ "$HOLY_BREW_ON" = true ] && [ -x "$(command -v brew)" ] \
+  && { true; return; } || { false; return; }
+}
+
 # report when something goes wrong
 noInstall() {
   >&2 echo "Fail: $(basename $0) did not install $1"

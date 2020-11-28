@@ -22,12 +22,3 @@ sudoUse() {
 sudomy() {
   sudo env "PATH=$PATH" $@
 }
-
-# sometimes brew is unnecessary as it takes too long to install
-# that's especially true when there's a network or disk bottleneck
-# perhaps it is unwanted when installing a cloud server from scratch
-# when getting a machine from from zero to running is of the essence
-brewOn() {
-  [ "$HOLY_BREW_ON" = true ] && [ -x "$(command -v brew)" ] \
-  && { true; return; } || { false; return; }
-}

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Using: check-x; onApt; sudoUse
-holy-dot bin-fn/check-x src os util
+holy-dot bin-fn/check-x src/install src os util
 
 if onApt; then
   sudoUse
