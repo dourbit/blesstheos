@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Depends holy on brew if brewOn is preferable
+
+# Using: sudoUse; sudomy; specho
+holy-dot src/ install util
+
 sudoUse
 
 # https://github.com/borkdude/babashka
@@ -42,7 +47,3 @@ gh-install mclarkson/JSONPath.sh JSONPath.sh ~/bin
 # https://github.com/cute/JSONPretty
 specho JSONPretty.sh ...
 gh-install cute/JSONPretty JSONPretty.sh ~/bin
-
-# https://github.com/dundalek/closh
-specho Closh ...
-$(dirname $0)/closh # install here, because it's a shell

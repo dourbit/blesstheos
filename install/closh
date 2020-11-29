@@ -4,7 +4,10 @@
 
 # Note the following dependencies:
 # install/shell (JSONPath.sh) for gh-get-bin
-# install/java for closh-zero.jar itself
+# install/java for closh-zero.jar runtime...
+
+# Using: check-x; sudomy
+holy-dot src/util bin-fn/ check-x
 
 if check-x JSONPath.sh && check-x java; then
   sudomy gh-get-bin dundalek/closh closh-zero.jar latest /usr/local/bin

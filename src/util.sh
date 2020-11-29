@@ -1,12 +1,13 @@
 # For things that don't belong elsewhere.
 
-errcho() { cat <<< "$@" 1>&2; }
-
 # spaced echo for more readble output with less code
 specho() {
   echo
   echo "$@"
 }
+
+# >&2 echo ... # is preferable
+errcho() { cat <<< "$@" 1>&2; }
 
 # will use sudo, make it clear at the top, especially for long-running scripts
 sudoUse() {

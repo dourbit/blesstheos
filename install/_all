@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Using: sudoUse
+holy-dot src/util
+
 sudoUse
 
 # needed for many of the install scripts; find the MacOS equivalents...
@@ -8,12 +11,15 @@ holy in aton
 # Homebrew usage depends on `export HOLY_BREW_ON=true`; MacOS may need update
 holy in brew
 
-# scripting with `bash` + `bb` or `closh`; `which bb` depends on `brewOn`
+# scripting with bash and sometimes also bb
 holy in shell
 
 # unless Ubuntu / Debian: manually download and install AdoptOpenJDK
 # https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
 holy in platform/java
+
+# depends on shell & java
+holy in closh
 
 # depends on `java`, with `brewOn` for some of the installs
 holy in platform/clojure
