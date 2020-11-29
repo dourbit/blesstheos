@@ -24,15 +24,15 @@ if onUbuntu; then
     wget -q -O - https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | sudo apt-key add -
     echo "deb https://deb.torproject.org/torproject.org $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list
     sudo apt update
-    sudo apt install tor deb.torproject.org-keyring torbrowser-launcher
+    sudo apt install -y tor deb.torproject.org-keyring torbrowser-launcher
   else
     # Focal "20.04" onward is a simpler install
-    sudo apt install torbrowser-launcher
+    sudo apt install -y torbrowser-launcher
   fi
 
   if $(bb -i "(>= $(lsb_release -rs) 18.04)"); then
     specho "(GNOME) Tweaks ..."
-    sudo apt install gnome-tweak-tool
+    sudo apt install -y gnome-tweak-tool
   fi
 
   # Etcher
@@ -44,4 +44,8 @@ if onUbuntu; then
   sudo apt update
   sudo apt install balena-etcher-electron
 
+else
+  echo "OS must be Ubuntu or an equivalent."
+  echo "If this is a derivative then check src/os and its onUbuntu function."
+  exit 1
 fi

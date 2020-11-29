@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Depends on holy on aton; shell
+# Depends holy on aton; shell
 
 # Using: sudoUse; onUbuntu; snapOn
 holy-dot src/ install os util

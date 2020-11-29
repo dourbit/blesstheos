@@ -40,6 +40,7 @@ holy in term
 holy in desktop/_os/ubuntu
 holy in desktop/editors
 holy in desktop/media
+holy in desktop/anbox
 
 # and certain `docker` containers if wanted (after reboot)
 holy in platform/docker
