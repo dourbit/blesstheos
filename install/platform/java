@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 # Java 11 (LTS)
-# Only for Debian / Ubuntu so far...
+# Only for onApt-able (Debian or Ubuntu derivatives, so far...)
 # https://adoptopenjdk.net/installation.html?variant=openjdk11&jvmVariant=hotspot#linux-pkg
+
+# Using: onApt
+holy-dot src/os
 
 if onApt; then
 
@@ -13,8 +16,11 @@ if onApt; then
   sudo apt install -y adoptopenjdk-11-hotspot
   java -version
 
-  echo '' >> ~/.bashrc # add an empty line spacer
-  echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
+  # only if this is a first-time install
+  if ! holy on platform/java > /dev/null && ! tis-some $JAVA_HOME; then
+    echo '' >> ~/.bashrc # add an empty line spacer
+    echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
+  fi
 
 else
 

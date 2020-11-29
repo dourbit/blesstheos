@@ -14,7 +14,7 @@ holy in brew
 # scripting with bash and sometimes also bb
 holy in shell
 
-# unless Ubuntu / Debian: manually download and install AdoptOpenJDK
+# unless onApt -- manually download and install AdoptOpenJDK
 # https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
 holy in platform/java
 
@@ -33,7 +33,7 @@ holy in platform/ruby
 # only apt, though that will eventually change
 holy in platform/python
 
-# it's just for Linux, almost fully...
+# it's just for Linux, just about fully...
 holy in term
 
 # if not `onUbuntu` then may have to re-install some of these later
