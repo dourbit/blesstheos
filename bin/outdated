@@ -1,18 +1,30 @@
 #!/usr/bin/env bash
 
+# Using: specho onApt snapOn
+holy-dot src/ install util os
+
+# NOTE: brewOn ignored on purpose due to HOLY_BREW_ON ambiguity
 if check-x brew; then
-  specho Homebrew ...
+  specho Homebrew:
   brew outdated
 fi
 
-if onLinux && check-x apt; then
-  specho Apt ...
+if onApt; then
+  specho Apt:
   apt list --upgradeable
 fi
+
+if snapOn; then
+  specho Snap:
+  snap refresh --list
+fi
+
+# NOTE: Flatpak doesn't seem to have a concept of outdated packages,
+# and though it auto-updates - an explicit update would run blindly.
 
 # TODO: Write a node-upgradeable function, and add to src/node.sh to use here.
 
 if check-x lein; then
-  specho Leiningen User Profiles ...
+  specho Leiningen User Profiles:
   lein ancient check-profiles ~/.lein/profiles.clj 2>/dev/null
 fi
