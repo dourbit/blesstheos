@@ -1,23 +1,25 @@
 #!/usr/bin/env bash
 
+# Using: sudoUse sudomy onApt check-x nvm-up node-up specho brewOn #and ...
+# silent and check-fn must be sourced -
+# because otherwise they would run in a subshell, not knowing about nvm
+holy-dot bin-fn/ check-x check-fn silent use/platform/node src/ install util os
+
 sudoUse
 
+# NOTE: brewOn ignored on purpose due to HOLY_BREW_ON ambiguity
+# updating brew packages even if brew is not preferable overall
 if check-x brew; then
   specho Homebrew ...
   brew upgrade
 fi
 
-if onLinux && check-x apt; then
+if onApt; then
   specho Apt ...
   silent sudo apt update
   sudo apt -y upgrade
 fi
 
-holy-dot use/platform/node
-# source silent and check-fn
-# because otherwise they would run in a subshell, not knowing about nvm
-. silent
-. check-fn
 if silent check-fn nvm; then
   specho NVM ...
   nvm-up
