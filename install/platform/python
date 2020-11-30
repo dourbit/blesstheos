@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# only for Debian / Ubuntu
+# only if onApt
+holy-dot src/os
 
 if onApt; then
 
@@ -17,10 +18,17 @@ if onApt; then
   sudo apt install -y python3-hidapi python3-ecdsa python3-pyaes python3-click
   # https://github.com/signal11/hidapi/tree/master/linux
   sudo apt install -y libhidapi-dev libusb-1.0-0-dev libudev-dev
+
+  # absolutely need these packages:
+  pip3 install pip-review
+
+  # TODO: move it elsewhere?
   # ckcc # Coldcard cli tool:
   pip3 install 'ckcc-protocol[cli]'
   if [ ! -f ~/.local/bin/ckcc ]; then ln -s ~/.local/bin/ckcc ~/bin/; fi
 
   python --version #3
 
+else
+  exit 1
 fi
