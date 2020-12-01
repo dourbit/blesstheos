@@ -11,12 +11,13 @@ fi
 
 if onApt; then
   specho Apt:
-  apt list --upgradeable
+  # WARNING: apt does not have a stable CLI interface.
+  apt list --upgradeable 2>/dev/null
 fi
 
 if snapOn; then
   specho Snap:
-  snap refresh --list
+  snap refresh --list 2>&1
 fi
 
 # NOTE: Flatpak doesn't seem to have a concept of outdated packages,
