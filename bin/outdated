@@ -3,6 +3,7 @@
 # Using: specho onApt snapOn
 holy-dot src/ install util os bin-fn/ check-x silent
 
+# NOTE: maybe just add options to holy-on and skip holy-be-on - altogether?
 # TODO: think of a HOLY_VAR: for expressing a completely silent preference,
 # because not installing a holy ability would be wanting to self-handle it?
 # Thus not be bothered with any messages regarding outdated packages,
