@@ -70,16 +70,20 @@ if check-x npm; then
   # NOTE alias: nls-up
   if holy-be-on platform/node; then
     npm -g outdated --depth=0
+    if [ $? -eq 0 ]; then
+      echo All up-to-date.
+    fi
   fi
 fi
 
 # This one simply keeps quiet if conditions aren't met.
 # It's only for certain dev environments...
-if silent holy on platform/clojure; then
-  if check-x lein && [ -f ~/.lein/profiles.clj ]; then
+if check-x lein && [ -f ~/.lein/profiles.clj ] \
+ && silent holy on platform/clojure; then
     specho Leiningen User Profiles:
     lein ancient check-profiles ~/.lein/profiles.clj 2>/dev/null
-  fi
+else
+  echo # because npm has no spacing after, this adds symmetry
 fi
 
 # Only informing, as being outdated isn't an error.
