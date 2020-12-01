@@ -9,33 +9,46 @@
 # `src/node.sh` - for switching between versions and upgrading
 # `use/aliases/npm.sh` - useful command aliases
 
+# Depends holy on brew (if onMac)
+# Install clojure modules (if holy on platform/clojure)
+# Using: onLinux onMac specho
+holy-dot src/ os node util
+
 # lts/* is the default node, call with "stable" if more recent node is preferred
 [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
 
-# Depends holy on brew (if onMac)
-# Using: onLinux onMac
-holy-dot src/ os node
 
+# NVM
 if onLinux; then
-  echo "Linux"
+  specho "Linux nvm install..."
+  echo
   mkdir -p ~/.nvm
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-elif onMac; then
-  echo "MacOS"
+elif onMac && check-x brew; then
+  specho "MacOS nvm install via brew..."
+  echo
   mkdir -p ~/.nvm
   cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 else
-  echo "System '${HOLY_KERNEL}' is not supported."
+  echo "System '${HOLY_KERNEL}' does not meet current requirements."
   exit 1
 fi
 
 # NOTE: immediate nvm use without a new shell session, need to keep it here!
 holy-dot use/platform/node
 
-echo "$kind" > ~/.nvmrc # nvm use rather than nvm use default
+
+# Configuration options
+echo "$kind" > ~/.nvmrc # nvm use (rather than nvm use default)
+
+# Some ~/.npmrc options
+npm set save-exact true
+
+echo
 node-to "$kind" # if node already installed, will reinstall current packages
 # Note that the above also makes "lts/*" the default + does `nvm use default`.
 status=$?
+
 
 # TODO: perhaps this belongs to install/npm-local or just install/npm-develop
 if onMac; then
@@ -50,8 +63,8 @@ if onMac; then
   # curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
 fi
 
-# Some npm options write to ~/.npmrc
-npm set save-exact true
+
+specho npm install --global packages
 
 # Always have the following packages installed
 npm i -g npm-check npm-check-updates yarn json
@@ -62,4 +75,5 @@ if check-x clojure && silent holy on platform/clojure; then
   npm i -g node-cljfmt
 fi
 
+echo
 exit $status
