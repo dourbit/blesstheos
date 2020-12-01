@@ -61,3 +61,24 @@ node-up() {
   nvm use $kind > /dev/null
   node-to $kind
 }
+
+
+# npm-i [opts] <packages>
+# install any packages, whether explicitly versioned or not,
+# only if not already installed - globally or otherwise ...
+# better when expecting the packages to be installed already
+
+# TODO: don't assume -g; and pass on or filter other options +
+# don't forget to change the name to npm-i ...
+
+npm-i--g() {
+  local pkg
+  local opt="-g"
+  for pkg in $@; do
+    if silent npm list $opt $pkg; then
+      echo "Is already installed: $pkg"
+    else
+      npm i $opt $pkg
+    fi
+  done
+}
