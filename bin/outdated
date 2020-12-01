@@ -3,10 +3,36 @@
 # Using: specho onApt snapOn
 holy-dot src/ install util os bin-fn/ check-x silent
 
+# TODO: think of a HOLY_VAR: for expressing a completely silent preference,
+# because not installing a holy ability would be wanting to self-handle it?
+# Thus not be bothered with any messages regarding outdated packages,
+# how to install / bless it, etc. Though how do we catch certain holy bugs?
+holy-be-on() {
+  if [ $# -eq 0 ]; then
+      >&2 echo "holy on <what>?"
+      return 1
+  else
+    local what=$1; shift
+    silent holy on $what
+    if [ $? -eq 0 ]; then
+      return 0
+    elif [ $# -ne 0 ]; then
+      # custom message given
+      echo "$@"
+    else
+      # is informative enough
+      holy on $what
+    fi
+    return 1
+  fi
+}
+
 # NOTE: brewOn ignored on purpose due to HOLY_BREW_ON ambiguity
 if check-x brew; then
   specho Homebrew:
-  brew outdated
+  if holy-be-on brew; then
+    brew outdated
+  fi
 fi
 
 if onApt; then
@@ -23,11 +49,15 @@ fi
 # NOTE: Flatpak doesn't seem to have a concept of outdated packages,
 # and though it auto-updates - an explicit update would run blindly.
 
-if check-x pip-review; then
+if check-x python && check-x pip-review; then
   specho Python:
-  pip-review
+  if holy-be-on platform/python; then
+    pip-review
+  fi
 fi
 
+# Atom is not commonly expected - check with a silent holy on.
+# It's normally updated through the app anyway.
 if silent holy on desktop/editor/atom; then
   specho Atom:
   # NOTE alias: als-up
@@ -37,13 +67,19 @@ fi
 if check-x npm; then
   specho NPM:
   # NOTE alias: nls-up
-  npm -g outdated --depth=0
+  if holy-be-on platform/node; then
+    npm -g outdated --depth=0
+  fi
 fi
 
-if check-x lein; then
-  specho Leiningen User Profiles:
-  lein ancient check-profiles ~/.lein/profiles.clj 2>/dev/null
+# This one simply keeps quiet if conditions aren't met.
+# It's only for certain dev environments...
+if silent holy on platform/clojure; then
+  if check-x lein && [ -f ~/.lein/profiles.clj ]; then
+    specho Leiningen User Profiles:
+    lein ancient check-profiles ~/.lein/profiles.clj 2>/dev/null
+  fi
 fi
 
-# only informing, so being outdated isn't an error
+# Only informing, as being outdated isn't an error.
 exit 0
