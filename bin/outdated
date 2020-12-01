@@ -22,6 +22,11 @@ fi
 # NOTE: Flatpak doesn't seem to have a concept of outdated packages,
 # and though it auto-updates - an explicit update would run blindly.
 
+if check-x pip-review; then
+  specho Python:
+  pip-review
+fi
+
 if check-x npm; then
   specho NPM:
   # NOTE alias: nls-up
