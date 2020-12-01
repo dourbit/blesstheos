@@ -12,6 +12,10 @@
 # lts/* is the default node, call with "stable" if more recent node is preferred
 [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
 
+# Depends holy on brew (if onMac)
+# Using: onLinux onMac
+holy-dot src/ os node
+
 if onLinux; then
   echo "Linux"
   mkdir -p ~/.nvm
@@ -25,12 +29,13 @@ else
   exit 1
 fi
 
-# immediate nvm use without a new shell session
+# NOTE: immediate nvm use without a new shell session, need to keep it here!
 holy-dot use/platform/node
 
 echo "$kind" > ~/.nvmrc # nvm use rather than nvm use default
 node-to "$kind" # if node already installed, will reinstall current packages
-# note that the above also makes "lts/*" the default + does `nvm use default`
+# Note that the above also makes "lts/*" the default + does `nvm use default`.
+status=$?
 
 # TODO: perhaps this belongs to install/npm-local or just install/npm-develop
 if onMac; then
@@ -45,12 +50,16 @@ if onMac; then
   # curl -sL https://raw.githubusercontent.com/nolanlawson/local-npm-launch-agent/master/script.py | python -
 fi
 
-# some npm options write to ~/.npmrc
+# Some npm options write to ~/.npmrc
 npm set save-exact true
 
-# always have the following packages installed
-npm i -g yarn json
-npm i -g npm-check npm-check-updates
+# Always have the following packages installed
+npm i -g npm-check npm-check-updates yarn json
 
-# clojure not depending on node, useful though
-npm i -g node-cljfmt
+# Clojure not depending on node, useful though, and usually...
+# clojure installed before node, using install/_all or similar
+if check-x clojure && silent holy on platform/clojure; then
+  npm i -g node-cljfmt
+fi
+
+exit $status

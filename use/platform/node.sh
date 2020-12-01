@@ -1,4 +1,7 @@
-# NOTE: sourced from elsewhere - use/aliases/npm.sh and src/node.sh
+# NOTE: sourced from elsewhere
+# install/platform/node
+# use/aliases/npm.sh
+# src/node.sh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
