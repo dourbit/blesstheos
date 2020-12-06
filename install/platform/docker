@@ -1,10 +1,24 @@
 #!/usr/bin/env bash
 
-# only for Ubuntu
-# need on servers although also useful for desktops
-# run the install/atop first and then this script
+# only for Ubuntu, unless user vouches for it with:
+# holy bless platform/docker
 
-if onUbuntu; then
+# need on servers although also useful for desktops
+# run the install/aton first and then this script
+# dourbit (urbit) depends on it
+
+holy-dot src/os bin-fn/ silent check-x
+
+# TODO: encapsulate this first if in a function
+# this can be reused by all installs for guaranteed idempotency
+# and even better, make it a function of holy in...
+# for a conditional install with a force option
+if silent holy on platform/docker && \
+  [[ "$1" != "-f" && "$1" != "--force" ]]; then
+  echo "Refusing execution of $0"
+  echo "This has already been installed or blessed."
+  echo "Run with --force option to install anyway."
+elif onUbuntu; then
   # Docker & Docker Compose
   # https://docs.docker.com/install/linux/docker-ce/ubuntu/
   sudo apt remove docker docker-engine docker.io containerd runc
@@ -37,12 +51,11 @@ if onUbuntu; then
   echo
   echo "try: docker run hello-world #or"
   echo "reboot your system to complete."
-
 else
   # TODO: automate this with a reusable script (holy command?)
-  # add it to the other install scripts
+  # add it to the other install scripts (code reuse)
   echo "OS not supported for automatic docker install."
-  if check-x docker; then # TODO: use: holy confirm platform/docker
+  if check-x docker; then # TODO: ? holy confirm platform/docker
     echo "However docker appears to have been installed."
     if ! silent holy on platform/docker; then
       echo "Vouch for this install with: holy bless platform/docker"
@@ -51,3 +64,7 @@ else
     exit 1
   fi
 fi
+
+# TODO: look into not assuming success?
+# holy confirm platform/docker # is it meaningful in-between install & reboot?
+exit 0
