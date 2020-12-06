@@ -63,12 +63,15 @@ if onApt; then
     fi
     sudo apt install -y bashtop
   fi
-  # https://askubuntu.com/questions/257263/how-to-display-network-traffic-in-the-terminal
+  # NOTE: bashtop and glances give a great overview of system activity
   sudo apt install -y htop glances # monitor system processes and much more
+  # https://askubuntu.com/questions/257263/how-to-display-network-traffic-in-the-terminal
   sudo apt install -y bmon slurm tcptrack iftop nethogs # network interface(s)
   sudo apt install -y speedometer # graph network traffic with custom chart max
   # speedometer -l  -t eth0 -r eth0 -m $(( 1024 * 1024 * 9 ))
   sudo apt install -y speedtest-cli # speedtest
+  # memory:
+  sudo apt install -y smem # https://www.selenic.com/smem/
 elif onMac; then
   brewOn && brew tap homebrew/cask-fonts && brew cask install font-iosevka && brew cask install font-iosevka-slab
   specho iTerm2 Shell Integrations ...
