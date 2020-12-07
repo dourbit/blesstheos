@@ -149,7 +149,7 @@ dourbit() {
       if [ "$tag" == "" ]; then
         >&2 echo "Not Found: ${1-'urbit-'}*"
         false; return
-      elif [ $(dourbit existing $tag) ]; then
+      elif dourbit existing $tag >/dev/null 2>&1; then
         echo "Pointless, will not build."
         echo "Have This: $tag"
         echo "Docker ID: $(dourbit image-id $tag)"
