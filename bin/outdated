@@ -3,6 +3,12 @@
 # Using: specho onApt snapOn
 holy-dot src/ install util os bin-fn/ check-x silent
 
+# Just one arg - keep it simple - in case you want to save before an upgrade
+no_color=false # show color by default
+[[ "$1" == "--no-color" ]] && no_color=true
+no_color_node="$(tis-true $no_color && echo -n --no-color)" # npm and apm
+# TODO: no_color_lein for lein ancient check-profiles #or strip with code
+
 # NOTE: maybe just add options to holy-on and skip holy-be-on - altogether?
 # TODO: think of a HOLY_VAR: for expressing a completely silent preference,
 # because not installing a holy ability would be wanting to self-handle it?
@@ -62,14 +68,14 @@ fi
 if silent holy on desktop/editor/atom; then
   specho Atom:
   # NOTE alias: als-up
-  apm upgrade -l
+  apm upgrade -l $no_color_node
 fi
 
 if check-x npm; then
   specho NPM:
   # NOTE alias: nls-up
   if holy-be-on platform/node; then
-    npm -g outdated --depth=0
+    npm -g outdated --depth=0 $no_color_node
     if [ $? -eq 0 ]; then
       echo All up-to-date.
     fi
