@@ -327,7 +327,7 @@ holy() {
       if tis-true $HOLY_EAGER; then
         echo && holy update
       fi
-      $(holy path bin/outdated)
+      $(holy path bin/outdated) $@
 
     elif [ $cmd == "upgrade" ]; then
       $(holy path bin/upgrade)
