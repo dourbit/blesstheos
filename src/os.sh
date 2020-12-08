@@ -23,7 +23,7 @@ onApt() {
 sudo-apt-update() {
   if onApt; then
     echo "apt update # silently..."
-    sudo-apt-update $@ > /dev/null 2>&1
+    sudo apt update $@ > /dev/null 2>&1
     return $?
   else
     false; return
