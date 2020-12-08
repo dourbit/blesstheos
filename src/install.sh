@@ -1,27 +1,17 @@
 # helper functions for install scripts
 
-holy-dot src/os # onApt
-
+# caller should check if onApt (src/os.sh)
 sudo-add-apt-repository() {
-  if onApt; then
-    echo "sudo add-apt-repository -y $@"
-    echo "Please wait for this silent run..."
-    sudo add-apt-repository -y $@ > /dev/null 2>&1
-    return $?
-  else
-    false; return
-  fi
+  echo "sudo add-apt-repository -y $@"
+  echo "Please wait for this silent run..."
+  sudo add-apt-repository -y $@ > /dev/null 2>&1
 }
 
+# caller should check if onApt (src/os.sh)
 sudo-apt-update() {
-  if onApt; then
-    echo "sudo apt update $@"
-    echo "Please wait for this silent run..."
-    sudo apt update $@ > /dev/null 2>&1
-    return $?
-  else
-    false; return
-  fi
+  echo "sudo apt update $@"
+  echo "Please wait for this silent run..."
+  sudo apt update $@ > /dev/null 2>&1
 }
 
 # NOTE: for a current Ubuntu this is automatically so, however...
