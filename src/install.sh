@@ -1,5 +1,29 @@
 # helper functions for install scripts
 
+holy-dot src/os # onApt
+
+sudo-add-apt-repository() {
+  if onApt; then
+    echo "sudo add-apt-repository -y $@"
+    echo "Please wait for this silent run..."
+    sudo add-apt-repository -y $@ > /dev/null 2>&1
+    return $?
+  else
+    false; return
+  fi
+}
+
+sudo-apt-update() {
+  if onApt; then
+    echo "sudo apt update $@"
+    echo "Please wait for this silent run..."
+    sudo apt update $@ > /dev/null 2>&1
+    return $?
+  else
+    false; return
+  fi
+}
+
 # NOTE: for a current Ubuntu this is automatically so, however...
 # TODO: maybe add $HOLY_SNAP_ON because using snap may be unwanted by some
 # though this logic may change further with use of other operating systems

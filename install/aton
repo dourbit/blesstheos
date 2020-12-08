@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 status=0
-holy-dot src/os
+holy-dot src/ os install
 
 # only for Debian / Ubuntu so far...
 # what is generally needed by a system (for other installs)

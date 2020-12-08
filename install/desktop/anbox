@@ -3,7 +3,7 @@
 # Depends holy on aton; shell
 
 # Using: sudoUse; onUbuntu; snapOn
-holy-dot src/ install os util
+holy-dot src/ os install util
 status=0
 
 sudoUse
@@ -12,7 +12,7 @@ specho "Anbox..."
 echo
 if onUbuntu; then
   if $(bb -i "(< $(lsb_release -rs) 19.04)"); then
-    sudo add-apt-repository -y ppa:morphis/anbox-support \
+    sudo-add-apt-repository ppa:morphis/anbox-support \
     && sudo-apt-update \
     && sudo apt install -y linux-headers-generic anbox-modules-dkms \
     || noInstall "anbox-support"
