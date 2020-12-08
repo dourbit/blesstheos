@@ -231,7 +231,13 @@ holy() {
           false; return
         fi
       else
-        >&2 echo "Not found: $path"
+        if [ -f $path ]; then
+          # path to file exists, this must be an executable permissions issue
+          >&2 echo "Not installable: $path"
+          >&2 echo "chmod +x please"
+        else
+          >&2 echo "Not found: $path"
+        fi
         false; return
       fi
 
