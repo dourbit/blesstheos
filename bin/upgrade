@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-# Using: sudoUse sudomy onApt check-x nvm-up node-up specho brewOn #and ...
-# silent and check-fn must be sourced -
-# because otherwise they would run in a subshell, not knowing about nvm
-holy-dot bin-fn/ check-x check-fn silent use/platform/node src/ install util os
+# Using: sudoUse sudomy onApt check-x nvm-up node-up specho brewOn brewCheck
+# ... silent and check-fn even more so,
+# because otherwise they would run in a subshell (not knowing about nvm)
+holy-dot use/platform/node src/ os install util node \
+  bin-fn/ check-x check-fn sudo-fn silent
 
 sudoUse
 
@@ -47,16 +48,14 @@ if check-x lein; then
   lein ancient upgrade-profiles ~/.lein/profiles.clj 2>/dev/null
 fi
 
-# Some things may not have been installed with brew...
-if ! brewOn; then
-  if check-x bb; then
-    specho Babashka ...
-    sudomy gh-install-xr borkdude/babashka install ~/tmp/
-  fi
-  if check-x clj-kondo; then
-    specho Clj-kondo ...
-    sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp/
-  fi
+# Download the following only if not installed via brew:
+if check-x bb && ! brewCheck babashka; then
+  specho Babashka ...
+  sudomy gh-install-xr borkdude/babashka install ~/tmp/
+fi
+if check-x clj-kondo && ! brewCheck clj-kondo; then
+  specho Clj-kondo ...
+  sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp/
 fi
 
 if check-x closh; then

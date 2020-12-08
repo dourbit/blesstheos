@@ -3,6 +3,8 @@
 # use/aliases/npm.sh
 # src/node.sh
 
+holy-dot src/os
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 

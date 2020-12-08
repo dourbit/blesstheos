@@ -37,6 +37,20 @@ brewOn() {
   && { true; return; } || { false; return; }
 }
 
+# check if a given package is installed by brew
+# this works regardless of brewOn
+brewCheck() {
+  if [ $# -eq 0 ]; then
+    >&2 echo "Please provide a package name."
+  elif ! [ -x "$(command -v brew)" ]; then
+    >&2 echo "Homebrew isn't on, perhaps do: holy in brew"
+  else
+    brew list --formula | grep -w $1 >/dev/null 2>&1
+    return $?
+  fi
+  false; return;
+}
+
 # report when something goes wrong
 noInstall() {
   >&2 echo "Fail: $(basename $0) did not install $1"
