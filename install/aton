@@ -8,7 +8,7 @@ holy-dot src/os
 
 if onApt; then
   echo "Apt Linux"
-  sudo apt update
+  sudo-apt-update
   sudo apt install -y build-essential git file git-lfs
   git lfs install --force
   if [ ! -f ~/.gitconfig ]; then cp "$HOLY_HOME"/home/.gitconfig ~/; fi

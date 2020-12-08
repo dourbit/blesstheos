@@ -23,7 +23,7 @@ if onUbuntu; then
   if $(bb -i "(< $(lsb_release -rs) 20.04)"); then
     wget -q -O - https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | sudo apt-key add -
     echo "deb https://deb.torproject.org/torproject.org $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list
-    sudo apt update
+    sudo-apt-update
     sudo apt install -y tor deb.torproject.org-keyring torbrowser-launcher
   else
     # Focal "20.04" onward is a simpler install
@@ -41,7 +41,7 @@ if onUbuntu; then
   specho Etcher ...
   echo "deb https://deb.etcher.io stable etcher" | sudo tee /etc/apt/sources.list.d/balena-etcher.list
   sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
-  sudo apt update
+  sudo-apt-update
   sudo apt install balena-etcher-electron
 
 else

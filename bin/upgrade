@@ -16,7 +16,7 @@ fi
 
 if onApt; then
   specho Apt ...
-  silent sudo apt update
+  silent sudo-apt-update
   sudo apt -y upgrade
 fi
 

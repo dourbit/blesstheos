@@ -20,6 +20,16 @@ onApt() {
   false; return
 }
 
+sudo-apt-update() {
+  if onApt; then
+    echo "apt update # silently..."
+    sudo-apt-update $@ > /dev/null 2>&1
+    return $?
+  else
+    false; return
+  fi
+}
+
 onUbuntu() {
   if [ "$HOLY_DISTRO" == 'Ubuntu' ]; then true; return; fi
   false; return
