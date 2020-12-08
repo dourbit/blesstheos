@@ -38,6 +38,7 @@ holy in term
 
 # if not `onUbuntu` then may have to re-install some of these later
 holy in desktop/_os/ubuntu
+holy in desktop/packages
 holy in desktop/editors
 holy in desktop/media
 holy in desktop/anbox

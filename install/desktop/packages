@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Using: sudoUse onApt specho sudo-apt-update
+holy-dot src/ os util
+
+# TODO: https://snapcraft.io/ for OSes that are not snapOn by default
+
+if onApt; then
+
+  sudoUse
+
+  specho Flatpak ...
+  sudo apt install -y flatpak gnome-software-plugin-flatpak
+  # TODO: look into $XDG_DATA_DIRS
+  # /var/lib/flatpak/exports/share
+  # ~/.local/share/flatpak/exports/share
+  # Because: applications installed by Flatpak may not appear on your desktop -
+  # until the session is restarted.
+
+  specho AppImageLauncher ...
+  sudo add-apt-repository -y ppa:appimagelauncher-team/stable
+  sudo-apt-update
+  sudo apt install -y appimagelauncher
+
+else
+  exit 1
+fi
