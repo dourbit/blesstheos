@@ -35,6 +35,11 @@ if silent check-fn nvm; then
   nvm install-latest-npm && npm-check -g -y
 fi
 
+if silent holy on desktop/editor/atom; then
+  specho Atom ...
+  apm upgrade --confirm=false
+fi
+
 if check-x lein; then
   specho Leiningen ...
   if sudo-fn check-x lein; then
