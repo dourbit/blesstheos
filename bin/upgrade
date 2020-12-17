@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# Using: sudoUse sudomy onApt check-x nvm-up node-up specho brewOn brewCheck
+# Using: sudoUse sudomy onApt check-x nvm-up node-up specho
+# ... brewOn brewCheck snapOn
 # ... silent and check-fn even more so,
 # because otherwise they would run in a subshell (not knowing about nvm)
 holy-dot use/platform/node src/ os install util node \
@@ -19,6 +20,11 @@ if onApt; then
   specho Apt ...
   silent sudo-apt-update
   sudo apt -y upgrade
+fi
+
+if snapOn; then
+  specho Snap ...
+  sudo snap refresh
 fi
 
 if silent check-fn nvm; then
