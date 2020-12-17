@@ -25,6 +25,10 @@ fi
 if snapOn; then
   specho Snap ...
   sudo snap refresh
+  # NOTE: devmode snaps need special refresh
+  if silent holy on desktop/anbox; then
+    sudo snap refresh --devmode --beta anbox
+  fi
 fi
 
 if silent check-fn nvm; then
