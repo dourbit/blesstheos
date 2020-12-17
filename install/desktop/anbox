@@ -27,6 +27,7 @@ fi
 
 echo
 snapOn && sudo snap install --devmode --beta anbox || noInstall anbox
+# NOTE: if anbox grows out of devmode - remove the explicit bin/upgrade refresh
 
 specho "Probing for ashmem and binder modules:"
 sudo modprobe ashmem_linux
