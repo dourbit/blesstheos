@@ -28,6 +28,5 @@ brew tap beeftornado/rmtree
 # Eventually these will get split in 3 files: linux-only, mac-only, and shared.
 # Here is a fresh start for what should end up as shared. None are necessary...
 if brewOn; then
-  brew install gcc #suggested
   if ! onApt; then brew install transmission-cli; fi # apt is preferable
 fi

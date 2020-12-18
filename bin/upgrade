@@ -32,9 +32,16 @@ if snapOn; then
   fi
 fi
 
-if check-x python && check-x pip-review && silent holy on platform/python; then
+if silent holy on platform/python; then
   specho Python ...
-  pip-review --auto
+  if check-x pip-review; then
+    # NOTE: should be expected and validated by holy confirm
+    pip-review --auto
+  fi
+  if check-x poetry; then
+    specho Poetry ...
+    poetry self update --no-interaction
+  fi
 fi
 
 if silent check-fn nvm; then
