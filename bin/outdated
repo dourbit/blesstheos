@@ -13,7 +13,10 @@ no_color_node="$(tis-true $no_color && echo -n --no-color)" # npm and apm
 if check-x brew; then
   specho Homebrew:
   if holy-be-on brew; then
-    brew outdated
+    brew_out="$(brew outdated | tee /dev/stderr | wc -l)"
+    if [ "$brew_out" == "0" ]; then
+      echo "Packages up to date."
+    fi
   fi
 fi
 
