@@ -20,6 +20,7 @@ if onApt; then
   specho Apt ...
   silent sudo-apt-update
   sudo apt -y upgrade
+  # sudo apt autoremove --purge
 fi
 
 if snapOn; then
@@ -29,6 +30,11 @@ if snapOn; then
   if silent holy on desktop/anbox; then
     sudo snap refresh --devmode --beta anbox
   fi
+fi
+
+if check-x python && check-x pip-review && silent holy on platform/python; then
+  specho Python ...
+  pip-review --auto
 fi
 
 if silent check-fn nvm; then
