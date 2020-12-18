@@ -57,3 +57,29 @@ noInstall() {
   status=1 # if using global $status then less code needed on the calling side
   return 1
 }
+
+# see example use in bin/outdated
+# NOTE: maybe just add options to holy-on and skip holy-be-on - altogether?
+# TODO: think of a HOLY_VAR: for expressing a completely silent preference,
+# because not installing a holy ability would be wanting to self-handle it?
+# Thus not be bothered with any messages regarding outdated packages,
+# how to install / bless it, etc. Though how do we catch certain holy bugs?
+holy-be-on() {
+  if [ $# -eq 0 ]; then
+      >&2 echo "holy on <what>?"
+      return 1
+  else
+    local what=$1; shift
+    silent holy on $what
+    if [ $? -eq 0 ]; then
+      return 0
+    elif [ $# -ne 0 ]; then
+      # custom message given
+      echo "$@"
+    else
+      # is informative enough
+      holy on $what
+    fi
+    return 1
+  fi
+}
