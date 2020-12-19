@@ -17,7 +17,7 @@ else
   # https://hypercore-protocol.org/
   specho Hypercore ...
   # https://github.com/hypercore-protocol/cli/
-  npm-i--g @hyperspace/cli || noInstall hyp
+  npm-i -g @hyperspace/cli || noInstall hyp
 
 fi
 

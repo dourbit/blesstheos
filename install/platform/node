@@ -67,12 +67,12 @@ fi
 specho npm install --global packages
 
 # Always have the following packages installed
-npm-i--g npm-check npm-check-updates yarn json
+npm-i -g npm-check npm-check-updates yarn json
 
 # Clojure not depending on node, useful though, and usually...
 # clojure installed before node, using install/_all or similar
 if check-x clojure && silent holy on platform/clojure; then
-  npm-i--g node-cljfmt
+  npm-i -g node-cljfmt
 fi
 
 echo

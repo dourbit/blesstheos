@@ -64,21 +64,22 @@ node-up() {
 
 
 # npm-i [opts] <packages>
+# NOTE: any --options (e.g. -g / --global) must come before the packages
 # install any packages, whether explicitly versioned or not,
 # only if not already installed - globally or otherwise ...
 # better when expecting the packages to be installed already
+# it does not reinstall and in fact that's the raison d'etre
 
-# TODO: don't assume -g; and pass on or filter other options +
-# don't forget to change the name to npm-i ...
-
-npm-i--g() {
-  local pkg
-  local opt="-g"
-  for pkg in $@; do
-    if silent npm list $opt $pkg; then
-      echo "Is already installed: $pkg"
+npm-i() {
+  local arg
+  local opts=()
+  for arg in $@; do
+    if [[ "$arg" =~ ^- ]]; then
+      opts+=($arg)
+    elif silent npm list ${opts[@]} $arg; then
+      echo "Installed: $arg"
     else
-      npm i $opt $pkg
+      npm i ${opts[@]} $arg
     fi
   done
 }
