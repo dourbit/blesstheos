@@ -139,6 +139,8 @@ this-that() {
 # sources files based on this-that, with optional .sh ext;
 # with a -x option: uses holy-export and passes on options to it +
 # guesses relative paths with great flexibility and alternatives
+# NOTE: has quirks, such as presuming base-dir/ context stickyness
+# instead of fallback to the home-dir (could reset with // or / ?)
 holy-dot() {
   local opts=() export="no" ifs=":" all="*.sh"
   # NOTE: expects options before the paths
