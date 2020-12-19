@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Decentralization toolset - everything without gui (i.e. cli & backends)
+
+holy-dot src/ install util node
+
+status=0
+
+if ! silent holy on platform/node; then
+  echo "Required holy on platform/node"
+  status=1
+
+else
+  # NOTE: usually not necessary, though just in case it's a fresh install
+  holy-dot use/platform/node
+
+  # https://hypercore-protocol.org/
+  specho Hypercore ...
+  # https://github.com/hypercore-protocol/cli/
+  npm-i--g @hyperspace/cli || noInstall hyp
+
+fi
+
+exit $status
