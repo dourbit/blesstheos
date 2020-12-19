@@ -38,6 +38,7 @@ if silent holy on platform/python; then
     # NOTE: should be expected and validated by holy confirm
     pip-review --auto
   fi
+  # NOTE: keep it at the bottom / after and yet within the python upgrades
   if check-x poetry; then
     specho Poetry ...
     poetry self update --no-interaction

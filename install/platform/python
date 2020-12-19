@@ -1,20 +1,27 @@
 #!/usr/bin/env bash
 
-# only if onApt
-holy-dot src/os
+# only if onApt, or assume python3 & pip3 already installed
+holy-dot src/ os install
+
+status=0
 
 if onApt; then
 
   # python 3 is the only alternative now
-  sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 3
+  # sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 3
 
   sudo apt install -y python-is-python3 python3-pip python3-markdown python3-tk
 
-  # absolutely need these packages:
-  pip3 install pip-review
-
-  python --version #3
-
-else
-  exit 1
 fi
+
+# absolutely need these packages for upgrades:
+pip3 install pip-review || noInstall pip3 pip-review
+
+# project development / dependencies management:
+echo
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+
+echo
+python --version
+
+exit $status
