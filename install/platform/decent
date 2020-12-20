@@ -21,6 +21,15 @@ else
   npm-i -g @hyperspace/cli || noInstall hyp
   # https://github.com/hypercore-protocol/hyperspace/
   npm-i -g hyperspace || noInstall hyperspace
+  # https://github.com/mafintosh/hyperphone
+  npm-i -g hyperphone || noInstall hyperphone
+  if onApt; then
+    sudo apt install -y sox
+  elif brewOn; then
+    brew install sox
+  elif ! check-x sox; then
+    noInstall sox for hyperphone
+  fi
 
 fi
 
