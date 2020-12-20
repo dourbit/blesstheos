@@ -71,12 +71,16 @@ node-up() {
 # it does not reinstall and in fact that's the raison d'etre
 
 npm-i() {
-  local arg
-  local opts=()
+  local arg opts=()
   for arg in $@; do
     if [[ "$arg" =~ ^- ]]; then
       opts+=($arg)
-    elif silent npm list ${opts[@]} $arg; then
+    # NOTE: checking for installed modules can be oddly imprecice and tricky!
+    # for example @hyperspace/cli shows up as npm ls -g hyperspace
+    # the options below ensure an exact match for "Installed: ..."
+    # otherwise a false positive would hinder a valid installation call
+    elif npm ls ${opts[@]} --parseable --depth=0 $arg | \
+      grep -e "node_modules/$arg\$" >/dev/null 2>&1; then
       echo "Installed: $arg"
     else
       npm i ${opts[@]} $arg
