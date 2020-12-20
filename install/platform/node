@@ -23,7 +23,7 @@ if onLinux; then
   specho "Linux nvm install..."
   echo
   mkdir -p ~/.nvm
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+  gh-install-xr nvm-sh/nvm install.sh ~/tmp
 elif onMac && check-x brew; then
   specho "MacOS nvm install via brew..."
   echo
@@ -67,7 +67,7 @@ fi
 specho npm install --global packages
 
 # Always have the following packages installed
-npm-i -g npm-check npm-check-updates yarn json
+npm-i -g npm-check npm-check-updates yarn json npm-auto
 
 # Clojure not depending on node, useful though, and usually...
 # clojure installed before node, using install/_all or similar
