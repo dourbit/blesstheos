@@ -2,8 +2,9 @@
 
 # Decentralization toolset - everything without gui (i.e. cli & backends)
 
-holy-dot src/ install util node
+holy-dot src/ install util node os
 
+sudoUse
 status=0
 
 if ! silent holy on platform/node; then
@@ -22,5 +23,17 @@ else
   npm-i -g hyperspace || noInstall hyperspace
 
 fi
+
+# https://ipfs.io/
+specho IPFS ...
+if onLinux && snapOn; then
+  sudo snap install ipfs
+elif onMac && brewOn; then
+  brew install ipfs
+else
+  noInstall ipfs
+fi
+# ipfs config profile --help
+# ipfs init --profile server
 
 exit $status
