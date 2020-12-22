@@ -63,5 +63,10 @@ specho "Compression..."
 onApt && sudo apt install -y rar unrar \
   || noInstall "*rar"
 
+specho "Images..."
+# https://github.com/muennich/sxiv
+onApt && sudo apt install -y sxiv \
+  || noInstall sxiv
+
 echo
 exit $status
