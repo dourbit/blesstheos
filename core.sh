@@ -196,15 +196,17 @@ holy-dot() {
     # 3. current base context must take precedence over a new base context...
     # this is what caused the requirement -- src/ install vs. src/ install/
     # in this case install is both a file in current context and a base dir
-    if [[ $path =~ /$ ]] && tis-true $that \
-      && [[ -d "${HOLY_HOME}/${path}" || -d "${DOTS_HOME}/${path}" ]] \
-      || [ -d "${homes}/${path}" ]; then
-        tis-true $glob && bases+=($base) # previous $path also a $base
-        # $path is a relative $base directory for sure (though files assumed)
-        base=$path # not checked in advance, just it being a directory is ok.
-        glob=yes # follow a base by one or more files - or all files sourced!
-        shift # this base-dir
-        continue # to the next $path
+    if [[ $path =~ /$ ]]; then
+      if tis-true $that \
+        && [[ -d "${HOLY_HOME}/${path}" || -d "${DOTS_HOME}/${path}" ]] \
+        || [ -d "${homes}/${path}" ]; then
+          tis-true $glob && bases+=($base) # previous $path also a $base
+          # $path is a relative $base directory for sure (though files assumed)
+          base=$path # not checked in advance, just it being a directory is ok.
+          glob=yes # follow a base by one or more files - or all files sourced!
+          shift # this base-dir
+          continue # to the next $path
+      fi
     fi
     found=none
     for home in ${homed[@]}; do

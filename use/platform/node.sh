@@ -1,7 +1,6 @@
 # NOTE: sourced from elsewhere
-# install/platform/node
 # use/aliases/npm.sh
-# src/node.sh
+# src/node.sh (sometimes)
 
 holy-dot src/ install os
 
