@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# install/node && . use/platform/node && nvm use
+# install with:
+# holy in platform/node && holy-dot use/platform/node
 
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
@@ -34,12 +35,11 @@ else
   exit 1
 fi
 
+# Configuration options (the default node version)
+echo "$kind" > ~/.nvmrc # nvm use (rather than nvm use default)
+
 # NOTE: immediate nvm use without a new shell session, need to keep it here!
 holy-dot use/platform/node
-
-
-# Configuration options
-echo "$kind" > ~/.nvmrc # nvm use (rather than nvm use default)
 
 # Some ~/.npmrc options
 npm set save-exact true
