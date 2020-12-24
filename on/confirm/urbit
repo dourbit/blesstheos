@@ -12,7 +12,7 @@ confirm() {
     silent ls $dir
     if [ $? -ne 0 ]; then
       good=false
-      echo "Not Found: $dir"
+      >&2 echo "Not Found: $dir"
     fi
   done
   $good; return

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+holy-dot src/node
+
+nvm-on
+# TODO: look into confirming nvm without the above (simpler check?)
+# because it is done again by use/platform/node.sh
+
+confirm() {
+  local good=true
+  if ! command -v nvm > /dev/null; then
+    good=false
+    >&2 echo "Not Found: nvm"
+  fi
+  $good; return
+}
+
+confirm

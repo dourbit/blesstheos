@@ -2,18 +2,13 @@
 # use/aliases/npm.sh
 # src/node.sh (sometimes)
 
-holy-dot src/ install os
+holy-dot src/ install node
 
 if holy-be-on platform/node; then
 
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+  nvm-on
 
-  if onLinux; then
-    [ -s "$NVM_DIR"/nvm.sh ] && . "$NVM_DIR"/nvm.sh
-  elif onMac; then
-    . "$(brew --prefix nvm)"/nvm.sh
-  fi
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
   # silently use /home/orlin/.nvmrc (this will pick up a change)
   nvm use > /dev/null
