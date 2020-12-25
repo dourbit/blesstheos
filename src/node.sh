@@ -63,6 +63,7 @@ node-v() {
 # upgrades node where it makes sense
 # switches to, and possibly upgrades one of: "lts/*", "stable", or "default"
 # "current" is the default and can work if it is set to "lts/*" or "stable"
+# latest npm, keep the same global packages
 
 node-up() {
   local kind=${1-"current"}
