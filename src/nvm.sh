@@ -4,13 +4,13 @@ nvm-dir() {
   local dir
   if tis-some $NVM_DIR; then
     dir="$NVM_DIR"
-  elif onMac && brewOn; then
+  elif onMac && silent brewCheck nvm; then
     dir="$(brew --prefix nvm)"
   else
     # Linux or other
     dir="$HOME"/.nvm
   fi
-  # validate nvm directory
+  # validate the nvm dir
   if [ -s "$dir"/nvm.sh ]; then
     echo "$dir" && true; return
   else
