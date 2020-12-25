@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-holy-dot src/node
+holy-dot src/nvm
 
 nvm-on
 # TODO: look into confirming nvm without the above (simpler check?)

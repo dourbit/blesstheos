@@ -1,13 +1,15 @@
-holy-dot src/ install node
+holy-dot src/install
 
 if holy-be-on platform/node; then
 
+  # source only if platform/node is on
+  holy-dot src/nvm
   nvm-on
 
-  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-
-  # silently use /home/orlin/.nvmrc (this will pick up a change)
+  # silently use ~/.nvmrc (perhaps the version changed)
   nvm use > /dev/null
+
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
   # https://github.com/yarnpkg/yarn/issues/5353
   # after the nvm / npm global packages, which take precedence (from above)
