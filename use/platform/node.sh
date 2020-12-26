@@ -9,8 +9,6 @@ if holy-be-on platform/node; then
   # silently use ~/.nvmrc (perhaps the version changed)
   nvm use > /dev/null
 
-  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-
   # https://github.com/yarnpkg/yarn/issues/5353
   # after the nvm / npm global packages, which take precedence (from above)
   [ -x "$(command -v yarn)" ] && PATH-add "$(yarn global bin)"

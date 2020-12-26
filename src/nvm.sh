@@ -23,6 +23,7 @@ nvm-on() {
   if [ -d "$dir" ]; then
     export NVM_DIR="$dir"
     . "$NVM_DIR"/nvm.sh
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
     command -v nvm > /dev/null
   else
     >&2 echo "Not Found: nvm"
