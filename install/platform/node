@@ -19,14 +19,18 @@ holy-dot src/ os node util
 [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
 
 
-# NVM
-if onLinux; then
-  specho "Linux nvm install..."
+# NVM (install)
+# NOTE: if not onLinux, have brewOn (HOLY_BREW_ON=yes)
+# in order to use brew rather than the install.sh default
+if onLinux || ! brewOn; then
+  specho "NVM via install.sh"
   echo
   mkdir -p ~/.nvm
   gh-install-xr nvm-sh/nvm install.sh ~/tmp
-elif onMac && check-x brew; then
-  specho "MacOS nvm install via brew..."
+elif check-x brew; then
+  # the above check-x brew is redundant, however enables an easier refactor and
+  # kept to prevent future bugs just in case the leading if changes further
+  specho "NVM install with brew"
   echo
   mkdir -p ~/.nvm
   cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
@@ -52,7 +56,7 @@ status=$?
 
 # TODO: perhaps this belongs to install/npm-local or just install/npm-develop
 if onMac; then
-  echo "local-npm to be revived..."
+  echo "local-npm to be revived only onMac? Not using for now..."
   # TODO: extract to install local-npm via Docker for any development machine
   # NOTE: wait for local-npm 3.0 first
   # https://github.com/local-npm/local-npm
