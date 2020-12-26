@@ -4,10 +4,12 @@ nvm-dir() {
   local dir
   if tis-some $NVM_DIR; then
     dir="$NVM_DIR"
-  elif onMac && silent brewCheck nvm; then
+  elif [ -x "$(command -v brew)" ] && brewCheck nvm; then
+    # brew is installed, and nvm is installed with it (usually onMac)
+    # in this case brewOn is rather irrelevant
     dir="$(brew --prefix nvm)"
   else
-    # Linux or other
+    # Linux or other not using brew
     dir="$HOME"/.nvm
   fi
   # validate the nvm dir

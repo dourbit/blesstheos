@@ -33,8 +33,8 @@ flatpakOn() {
 # perhaps it is unwanted when installing a cloud server from scratch
 # when getting a machine from from zero to running is of the essence
 brewOn() {
-  [ "$HOLY_BREW_ON" = true ] && [ -x "$(command -v brew)" ] \
-  && { true; return; } || { false; return; }
+  tis-true $HOLY_BREW_ON && [ -x "$(command -v brew)" ] && { true; return; } \
+    || { false; return; }
 }
 
 # check if a given package is installed by brew
