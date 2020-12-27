@@ -6,9 +6,9 @@
 # Node.js via Node Version Manager
 # https://github.com/nvm-sh/nvm
 # See also:
-# `bin/nvm-up` - upgrade of nvm itself
-# `src/node.sh` - for switching between versions and upgrading
-# `use/aliases/npm.sh` - useful command aliases
+# `src/nvm.sh` - upgrade of nvm itself + various nvm functions / helpers
+# `src/node.sh` - for switching between versions and upgrading / installing
+# `use/platform/node` - sourced with holy-dot or holy-f node
 
 # Depends holy on brew (if onMac)
 # Install clojure modules (if holy on platform/clojure)

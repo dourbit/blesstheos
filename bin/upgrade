@@ -4,7 +4,7 @@
 # ... brewOn brewCheck snapOn
 # ... silent and check-fn even more so,
 # because otherwise they would run in a subshell (not knowing about nvm)
-holy-dot use/platform/node src/ os install util node \
+holy-dot use/platform/node src/ os install util nvm node \
   bin-fn/ check-x check-fn sudo-fn silent
 
 sudoUse
