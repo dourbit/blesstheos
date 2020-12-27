@@ -33,6 +33,11 @@ nvm-on() {
   fi
 }
 
+# NOTE: If you're using zsh you can easily install nvm as a zsh plugin.
+# Install zsh-nvm and run nvm upgrade to upgrade.
+# https://github.com/lukechilds/zsh-nvm
+# TODO: consider adding shell-dependent logic for install,
+# plus upgrading the function below for using nvm upgrade if $SHELL is zsh
 nvm-up() {
   if tis-some $NVM_DIR; then
     # https://github.com/nvm-sh/nvm#manual-upgrade
