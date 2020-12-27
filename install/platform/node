@@ -33,7 +33,9 @@ elif check-x brew; then
   specho "NVM install with brew"
   echo
   mkdir -p ~/.nvm
-  cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+  brew install nvm
+  # next command seems no longer needed and perhaps also destructive (skip)
+  # cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 else
   echo "System '${HOLY_KERNEL}' does not meet current requirements."
   exit 1
