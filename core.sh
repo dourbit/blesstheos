@@ -368,6 +368,21 @@ holy-export() {
   fi
 }
 
+holy-f() {
+  if [ $# -eq 0 ]; then
+    >&2 echo "holy-f: what?"
+    false; return
+  elif [ "$1" == "nvm" ]; then
+    holy-dot -x -f src/nvm
+    nvm-on && nvm use
+  elif [ "$1" == "node" ]; then
+    holy-dot -x -f src/ nvm node
+    holy-dot use/platform/node
+  else
+    holy-dot -x -f $@
+  fi
+}
+
 # http://unix.stackexchange.com/questions/4965/keep-duplicates-out-of-path-on-source
 PATH-add() {
   for d; do
