@@ -81,5 +81,18 @@ if check-x clojure && silent holy on platform/clojure; then
   npm-i -g node-cljfmt
 fi
 
+specho "Default node version of ~/.nvmrc set to $kind"
+echo -n "Outcome is a node " && node-v
+if [ $# -eq 0 ]; then
+  echo "One can change it with this same script, for example:"
+  echo -n "holy in platform/node "
+  [[ $kind =~ ^lts.* ]] && echo "stable" || echo "lts/*"
+  # NOTE: above we give example that's different from the default
+  # done with code just in case that changes some day
+fi
+
+specho "For immediate use, run:"
+echo "holy-dot use/platform/node"
+
 echo
 exit $status
