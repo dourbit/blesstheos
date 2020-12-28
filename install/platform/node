@@ -18,6 +18,8 @@ holy-dot src/ os node util
 # lts/* is the default node, call with "stable" if more recent node is preferred
 [[ $# -eq 0 ]] && kind="lts/*" || kind="$1"
 
+# The node version before the install, if any at all, later compare to result
+before="$(command -v node > /dev/null && node -v)"
 
 # NVM (install)
 # NOTE: if not onLinux, have brewOn (HOLY_BREW_ON=yes)
@@ -81,8 +83,12 @@ if check-x clojure && silent holy on platform/clojure; then
   npm-i -g node-cljfmt
 fi
 
+
+# What is now installed, captured without a subshell, pretty neat
+read result < <(node-v)
+
 specho "Default node version of ~/.nvmrc set to $kind"
-echo -n "Outcome is a node " && node-v
+echo "Outcome is a node $result"
 if [ $# -eq 0 ]; then
   echo "One can change it with this same script, for example:"
   echo -n "holy in platform/node "
@@ -91,8 +97,14 @@ if [ $# -eq 0 ]; then
   # done with code just in case that changes some day
 fi
 
-specho "For immediate use, run:"
-echo "holy-dot use/platform/node"
+# Here we show how to switch the node version from the same shell
+# only if the version has changed, because this change happens in a subshell
+if [ "$result" != "$before" ]; then
+  echo
+  tis-some $before && echo "Notice the change from $before to $result"
+  echo "For immediate use, run:"
+  echo "holy-dot use/platform/node"
+fi
 
 echo
 exit $status
