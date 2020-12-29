@@ -369,17 +369,45 @@ holy-export() {
 }
 
 holy-f() {
+  local opts=() aliases=no holy_dot="holy-dot -x -f" aliases_save=""
+  # NOTE: holy-dot and holy-source assumed to not take the same options
+  # so far this is the case with -a|--aliases (or pass on with $opts as well)
+  while :; do
+    case $1 in
+      -a|--aliases)
+        aliases=yes
+        ;;
+      -?*)
+        opts+=($1)
+        ;;
+      *)
+        break
+    esac
+    shift
+  done
+  # construct the holy-dot command with any given options
+  [ ${#opts[@]} -ne 0 ] && holy_dot="$holy_dot ${opts[@]}"
+  # require a shortcut or holy-dot path(s)
   if [ $# -eq 0 ]; then
-    >&2 echo "holy-f: what?"
+    >&2 echo "Usage: holy-f [options] [shortcuts or holy-dot paths]"
+    >&2 echo "options: -a, --aliases; anything else given to holy-dot"
+    >&2 echo "shortcuts: nvm node"
     false; return
-  elif [ "$1" == "nvm" ]; then
-    holy-dot -x -f src/nvm
-    nvm-on && nvm use
-  elif [ "$1" == "node" ]; then
-    holy-dot -x -f src/ nvm node
-    holy-dot use/platform/node
   else
-    holy-dot -x -f $@
+    tis-true $aliases && aliases_save=$HOLY_ALIASES && export HOLY_ALIASES=yes
+    if [ "$1" == "nvm" ]; then
+      # unusual to only need nvm, though available for the fewer functions
+      # node is being turned on / reloaded here anyway, just not as a main goal
+      $holy_dot src/nvm
+      nvm-on && nvm use
+    elif [ "$1" == "node" ]; then
+      # node also exports the nvm helper functions
+      $holy_dot src/ nvm node
+      holy-dot use/platform/node
+    else
+      $holy_dot $@
+    fi
+    [ "aliases_save" != "" ] && export HOLY_ALIASES=$aliases_save # restore
   fi
 }
 
