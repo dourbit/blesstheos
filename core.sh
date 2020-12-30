@@ -391,6 +391,7 @@ holy-f() {
   if [ $# -eq 0 ]; then
     >&2 echo "Usage: holy-f [options] [shortcuts or holy-dot paths]"
     >&2 echo "options: -a, --aliases; anything else given to holy-dot"
+    >&2 echo "unexport: to undo / unset, use the -n option, e.g. holy-f -n ..."
     >&2 echo "shortcuts: nvm node"
     false; return
   else
