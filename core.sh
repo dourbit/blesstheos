@@ -368,8 +368,14 @@ holy-export() {
   fi
 }
 
+# convenience function for holy-dot exporting functions from sourceable files
+# in addition to less typing, one simply overrides global configuration:
+# it ignores the value of $HOLY_EXPORT (via holy-dot / holy-source options)
+# if -a or --aliases option, it also ingores $HOLY_ALIASES (unique to holy-f)
+# finally, it adds a few keyword shortcuts that have their own sourcing logic
 holy-f() {
-  local opts=() aliases=no holy_dot="holy-dot -x -f" aliases_save=""
+  local holy_dot="holy-dot -x -f"
+  local opts=() aliases=no aliases_save=""
   # NOTE: holy-dot and holy-source assumed to not take the same options
   # so far this is the case with -a|--aliases (or pass on with $opts as well)
   while :; do
@@ -389,10 +395,10 @@ holy-f() {
   [ ${#opts[@]} -ne 0 ] && holy_dot="$holy_dot ${opts[@]}"
   # require a shortcut or holy-dot path(s)
   if [ $# -eq 0 ]; then
-    >&2 echo "Usage: holy-f [options] [shortcuts or holy-dot paths]"
-    >&2 echo "options: -a, --aliases; anything else given to holy-dot"
-    >&2 echo "unexport: to undo / unset, use the -n option, e.g. holy-f -n ..."
-    >&2 echo "shortcuts: nvm node"
+    echo "Usage: holy-f [options] [shortcuts or holy-dot paths]"
+    echo "options: -a, --aliases; anything else given to holy-dot"
+    echo "unexport: to undo / unset, use the -n option, e.g. holy-f -n ..."
+    echo "shortcuts: nvm node"
     false; return
   else
     tis-true $aliases && aliases_save=$HOLY_ALIASES && export HOLY_ALIASES=yes
