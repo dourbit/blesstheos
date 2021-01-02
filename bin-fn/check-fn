@@ -19,7 +19,11 @@ check-fn() {
     echo "check-fn <name> # for the code"
   else
     if ! declare -fp "$1" 2> /dev/null; then
-      echo "$1 is not a function"
+      # check if in a subshell context, because:
+      # when run as command, can't see functions that aren't exported
+      [ $(basename $0) == $COMMAND_FN ] \
+        && echo "$1 is not an exported function" \
+        || echo "$1 is not declared as function"
       echo "try: type $1"
       false; return
     fi
