@@ -66,18 +66,20 @@ noInstall() {
 # how to install / bless it, etc. Though how do we catch certain holy bugs?
 holy-be-on() {
   if [ $# -eq 0 ]; then
-      >&2 echo "holy on <what>?"
+      >&2 echo "holy on <what?> [--silent]"
       return 1
   else
     local what=$1; shift
-    silent holy on $what
+    holy on $what >/dev/null 2>&1
     if [ $? -eq 0 ]; then
       return 0
     elif [ $# -ne 0 ]; then
-      # custom message given
-      echo "$@"
+      if [ $1 != "--silent" ]; then
+        # custom message given
+        echo "$@"
+      fi
     else
-      # is informative enough
+      # informative enough
       holy on $what
     fi
     return 1
