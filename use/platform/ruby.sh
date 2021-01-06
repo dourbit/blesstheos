@@ -6,9 +6,7 @@
 # use the following, instead of ~/.rbenv
 # export RBENV_ROOT=/usr/local/var/rbenv
 
-holy-dot src/install
-
-if holy-be-on platform/ruby --silent; then
+if silent holy on platform/ruby; then
 
   if tis-true $HOLY_ALIASES; then
     alias bex="bundle exec"

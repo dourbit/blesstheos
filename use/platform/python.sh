@@ -1,7 +1,5 @@
-holy-dot src/install
-
 # so far just for aliases
-if holy-be-on platform/python --silent && tis-true $HOLY_ALIASES; then
+if tis-true $HOLY_ALIASES && silent holy on platform/python; then
 
   # pip's upgrading of packages is unintuitive
   # these are my aliases, a kind of cheatsheet

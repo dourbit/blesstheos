@@ -1,6 +1,4 @@
-holy-dot src/install
-
-if holy-be-on platform/node --silent; then
+if silent holy on platform/node; then
 
   # source only if platform/node is on
   holy-dot src/nvm

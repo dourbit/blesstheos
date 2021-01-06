@@ -1,4 +1,4 @@
-holy-dot src/os
+holy-dot src/ os install
 
 nvm-dir() {
   local dir
