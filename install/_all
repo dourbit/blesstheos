@@ -28,13 +28,13 @@ holy in platform/clojure
 holy in platform/node && holy-dot use/platform/node
 
 # decentralized tools
-holy in platform/decent
+holy in platform/decent && holy-dot use/platform/decent
 
 # via `brew` on a Mac - maybe unify for all to be brew-based...
-holy in platform/ruby
+holy in platform/ruby && holy-dot use/platform/ruby
 
 # only apt, though that will eventually change
-holy in platform/python
+holy in platform/python && holy-dot use/platform/python
 
 # it's just for Linux, just about fully...
 holy in term

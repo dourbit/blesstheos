@@ -4,36 +4,20 @@
 
 if onMac; then
   echo "Mac OS"
-  brew install rbenv
-  brew install ruby-build
+  brew install rbenv ruby-build
+
 elif onApt; then
   echo "Apt Linux"
-  # Debian / Ubuntu can sudo apt install rbenv ruby-build
-  # that's easier, foolproof and automatically upgradable
-  # consider switching to those with the next install ...
+  sudo apt install -y rbenv ruby-build
 
   # dependencies needed for building ruby
   sudo apt install -y libssl-dev libreadline-dev zlib1g-dev
-
-  echo '' >> ~/.bashrc # add an empty line space
-
-  cd
-  git clone git://github.com/rbenv/rbenv.git .rbenv
-  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-
-  git clone git://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
-
-  echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-  exec $SHELL
 
   # to get more ruby versions, down the road:
   # $ cd ~/.rbenv/plugins/ruby-build
   # $ git pull
   # $ rbenv install --list
 
-  # This plugin is deprecated since its behavior is now included in rbenv core.
-  # git clone https://github.com/rbenv/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 else
   echo "No ${HOLY_KERNEL} system match!"
 fi
