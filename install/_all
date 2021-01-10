@@ -16,7 +16,7 @@ holy in shell
 
 # unless onApt -- manually download and install AdoptOpenJDK
 # https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
-holy in platform/java
+holy in platform/java && holy-dot use/platform/java
 
 # depends on shell & java
 holy in closh
