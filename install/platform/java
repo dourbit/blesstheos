@@ -9,23 +9,42 @@ holy-dot src/ os install
 
 if onApt; then
 
+  java_home="/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64"
+
   sudo apt install -y software-properties-common
   wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
   sudo-add-apt-repository https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
   sudo-apt-update
   sudo apt install -y adoptopenjdk-11-hotspot
-  java -version
 
-  # only if this is a first-time install
-  if ! holy on platform/java > /dev/null && ! tis-some $JAVA_HOME; then
-    echo '' >> ~/.bashrc # add an empty line spacer
-    echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
+  if [ "$JAVA_HOME" != "$java_home" ]; then
+    if tis-some $JAVA_HOME; then
+      echo
+      echo 'Change of $JAVA_HOME'
+      echo "Before: $JAVA_HOME"
+      echo "Now is: $java_home"
+      echo "Please make sure the variable is set correctly."
+    fi
+    export JAVA_HOME="$java_home"
+
+    # Only if this is a first-time install:
+    # TODO: rather than looking at .bashrc contents wait for holy env ...
+    # upcoming env vars functionality that will help improve this
+    if ! holy on platform/java > /dev/null; then
+      echo '' >> ~/.bashrc # add an empty line spacer
+      echo "export JAVA_HOME=$java_home" >> ~/.bashrc
+    fi
   fi
+
+  echo
+  echo "JAVA_HOME=\"${JAVA_HOME}\""
+  java -version
 
 else
 
   echo "You may need to setup java manually, let's see what you have installed:"
-  echo $JAVA_HOME
-  java -version
+  tis-some $JAVA_HOME && echo "JAVA_HOME=\"${JAVA_HOME}\"" \
+    || echo "Not Set: \$JAVA_HOME"
+  check-x java && java -version || echo "Not Found: java"
 
 fi
