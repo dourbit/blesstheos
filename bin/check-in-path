@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+path=$(echo $PATH | tr : '\n')
+
+if [ $# -eq 0 ]; then
+  echo "$path"
+else
+  echo "$path" | grep "$1"
+fi
