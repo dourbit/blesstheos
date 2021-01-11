@@ -1,10 +1,20 @@
 #!/usr/bin/env bash
 
-# borrowed from https://gist.github.com/brentertz/1384279
+# TODO: make this come from an environment variable $HOLY_RUBY_V,
+# as an override, or find some other way to have it not hardcoded
+RUBY_V=2.6.3
 
+holy-dot src/ os install
+
+# TODO: perhaps make Homebrew the default if brewOn?
 if onMac; then
   echo "Mac OS"
-  brew install rbenv ruby-build
+  if brewOn; then
+    brew install rbenv ruby-build
+  else
+    echo "Not On: brew"
+    exit 1
+  fi
 
 elif onApt; then
   echo "Apt Linux"
@@ -20,7 +30,11 @@ elif onApt; then
 
 else
   echo "No ${HOLY_KERNEL} system match!"
+  exit 1
 fi
+
+
+# borrowed from https://gist.github.com/brentertz/1384279
 
 if [ ! -f ~/.bundle/config ]; then mkdir -p ~/.bundle && printf -- "---\nBUNDLE_PATH: vendor/bundle\n" >> ~/.bundle/config; fi
 
@@ -30,11 +44,11 @@ if [ ! -f ~/.gemrc ]; then echo "gem: --no-ri --no-rdoc" >> ~/.gemrc; fi
 
 if [ -x rbenv ]; then
   # rbenv install --list
-  rbenv install 2.6.3
-  rbenv global 2.6.3
+  rbenv install $RUBY_V
+  rbenv global $RUBY_V
 
   gem install bundler --pre
-  # TODO: install ./packages/gem
+  # TODO: install ../packages/gem
   # rbenv rehash #after installing binaries is automatic / no longer needed
 
   # per project:
