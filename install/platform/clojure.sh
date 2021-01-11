@@ -2,16 +2,25 @@
 
 # Note: sh extension is for Atom to not treat it as Clojure code.
 
-sudoUse
-
 # Based on https://purelyfunctional.tv/guide/how-to-install-clojure/
 # https://clojure.org/guides/getting_started#_installation_on_linux
 # Version copied from the above link.
+# TODO: make this a global, exported environment variable,
+# for a fixed yet configurable version useful in production,
+# which should override brew install; still also ...
+# keep the version below as fallback in non-brew scenarios
 CLOJURE_V="1.10.1.536"
+
+# Using: brewOn sudoUse sudomy specho
+# Also many bin-fn scripts, which can be sourced.
+holy-dot src/ install util
+
+sudoUse
 
 # Expected deps
 echo $JAVA_HOME
 java -version
+# NOTE: this will become irrelevant with $HOLY_CLOJURE_V (make it conditional)
 brewOn && brew --version
 
 # Leiningen
@@ -44,5 +53,5 @@ fi
 # There is a scenario for not brewOn && not onLinux,
 # when Clojure may not be installed ...
 if check-x clj; then
-  clj -e '(println (str "Clojure " (clojure-version)))'
+  clj -M -e '(println (str "Clojure " (clojure-version)))'
 else echo "Clojure not installed."; fi
