@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 
-# Using: check-x; onApt; sudoUse
-holy-dot bin-fn/check-x src/ install os util
+# Using: onApt sudoUse noInstall
+holy-dot src/ install os util
+status=0
+
+check-x nvim && echo "Notice: nvim is already installed, proceeding anyway"
 
 if onApt; then
   sudoUse
-  check-x nvim && echo "Notice: nvim is already installed" && type nvim
-  sudo apt install -y neovim
-elif brewOn; then
-  # notice how apt is preferable
-  brew install neovim
+  sudo apt install -y neovim || noInstall "nvim via apt"
+elif check-x brew; then
+  # apt is preferable as possible and brewOn irrelevant
+  brew install neovim || noInstall "nvim via brew"
 else
-  exit 1
+  status=1
 fi
 
-type nvim
+tis-true $status && type nvim
+
+exit $status

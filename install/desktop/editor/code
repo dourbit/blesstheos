@@ -4,7 +4,7 @@
 # https://blog.robenkleene.com/2020/09/21/the-era-of-visual-studio-code/
 
 # Depends on aton
-# Using: onApt sudoUse sudo-add-apt-repository sudo-apt-update noInstall
+# Using: onApt sudoUse sudo-add-apt-repository sudo-apt-update noInstall snapOn
 holy-dot src/ os install util
 status=0
 
@@ -15,10 +15,10 @@ if onApt; then
   wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
   sudo-add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
   sudo-apt-update
-  sudo apt install -y code || noInstall "code"
+  sudo apt install -y code || noInstall "code via apt"
 elif snapOn; then
   sudoUse
-  sudo snap install --classic code
+  sudo snap install --classic code || noInstall "code via snap"
 else
   # https://code.visualstudio.com/docs/setup/setup-overview
   status=1
