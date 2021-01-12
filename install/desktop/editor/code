@@ -1,18 +1,29 @@
 #!/usr/bin/env bash
 
+# VSCode appears as top IDE choice in 2020
+# https://blog.robenkleene.com/2020/09/21/the-era-of-visual-studio-code/
+
 # Depends on aton
-# Using: check-x; onApt; sudoUse
-holy-dot bin-fn/check-x src/ os install util
+# Using: onApt sudoUse sudo-add-apt-repository sudo-apt-update noInstall
+holy-dot src/ os install util
+status=0
+
+check-x code && echo "Notice: code is already installed, proceeding anyway"
 
 if onApt; then
   sudoUse
-  check-x code && echo "Notice: code, i.e. VSCode, is already installed" && type code
   wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
   sudo-add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
   sudo-apt-update
-  sudo apt install -y code
+  sudo apt install -y code || noInstall "code"
+elif snapOn; then
+  sudoUse
+  sudo snap install --classic code
 else
-  exit 1
+  # https://code.visualstudio.com/docs/setup/setup-overview
+  status=1
 fi
 
-type code
+tis-true $status && type code
+
+exit $status
