@@ -60,8 +60,11 @@ onApt && cd /tmp && wget https://zoom.us/client/latest/zoom_amd64.deb \
   || noInstall Zoom
 
 specho "Compression..."
-onApt && sudo apt install -y rar unrar \
+onApt && sudo apt install -y unrar rar \
   || noInstall "*rar"
+# unpack messages in MIME or split-uuencode format
+onApt && sudo apt install -y mpack \
+  || noInstall "mpack" # munpack *.eml
 
 specho "Images..."
 # https://github.com/muennich/sxiv
