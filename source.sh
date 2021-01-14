@@ -54,6 +54,8 @@ else
   return 1
 fi
 
+holy-time start
+
 # exports $LEAD_HOME
 holy-sort
 
@@ -92,3 +94,5 @@ for src in $(ls "${HOLY_HOME}/use/platform"/* | grep -v .skip); do . "$src"; don
 holy-dot use/path
 
 unset THIS_HOME
+
+tis-true $HOLY_TIME_TELL && holy-time tell
