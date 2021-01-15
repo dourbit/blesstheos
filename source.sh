@@ -47,10 +47,11 @@ export -f holy-one
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
   # NOTE: expects options before the paths
-  local label
+  local label opts=()
   while :; do
     case $1 in
       -l|--label)
+        opts+=($1); opts+=("$2")
         label="$2"; shift
         ;;
       -?*)
@@ -68,7 +69,12 @@ holy-time() {
     local cmd=$1
     shift
     if [ $cmd == "start" ]; then
-      HOLY_TIME_START=$(date +%s.%N)
+      # only one context per env
+      export HOLY_TIME_START=$(date +%s.%N)
+    elif [ $cmd == "done" ]; then
+      holy-time ${opts[@]} tell
+      # remove global environment variables
+      unset HOLY_TIME_START
     elif [ $cmd == "tell" ]; then
       local start=${1-$HOLY_TIME_START}
       local round=${HOLY_TIME_ROUND-'3'}
@@ -142,4 +148,4 @@ holy-dot use/path
 
 unset THIS_HOME
 
-holy-time -l "${HOLY_HOME}/source.sh" tell
+holy-time -l "${HOLY_HOME}/source.sh" done
