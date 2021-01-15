@@ -418,7 +418,9 @@ holy-f() {
   fi
 }
 
-# to measure and report elapsed time
+# to measure and report elapsed time, with optional config:
+# HOLY_TIME_TELL=yes # turn it on
+# HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
   if [ $# -eq 0 ]; then
     echo "Usage: holy-time <cmd> ..."
@@ -429,9 +431,10 @@ holy-time() {
       HOLY_TIME_START=$(date +%s.%N)
     elif [ $cmd == "tell" ]; then
       local start=${1-$HOLY_TIME_START}
+      local round=${HOLY_TIME_ROUND-'3'}
       if tis-some $start; then
         echo $(echo "$(date +%s.%N) - $start" | env bc \
-                  | LC_ALL=C xargs env printf '%.*f' 3)
+             | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
         return 1
