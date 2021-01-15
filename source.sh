@@ -47,12 +47,15 @@ export -f holy-one
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
   # NOTE: expects options before the paths
-  local label opts=()
+  local label mark=0 opts=()
   while :; do
     case $1 in
-      -l|--label)
+      --label|-l)
         opts+=($1); opts+=("$2")
         label="$2"; shift
+        ;;
+      --marker)
+        mark=$(date +%s.%N)
         ;;
       -?*)
         >&2 echo "Not an option: holy-time $1"
@@ -71,9 +74,13 @@ holy-time() {
     if [ $cmd == "start" ]; then
       # only one context per env
       export HOLY_TIME_START=$(date +%s.%N)
+      export HOLY_TIME_MARK="#START"
+      export HOLY_TIME_TOLD=0
     elif [ $cmd == "done" ]; then
       holy-time ${opts[@]} tell
       # remove global environment variables
+      unset HOLY_TIME_MARK
+      unset HOLY_TIME_TOLD
       unset HOLY_TIME_START
     elif [ $cmd == "tell" ]; then
       local start=${1-$HOLY_TIME_START}
