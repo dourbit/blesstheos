@@ -42,6 +42,35 @@ holy-one() {
 }
 export -f holy-one
 
+# Мeasure and report elapsed time + optional config:
+# HOLY_TIME_TELL=yes # turn it on, or it will not be seen
+# HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
+holy-time() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: holy-time <cmd> ..."
+    echo "Where <cmd> is: start, tell"
+  else
+    local cmd=$1; shift
+    if [ $cmd == "start" ]; then
+      HOLY_TIME_START=$(date +%s.%N)
+    elif [ $cmd == "tell" ]; then
+      local start=${1-$HOLY_TIME_START}
+      local round=${HOLY_TIME_ROUND-'3'}
+      if tis-some $start; then
+        echo $(echo "$(date +%s.%N) - $start" | env bc \
+             | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")
+      else
+        >&2 echo "Missing: holy-time start || holy-time tell <start>"
+        return 1
+      fi
+    else
+      >&2 echo "Unknown: holy-time $cmd"
+      return 1
+    fi
+  fi
+}
+export -f holy-time
+holy-time start
 
 # holy-one and core.sh functions to bootstrap with
 if holy-one 1; then
@@ -53,8 +82,6 @@ else
   unset THIS_HOME
   return 1
 fi
-
-holy-time start
 
 # exports $LEAD_HOME
 holy-sort
