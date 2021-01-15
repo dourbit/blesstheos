@@ -142,7 +142,6 @@ this-that() {
 # NOTE: has quirks, such as presuming base-dir/ context stickyness
 # instead of fallback to the home-dir (could reset with // or / ?)
 holy-dot() {
-  local start=$(date +%s.%N) # relevant only when --time
   local args="$@" # preserve for holy-time tell or other meta use
   local opts=() time="no" export="no" ifs=":" all="*.sh"
   # NOTE: expects options before the paths
@@ -150,6 +149,7 @@ holy-dot() {
     case $1 in
       --time)
         time="yes"
+        local start=$(holy-time now)
         ;;
       -x)
         export="yes"

@@ -46,7 +46,8 @@ export -f holy-one
 # HOLY_TIME_TELL=yes # turn it on, or it will not be seen
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
-  # NOTE: expects options before the paths
+  local now=$(date +%s.%N) # used in too many places, keep it dry and accurate
+  # NOTE: expects options before the commands, or any command-specific args
   local label mark=0 opts=()
   while :; do
     case $1 in
@@ -55,7 +56,7 @@ holy-time() {
         label="$2"; shift
         ;;
       --marker)
-        mark=$(date +%s.%N)
+        mark=$now
         ;;
       -?*)
         >&2 echo "Not an option: holy-time $1"
@@ -67,13 +68,15 @@ holy-time() {
   done
   if [ $# -eq 0 ] ; then
     echo "Usage: holy-time [opts] <cmd> [...]"
-    echo "Where <cmd> is: start, tell"
+    echo "Where [opt] is: --label <what>, --marked"
+    echo "Where <cmd> is: start, now, tell, done"
   else
     local cmd=$1
     shift
     if [ $cmd == "start" ]; then
       # only one context per env
-      export HOLY_TIME_START=$(date +%s.%N)
+      # the start is an automatic marker
+      export HOLY_TIME_START=$now
       export HOLY_TIME_MARK="#START"
       export HOLY_TIME_TOLD=0
     elif [ $cmd == "done" ]; then
@@ -82,12 +85,14 @@ holy-time() {
       unset HOLY_TIME_MARK
       unset HOLY_TIME_TOLD
       unset HOLY_TIME_START
+    elif [ $cmd == "now" ]; then
+      echo $now
     elif [ $cmd == "tell" ]; then
       local start=${1-$HOLY_TIME_START}
       local round=${HOLY_TIME_ROUND-'3'}
       if tis-some $start; then
         if tis-true $HOLY_TIME_TELL; then
-          echo "$(echo "$(date +%s.%N) - $start" | env bc \
+          echo "$(echo "$now - $start" | env bc \
                 | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") $label"
         fi
       else
