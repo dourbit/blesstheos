@@ -57,8 +57,10 @@ holy-time() {
       local start=${1-$HOLY_TIME_START}
       local round=${HOLY_TIME_ROUND-'3'}
       if tis-some $start; then
-        echo $(echo "$(date +%s.%N) - $start" | env bc \
-             | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")
+        if tis-true $HOLY_TIME_TELL; then
+          echo $(echo "$(date +%s.%N) - $start" | env bc \
+               | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")
+        fi
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
         return 1
@@ -122,4 +124,4 @@ holy-dot use/path
 
 unset THIS_HOME
 
-tis-true $HOLY_TIME_TELL && holy-time tell
+holy-time tell
