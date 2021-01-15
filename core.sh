@@ -430,7 +430,8 @@ holy-time() {
     elif [ $cmd == "tell" ]; then
       local start=${1-$HOLY_TIME_START}
       if tis-some $start; then
-        echo $(echo "$(date +%s.%N) - $start" | command bc)
+        echo $(echo "$(date +%s.%N) - $start" | env bc \
+                  | LC_ALL=C xargs env printf '%.*f' 3)
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
         return 1
