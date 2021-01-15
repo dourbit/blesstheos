@@ -46,11 +46,26 @@ export -f holy-one
 # HOLY_TIME_TELL=yes # turn it on, or it will not be seen
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
-  if [ $# -eq 0 ]; then
-    echo "Usage: holy-time <cmd> ..."
+  local label
+  while :; do
+    case $1 in
+      -l|--label)
+        label="$2"; shift
+        ;;
+      -?*)
+        >&2 echo "Not an option: holy-time $1"
+        ;;
+      *)
+        break
+    esac
+    shift
+  done
+  if [ $# -eq 0 ] ; then
+    echo "Usage: holy-time [opts] <cmd>"
     echo "Where <cmd> is: start, tell"
   else
-    local cmd=$1; shift
+    local cmd=$1
+    shift
     if [ $cmd == "start" ]; then
       HOLY_TIME_START=$(date +%s.%N)
     elif [ $cmd == "tell" ]; then
@@ -58,8 +73,8 @@ holy-time() {
       local round=${HOLY_TIME_ROUND-'3'}
       if tis-some $start; then
         if tis-true $HOLY_TIME_TELL; then
-          echo $(echo "$(date +%s.%N) - $start" | env bc \
-               | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")
+          echo "$(echo "$(date +%s.%N) - $start" | env bc \
+                | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") $label"
         fi
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
@@ -124,4 +139,4 @@ holy-dot use/path
 
 unset THIS_HOME
 
-holy-time tell
+holy-time -l "${HOLY_HOME}/source.sh" tell
