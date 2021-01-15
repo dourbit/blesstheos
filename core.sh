@@ -142,10 +142,15 @@ this-that() {
 # NOTE: has quirks, such as presuming base-dir/ context stickyness
 # instead of fallback to the home-dir (could reset with // or / ?)
 holy-dot() {
-  local opts=() export="no" ifs=":" all="*.sh"
+  local start=$(date +%s.%N) # relevant only when --time
+  local args="$@" # preserve for holy-time tell or other meta use
+  local opts=() time="no" export="no" ifs=":" all="*.sh"
   # NOTE: expects options before the paths
   while :; do
     case $1 in
+      --time)
+        time="yes"
+        ;;
       -x)
         export="yes"
         ;;
@@ -271,6 +276,7 @@ holy-dot() {
     holy-export ${opts[@]} ${files[@]}
     [ $? -ne 0 ] && status=1
   fi
+  tis-true $time && holy-time -l "holy-dot $args" tell $start
   # errors would return 1
   return $status
 }

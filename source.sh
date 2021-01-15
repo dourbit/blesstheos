@@ -46,6 +46,7 @@ export -f holy-one
 # HOLY_TIME_TELL=yes # turn it on, or it will not be seen
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
+  # NOTE: expects options before the paths
   local label
   while :; do
     case $1 in
@@ -61,7 +62,7 @@ holy-time() {
     shift
   done
   if [ $# -eq 0 ] ; then
-    echo "Usage: holy-time [opts] <cmd>"
+    echo "Usage: holy-time [opts] <cmd> [...]"
     echo "Where <cmd> is: start, tell"
   else
     local cmd=$1
@@ -117,7 +118,7 @@ PATH-add \
   ${HOLY_HOME}/cmd \
   ${HOLY_HOME}/bin-fn
 
-holy-dot use/ colors term aliases git jump rundev
+holy-dot --time use/ colors term aliases git jump rundev
 
 # bash-only stuff
 [ -n "$BASH" ] && holy-dot use/bash
@@ -132,7 +133,9 @@ shopt -s checkwinsize # After each command, checks the windows size and changes 
 
 
 # platforms for programming / runtime
-for src in $(ls "${HOLY_HOME}/use/platform"/* | grep -v .skip); do . "$src"; done
+for src in $(ls "${HOLY_HOME}/use/platform"/* | grep -v .skip); do
+  holy-dot --time "$src"
+done
 
 # so far the PATH pas been added to from many places
 holy-dot use/path
