@@ -55,7 +55,7 @@ holy-time() {
         opts+=($1); opts+=("$2")
         label="$2"; shift
         ;;
-      --marker)
+      --marker|-m)
         mark=$now
         ;;
       -?*)
@@ -68,7 +68,7 @@ holy-time() {
   done
   if [ $# -eq 0 ] ; then
     echo "Usage: holy-time [opts] <cmd> [...]"
-    echo "Where [opt] is: --label <what>, --marked"
+    echo "Where [opt] is: --label <what>, --marker"
     echo "Where <cmd> is: start, now, tell, done"
   else
     local cmd=$1
@@ -77,24 +77,37 @@ holy-time() {
       # only one context per env
       # the start is an automatic marker
       export HOLY_TIME_START=$now
-      export HOLY_TIME_MARK="#START"
+      export HOLY_TIME_WHAT=START
       export HOLY_TIME_TOLD=0
+      export HOLY_TIME_MARK=$now
     elif [ $cmd == "done" ]; then
       holy-time ${opts[@]} tell
       # remove global environment variables
       unset HOLY_TIME_MARK
       unset HOLY_TIME_TOLD
+      unset HOLY_TIME_WHAT
       unset HOLY_TIME_START
     elif [ $cmd == "now" ]; then
       echo $now
     elif [ $cmd == "tell" ]; then
-      local start=${1-$HOLY_TIME_START}
+      tis-true $HOLY_TIME_TELL || return
+      local since=${1-$HOLY_TIME_START}
       local round=${HOLY_TIME_ROUND-'3'}
-      if tis-some $start; then
-        if tis-true $HOLY_TIME_TELL; then
-          echo "$(echo "$now - $start" | env bc \
-                | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") $label"
+      local what="$label"
+      if tis-some $since; then
+        if [ $mark != 0 ]; then
+          # a --marker = a duration since the last labeled marker
+          since=$HOLY_TIME_MARK
+          what="#since $HOLY_TIME_WHAT"
+          if tis-some "$label"; then
+            # a --marker with a --label becomes the latest marker
+            what="#timed $label $what"
+            export HOLY_TIME_WHAT="$label"
+            export HOLY_TIME_MARK=$now
+          fi
         fi
+        echo "$(echo "$now - $since" | env bc \
+              | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") $what"
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
         return 1
@@ -131,6 +144,8 @@ else
   holy-dot -x src/os.sh
 fi
 
+holy-time --marker --label "sourced core functions" tell
+
 
 PATH-add \
   ${HOLY_HOME}/cmd \
@@ -149,6 +164,7 @@ export HISTCONTROL=ignoredups
 shopt -s checkwinsize # After each command, checks the windows size and changes lines and columns
 #shopt -s globstar # research...
 
+holy-time --marker tell
 
 # platforms for programming / runtime
 for src in $(ls "${HOLY_HOME}/use/platform"/* | grep -v .skip); do
@@ -160,4 +176,5 @@ holy-dot use/path
 
 unset THIS_HOME
 
+holy-time -l "ALL" -m tell
 holy-time -l "${HOLY_HOME}/source.sh" done
