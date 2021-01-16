@@ -71,8 +71,8 @@ holy-time() {
     echo "Where [opt] is: --label <what>, --marker"
     echo "Where <cmd> is: start, now, tell, done"
   else
-    local cmd=$1
-    shift
+    local cmd=$1; shift
+    local round=${HOLY_TIME_ROUND-'3'}
     if [ $cmd == "start" ]; then
       # only one context per env
       # the start is an automatic marker
@@ -81,7 +81,12 @@ holy-time() {
       export HOLY_TIME_TOLD=0
       export HOLY_TIME_MARK=$now
     elif [ $cmd == "done" ]; then
-      holy-time ${opts[@]} tell
+      local total=$(holy-time tell)
+      local untold=$(echo "$total - $HOLY_TIME_TOLD" | env bc)
+      echo
+      echo "$(echo $untold | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #untold"
+      # holy-time ${opts[@]} tell
+      echo "${total} #total $label"
       # remove global environment variables
       unset HOLY_TIME_MARK
       unset HOLY_TIME_TOLD
@@ -92,9 +97,9 @@ holy-time() {
     elif [ $cmd == "tell" ]; then
       tis-true $HOLY_TIME_TELL || return
       local since=${1-$HOLY_TIME_START}
-      local round=${HOLY_TIME_ROUND-'3'}
       local what="$label"
       if tis-some $since; then
+        local elapsed=$(echo "$now - $since" | env bc)
         if [ $mark != 0 ]; then
           # a --marker = a duration since the last labeled marker
           since=$HOLY_TIME_MARK
@@ -105,9 +110,10 @@ holy-time() {
             export HOLY_TIME_WHAT="$label"
             export HOLY_TIME_MARK=$now
           fi
+        else
+          export HOLY_TIME_TOLD=$(echo "$HOLY_TIME_TOLD + $elapsed" | env bc)
         fi
-        echo "$(echo "$now - $since" | env bc \
-              | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") $what"
+        echo "$(echo $elapsed | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") $what"
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
         return 1
