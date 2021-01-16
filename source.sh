@@ -77,7 +77,7 @@ holy-time() {
       # only one context per env
       # the start is an automatic marker
       export HOLY_TIME_START=$now
-      export HOLY_TIME_WHAT=START
+      export HOLY_TIME_WHAT="${1-START}"
       export HOLY_TIME_TOLD=0
       export HOLY_TIME_MARK=$now
     elif [ $cmd == "done" ]; then
@@ -119,7 +119,7 @@ holy-time() {
   fi
 }
 export -f holy-time
-holy-time start
+holy-time start "holy-time start"
 
 # holy-one and core.sh functions to bootstrap with
 if holy-one 1; then
