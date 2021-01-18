@@ -47,6 +47,10 @@ specho "Ebook Apps..."
 # Foliate Reader
 snapOn && sudo snap install foliate \
   || noInstall Foliate
+# CHM Reader, not just for Apt...
+# https://xchm.sourceforge.io/
+onApt && sudo apt install -y xchm \
+  || noInstall xCHM
 # Calibre Manager (does not update)
 # https://calibre-ebook.com/download_linux
 onLinux && sudo -v \
