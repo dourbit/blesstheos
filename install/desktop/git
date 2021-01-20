@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Using: sudoUse; onApt; snapOn
+holy-dot src/ os install util
+status=0
+
+sudoUse
+specho Git Apps...
+
+specho gitg
+onApt && sudo apt install -y gitg || noInstall gitg
+
+specho GitKraken
+snapOn && sudo snap install gitkraken --classic || noInstall GitKraken
+
+echo
+exit $status
