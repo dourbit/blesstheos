@@ -81,12 +81,13 @@ holy-time() {
       export HOLY_TIME_TOLD=0
       export HOLY_TIME_MARK=$now
     elif [ $cmd == "done" ]; then
+      echo # spacer line
       local total=$(holy-time tell)
-      local untold=$(echo "$total - $HOLY_TIME_TOLD" | env bc)
-      echo
-      echo "$(echo $untold | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #untold"
+      # local untold=$(echo "$total - $HOLY_TIME_TOLD" | env bc)
+      # echo "$(echo $untold | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #untold"
       # holy-time ${opts[@]} tell
       echo "${total} #total $label"
+      echo "$(echo $HOLY_TIME_TOLD | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #told"
       # remove global environment variables
       unset HOLY_TIME_MARK
       unset HOLY_TIME_TOLD
@@ -97,8 +98,8 @@ holy-time() {
     elif [ $cmd == "tell" ]; then
       tis-true $HOLY_TIME_TELL || return
       local since=${1-$HOLY_TIME_START}
-      local what="$label"
       if tis-some $since; then
+        local what
         local elapsed=$(echo "$now - $since" | env bc)
         if [ $mark != 0 ]; then
           # a --marker = a duration since the last labeled marker
@@ -111,9 +112,10 @@ holy-time() {
             export HOLY_TIME_MARK=$now
           fi
         else
+          [ "$label" != "" ] && what="#tell $label"
           export HOLY_TIME_TOLD=$(echo "$HOLY_TIME_TOLD + $elapsed" | env bc)
         fi
-        [ "$what" != "" ] && what=" $what" # space only if $what is not blank
+        [ "$what" != "" ] && what=" $what" # spaced if $label / $what not blank
         echo "$(echo $elapsed | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")$what"
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
