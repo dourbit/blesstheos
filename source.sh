@@ -113,7 +113,8 @@ holy-time() {
         else
           export HOLY_TIME_TOLD=$(echo "$HOLY_TIME_TOLD + $elapsed" | env bc)
         fi
-        echo "$(echo $elapsed | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") $what"
+        [ "$what" != "" ] && what=" $what" # space only if $what is not blank
+        echo "$(echo $elapsed | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")$what"
       else
         >&2 echo "Missing: holy-time start || holy-time tell <start>"
         return 1
