@@ -47,6 +47,8 @@ export -f holy-one
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
   local now=$(date +%s.%N) # used in too many places, keep it dry and accurate
+  # holy-time now # command doesn't take any options, and returns immediately
+  [ "now" == "$1" ] && echo $now && return # best performance command
   # NOTE: expects options before the commands, or any command-specific args
   local label mark=0
   while :; do
@@ -90,8 +92,6 @@ holy-time() {
       unset HOLY_TIME_TOLD
       unset HOLY_TIME_WHAT
       unset HOLY_TIME_START
-    elif [ $cmd == "now" ]; then
-      echo $now
     elif [ $cmd == "tell" ]; then
       tis-true $HOLY_TIME_TELL || return
       local since=${1-$HOLY_TIME_START}
