@@ -48,11 +48,10 @@ export -f holy-one
 holy-time() {
   local now=$(date +%s.%N) # used in too many places, keep it dry and accurate
   # NOTE: expects options before the commands, or any command-specific args
-  local label mark=0 opts=()
+  local label mark=0
   while :; do
     case $1 in
       --label|-l)
-        opts+=($1); opts+=("$2")
         label="$2"; shift
         ;;
       --marker|-m)
@@ -74,8 +73,9 @@ holy-time() {
     local cmd=$1; shift
     local round=${HOLY_TIME_ROUND-'3'}
     if [ $cmd == "start" ]; then
-      # only one context per env
+      # only one context per environment
       # the start is an automatic marker
+      # finalize with a holy-time done #summary
       export HOLY_TIME_START=$now
       export HOLY_TIME_WHAT="${1-START}"
       export HOLY_TIME_TOLD=0
@@ -83,9 +83,6 @@ holy-time() {
     elif [ $cmd == "done" ]; then
       echo # spacer line
       local total=$(holy-time tell)
-      # local untold=$(echo "$total - $HOLY_TIME_TOLD" | env bc)
-      # echo "$(echo $untold | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #untold"
-      # holy-time ${opts[@]} tell
       echo "${total} #total $label"
       echo "$(echo $HOLY_TIME_TOLD | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #told"
       # remove global environment variables
