@@ -50,7 +50,7 @@ holy-time() {
   # holy-time now # command doesn't take any options, and returns immediately
   [ "now" == "$1" ] && echo $now && return # best performance command
   # NOTE: expects options before the commands, or any command-specific args
-  local label mark=0
+  local label mark=0 run=no
   while :; do
     case $1 in
       --label|-l)
@@ -58,6 +58,9 @@ holy-time() {
         ;;
       --marker|-m)
         mark=$now
+        ;;
+      --run)
+        run=yes
         ;;
       -?*)
         >&2 echo "Not an option: holy-time $1"
@@ -69,7 +72,7 @@ holy-time() {
   done
   if [ $# -eq 0 ] ; then
     echo "Usage: holy-time [opts] <cmd> [...]"
-    echo "Where [opt] is: --label <what>, --marker"
+    echo "Where [opt] is: --label <what>, --marker, --run"
     echo "Where <cmd> is: start, now, tell, done"
   else
     local cmd=$1; shift
@@ -93,8 +96,19 @@ holy-time() {
       unset HOLY_TIME_WHAT
       unset HOLY_TIME_START
     elif [ $cmd == "tell" ]; then
-      tis-true $HOLY_TIME_TELL || return
-      local since=${1-$HOLY_TIME_START}
+      tis-true $HOLY_TIME_TELL || return # quietly skip if not on
+      local since status=0
+      if tis-true $run; then
+        since=$now
+        label=${label-$@}
+        $@ # --run the rest of args
+        status=$?
+        now=$(holy-time now)
+      else
+        since=${1-$HOLY_TIME_START}
+        tis-some $1 && shift;
+      fi
+      # is there a start time? can be timed as elapsed, and #told...
       if tis-some $since; then
         local what
         local elapsed=$(echo "$now - $since" | env bc)
@@ -109,13 +123,20 @@ holy-time() {
             export HOLY_TIME_MARK=$now
           fi
         else
-          [ "$label" != "" ] && what="#tell $label"
-          export HOLY_TIME_TOLD=$(echo "$HOLY_TIME_TOLD + $elapsed" | env bc)
+          if tis-true $run; then
+            # $run guarantees a label
+            what="#for $label" #takes to run or #ran for
+          else
+            # TODO: do not add if nested; can run be told?
+            export HOLY_TIME_TOLD=$(echo "$HOLY_TIME_TOLD + $elapsed" | env bc)
+            [ "$label" != "" ] && what="#tell $label"
+          fi
         fi
         [ "$what" != "" ] && what=" $what" # spaced if $label / $what not blank
         echo "$(echo $elapsed | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round")$what"
+        return $status
       else
-        >&2 echo "Missing: holy-time start || holy-time tell <start>"
+        >&2 echo "Missing: holy-time start || holy-time tell <start> || holy-time --run tell ..."
         return 1
       fi
     else
