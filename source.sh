@@ -100,10 +100,25 @@ holy-time() {
       local since status=0
       if tis-true $run; then
         since=$now
-        label=${label-$@}
         $@ # --run the rest of args
         status=$?
         now=$(holy-time now)
+        # there is always a $label with $run
+        # the code below ensures that
+        if [ $# -eq 0 ]; then
+          if [ "$label" == "" ]; then
+            label="#empty #run"
+          else
+            # here we just wanted a label, should this be another command?
+            # TODO: format with precision fn + calculate time for accuracy?
+            # added to wasted time for total done stats?
+            echo "0.    $label"
+            return
+          fi
+        else
+          # $@ is the label when no --label given
+          label=${label-$@}
+        fi
       else
         since=${1-$HOLY_TIME_START}
         tis-some $1 && shift;
