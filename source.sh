@@ -91,10 +91,16 @@ holy-time() {
       export HOLY_TIME_TOLD=0
       export HOLY_TIME_MARK=$now
     elif [ $cmd == "done" ]; then
-      echo # spacer line
-      local total=$(holy-time tell)
-      echo "${total} #total $label"
-      echo "$(echo $HOLY_TIME_TOLD | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #told"
+      if tis-true $HOLY_TIME_TELL; then
+        if tis-some $HOLY_TIME_START; then
+          local total=$(holy-time tell)
+          echo # spacer line
+          echo "${total} #total $label"
+          echo "$(echo $HOLY_TIME_TOLD | LC_ALL=C xargs /usr/bin/printf '%.*f' "$round") #told"
+        else
+          >&2 echo "Missing: holy-time start"
+        fi
+      fi
       # remove global environment variables
       unset HOLY_TIME_MARK
       unset HOLY_TIME_TOLD
