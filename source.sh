@@ -52,7 +52,7 @@ holy-time() {
   # holy-time now # command doesn't take any options, and returns immediately
   [ "now" == "$1" ] && echo $now && return # best performance command
   # NOTE: expects options before the commands, or any command-specific args
-  local label mark=0 run=no
+  local label mark=0 run=no silent=no
   while :; do
     case $1 in
       --label|-l)
@@ -64,6 +64,9 @@ holy-time() {
       --run|-r)
         run=yes
         ;;
+      --silent|-s)
+        silent=yes
+        ;;
       -?*)
         >&2 echo "Not an option: holy-time $1"
         ;;
@@ -74,7 +77,7 @@ holy-time() {
   done
   if [ $# -eq 0 ] ; then
     echo "Usage: holy-time [opts] <cmd> [...]"
-    echo "Where [opt] is: --label <what>, --marker, --run"
+    echo "Where [opt] is: --label <what>, --marker, --run, --silent"
     echo "Where <cmd> is: start, now, tell, done"
   else
     local cmd=$1; shift
@@ -102,7 +105,12 @@ holy-time() {
       local since status=0
       if tis-true $run; then
         since=$now
-        $@ # --run the rest of args
+        # --run the rest of args, with --silent option?
+        if tis-true $silent; then
+          $@ >/dev/null 2>&1
+        else
+          $@
+        fi
         status=$?
         now=$(holy-time now)
         # there is always a $label with $run
