@@ -43,9 +43,11 @@ holy-one() {
 export -f holy-one
 
 # Мeasure and report elapsed time + optional config:
-# HOLY_TIME_TELL=yes # turn it on, or it will not be seen
+# HOLY_TIME=not # make it a yes or it will not run (saves time when not used)
+# HOLY_TIME_TELL=yes # keep it on, or it will not be seen
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
+  [ "$HOLY_TIME" == "yes" ] || return # an on / off switch, needs literal "yes"
   local now=$(date +%s.%N) # used in too many places, keep it dry and accurate
   # holy-time now # command doesn't take any options, and returns immediately
   [ "now" == "$1" ] && echo $now && return # best performance command
@@ -59,7 +61,7 @@ holy-time() {
       --marker|-m)
         mark=$now
         ;;
-      --run)
+      --run|-r)
         run=yes
         ;;
       -?*)
