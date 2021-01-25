@@ -1,3 +1,5 @@
+holy-time -r -l "use/platform/node.sh takes so long..." tell #slow!
+
 if holy-time --silent --run tell holy on platform/node; then
 
   # source only if platform/node is on
