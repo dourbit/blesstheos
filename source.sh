@@ -42,6 +42,26 @@ holy-one() {
 }
 export -f holy-one
 
+# working on holy-time optimizations of some code as a wip...
+# this lightweight way of doing that keeps things running,
+# even when holy-time is turned off
+holy-run() {
+  local $opts
+  # TODO: remove $opts from $@ (partial use, so don't parse)
+  if tis-true $HOLY_TIME && tis-true $HOLY_TIME_TELL; then
+    holy-time --run $opts tell $@
+  else
+    local silent
+    # TODO: string-match for --silent in $opts (and set the var)
+    if tis-true $silent; then
+      $@ >/dev/null 2>&1
+    else
+      $@
+    fi
+  fi
+}
+export -f holy-run
+
 # Мeasure and report elapsed time + optional config:
 # HOLY_TIME=not # make it a yes or it will not run (saves time when not used)
 # HOLY_TIME_TELL=yes # keep it on, or it will not be seen
@@ -64,7 +84,7 @@ holy-time() {
       --run|-r)
         run=yes
         ;;
-      --silent|-s)
+      --silent)
         silent=yes
         ;;
       -?*)
