@@ -1,12 +1,12 @@
 holy-time -r -l "use/platform/node.sh takes so long..." tell #slow!
 
-if holy-run silent holy on platform/node; then
+if holy-time --run --silent tell holy on platform/node; then
   # source only if platform/node is on
   holy-dot src/nvm
-  holy-run nvm-on
+  holy-time --run tell nvm-on
 
   # silently use ~/.nvmrc - the version maybe changed, though it's a luxury!
-  holy-run silent nvm use # why does it take so much time?
+  holy-time --run --silent tell nvm use # why does it take so much time?
 
   # https://github.com/yarnpkg/yarn/issues/5353
   # after the nvm / npm global packages, which take precedence (from above)

@@ -42,32 +42,16 @@ holy-one() {
 }
 export -f holy-one
 
-# working on holy-time optimizations of some code as a wip...
-# this lightweight way of doing that keeps things running,
-# even when holy-time is turned off
-holy-run() {
-  local $opts
-  # TODO: remove $opts from $@ (partial use, so don't parse)
-  if tis-true $HOLY_TIME && tis-true $HOLY_TIME_TELL; then
-    holy-time --run $opts tell $@
-  else
-    local silent
-    # TODO: string-match for --silent in $opts (and set the var)
-    if tis-true $silent; then
-      $@ >/dev/null 2>&1
-    else
-      $@
-    fi
-  fi
-}
-export -f holy-run
-
 # Мeasure and report elapsed time + optional config:
 # HOLY_TIME=not # make it a yes or it will not run (saves time when not used)
 # HOLY_TIME_TELL=yes # keep it on, or it will not be seen
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
 holy-time() {
-  [ "$HOLY_TIME" == "yes" ] || return # an on / off switch, needs literal "yes"
+  # an on / off switch, needs literal "yes"
+  if [ "$HOLY_TIME" != "yes" ]; then
+    # but only if called without the --run option
+    [[ " $@ " =~ [[:blank:]](--run|-r)[[:blank:]]  ]] || return
+  fi
   local now=$(date +%s.%N) # used in too many places, keep it dry and accurate
   # holy-time now # command doesn't take any options, and returns immediately
   [ "now" == "$1" ] && echo $now && return # best performance command
@@ -127,7 +111,8 @@ holy-time() {
       unset HOLY_TIME_WHAT
       unset HOLY_TIME_START
     elif [ $cmd == "tell" ]; then
-      tis-true $HOLY_TIME_TELL || return # quietly skip if not on
+      local tell=yes # quietly skip telling if not on; checked in two places
+      tis-true $HOLY_TIME && tis-true $HOLY_TIME_TELL || tell=not
       local since status=0
       if tis-true $run; then
         since=$now
@@ -138,7 +123,11 @@ holy-time() {
           $@
         fi
         status=$?
-        now=$(holy-time now)
+        if [ $tell == yes ]; then
+          now=$(holy-time now)
+        else
+          return $status
+        fi
         # there is always a $label with $run
         # the code below ensures that
         if [ $# -eq 0 ]; then
@@ -156,6 +145,7 @@ holy-time() {
           label=${label-$@}
         fi
       else
+        [ $tell == yes ] || return
         since=${1-$HOLY_TIME_START}
         tis-some $1 && shift;
       fi
