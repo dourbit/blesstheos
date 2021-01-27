@@ -79,12 +79,15 @@ holy-time() {
     esac
     shift
   done
-  if [ $# -eq 0 ] ; then
+  if [ $# -eq 0 ]; then
     echo "Usage: holy-time [opts] <cmd> [...]"
     echo "Where [opt] is: --label <what>, --marker, --run, --silent"
     echo "Where <cmd> is: start, now, tell, done"
   else
-    local cmd=$1; shift
+    local cmd=$1;
+    if [[ $run != "yes" || $cmd == "tell" ]]; then
+      shift
+    fi
     local round=${HOLY_TIME_ROUND-'3'}
     if [ $cmd == "start" ]; then
       # only one context per environment
@@ -110,7 +113,7 @@ holy-time() {
       unset HOLY_TIME_TOLD
       unset HOLY_TIME_WHAT
       unset HOLY_TIME_START
-    elif [ $cmd == "tell" ]; then
+    elif [[ $cmd == "tell" || $run == "yes" ]]; then
       local tell=yes # quietly skip telling if not on; checked in two places
       tis-true $HOLY_TIME && tis-true $HOLY_TIME_TELL || tell=not
       local since status=0
