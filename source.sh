@@ -49,8 +49,8 @@ export -f holy-one
 holy-time() {
   # an on / off switch, needs literal "yes"
   if [ "$HOLY_TIME" != "yes" ]; then
-    # but only if called without the --run option
-    [[ " $@ " =~ [[:blank:]](--run|-r)[[:blank:]]  ]] || return
+    # but only if called without the --run / -r option
+    [[ "=$(printf "%s=" $@)" =~ =(--run|-r)= ]] || return
   fi
   local now=$(date +%s.%N) # used in too many places, keep it dry and accurate
   # holy-time now # command doesn't take any options, and returns immediately
