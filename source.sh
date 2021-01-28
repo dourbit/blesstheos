@@ -47,11 +47,12 @@ export -f holy-one
 # holy-one and core.sh functions to bootstrap with
 if holy-one 1; then
   . "${HOLY_HOME}/core.sh"
-  holy-export -f "${HOLY_HOME}/core.sh"
+  holy-time --run holy-export -f "${HOLY_HOME}/core.sh"
 else
   # holy-one somehow isn't on, unexpected but possible
   # clean-up here
   unset THIS_HOME
+  holy-time -l "#bail ${HOLY_HOME}/source.sh" done
   return 1
 fi
 
