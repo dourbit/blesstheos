@@ -17,7 +17,7 @@ HOLY_GOAL=HOLY_HOME
 tee -a $HOLY_HERE > /dev/null << END
 
 . "\$$HOLY_GOAL"/declare.sh
-# export HOLY_PREP="\$$HOLY_GOAL"/prepare.sh
+export HOLY_PREP="\$$HOLY_GOAL"/prepare.sh
 
 . "\$$HOLY_GOAL"/source.sh
 END
