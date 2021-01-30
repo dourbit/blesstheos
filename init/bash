@@ -6,10 +6,18 @@ HOLY_GOAL=HOLY_HOME
 # with the above two vars we validate first-time init + set the HOLY_GOAL home
 . $(dirname $0)/once.sh
 
+# NOTE: the following two commands should work whatever the shell is!
+# TODO: pull the code into some shared file as more shells are added.
 
+# copy prepare.sh for the first time
+[ -f "$HOLY_PATH"/prepare.sh ] || \
+  cp "$HOLY_PATH"/files/prepare.sh "$HOLY_PATH"/prepare.sh
+
+# append to $HOLY_HERE ($HOLY_RC)
 tee -a $HOLY_HERE > /dev/null << END
 
-[ -f ~/.bashrc-pre ] && . "\$HOME"/.bashrc-pre
+. "\$$HOLY_GOAL"/declare.sh
+# export HOLY_PREP="\$$HOLY_GOAL"/prepare.sh
 
 . "\$$HOLY_GOAL"/source.sh
 END

@@ -8,8 +8,8 @@
 *.swp
 tmp
 
+/prepare.sh
 on/ability/
-
 use/repos/*
 !use/repos/readme.md
 use/secret/

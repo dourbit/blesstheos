@@ -6,6 +6,10 @@ export HOLY_BREW_ON=yes # omit to decrease / skip Homebrew usage
 export HOLY_TIME=not # must be true (i.e. yes) or does nothing, thus saves time
 export HOLY_TIME_TELL=yes # a yes would print how long blesstheos takes to load
 
+# The best place to change the above...
+# The $HOLY_PREP is sourced by source.sh
+export HOLY_PREP="$HOLY_HOME"/prepare.sh
+
 # Мeasure and report elapsed time, considering the following config vars:
 # HOLY_TIME=yes # make it a yes or it will not run (saves time when not used)
 # HOLY_TIME_TELL=yes # keep it on, or no output would be shown

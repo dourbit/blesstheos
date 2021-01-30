@@ -63,9 +63,4 @@ tee -a $HOLY_HERE > /dev/null << END
 
 # $HOLY_COPY
 export $HOLY_GOAL="${!HOLY_GOAL}"
-
-. "\$$HOLY_GOAL"/declare.sh
-
-# perhaps override some vars here...
-# export HOLY_TIME=yes
 END

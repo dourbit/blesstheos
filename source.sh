@@ -1,3 +1,4 @@
+. "${HOLY_PREP}"
 holy-time start "holy-time start"
 
 #
