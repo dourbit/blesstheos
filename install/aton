@@ -26,7 +26,6 @@ fi
 
 if [ $status -eq 0 ]; then
   mkdir -p ~/tmp
-  touch ~/.bashrc-pre
 fi
 
 exit $status

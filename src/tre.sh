@@ -21,7 +21,7 @@ check-tre() {
     false; return
   elif [ -z "${TRANSMISSION_RE}" ]; then
     echo "Not finding transmission-remote configuration"
-    echo "Retry after adding the following to ~/.bashrc-pre with changed values"
+    echo "Retry after adding the following to \$HOLY_PREP with changed values"
     echo "export TRANSMISSION_RE='127.0.0.1:9092 --auth user:password'"
     false; return
   fi
