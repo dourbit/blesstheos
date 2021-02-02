@@ -5,11 +5,13 @@ export HOLY_ALIASES=yes # certain aliases bundled together with abilities
 export HOLY_BREW_ON=yes # omit to decrease / skip Homebrew usage
 export HOLY_TIME=not # must be true (i.e. yes) or does nothing, thus saves time
 export HOLY_TIME_TELL=yes # a yes would print how long blesstheos takes to load
+export HOLY_TIME_RUN_TELL=not # a yes enables seeing a greater depth of details
 
 # Мeasure and report elapsed time, considering the following config vars:
 # HOLY_TIME=yes # make it a yes or it will not run (saves time when not used)
 # HOLY_TIME_TELL=yes # keep it on, or no output would be shown
 # HOLY_TIME_ROUND=3 # override with 1 to 9 precison; the 3 default is for ms
+# HOLY_TIME_RUN_TELL=yes # turns on more details, #for performance optimization
 holy-time() {
   # an on / off switch, needs literal "yes"
   if [ "$HOLY_TIME" != "yes" ]; then
@@ -90,7 +92,7 @@ holy-time() {
           $@
         fi
         status=$?
-        if [ $tell == yes ]; then
+        if [ $tell == yes ] && tis-true $HOLY_TIME_RUN_TELL; then
           now=$(holy-time now)
         else
           return $status

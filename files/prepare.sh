@@ -3,6 +3,7 @@
 
 # Change configuration of declare.sh defaults, etc.
 # export HOLY_TIME=yes
+# export HOLY_TIME_RUN_TELL=yes
 
 
 # Keep the following comment line as is.
