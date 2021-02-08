@@ -4,29 +4,41 @@
 # https://docs.brew.sh/Installation
 # https://docs.brew.sh/Homebrew-on-Linux
 
+holy-dot src/ os install
+
 if onMac; then
-  echo "MacOS has not been tested yet.  Will not install."
+  >&2 echo "MacOS isn't supported here yet."
+  >&2 echo "Check https://docs.brew.sh/Installation"
   exit 0
+else
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+  # NOTE: the following 2 lines are Linux-specific...  Where does it go on a Mac?
+  test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+  test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+  # Only append on initial install:
+  if ! silent holy on brew; then
+    # echo "" >>~/.profile
+    # echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+
+    echo "" >>${HOLY_PREP}
+    echo "[ -x \"\$(command -v brew)\" ] || eval \$($(brew --prefix)/bin/brew shellenv)" >>${HOLY_PREP}
+  fi
 fi
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+# Always install these, also confirming brew itself is installed
+if check-x brew; then
+  # If you install something by mistake then `brew rmtree package`
+  # https://stackoverflow.com/questions/7323261/uninstall-remove-a-homebrew-package-including-all-its-dependencies
+  brew tap beeftornado/rmtree
+else
+  >&2 echo "Not Found: brew #unexpected"
+  >&2 echo "Should be installed by now!"
+  exit 1
+fi
 
-# NOTE: the following 2 lines are Linux-specific...  Where does it go on a Mac?
-test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-
-echo "" >>~/.profile
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-
-echo "" >>${HOLY_PREP}
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>${HOLY_PREP}
-
-# if you install something by mistake then `brew rmtree package`
-# https://stackoverflow.com/questions/7323261/uninstall-remove-a-homebrew-package-including-all-its-dependencies
-brew tap beeftornado/rmtree
-
-# Eventually these will get split in 3 files: linux-only, mac-only, and shared.
-# Here is a fresh start for what should end up as shared. None are necessary...
+# NOTE: doesn't belong here, please move it!
 if brewOn; then
   if ! onApt; then brew install transmission-cli; fi # apt is preferable
 fi
