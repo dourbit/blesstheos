@@ -64,6 +64,11 @@ if silent holy on desktop/editor/atom; then
   apm upgrade --confirm=false
 fi
 
+if check-x tldr; then
+  specho TLDR ...
+  tldr --update
+fi
+
 if check-x lein; then
   specho Leiningen ...
   if sudo-fn check-x lein; then
