@@ -19,10 +19,8 @@ else
 
   # Only append on initial install:
   if ! silent holy on brew; then
-    # echo "" >>~/.profile
-    # echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-
     echo "" >>${HOLY_PREP}
+    echo "export HOLY_BREW_ON=yes" >>${HOLY_PREP}
     echo "[ -x \"\$(command -v brew)\" ] || eval \$($(brew --prefix)/bin/brew shellenv)" >>${HOLY_PREP}
   fi
 fi
