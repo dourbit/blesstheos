@@ -12,19 +12,19 @@ sudoUse
 # NOTE: brewOn ignored on purpose due to HOLY_BREW_ON ambiguity
 # updating brew packages even if brew is not preferable overall
 if check-x brew; then
-  specho Homebrew ...
+  specho Homebrew...
   brew upgrade
 fi
 
 if onApt; then
-  specho Apt ...
+  specho Apt...
   silent sudo-apt-update
   sudo apt -y upgrade
   # sudo apt autoremove --purge
 fi
 
 if snapOn; then
-  specho Snap ...
+  specho Snap...
   sudo snap refresh
   # NOTE: devmode snaps need special refresh
   if silent holy on desktop/anbox; then
@@ -33,44 +33,44 @@ if snapOn; then
 fi
 
 if silent holy on platform/python; then
-  specho Python ...
+  specho Python...
   if check-x pip-review; then
     # NOTE: should be expected and validated by holy confirm
     pip-review --auto
   fi
   # NOTE: keep it at the bottom / after and yet within the python upgrades
   if check-x poetry; then
-    specho Poetry ...
+    specho Poetry...
     poetry self update --no-interaction
   fi
 fi
 
 if silent check-fn nvm; then
-  specho NVM ...
+  specho NVM...
   nvm-up
   if ! check-x bb; then
     # using babashka for node-up
     specho "Babashka missing, will install/shell ..."
     $(dirname $0)/../install/shell
   fi
-  specho NodeJS ...
+  specho NodeJS...
   node-up
   specho NPM and all global packages ...
   nvm install-latest-npm && npm-check -g -y
 fi
 
 if silent holy on desktop/editor/atom; then
-  specho Atom ...
+  specho Atom...
   apm upgrade --confirm=false
 fi
 
 if check-x tldr; then
-  specho TLDR ...
+  specho TLDR...
   tldr --update
 fi
 
 if check-x lein; then
-  specho Leiningen ...
+  specho Leiningen...
   if sudo-fn check-x lein; then
     # global lein needs sudo to upgrade
     yes Y | sudo lein upgrade
@@ -78,26 +78,26 @@ if check-x lein; then
     # sometimes lein install is just within a local user context
     yes Y | lein upgrade
   fi
-  specho Leiningen User Profiles ...
+  specho Leiningen User Profiles...
   lein ancient upgrade-profiles ~/.lein/profiles.clj 2>/dev/null
 fi
 
 # Download the following only if not installed via brew:
 if check-x bb && ! brewCheck babashka; then
-  specho Babashka ...
+  specho Babashka...
   sudomy gh-install-xr borkdude/babashka install ~/tmp/
 fi
 if check-x clj-kondo && ! brewCheck clj-kondo; then
-  specho Clj-kondo ...
+  specho Clj-kondo...
   sudomy gh-install-xr borkdude/clj-kondo script/install-clj-kondo ~/tmp/
 fi
 
 if check-x closh; then
-  specho Closh ...
+  specho Closh...
   $(dirname $0)/../install/closh
 fi
 
 if silent dourbit confirm; then
-  specho Urbit ...
+  specho Urbit...
   dourbit update
 fi
