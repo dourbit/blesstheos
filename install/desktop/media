@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Dependens on: install/aton; install/desktop/packages
+
 # Using: sudoUse; onApt; snapOn; flatpakOn
 holy-dot src/ install os install util
 
@@ -43,7 +45,7 @@ brewOn && brew install pandoc \
   && onUbuntu && sudo apt install -y wkhtmltopdf librsvg2-bin \
   || noInstall Pandoc
 
-specho "Ebook Apps..."
+specho "Ebooks..."
 # Foliate Reader
 snapOn && sudo snap install foliate \
   || noInstall Foliate
@@ -56,6 +58,14 @@ onApt && sudo apt install -y xchm \
 onLinux && sudo -v \
   && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin \
   || noInstall Calibre
+
+specho "Convos..."
+# https://element.io
+onApt && {
+  sudo wget -O /usr/share/keyrings/riot-im-archive-keyring.gpg https://packages.riot.im/debian/riot-im-archive-keyring.gpg
+  echo "deb [signed-by=/usr/share/keyrings/riot-im-archive-keyring.gpg] https://packages.riot.im/debian/ default main" | sudo tee /etc/apt/sources.list.d/riot-im.list
+  sudo-apt-update
+} && sudo apt install -y element-desktop || noInstall Element
 
 specho "Conference..."
 onApt && cd /tmp && wget https://zoom.us/client/latest/zoom_amd64.deb \
