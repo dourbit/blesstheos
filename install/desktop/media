@@ -60,6 +60,13 @@ onLinux && sudo -v \
   || noInstall Calibre
 
 specho "Convos..."
+# https://signal.org
+onApt && {
+  wget -O- https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
+  echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" |\
+    sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+  sudo-apt-update
+} && sudo apt install -y signal-desktop-beta || noInstall Signal
 # https://element.io
 onApt && {
   sudo wget -O /usr/share/keyrings/riot-im-archive-keyring.gpg https://packages.riot.im/debian/riot-im-archive-keyring.gpg
