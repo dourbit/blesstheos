@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# Here I get into the habit of documenting what I install for easier "next time"
+# Here I get into the habit of scripting installs for an easier "next time",
+# including Gnome-specific stuff - which should probably move elsewhere...
 
 # using: onUbuntu; sudoUse; specho
 holy-dot src/ os install util
@@ -9,9 +10,14 @@ if onUbuntu; then
 
   sudoUse
 
+  if $(bb -i "(>= $(lsb_release -rs) 18.04)"); then
+    specho "(GNOME) Tweaks..."
+    sudo apt install -y gnome-tweak-tool
+  fi
+
   # Tor Browser
   # https://linuxize.com/post/how-to-install-tor-browser-on-ubuntu-18-04/
-  specho Tor Browser ...
+  specho Tor Browser...
   if $(bb -i "(< $(lsb_release -rs) 20.04)"); then
     wget -q -O - https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | sudo apt-key add -
     echo "deb https://deb.torproject.org/torproject.org $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list
@@ -22,15 +28,28 @@ if onUbuntu; then
     sudo apt install -y torbrowser-launcher
   fi
 
-  if $(bb -i "(>= $(lsb_release -rs) 18.04)"); then
-    specho "(GNOME) Tweaks ..."
-    sudo apt install -y gnome-tweak-tool
-  fi
+  # Wine
+  # https://winehq.org
+  # https://wiki.winehq.org/Ubuntu
+  specho Wine...
+  sudo dpkg --add-architecture i386
+  wget -q -O - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+  sudo-add-apt-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ $(lsb_release -cs) main"
+  $(bb -i "(= $(lsb_release -rs) 18.04)") \
+    && sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport
+  sudo-apt-update
+  # may need these in order to fix an error, the second one confirmed to help:
+  # sudo apt install libvdpau1:i386
+  # sudo apt install libasound2-plugins:i386
+  sudo apt install --install-recommends winehq-stable
+  # for version 5.0 one simply could:
+  # sudo apt install -y wine64 wine32
+  wine --version
 
   # Etcher
   # https://www.balena.io/etcher/
   # https://github.com/balena-io/etcher#debian-and-ubuntu-based-package-repository-gnulinux-x86x64
-  specho Etcher ...
+  specho Etcher...
   echo "deb https://deb.etcher.io stable etcher" | sudo tee /etc/apt/sources.list.d/balena-etcher.list
   sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 379CE192D401AB61
   sudo-apt-update
