@@ -23,7 +23,7 @@ if onUbuntu; then
   sudo-apt-update
   sudo apt install -y protonvpn
   # kill switch (for if the VPN connection dies, then the Internet won't work)
-  protonvpn-cli ks --on
+  # protonvpn-cli ks --on # maybe just add aliases for on and off, or it can be confusing...
   # https://github.com/ProtonVPN/linux-gui
   sudo apt install -y python3-gi python3-gi-cairo gir1.2-gtk-3.0 libnotify-bin
   # For Gnome; enable with gnome-tweaks' Extensions:
