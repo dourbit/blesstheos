@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+holy-dot src/os
+
+onApt && sudo apt install -y btrfs-progs || exit 1
