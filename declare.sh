@@ -6,6 +6,7 @@ export HOLY_BREW_ON=not # holy in brew or just override it with $HOLY_PREP
 export HOLY_TIME=not # must be true (i.e. yes) or does nothing, thus saves time
 export HOLY_TIME_TELL=yes # a yes would print how long blesstheos takes to load
 export HOLY_TIME_RUN_TELL=not # a yes enables seeing a greater depth of details
+export MANPAGER="sh -c 'col -bx | batcat -l man -p'" # more readable man
 
 # Мeasure and report elapsed time, considering the following config vars:
 # HOLY_TIME=yes # make it a yes or it will not run (saves time when not used)
