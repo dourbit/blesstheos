@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+holy-dot src/ os install util
+status=0
+
+specho OnionShare...
+if flatpakOn; then
+  flatpak install -y flathub org.onionshare.OnionShare
+elif snapOn; then
+  sudo snap install onionshare
+else
+  noInstall OnionShare
+fi
+
+echo
+exit $status
