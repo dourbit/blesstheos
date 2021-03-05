@@ -91,6 +91,9 @@ specho "Images..."
 # https://github.com/muennich/sxiv
 onApt && sudo apt install -y sxiv \
   || noInstall sxiv
+# https://flameshot.org/
+snapOn && sudo snap install flameshot \
+  || noInstall flameshot
 
 echo
 exit $status
