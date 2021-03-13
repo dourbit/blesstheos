@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
 
-holy-dot src/os
+holy-dot src/ os install util
+status=0
 
-# https://www.smartmontools.org/
-# smartctl -i /dev/sdX
+if onApt; then
+  sudoUse
 
-onApt && sudo apt install -y smartmontools gddrescue || exit 1
+  # https://www.smartmontools.org/
+  # smartctl -i /dev/sdX
+  sudo apt install -y smartmontools || noInstall smartmontools
+
+  # https://www.gnu.org/software/ddrescue/ddrescue.html
+  # WARNING: it can cause CATASTROPHIC DATA LOSS if sdX is the wrong drive:
+  # ddrescue --force -r2 /path/to/clone.img /dev/sdX
+  sudo apt install -y gddrescue || noInstall gddrescue
+
+else
+  exit 1
+fi
+
+exit $status
