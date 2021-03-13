@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+holy-dot src/os
+
+# https://www.smartmontools.org/
+# smartctl -i /dev/sdX
+
+onApt && sudo apt install -y smartmontools gddrescue || exit 1
