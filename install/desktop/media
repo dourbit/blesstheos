@@ -73,6 +73,15 @@ onApt && {
   echo "deb [signed-by=/usr/share/keyrings/riot-im-archive-keyring.gpg] https://packages.riot.im/debian/ default main" | sudo tee /etc/apt/sources.list.d/riot-im.list
   sudo-apt-update
 } && sudo apt install -y element-desktop || noInstall Element
+# https://discord.com
+if snapOn; then
+  sudo snap install discord
+  sudo snap connect discord:system-observe
+elif flatpakOn; then
+  flatpak install -y flathub com.discordapp.Discord
+else
+  noInstall Discord
+fi
 
 specho "Conference..."
 onApt && cd /tmp && wget https://zoom.us/client/latest/zoom_amd64.deb \
