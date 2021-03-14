@@ -41,9 +41,12 @@ flatpakOn && flatpak install -y flathub com.github.marktext.marktext \
 # https://github.com/brrd/abricotine/blob/master/docs/installation-and-usage.md
 #
 # Pandoc
-brewOn && brew install pandoc \
-  && onUbuntu && sudo apt install -y wkhtmltopdf librsvg2-bin \
-  || noInstall Pandoc
+if brewOn; then
+  brew install pandoc
+  onApt && sudo apt install -y wkhtmltopdf librsvg2-bin
+else
+  noInstall Pandoc
+fi
 
 specho "Ebooks..."
 # Foliate Reader

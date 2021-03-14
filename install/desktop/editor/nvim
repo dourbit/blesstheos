@@ -11,9 +11,9 @@ if onApt; then
   sudo apt install -y neovim || noInstall "nvim via apt"
 elif check-x brew; then
   # apt is preferable as possible and brewOn irrelevant
-  brew install neovim || noInstall "nvim via brew"
+  brew install neovim
 else
-  status=1
+  noInstall "nvim"
 fi
 
 tis-true $status && type nvim
