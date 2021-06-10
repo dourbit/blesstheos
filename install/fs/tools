@@ -6,6 +6,8 @@ status=0
 if onApt; then
   sudoUse
 
+  sudo apt install -y tree
+
   # https://www.smartmontools.org/
   # smartctl -i /dev/sdX
   sudo apt install -y smartmontools || noInstall smartmontools
