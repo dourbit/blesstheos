@@ -3,6 +3,8 @@
 # Various terminal themes and ux improvements
 # as well as tools for use in a terminal - installed with apt.
 
+holy-dot src/ install os util
+
 # Changes theme on both Linux and MacOS iTerm:
 # bash -c  "$(wget -qO- https://git.io/vQgMr)"
 # though prefer xfce on Linux (skip for that)
