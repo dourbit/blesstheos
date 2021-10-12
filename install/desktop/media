@@ -16,6 +16,12 @@ specho "Podcast Apps..."
 flatpakOn && flatpak install -y flathub org.gpodder.gpodder \
   || noInstall gPodder
 
+specho "News Feeds..."
+# https://gitlab.com/news-flash/news_flash_gtk
+# NOTE: for Arch do `yay -S newsflash`
+flatpakOn && flatpak install -y flathub com.gitlab.newsflash \
+  || noInstall NewsFlash
+
 specho "Video Apps..."
 # VLC media player
 snapOn && sudo snap install vlc \
